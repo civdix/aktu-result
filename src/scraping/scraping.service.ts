@@ -1,9 +1,16 @@
-import axios from 'axios';
 import qs from 'qs';
 import * as cheerio from 'cheerio';
 import { AKTU_URL, getRandomHeaders } from '../config';
 import { ViewStateParams, ParseResult, Student, ScrapingSession } from '../interfaces';
 import { DatabaseService } from '../database/database.service';
+
+function getSetCookieHeaders(response: Response): string[] {
+  if (typeof (response.headers as any).getSetCookie === 'function') {
+    return (response.headers as any).getSetCookie();
+  }
+  const single = response.headers.get('set-cookie');
+  return single ? [single] : [];
+}
 
 export class ScrapingService {
   static async extractViewStateParams(htmlText: string): Promise<ViewStateParams> {
@@ -33,18 +40,21 @@ export class ScrapingService {
     });
   
     try {
-      const response = await axios.post(AKTU_URL, data, {
+      const response = await fetch(AKTU_URL, {
+        method: 'POST',
         headers: {
           ...getRandomHeaders(),
           'Content-Type': 'application/x-www-form-urlencoded',
           'Cookie': session.cookieHeader
-        }
+        },
+        body: data
       });
+      const htmlData = await response.text();
       
-      const parsed = ScrapingService.parseHtml(response.data);
-      const viewStateParams = await ScrapingService.extractViewStateParams(response.data);
+      const parsed = ScrapingService.parseHtml(htmlData);
+      const viewStateParams = await ScrapingService.extractViewStateParams(htmlData);
       
-      const newCookies = response.headers['set-cookie'] || [];
+      const newCookies = getSetCookieHeaders(response);
       let updatedCookieHeader = session.cookieHeader;
       if (newCookies.length > 0) {
         const existingMap = new Map(session.cookieHeader.split(';').map(c => {
@@ -440,10 +450,11 @@ export class ScrapingService {
       console.log(`[Bypass] Initiating bypass request for roll number: ${rollNumber}`);
       
       // Step 1: Fetch initial page to get initial ViewState and cookies
-      const initialRes = await axios.get(AKTU_URL, { headers });
-      const cookies = initialRes.headers['set-cookie'] || [];
+      const initialRes = await fetch(AKTU_URL, { method: 'GET', headers });
+      const initialHtml = await initialRes.text();
+      const cookies = getSetCookieHeaders(initialRes);
       const cookieHeader = cookies.map(c => c.split(';')[0]).join('; ');
-      const initialParams = await ScrapingService.extractViewStateParams(initialRes.data);
+      const initialParams = await ScrapingService.extractViewStateParams(initialHtml);
 
       // Step 2: Post with the bypass roll number (1150231905) to proceed without DOB
       const proceedData = qs.stringify({
@@ -456,15 +467,18 @@ export class ScrapingService {
         '__EVENTVALIDATION': initialParams.eventValidation
       });
 
-      const proceedRes = await axios.post(AKTU_URL, proceedData, {
+      const proceedRes = await fetch(AKTU_URL, {
+        method: 'POST',
         headers: {
           ...headers,
           'Content-Type': 'application/x-www-form-urlencoded',
           'Cookie': cookieHeader
-        }
+        },
+        body: proceedData
       });
+      const proceedHtml = await proceedRes.text();
 
-      const proceedCookies = proceedRes.headers['set-cookie'] || [];
+      const proceedCookies = getSetCookieHeaders(proceedRes);
       let updatedCookieHeader = cookieHeader;
       if (proceedCookies.length > 0) {
         const existingMap = new Map(cookieHeader.split(';').map(c => {
@@ -479,7 +493,7 @@ export class ScrapingService {
         updatedCookieHeader = Array.from(existingMap.entries()).map(([k, v]) => `${k}=${v}`).join('; ');
       }
 
-      const proceedParams = await ScrapingService.extractViewStateParams(proceedRes.data);
+      const proceedParams = await ScrapingService.extractViewStateParams(proceedHtml);
 
       // Step 3: Post the target roll number using the bypassed session
       const targetData = qs.stringify({
@@ -492,16 +506,19 @@ export class ScrapingService {
         '__EVENTVALIDATION': proceedParams.eventValidation
       });
 
-      const targetRes = await axios.post(AKTU_URL, targetData, {
+      const targetRes = await fetch(AKTU_URL, {
+        method: 'POST',
         headers: {
           ...headers,
           'Content-Type': 'application/x-www-form-urlencoded',
           'Cookie': updatedCookieHeader
-        }
+        },
+        body: targetData
       });
+      const targetHtml = await targetRes.text();
 
       // Step 4: Parse the returned HTML
-      const parseResult = ScrapingService.parseHtml(targetRes.data);
+      const parseResult = ScrapingService.parseHtml(targetHtml);
       if (parseResult) {
         const studentResult: Student = {
           ...parseResult,
