@@ -6,6 +6,7 @@ import branches from "../data/branches.json";
 interface Props {
   title: string;
   description: string;
+  keywords?: string;
   canonicalUrl?: string;
   ogType?: string;
   jsonLd?: Record<string, any>;
@@ -14,6 +15,7 @@ interface Props {
 const {
   title,
   description,
+  keywords = "aktu result, aktu result without dob, aktu roll number finder, check aktu result, aktu result direct link, aktu result scraper, aktu affiliated colleges, dr apj abdul kalam technical university result",
   canonicalUrl = Astro.url.href,
   ogType = "website",
   jsonLd
@@ -50,6 +52,7 @@ const isActive = (path: string) => {
     <!-- Meta SEO Tags -->
     <title>{title}</title>
     <meta name="description" content={description} />
+    <meta name="keywords" content={keywords} />
     <link rel="canonical" href={canonicalUrl} />
     <meta name="generator" content={Astro.generator} />
     <meta name="robots" content="index, follow" />
