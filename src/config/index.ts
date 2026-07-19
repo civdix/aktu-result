@@ -1,7 +1,3 @@
-import dotenv from 'dotenv';
-
-dotenv.config();
-
 export const MONGO_DB_URI = process.env.MONGO_DB_URI || 'mongodb://localhost:27017';
 export const AKTU_URL = 'https://oneview.aktu.ac.in/WebPages/aktu/OneView.aspx';
 
