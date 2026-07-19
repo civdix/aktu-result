@@ -1,0 +1,161 @@
+---
+import Layout from "../layouts/Layout.astro";
+
+// FAQ List data
+const faqs = [
+  {
+    question: "How do I check my AKTU result without my Date of Birth?",
+    answer: "Our portal allows you to retrieve your full academic records using just your university Roll Number. Behind the scenes, the lookup engine securely handshakes with the official AKTU server, retrieves the session state vector, and runs targeted year checks to fetch the grades, completely saving you the hassle of manually recovering your Date of Birth."
+  },
+  {
+    question: "What details are included in the retrieved AKTU result?",
+    answer: "The returned results show the complete student profile (Student Name, Father's Name, Roll Number, Enrollment Number, Course/Branch, and Institute), Cumulative CGPA, Division, and year-by-year, semester-by-semester subject performance cards (including subject codes, names, internal marks, external marks, back paper/COP status, and grade letters)."
+  },
+  {
+    question: "Why does the official AKTU dashboard say 'Session Expired' or display cryptographic token errors?",
+    answer: "The official AKTU One View portal utilizes security states called ASP.NET ViewState tokens that expire within minutes. If a student tries to submit a form with stale session data, the server throws error pages. Our tool dynamically refreshes and synchronizes all session tokens with every request, preventing these cryptographic errors entirely."
+  },
+  {
+    question: "How does the result lookup engine work under the hood without my DOB?",
+    answer: "The search system operates by executing secure headless session handshakes. It establishes a connection to the portal, fetches session tokens, and validates candidates internally to bypass gateway restrictions. The retrieved data is exclusively parsed for the final academic report and no Date of Birth is ever returned, displayed, or logged."
+  },
+  {
+    question: "Is my personal student data safe on this site?",
+    answer: "Absolutely. This utility functions entirely as a live query wrapper. We do not store, index, log, or sell any student academic records or enrollment credentials. The scraped result data is displayed on your screen and discarded immediately once you exit or click the Reset button."
+  },
+  {
+    question: "What do the terms SGPA, CGPA, PCP, and PWG mean in the AKTU results card?",
+    answer: "SGPA (Semester Grade Point Average) is the score of a single semester. CGPA (Cumulative Grade Point Average) is the overall average score across all completed years. PASS indicates all subjects are clear. PWG (Pass with Grace) means you passed with grace marks in a subject. PCP (Passed with Carry Over Papers) means you have passed the semester but have back papers to clear."
+  },
+  {
+    question: "How to find the roll number of an AKTU student?",
+    answer: "You can find an AKTU student's roll number by using our dedicated Roll Number Finder tool. Enter the admission year, affiliated college, and branch. You can also specify the student's name to filter the scanned class database cached records."
+  },
+  {
+    question: "How to get an AKTU student's Date of Birth if forgotten?",
+    answer: "If you have forgotten or lost your Date of Birth, our main portal lets you fetch your complete marks sheet and academic records using only your university Roll Number. We bypass the DOB verification gateway securely in the background, omitting the need to recover the DOB value."
+  },
+  {
+    question: "Is this tool official or affiliated with Dr. A.P.J. Abdul Kalam Technical University?",
+    answer: "No. This website is a 100% independent educational utility created by Shivam Dixit, an AI Software Engineer and CS class of 2026 student at AKTU. It is NOT affiliated with, sponsored by, or endorsed by AKTU, Lucknow, or any governmental education department."
+  }
+];
+
+// JSON-LD FAQPage Schema for Search Engine Optimization
+const faqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": faqs.map(faq => ({
+    "@type": "Question",
+    "name": faq.question,
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": faq.answer
+    }
+  }))
+};
+---
+
+<Layout 
+  title="FAQ - AKTU Result Without DOB | Questions & Support"
+  description="Commonly asked questions about recovering AKTU One View marks sheets, solving session validation errors, and understanding SGPA/CGPA cards."
+  jsonLd={faqJsonLd}
+>
+  <!-- Header Banner -->
+  <section class="py-16 md:py-24 border-b border-canvas-dark-border light:border-canvas-light-border bg-gradient-to-b from-black to-canvas-dark-surface light:from-white light:to-canvas-light-surface text-center">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6">
+      <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight mb-4 text-white light:text-ink">
+        Frequently Asked Questions
+      </h1>
+      <p class="text-base sm:text-lg text-gray-400 light:text-gray-600 max-w-xl mx-auto leading-relaxed">
+        Everything you need to know about the recovery system, security, and troubleshooting.
+      </p>
+    </div>
+  </section>
+
+  <!-- FAQ Accordion Layout -->
+  <section class="py-16 md:py-24 bg-black light:bg-white text-gray-400 light:text-gray-600">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6">
+      
+      <!-- Accordion Grid -->
+      <div class="space-y-4">
+        {faqs.map((faq, index) => (
+          <div class="border border-canvas-dark-border light:border-canvas-light-border rounded-xl bg-canvas-dark-tile light:bg-canvas-light-tile overflow-hidden transition-all duration-300">
+            <!-- Accordion Header -->
+            <button 
+              class="faq-trigger w-full px-6 py-4 flex items-center justify-between text-left font-semibold text-white light:text-ink hover:text-brand-blue light:hover:text-brand-blue transition-colors focus:outline-none"
+              data-target={`faq-answer-${index}`}
+              aria-expanded="false"
+            >
+              <span class="text-sm sm:text-base">{faq.question}</span>
+              <!-- Toggle Icon -->
+              <svg class="w-4 h-4 transform transition-transform duration-300 text-gray-500 faq-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+              </svg>
+            </button>
+            <!-- Accordion Content -->
+            <div 
+              id={`faq-answer-${index}`}
+              class="faq-content max-h-0 overflow-hidden transition-all duration-300 ease-in-out"
+            >
+              <div class="px-6 pb-5 pt-1 text-xs sm:text-sm text-gray-400 light:text-gray-500 border-t border-canvas-dark-border/40 light:border-canvas-light-border/40 mt-1 leading-relaxed">
+                {faq.answer}
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <!-- Support Card -->
+      <div class="mt-16 p-6 sm:p-8 rounded-2xl bg-canvas-dark-surface light:bg-canvas-light-surface border border-canvas-dark-border light:border-canvas-light-border text-center max-w-xl mx-auto space-y-4">
+        <h3 class="text-base font-semibold text-white light:text-ink">Still have questions?</h3>
+        <p class="text-xs text-gray-500 light:text-gray-600 leading-relaxed">
+          If you have further queries about API licensing or need developer assistance, feel free to drop a message.
+        </p>
+        <a 
+          href="/contact" 
+          class="inline-block px-4 py-2 bg-brand-blue text-white rounded-lg text-xs font-semibold hover:bg-brand-blue-hover transition-colors btn-press-active"
+        >
+          Contact Developer
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Client-Side Accordion Script -->
+  <script is:inline>
+    const triggers = document.querySelectorAll(".faq-trigger");
+    
+    triggers.forEach(trigger => {
+      trigger.addEventListener("click", () => {
+        const targetId = trigger.getAttribute("data-target");
+        const content = document.getElementById(targetId);
+        const icon = trigger.querySelector(".faq-icon");
+        const isExpanded = trigger.getAttribute("aria-expanded") === "true";
+
+        // Close all other accordions first
+        document.querySelectorAll(".faq-content").forEach(el => {
+          if (el.id !== targetId) {
+            el.style.maxHeight = null;
+            const parentTrigger = document.querySelector(`[data-target="${el.id}"]`);
+            parentTrigger.setAttribute("aria-expanded", "false");
+            const otherIcon = parentTrigger.querySelector(".faq-icon");
+            otherIcon.classList.remove("rotate-180");
+          }
+        });
+
+        // Toggle target accordion
+        if (isExpanded) {
+          content.style.maxHeight = null;
+          trigger.setAttribute("aria-expanded", "false");
+          icon.classList.remove("rotate-180");
+        } else {
+          content.style.maxHeight = content.scrollHeight + "px";
+          trigger.setAttribute("aria-expanded", "true");
+          icon.classList.add("rotate-180");
+        }
+      });
+    });
+  </script>
+</Layout>

@@ -1,0 +1,42 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout 
+  title="Page Not Found | AKTU Result Without DOB"
+  description="The page you are looking for does not exist. Navigate back to search your Roll Number and find your AKTU Result."
+>
+  <section class="min-h-[60vh] flex flex-col items-center justify-center text-center px-4 relative overflow-hidden bg-black light:bg-white transition-colors duration-300">
+    <!-- Glowing Aura -->
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 rounded-full bg-brand-blue/10 blur-[100px] pointer-events-none"></div>
+
+    <div class="relative z-10 space-y-6 max-w-md mx-auto">
+      <div class="text-xs font-bold font-mono tracking-widest text-brand-blue uppercase bg-brand-blue/10 px-3 py-1 rounded-full border border-brand-blue/20 inline-block">
+        Error 404
+      </div>
+      
+      <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight text-white light:text-ink leading-tight">
+        Lost in Session Space
+      </h1>
+
+      <p class="text-xs sm:text-sm text-gray-500 light:text-gray-600 leading-relaxed max-w-sm mx-auto">
+        The requested path does not exist or has been relocated. Return to the homepage to recover your university credentials.
+      </p>
+
+      <div class="pt-4 flex flex-col sm:flex-row gap-3 justify-center">
+        <a 
+          href="/" 
+          class="px-5 py-2.5 bg-brand-blue text-white rounded-xl text-sm font-semibold hover:bg-brand-blue-hover transition-colors btn-press-active premium-shadow-dark"
+        >
+          Back to Homepage
+        </a>
+        <a 
+          href="/faq" 
+          class="px-5 py-2.5 bg-transparent hover:bg-gray-900 light:hover:bg-gray-50 border border-canvas-dark-border light:border-canvas-light-border text-sm font-semibold text-gray-400 light:text-gray-600 hover:text-white light:hover:text-ink rounded-xl transition-colors btn-press-active"
+        >
+          Check FAQs
+        </a>
+      </div>
+    </div>
+  </section>
+</Layout>

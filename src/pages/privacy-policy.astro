@@ -1,0 +1,52 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout 
+  title="Privacy Policy | AKTU Result Without DOB"
+  description="Read the privacy guidelines outlining how we process student roll numbers and protect your personal credentials."
+>
+  <section class="py-16 md:py-24 bg-black light:bg-white text-gray-400 light:text-gray-600 text-left">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6">
+      
+      <h1 class="text-3xl font-extrabold tracking-tight text-white light:text-ink mb-8 border-b border-canvas-dark-border pb-4">
+        Privacy Policy
+      </h1>
+
+      <div class="space-y-6 text-xs sm:text-sm leading-relaxed">
+        <p>
+          Last Updated: July 2026
+        </p>
+        <p>
+          At **AKTU Result Without DOB**, accessible via `akturesultwithoutdob.com`, student privacy and security are paramount. This privacy document outlines the parameters of data processing.
+        </p>
+
+        <h3 class="text-sm font-semibold text-white light:text-ink uppercase tracking-wider mt-6">1. Transient Data Processing</h3>
+        <p>
+          Our recovery engine operates exclusively as a **transient search helper**. When you input a Roll Number, the query is routed live to the university portal. We do **NOT** store student transcripts, grades, or query outputs in a persistent local database.
+        </p>
+
+        <h3 class="text-sm font-semibold text-white light:text-ink uppercase tracking-wider mt-6">2. Salted IP Hashing</h3>
+        <p>
+          To prevent search abuse and protect our server resources, we track the request volumes of client IP addresses. To preserve user anonymity:
+        </p>
+        <ul class="list-disc pl-5 space-y-1.5">
+          <li>IP addresses are hashed immediately using the `SHA-256` protocol combined with a rotating salt.</li>
+          <li>We only store the anonymized hash signature rather than the raw IP sequence.</li>
+          <li>This signature is completely destroyed at the end of every 24-hour cycle.</li>
+        </ul>
+
+        <h3 class="text-sm font-semibold text-white light:text-ink uppercase tracking-wider mt-6">3. Third-Party Websites</h3>
+        <p>
+          This website provides external links to the official AKTU One View dashboard (`oneview.aktu.ac.in`). We have no control over, and assume no responsibility for, the content, cookies, privacy policies, or practices of university portals.
+        </p>
+
+        <h3 class="text-sm font-semibold text-white light:text-ink uppercase tracking-wider mt-6">4. Encryption</h3>
+        <p>
+          All communication between your browser and our lookup router is secured using industry-standard Secure Socket Layer (SSL/TLS) 256-bit encryption protocols.
+        </p>
+      </div>
+
+    </div>
+  </section>
+</Layout>

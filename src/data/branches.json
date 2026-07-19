@@ -1,0 +1,682 @@
+[
+  {
+    "sno": "1",
+    "code": "00",
+    "name": "Civil Engineering"
+  },
+  {
+    "sno": "2",
+    "code": "01",
+    "name": "Bio Medical Engineering"
+  },
+  {
+    "sno": "3",
+    "code": "03",
+    "name": "Interior Design"
+  },
+  {
+    "sno": "4",
+    "code": "05",
+    "name": "Construction Technology & MGT"
+  },
+  {
+    "sno": "5",
+    "code": "06",
+    "name": "MCA(Integrated)"
+  },
+  {
+    "sno": "6",
+    "code": "07",
+    "name": "Mining Engineering"
+  },
+  {
+    "sno": "7",
+    "code": "08",
+    "name": "VLSI Design"
+  },
+  {
+    "sno": "8",
+    "code": "10",
+    "name": "Computer Science and Engineering"
+  },
+  {
+    "sno": "9",
+    "code": "11",
+    "name": "Computer Science Information Technology"
+  },
+  {
+    "sno": "10",
+    "code": "12",
+    "name": "Computer Science"
+  },
+  {
+    "sno": "11",
+    "code": "13",
+    "name": "Information Technology"
+  },
+  {
+    "sno": "12",
+    "code": "14",
+    "name": "MCA"
+  },
+  {
+    "sno": "13",
+    "code": "15",
+    "name": "Computer Engineering"
+  },
+  {
+    "sno": "14",
+    "code": "16",
+    "name": "Computer Aided Design & Manufacturing"
+  },
+  {
+    "sno": "15",
+    "code": "20",
+    "name": "Electrical Engineering"
+  },
+  {
+    "sno": "16",
+    "code": "21",
+    "name": "Electrical & Electronics Engineering"
+  },
+  {
+    "sno": "17",
+    "code": "22",
+    "name": "Instrumentation and Control Engineering"
+  },
+  {
+    "sno": "18",
+    "code": "23",
+    "name": "Electrical & Computer Engg."
+  },
+  {
+    "sno": "19",
+    "code": "25",
+    "name": "Remote Sensing & GIS"
+  },
+  {
+    "sno": "20",
+    "code": "27",
+    "name": "Digital Communications"
+  },
+  {
+    "sno": "21",
+    "code": "28",
+    "name": "Electrical Engineering(Electrical Power And Energy Systems)"
+  },
+  {
+    "sno": "22",
+    "code": "30",
+    "name": "Electronics Engineering"
+  },
+  {
+    "sno": "23",
+    "code": "31",
+    "name": "Electronics and Communication Engineering"
+  },
+  {
+    "sno": "24",
+    "code": "32",
+    "name": "Electronics and Instrumentation Engineering"
+  },
+  {
+    "sno": "25",
+    "code": "33",
+    "name": "Electronics and Telecommunication Engineering"
+  },
+  {
+    "sno": "26",
+    "code": "36",
+    "name": "Bachelor of Design"
+  },
+  {
+    "sno": "27",
+    "code": "37",
+    "name": "Electronics Design And Technology"
+  },
+  {
+    "sno": "28",
+    "code": "39",
+    "name": "MBA(Integrated)"
+  },
+  {
+    "sno": "29",
+    "code": "40",
+    "name": "Mechanical Engineering"
+  },
+  {
+    "sno": "30",
+    "code": "41",
+    "name": "Manufacturing Technology"
+  },
+  {
+    "sno": "31",
+    "code": "42",
+    "name": "Manufacturing Science & Technology"
+  },
+  {
+    "sno": "32",
+    "code": "44",
+    "name": "Production Engineering"
+  },
+  {
+    "sno": "33",
+    "code": "45",
+    "name": "Industrial Production Engineering"
+  },
+  {
+    "sno": "34",
+    "code": "47",
+    "name": "Automobile Engineering"
+  },
+  {
+    "sno": "35",
+    "code": "48",
+    "name": "Aeronautical Engineering"
+  },
+  {
+    "sno": "36",
+    "code": "50",
+    "name": "Bachelor of Pharmacy"
+  },
+  {
+    "sno": "37",
+    "code": "51",
+    "name": "Chemical Engineering"
+  },
+  {
+    "sno": "38",
+    "code": "54",
+    "name": "Biotechnology"
+  },
+  {
+    "sno": "39",
+    "code": "56",
+    "name": "Pharmaceutics"
+  },
+  {
+    "sno": "40",
+    "code": "57",
+    "name": "Pharmceutical Chemistry"
+  },
+  {
+    "sno": "41",
+    "code": "58",
+    "name": "Pharmacogonosy"
+  },
+  {
+    "sno": "42",
+    "code": "60",
+    "name": "Textile Chemistry"
+  },
+  {
+    "sno": "43",
+    "code": "61",
+    "name": "Textile Technology"
+  },
+  {
+    "sno": "44",
+    "code": "62",
+    "name": "Man Made Fibre Technology"
+  },
+  {
+    "sno": "45",
+    "code": "63",
+    "name": "Textile Engineering"
+  },
+  {
+    "sno": "46",
+    "code": "64",
+    "name": "Carpet & Textile Technology"
+  },
+  {
+    "sno": "47",
+    "code": "65",
+    "name": "BFAD"
+  },
+  {
+    "sno": "48",
+    "code": "66",
+    "name": "Bachelor of Fine Art(BFA)"
+  },
+  {
+    "sno": "49",
+    "code": "67",
+    "name": "Computer science and engineering with specialization in cyber security/ ICT"
+  },
+  {
+    "sno": "50",
+    "code": "69",
+    "name": "Thermal Engineering"
+  },
+  {
+    "sno": "51",
+    "code": "70",
+    "name": "MBA"
+  },
+  {
+    "sno": "52",
+    "code": "71",
+    "name": "MBA in Tourism Management"
+  },
+  {
+    "sno": "53",
+    "code": "73",
+    "name": "Structural Engineering"
+  },
+  {
+    "sno": "54",
+    "code": "74",
+    "name": "BHMCT"
+  },
+  {
+    "sno": "55",
+    "code": "75",
+    "name": "Automation and Robotics"
+  },
+  {
+    "sno": "56",
+    "code": "76",
+    "name": "Power Electronics And Drives"
+  },
+  {
+    "sno": "57",
+    "code": "77",
+    "name": "Power Systems"
+  },
+  {
+    "sno": "58",
+    "code": "79",
+    "name": "Electronic And Computer Engineering"
+  },
+  {
+    "sno": "59",
+    "code": "80",
+    "name": "Agricultural Engineering"
+  },
+  {
+    "sno": "60",
+    "code": "81",
+    "name": "Architecture"
+  },
+  {
+    "sno": "61",
+    "code": "82",
+    "name": "Food Technology"
+  },
+  {
+    "sno": "62",
+    "code": "85",
+    "name": "Master of Architecture"
+  },
+  {
+    "sno": "63",
+    "code": "87",
+    "name": "Plastic Engineering"
+  },
+  {
+    "sno": "64",
+    "code": "88",
+    "name": "Electrical Drive and Control"
+  },
+  {
+    "sno": "65",
+    "code": "95",
+    "name": "Mechatronics"
+  },
+  {
+    "sno": "66",
+    "code": "96",
+    "name": "Nano Technology"
+  },
+  {
+    "sno": "67",
+    "code": "97",
+    "name": "Environmental Engineering"
+  },
+  {
+    "sno": "68",
+    "code": "98",
+    "name": "Pharmacology"
+  },
+  {
+    "sno": "69",
+    "code": "99",
+    "name": "PHARMACEUTICAL QUALITY ASSURANCE"
+  },
+  {
+    "sno": "70",
+    "code": "101",
+    "name": "Automotive  Manufacturing Technology"
+  },
+  {
+    "sno": "71",
+    "code": "102",
+    "name": "Automobile Servicing"
+  },
+  {
+    "sno": "72",
+    "code": "103",
+    "name": "Production Technology"
+  },
+  {
+    "sno": "73",
+    "code": "104",
+    "name": "Industrial Tool  Manufacturing (ITM)"
+  },
+  {
+    "sno": "74",
+    "code": "105",
+    "name": "Refrigeration and Air Conditioning"
+  },
+  {
+    "sno": "75",
+    "code": "106",
+    "name": "Software Development"
+  },
+  {
+    "sno": "76",
+    "code": "107",
+    "name": "Graphics & Mutimedia"
+  },
+  {
+    "sno": "77",
+    "code": "108",
+    "name": "BFSI"
+  },
+  {
+    "sno": "78",
+    "code": "109",
+    "name": "Travel & Tourism"
+  },
+  {
+    "sno": "79",
+    "code": "111",
+    "name": "Electronic Manufacturing Servicing"
+  },
+  {
+    "sno": "80",
+    "code": "112",
+    "name": "Medical Imaging  Technology"
+  },
+  {
+    "sno": "81",
+    "code": "114",
+    "name": "Communication Engineering"
+  },
+  {
+    "sno": "82",
+    "code": "115",
+    "name": "Mobile Communication"
+  },
+  {
+    "sno": "83",
+    "code": "116",
+    "name": "Artificial Intelligence"
+  },
+  {
+    "sno": "84",
+    "code": "117",
+    "name": "Energy Science & Technology"
+  },
+  {
+    "sno": "85",
+    "code": "119",
+    "name": "Micro Electronic Engineering"
+  },
+  {
+    "sno": "86",
+    "code": "120",
+    "name": "Pharmaceutical Analysis"
+  },
+  {
+    "sno": "87",
+    "code": "121",
+    "name": "Pharmaceutical Analysis And Quality Assurance"
+  },
+  {
+    "sno": "88",
+    "code": "123",
+    "name": "Geotechnical & Geoenvironmental Engineering"
+  },
+  {
+    "sno": "89",
+    "code": "124",
+    "name": "M.Design."
+  },
+  {
+    "sno": "90",
+    "code": "129",
+    "name": "Computer Engineering And Information Technology"
+  },
+  {
+    "sno": "91",
+    "code": "130",
+    "name": "Urban and Regional Planning"
+  },
+  {
+    "sno": "92",
+    "code": "131",
+    "name": "Computer Science & Technology"
+  },
+  {
+    "sno": "93",
+    "code": "151",
+    "name": "Manufacturing Technology and Automation"
+  },
+  {
+    "sno": "94",
+    "code": "152",
+    "name": "Computer Science and Engineering (Artificial Intelligence)"
+  },
+  {
+    "sno": "95",
+    "code": "153",
+    "name": "Computer Science And Engineering(Artificial Intelligence & Machine Learning)"
+  },
+  {
+    "sno": "96",
+    "code": "154",
+    "name": "Computer Science And Engineering(Data Science)"
+  },
+  {
+    "sno": "97",
+    "code": "155",
+    "name": "Computer Science And Engineering(Internet Of Things)"
+  },
+  {
+    "sno": "98",
+    "code": "156",
+    "name": "Computer Science And Business System"
+  },
+  {
+    "sno": "99",
+    "code": "157",
+    "name": "MBA(Business Analytics)"
+  },
+  {
+    "sno": "100",
+    "code": "158",
+    "name": "MBA(Logistics and supply chain management)"
+  },
+  {
+    "sno": "101",
+    "code": "159",
+    "name": "Innovation Entrepreneurship and Venture Devlopement"
+  },
+  {
+    "sno": "102",
+    "code": "160",
+    "name": "Handloom & Textile Technology"
+  },
+  {
+    "sno": "103",
+    "code": "161",
+    "name": "Robotics And Automation"
+  },
+  {
+    "sno": "104",
+    "code": "162",
+    "name": "Environmental Design"
+  },
+  {
+    "sno": "105",
+    "code": "163",
+    "name": "Artificial Inelligence (AI) And Data Science"
+  },
+  {
+    "sno": "106",
+    "code": "164",
+    "name": "Artificial Intelligence And Machine Learning"
+  },
+  {
+    "sno": "107",
+    "code": "165",
+    "name": "Computer Science And Design"
+  },
+  {
+    "sno": "108",
+    "code": "166",
+    "name": "Pharmacy Practice"
+  },
+  {
+    "sno": "109",
+    "code": "167",
+    "name": "Pharm D"
+  },
+  {
+    "sno": "110",
+    "code": "168",
+    "name": "Power and Energy System"
+  },
+  {
+    "sno": "111",
+    "code": "169",
+    "name": "Computer Science (Hindi)"
+  },
+  {
+    "sno": "112",
+    "code": "170",
+    "name": "MBA (Health Care and Hospital Management)"
+  },
+  {
+    "sno": "113",
+    "code": "171",
+    "name": "MBA (Banking and Finance Service)"
+  },
+  {
+    "sno": "114",
+    "code": "172",
+    "name": "Computer Science & Engineering (Cyber Security)"
+  },
+  {
+    "sno": "115",
+    "code": "173",
+    "name": "Electronics Engineering (VLSI Design and Technology)"
+  },
+  {
+    "sno": "116",
+    "code": "174",
+    "name": "Electronics and Communication (Advanced Communication Technology)"
+  },
+  {
+    "sno": "117",
+    "code": "175",
+    "name": "Electronics and Communication (VLSI Design)"
+  },
+  {
+    "sno": "118",
+    "code": "176",
+    "name": "Bioinformatics"
+  },
+  {
+    "sno": "119",
+    "code": "178",
+    "name": "BBA"
+  },
+  {
+    "sno": "120",
+    "code": "179",
+    "name": "BCA"
+  },
+  {
+    "sno": "121",
+    "code": "180",
+    "name": "MBA (Collaboration & Twining Program)"
+  },
+  {
+    "sno": "122",
+    "code": "184",
+    "name": "Computer Science and Engineering(Working Professional)"
+  },
+  {
+    "sno": "123",
+    "code": "185",
+    "name": "Electronics and Communication Engineering (Working Professional)"
+  },
+  {
+    "sno": "124",
+    "code": "187",
+    "name": "Electrical Engineering (Working Professional)"
+  },
+  {
+    "sno": "125",
+    "code": "188",
+    "name": "Mechanical Engineering (Working Professional)"
+  },
+  {
+    "sno": "126",
+    "code": "192",
+    "name": "MCA (Collaboration & Twining Program)"
+  },
+  {
+    "sno": "127",
+    "code": "193",
+    "name": "Computer Science and Engineering (Collaboration & Twining Program)"
+  },
+  {
+    "sno": "128",
+    "code": "194",
+    "name": "Computer Science and Engineering (Artificial Intelligence) (Collaboration & Twining Program)"
+  },
+  {
+    "sno": "129",
+    "code": "195",
+    "name": "Computer Science And Engineering(AIML) (Collaboration & Twining Program)"
+  },
+  {
+    "sno": "130",
+    "code": "196",
+    "name": "Information Technology (Collaboration & Twining Program)"
+  },
+  {
+    "sno": "131",
+    "code": "197",
+    "name": "MBA (AGRIBUSINESS MANAGEMENT)"
+  },
+  {
+    "sno": "132",
+    "code": "198",
+    "name": "MBA (Marketing and Finance)"
+  },
+  {
+    "sno": "133",
+    "code": "199",
+    "name": "DATA SCIENCE"
+  },
+  {
+    "sno": "134",
+    "code": "200",
+    "name": "CYBER SECURITY"
+  },
+  {
+    "sno": "135",
+    "code": "204",
+    "name": "Infrastructure Planning and Management"
+  },
+  {
+    "sno": "136",
+    "code": "205",
+    "name": "Mathematics and Computing"
+  }
+]

@@ -1,0 +1,882 @@
+---
+export const prerender = false;
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout 
+  title="Developer REST API Documentation | AKTU Result Without DOB"
+  description="Integrate student academic result lookup capabilities directly in your systems. Read the documentation for POST /api/search parameters, response schemas, and rate limits."
+>
+  <!-- Banner Header -->
+  <section class="py-16 md:py-24 border-b border-canvas-dark-border light:border-canvas-light-border bg-gradient-to-b from-black to-canvas-dark-surface light:from-white light:to-canvas-light-surface text-center relative overflow-hidden">
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[350px] h-[350px] rounded-full bg-brand-blue/5 blur-[80px] pointer-events-none"></div>
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 relative z-10">
+      <!-- Trust Badge -->
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-canvas-dark-border light:border-canvas-light-border bg-black/40 light:bg-white/40 backdrop-blur text-[10px] sm:text-xs text-gray-400 light:text-gray-600 mb-6 premium-shadow-light">
+        <span class="w-1.5 h-1.5 rounded-full bg-brand-blue animate-pulse"></span>
+        Developer REST API Integrations
+      </div>
+      <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight mb-4 bg-gradient-to-b from-white to-gray-400 light:from-ink light:to-gray-800 bg-clip-text text-transparent">
+        Developer API Documentation
+      </h1>
+      <p class="text-sm sm:text-base text-gray-400 light:text-gray-600 max-w-xl mx-auto leading-relaxed">
+        Specs for programmatic student credential verification and detailed academic result query.
+      </p>
+    </div>
+  </section>
+
+  <!-- Technical Spec Contents -->
+  <section class="py-16 md:py-24 bg-black light:bg-white text-gray-400 light:text-gray-600">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16 text-left">
+      
+      <!-- Intro -->
+      <div class="p-6 rounded-2xl border border-canvas-dark-border light:border-canvas-light-border bg-canvas-dark-tile/30 light:bg-canvas-light-tile/50 backdrop-blur premium-shadow-dark light:premium-shadow-light space-y-4">
+        <h2 class="text-base sm:text-lg font-bold text-white light:text-ink flex items-center gap-2">
+          <span class="text-brand-blue">⚡</span> Overview
+        </h2>
+        <p class="text-xs sm:text-sm leading-relaxed text-gray-400 light:text-gray-600">
+          AKTU DOB Finder provides RESTful endpoints for external systems. Developers can programmatically lookup academic results (without DOBs), query class roll numbers, or retrieve validated student DOBs via secure, whitelisted calls.
+        </p>
+      </div>
+
+      <!-- Result API Specifications -->
+      <div class="space-y-6">
+        <h2 class="text-xl font-bold text-white light:text-ink">1. Result API (Public Search)</h2>
+        <p class="text-xs sm:text-sm">
+          Use this endpoint to fetch student profiles and academic semesters. If the student is not in the database, it utilizes a fast DOB bypass mechanism to scrap the portal. Note: **The student DOB is omitted from this payload for compliance.**
+        </p>
+        
+        <div class="flex items-center gap-3 p-3 rounded-lg bg-canvas-dark-surface light:bg-canvas-light-surface border border-canvas-dark-border light:border-canvas-light-border font-mono text-xs sm:text-sm">
+          <span class="px-2 py-0.5 bg-emerald-500/10 text-emerald-400 font-bold rounded">POST</span>
+          <span class="text-white light:text-ink">/api/search</span>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div class="space-y-4">
+            <h3 class="text-sm font-semibold text-white light:text-ink uppercase tracking-wider">Request Headers</h3>
+            <div class="font-mono text-xs p-4 rounded-xl border border-canvas-dark-border light:border-canvas-light-border bg-black/40 light:bg-canvas-light-surface text-gray-400 light:text-gray-700">
+              Content-Type: application/json
+            </div>
+
+            <h3 class="text-sm font-semibold text-white light:text-ink uppercase tracking-wider">JSON Body Parameters</h3>
+            <div class="border border-canvas-dark-border light:border-canvas-light-border rounded-xl overflow-hidden text-xs">
+              <table class="w-full border-collapse">
+                <thead>
+                  <tr class="bg-canvas-dark-surface light:bg-canvas-light-surface border-b border-canvas-dark-border light:border-canvas-light-border text-gray-400 light:text-gray-600">
+                    <th class="p-3 text-left">Parameter</th>
+                    <th class="p-3 text-left">Type</th>
+                    <th class="p-3 text-left">Requirement</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-canvas-dark-border/40 light:divide-canvas-light-border/40">
+                  <tr class="hover:bg-canvas-dark-surface/20 light:hover:bg-canvas-light-surface/20">
+                    <td class="p-3 text-white light:text-ink font-mono font-medium">rollNumber</td>
+                    <td class="p-3 text-gray-500 light:text-gray-600">string</td>
+                    <td class="p-3 text-brand-blue font-semibold">Required</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="space-y-4">
+            <h3 class="text-sm font-semibold text-white light:text-ink uppercase tracking-wider">Example Payload</h3>
+            <pre is:raw class="font-mono text-xs p-4 rounded-xl border border-canvas-dark-border light:border-canvas-light-border bg-black/60 light:bg-canvas-light-surface text-emerald-400 light:text-emerald-700 overflow-x-auto">
+{
+  "rollNumber": "2200650100100"
+}</pre>
+          </div>
+        </div>
+
+        <!-- Code Examples Tab Box -->
+        <div class="space-y-4">
+          <h3 class="text-sm font-semibold text-white light:text-ink uppercase tracking-wider">Implementation Code Examples</h3>
+          
+          <!-- Code Editor Window -->
+          <div class="code-editor-window">
+            <!-- Code Editor Title Bar -->
+            <div class="code-editor-header">
+              <div class="code-editor-dots">
+                <span class="code-editor-dot close"></span>
+                <span class="code-editor-dot minimize"></span>
+                <span class="code-editor-dot maximize"></span>
+              </div>
+              <div class="code-editor-title" id="search-editor-title">request.sh</div>
+              <div class="flex gap-2">
+                <!-- Lang Selector Tabs -->
+                <div class="flex bg-black/40 light:bg-gray-200/50 p-0.5 rounded-lg border border-white/5 light:border-black/5">
+                  <button class="px-2.5 py-1 text-[10px] font-bold text-brand-blue bg-canvas-dark-surface light:bg-white rounded-md search-tab-btn cursor-pointer" data-lang="curl" data-filename="request.sh">cURL</button>
+                  <button class="px-2.5 py-1 text-[10px] font-bold text-gray-400 hover:text-white light:hover:text-ink search-tab-btn cursor-pointer" data-lang="nodejs" data-filename="request.js">Node.js</button>
+                  <button class="px-2.5 py-1 text-[10px] font-bold text-gray-400 hover:text-white light:hover:text-ink search-tab-btn cursor-pointer" data-lang="python" data-filename="request.py">Python</button>
+                  <button class="px-2.5 py-1 text-[10px] font-bold text-gray-400 hover:text-white light:hover:text-ink search-tab-btn cursor-pointer" data-lang="go" data-filename="main.go">Go</button>
+                  <button class="px-2.5 py-1 text-[10px] font-bold text-gray-400 hover:text-white light:hover:text-ink search-tab-btn cursor-pointer" data-lang="java" data-filename="Main.java">Java</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Code Editor Body -->
+            <div class="code-editor-body">
+              <!-- Line Numbers Column -->
+              <div class="code-editor-linenos" id="search-linenos">
+                <span>1</span><span>2</span><span>3</span>
+              </div>
+              
+              <!-- Code Contents -->
+              <div class="code-editor-content">
+                <!-- cURL -->
+                <pre is:raw class="search-code-block" id="search-code-curl" data-lines="3"><span class="code-cmd">curl</span> -X <span class="code-kw">POST</span> http://localhost:4321/api/search \
+  -H <span class="code-str">"Content-Type: application/json"</span> \
+  -d <span class="code-str">'{"rollNumber": "2200650100100"}'</span></pre>
+                
+                <!-- Nodejs -->
+                <pre is:raw class="search-code-block hidden" id="search-code-nodejs" data-lines="13"><span class="code-kw">const</span> <span class="code-var">rollNumber</span> = <span class="code-str">"2200650100100"</span>;
+
+<span class="code-fn">fetch</span>(<span class="code-str">'http://localhost:4321/api/search'</span>, {
+  method: <span class="code-str">'POST'</span>,
+  headers: {
+    <span class="code-str">'Content-Type'</span>: <span class="code-str">'application/json'</span>
+  },
+  body: <span class="code-type">JSON</span>.<span class="code-fn">stringify</span>({ <span class="code-var">rollNumber</span> })
+})
+.<span class="code-fn">then</span>(<span class="code-var">res</span> => <span class="code-var">res</span>.<span class="code-fn">json</span>())
+.<span class="code-fn">then</span>(<span class="code-var">data</span> => <span class="code-type">console</span>.<span class="code-fn">log</span>(<span class="code-var">data</span>))
+.<span class="code-fn">catch</span>(<span class="code-var">err</span> => <span class="code-type">console</span>.<span class="code-fn">error</span>(<span class="code-var">err</span>));</pre>
+
+                <!-- Python -->
+                <pre is:raw class="search-code-block hidden" id="search-code-python" data-lines="8"><span class="code-kw">import</span> requests
+
+<span class="code-var">url</span> = <span class="code-str">"http://localhost:4321/api/search"</span>
+<span class="code-var">payload</span> = {<span class="code-str">"rollNumber"</span>: <span class="code-str">"2200650100100"</span>}
+<span class="code-var">headers</span> = {<span class="code-str">"Content-Type"</span>: <span class="code-str">"application/json"</span>}
+
+<span class="code-var">response</span> = requests.<span class="code-fn">post</span>(<span class="code-var">url</span>, json=<span class="code-var">payload</span>, headers=<span class="code-var">headers</span>)
+<span class="code-fn">print</span>(<span class="code-var">response</span>.<span class="code-fn">json</span>())</pre>
+
+                <!-- Go -->
+                <pre is:raw class="search-code-block hidden" id="search-code-go" data-lines="25"><span class="code-kw">package</span> main
+
+<span class="code-kw">import</span> (
+	<span class="code-str">"bytes"</span>
+	<span class="code-str">"encoding/json"</span>
+	<span class="code-str">"fmt"</span>
+	<span class="code-str">"io"</span>
+	<span class="code-str">"net/http"</span>
+)
+
+<span class="code-kw">func</span> <span class="code-fn">main</span>() {
+	<span class="code-var">url</span> := <span class="code-str">"http://localhost:4321/api/search"</span>
+	<span class="code-var">payload</span> := <span class="code-kw">map</span>[<span class="code-type">string</span>]<span class="code-type">string</span>{<span class="code-str">"rollNumber"</span>: <span class="code-str">"2200650100100"</span>}
+	<span class="code-var">jsonValue</span>, _ := json.<span class="code-fn">Marshal</span>(<span class="code-var">payload</span>)
+
+	<span class="code-var">resp</span>, <span class="code-var">err</span> := http.<span class="code-fn">Post</span>(<span class="code-var">url</span>, <span class="code-str">"application/json"</span>, bytes.<span class="code-fn">NewBuffer</span>(<span class="code-var">jsonValue</span>))
+	<span class="code-kw">if</span> <span class="code-var">err</span> != <span class="code-num">nil</span> {
+		fmt.<span class="code-fn">Printf</span>(<span class="code-str">"Request failed: %s\n"</span>, <span class="code-var">err</span>)
+		<span class="code-kw">return</span>
+	}
+	<span class="code-kw">defer</span> <span class="code-var">resp</span>.Body.<span class="code-fn">Close</span>()
+
+	<span class="code-var">body</span>, _ := io.<span class="code-fn">ReadAll</span>(<span class="code-var">resp</span>.Body)
+	fmt.<span class="code-fn">Println</span>(<span class="code-type">string</span>(<span class="code-var">body</span>))
+}</pre>
+
+                <!-- Java -->
+                <pre is:raw class="search-code-block hidden" id="search-code-java" data-lines="33"><span class="code-kw">import</span> java.io.OutputStream;
+<span class="code-kw">import</span> java.net.HttpURLConnection;
+<span class="code-kw">import</span> java.net.URL;
+<span class="code-kw">import</span> java.util.Scanner;
+
+<span class="code-kw">public class</span> <span class="code-fn">Main</span> {
+    <span class="code-kw">public static void</span> <span class="code-fn">main</span>(<span class="code-type">String</span>[] args) {
+        <span class="code-kw">try</span> {
+            <span class="code-type">URL</span> <span class="code-var">url</span> = <span class="code-kw">new</span> <span class="code-type">URL</span>(<span class="code-str">"http://localhost:4321/api/search"</span>);
+            <span class="code-type">HttpURLConnection</span> <span class="code-var">conn</span> = (<span class="code-type">HttpURLConnection</span>) <span class="code-var">url</span>.<span class="code-fn">openConnection</span>();
+            <span class="code-var">conn</span>.<span class="code-fn">setRequestMethod</span>(<span class="code-str">"POST"</span>);
+            <span class="code-var">conn</span>.<span class="code-fn">setRequestProperty</span>(<span class="code-str">"Content-Type"</span>, <span class="code-str">"application/json"</span>);
+            <span class="code-var">conn</span>.<span class="code-fn">setDoOutput</span>(<span class="code-num">true</span>);
+
+            <span class="code-type">String</span> <span class="code-var">jsonInputString</span> = <span class="code-str">"{\"rollNumber\": \"2200650100100\"}"</span>;
+
+            <span class="code-kw">try</span> (<span class="code-type">OutputStream</span> <span class="code-var">os</span> = <span class="code-var">conn</span>.<span class="code-fn">getOutputStream</span>()) {
+                <span class="code-kw">byte</span>[] <span class="code-var">input</span> = <span class="code-var">jsonInputString</span>.<span class="code-fn">getBytes</span>(<span class="code-str">"utf-8"</span>);
+                <span class="code-var">os</span>.<span class="code-fn">write</span>(<span class="code-var">input</span>, <span class="code-num">0</span>, <span class="code-var">input</span>.length);
+            }
+
+            <span class="code-kw">int</span> <span class="code-var">code</span> = <span class="code-var">conn</span>.<span class="code-fn">getResponseCode</span>();
+            <span class="code-type">Scanner</span> <span class="code-var">scanner</span> = <span class="code-kw">new</span> <span class="code-type">Scanner</span>(<span class="code-var">conn</span>.<span class="code-fn">getInputStream</span>());
+            <span class="code-type">StringBuilder</span> <span class="code-var">response</span> = <span class="code-kw">new</span> <span class="code-type">StringBuilder</span>();
+            <span class="code-kw">while</span> (<span class="code-var">scanner</span>.<span class="code-fn">hasNext</span>()) {
+                <span class="code-var">response</span>.<span class="code-fn">append</span>(<span class="code-var">scanner</span>.<span class="code-fn">nextLine</span>());
+            }
+            <span class="code-var">scanner</span>.<span class="code-fn">close</span>();
+            <span class="code-type">System</span>.out.<span class="code-fn">println</span>(<span class="code-str">"Response: "</span> + <span class="code-var">response</span>.<span class="code-fn">toString</span>());
+        } <span class="code-kw">catch</span> (<span class="code-type">Exception</span> <span class="code-var">e</span>) {
+            <span class="code-var">e</span>.<span class="code-fn">printStackTrace</span>();
+        }
+    }
+}</pre>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div class="space-y-4">
+            <h3 class="text-sm font-semibold text-white light:text-ink uppercase tracking-wider">Response Schema (200 OK)</h3>
+            <pre is:raw class="font-mono text-xs p-4 rounded-xl border border-canvas-dark-border light:border-canvas-light-border bg-black/60 light:bg-canvas-light-surface text-emerald-400 light:text-emerald-700 overflow-x-auto">
+{
+  "success": true,
+  "name": "SHIVAM DIXIT",
+  "rollNumber": "2200650100100",
+  "course": "B.Tech (CS)",
+  "cgpa": "8.06",
+  "status": "PASS",
+  "semesters": [
+    {
+      "sem": "Semester 1",
+      "sgpa": "8.23",
+      "status": "PASS",
+      "subjects": [
+        { "code": "BAS102", "name": "Chemistry", "grade": "B" }
+      ]
+    }
+  ]
+}</pre>
+          </div>
+
+          <div class="space-y-4">
+            <h3 class="text-sm font-semibold text-white light:text-ink uppercase tracking-wider">Response Schema (404 Not Found)</h3>
+            <pre is:raw class="font-mono text-xs p-4 rounded-xl border border-canvas-dark-border light:border-canvas-light-border bg-black/60 light:bg-canvas-light-surface text-red-400 light:text-red-700 overflow-x-auto">
+{
+  "success": false,
+  "error": "Could not able to fetch now try later",
+  "code": 404
+}</pre>
+          </div>
+        </div>
+      </div>
+
+      <hr class="border-canvas-dark-border light:border-canvas-light-border" />
+
+      <!-- Roll Number Finder API Specifications -->
+      <div class="space-y-6">
+        <h2 class="text-xl font-bold text-white light:text-ink">2. Roll Number Finder API (Public Search)</h2>
+        <p class="text-xs sm:text-sm">
+          Query student lists and matching results by admission filters (year, college code, branch code) and optionally search by student name.
+        </p>
+        
+        <div class="flex items-center gap-3 p-3 rounded-lg bg-canvas-dark-surface light:bg-canvas-light-surface border border-canvas-dark-border light:border-canvas-light-border font-mono text-xs sm:text-sm">
+          <span class="px-2 py-0.5 bg-emerald-500/10 text-emerald-400 font-bold rounded">POST</span>
+          <span class="text-white light:text-ink">/api/find-roll</span>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div class="space-y-4">
+            <h3 class="text-sm font-semibold text-white light:text-ink uppercase tracking-wider">Request Headers</h3>
+            <div class="font-mono text-xs p-4 rounded-xl border border-canvas-dark-border light:border-canvas-light-border bg-black/40 light:bg-canvas-light-surface text-gray-400 light:text-gray-700">
+              Content-Type: application/json
+            </div>
+
+            <h3 class="text-sm font-semibold text-white light:text-ink uppercase tracking-wider">JSON Body Parameters</h3>
+            <div class="border border-canvas-dark-border light:border-canvas-light-border rounded-xl overflow-hidden text-xs">
+              <table class="w-full border-collapse">
+                <thead>
+                  <tr class="bg-canvas-dark-surface light:bg-canvas-light-surface border-b border-canvas-dark-border light:border-canvas-light-border text-gray-400 light:text-gray-600">
+                    <th class="p-3 text-left">Parameter</th>
+                    <th class="p-3 text-left">Type</th>
+                    <th class="p-3 text-left">Requirement</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-canvas-dark-border/40 light:divide-canvas-light-border/40">
+                  <tr class="hover:bg-canvas-dark-surface/20 light:hover:bg-canvas-light-surface/20">
+                    <td class="p-3 text-white light:text-ink font-mono font-medium">admissionYear</td>
+                    <td class="p-3 text-gray-500 light:text-gray-600 font-medium">string</td>
+                    <td class="p-3 text-brand-blue font-semibold">Required (e.g. "22")</td>
+                  </tr>
+                  <tr class="hover:bg-canvas-dark-surface/20 light:hover:bg-canvas-light-surface/20">
+                    <td class="p-3 text-white light:text-ink font-mono font-medium">collegeCode</td>
+                    <td class="p-3 text-gray-500 light:text-gray-600 font-medium">string</td>
+                    <td class="p-3 text-brand-blue font-semibold">Required (e.g. "065")</td>
+                  </tr>
+                  <tr class="hover:bg-canvas-dark-surface/20 light:hover:bg-canvas-light-surface/20">
+                    <td class="p-3 text-white light:text-ink font-mono font-medium">branchCode</td>
+                    <td class="p-3 text-gray-500 light:text-gray-600 font-medium">string</td>
+                    <td class="p-3 text-brand-blue font-semibold">Required (e.g. "010")</td>
+                  </tr>
+                  <tr class="hover:bg-canvas-dark-surface/20 light:hover:bg-canvas-light-surface/20">
+                    <td class="p-3 text-white light:text-ink font-mono font-medium">name</td>
+                    <td class="p-3 text-gray-500 light:text-gray-600 font-medium">string</td>
+                    <td class="p-3 text-gray-400">Optional</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="space-y-4">
+            <h3 class="text-sm font-semibold text-white light:text-ink uppercase tracking-wider">Example Payload</h3>
+            <pre is:raw class="font-mono text-xs p-4 rounded-xl border border-canvas-dark-border light:border-canvas-light-border bg-black/60 light:bg-canvas-light-surface text-emerald-400 light:text-emerald-700 overflow-x-auto">
+{
+  "admissionYear": "22",
+  "collegeCode": "065",
+  "branchCode": "010",
+  "name": "SHIVAM"
+}</pre>
+          </div>
+        </div>
+
+        <!-- Code Examples Tab Box -->
+        <div class="space-y-4">
+          <h3 class="text-sm font-semibold text-white light:text-ink uppercase tracking-wider">Implementation Code Examples</h3>
+          
+          <!-- Code Editor Window -->
+          <div class="code-editor-window">
+            <!-- Code Editor Title Bar -->
+            <div class="code-editor-header">
+              <div class="code-editor-dots">
+                <span class="code-editor-dot close"></span>
+                <span class="code-editor-dot minimize"></span>
+                <span class="code-editor-dot maximize"></span>
+              </div>
+              <div class="code-editor-title" id="finder-editor-title">request.sh</div>
+              <div class="flex gap-2">
+                <!-- Lang Selector Tabs -->
+                <div class="flex bg-black/40 light:bg-gray-200/50 p-0.5 rounded-lg border border-white/5 light:border-black/5">
+                  <button class="px-2.5 py-1 text-[10px] font-bold text-brand-blue bg-canvas-dark-surface light:bg-white rounded-md finder-tab-btn cursor-pointer" data-lang="curl" data-filename="request.sh">cURL</button>
+                  <button class="px-2.5 py-1 text-[10px] font-bold text-gray-400 hover:text-white light:hover:text-ink finder-tab-btn cursor-pointer" data-lang="nodejs" data-filename="request.js">Node.js</button>
+                  <button class="px-2.5 py-1 text-[10px] font-bold text-gray-400 hover:text-white light:hover:text-ink finder-tab-btn cursor-pointer" data-lang="python" data-filename="request.py">Python</button>
+                  <button class="px-2.5 py-1 text-[10px] font-bold text-gray-400 hover:text-white light:hover:text-ink finder-tab-btn cursor-pointer" data-lang="go" data-filename="main.go">Go</button>
+                  <button class="px-2.5 py-1 text-[10px] font-bold text-gray-400 hover:text-white light:hover:text-ink finder-tab-btn cursor-pointer" data-lang="java" data-filename="Main.java">Java</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Code Editor Body -->
+            <div class="code-editor-body">
+              <!-- Line Numbers Column -->
+              <div class="code-editor-linenos" id="finder-linenos">
+                <span>1</span><span>2</span><span>3</span>
+              </div>
+              
+              <!-- Code Contents -->
+              <div class="code-editor-content">
+                <!-- cURL -->
+                <pre is:raw class="finder-code-block" id="finder-code-curl" data-lines="3"><span class="code-cmd">curl</span> -X <span class="code-kw">POST</span> http://localhost:4321/api/find-roll \
+  -H <span class="code-str">"Content-Type: application/json"</span> \
+  -d <span class="code-str">'{"admissionYear": "22", "collegeCode": "065", "branchCode": "010", "name": "SHIVAM"}'</span></pre>
+                
+                <!-- Nodejs -->
+                <pre is:raw class="finder-code-block hidden" id="finder-code-nodejs" data-lines="16"><span class="code-kw">const</span> <span class="code-var">payload</span> = {
+  admissionYear: <span class="code-str">"22"</span>,
+  collegeCode: <span class="code-str">"065"</span>,
+  branchCode: <span class="code-str">"010"</span>,
+  name: <span class="code-str">"SHIVAM"</span>
+};
+
+<span class="code-fn">fetch</span>(<span class="code-str">'http://localhost:4321/api/find-roll'</span>, {
+  method: <span class="code-str">'POST'</span>,
+  headers: {
+    <span class="code-str">'Content-Type'</span>: <span class="code-str">'application/json'</span>
+  },
+  body: <span class="code-type">JSON</span>.<span class="code-fn">stringify</span>(<span class="code-var">payload</span>)
+})
+.<span class="code-fn">then</span>(<span class="code-var">res</span> => <span class="code-var">res</span>.<span class="code-fn">json</span>())
+.<span class="code-fn">then</span>(<span class="code-var">data</span> => <span class="code-type">console</span>.<span class="code-fn">log</span>(<span class="code-var">data</span>))
+.<span class="code-fn">catch</span>(<span class="code-var">err</span> => <span class="code-type">console</span>.<span class="code-fn">error</span>(<span class="code-var">err</span>));</pre>
+
+                <!-- Python -->
+                <pre is:raw class="finder-code-block hidden" id="finder-code-python" data-lines="11"><span class="code-kw">import</span> requests
+
+<span class="code-var">url</span> = <span class="code-str">"http://localhost:4321/api/find-roll"</span>
+<span class="code-var">payload</span> = {
+    <span class="code-str">"admissionYear"</span>: <span class="code-str">"22"</span>,
+    <span class="code-str">"collegeCode"</span>:    <span class="code-str">"065"</span>,
+    <span class="code-str">"branchCode"</span>:     <span class="code-str">"010"</span>,
+    <span class="code-str">"name"</span>:           <span class="code-str">"SHIVAM"</span>
+}
+<span class="code-var">headers</span> = {<span class="code-str">"Content-Type"</span>: <span class="code-str">"application/json"</span>}
+
+<span class="code-var">response</span> = requests.<span class="code-fn">post</span>(<span class="code-var">url</span>, json=<span class="code-var">payload</span>, headers=<span class="code-var">headers</span>)
+<span class="code-fn">print</span>(<span class="code-var">response</span>.<span class="code-fn">json</span>())</pre>
+
+                <!-- Go -->
+                <pre is:raw class="finder-code-block hidden" id="finder-code-go" data-lines="28"><span class="code-kw">package</span> main
+
+<span class="code-kw">import</span> (
+	<span class="code-str">"bytes"</span>
+	<span class="code-str">"encoding/json"</span>
+	<span class="code-str">"fmt"</span>
+	<span class="code-str">"io"</span>
+	<span class="code-str">"net/http"</span>
+)
+
+<span class="code-kw">func</span> <span class="code-fn">main</span>() {
+	<span class="code-var">url</span> := <span class="code-str">"http://localhost:4321/api/find-roll"</span>
+	<span class="code-var">payload</span> := <span class="code-kw">map</span>[<span class="code-type">string</span>]<span class="code-type">string</span>{
+		<span class="code-str">"admissionYear"</span>: <span class="code-str">"22"</span>,
+		<span class="code-str">"collegeCode"</span>:    <span class="code-str">"065"</span>,
+		<span class="code-str">"branchCode"</span>:     <span class="code-str">"010"</span>,
+		<span class="code-str">"name"</span>:           <span class="code-str">"SHIVAM"</span>,
+	}
+	<span class="code-var">jsonValue</span>, _ := json.<span class="code-fn">Marshal</span>(<span class="code-var">payload</span>)
+
+	<span class="code-var">resp</span>, <span class="code-var">err</span> := http.<span class="code-fn">Post</span>(<span class="code-var">url</span>, <span class="code-str">"application/json"</span>, bytes.<span class="code-fn">NewBuffer</span>(<span class="code-var">jsonValue</span>))
+	<span class="code-kw">if</span> <span class="code-var">err</span> != <span class="code-num">nil</span> {
+		fmt.<span class="code-fn">Printf</span>(<span class="code-str">"Request failed: %s\n"</span>, <span class="code-var">err</span>)
+		<span class="code-kw">return</span>
+	}
+	<span class="code-kw">defer</span> <span class="code-var">resp</span>.Body.<span class="code-fn">Close</span>()
+
+	<span class="code-var">body</span>, _ := io.<span class="code-fn">ReadAll</span>(<span class="code-var">resp</span>.Body)
+	fmt.<span class="code-fn">Println</span>(<span class="code-type">string</span>(<span class="code-var">body</span>))
+}</pre>
+
+                <!-- Java -->
+                <pre is:raw class="finder-code-block hidden" id="finder-code-java" data-lines="36"><span class="code-kw">import</span> java.io.OutputStream;
+<span class="code-kw">import</span> java.net.HttpURLConnection;
+<span class="code-kw">import</span> java.net.URL;
+<span class="code-kw">import</span> java.util.Scanner;
+
+<span class="code-kw">public class</span> <span class="code-fn">Main</span> {
+    <span class="code-kw">public static void</span> <span class="code-fn">main</span>(<span class="code-type">String</span>[] args) {
+        <span class="code-kw">try</span> {
+            <span class="code-type">URL</span> <span class="code-var">url</span> = <span class="code-kw">new</span> <span class="code-type">URL</span>(<span class="code-str">"http://localhost:4321/api/find-roll"</span>);
+            <span class="code-type">HttpURLConnection</span> <span class="code-var">conn</span> = (<span class="code-type">HttpURLConnection</span>) <span class="code-var">url</span>.<span class="code-fn">openConnection</span>();
+            <span class="code-var">conn</span>.<span class="code-fn">setRequestMethod</span>(<span class="code-str">"POST"</span>);
+            <span class="code-var">conn</span>.<span class="code-fn">setRequestProperty</span>(<span class="code-str">"Content-Type"</span>, <span class="code-str">"application/json"</span>);
+            <span class="code-var">conn</span>.<span class="code-fn">setDoOutput</span>(<span class="code-num">true</span>);
+
+            <span class="code-type">String</span> <span class="code-var">jsonInputString</span> = <span class="code-str">"{"</span>
+                + <span class="code-str">"\"admissionYear\": \"22\","</span>
+                + <span class="code-str">"\"collegeCode\": \"065\","</span>
+                + <span class="code-str">"\"branchCode\": \"010\","</span>
+                + <span class="code-str">"\"name\": \"SHIVAM\""</span>
+                + <span class="code-str">"}"</span>;
+
+            <span class="code-kw">try</span> (<span class="code-type">OutputStream</span> <span class="code-var">os</span> = <span class="code-var">conn</span>.<span class="code-fn">getOutputStream</span>()) {
+                <span class="code-kw">byte</span>[] <span class="code-var">input</span> = <span class="code-var">jsonInputString</span>.<span class="code-fn">getBytes</span>(<span class="code-str">"utf-8"</span>);
+                <span class="code-var">os</span>.<span class="code-fn">write</span>(<span class="code-var">input</span>, <span class="code-num">0</span>, <span class="code-var">input</span>.length);
+            }
+
+            <span class="code-kw">int</span> <span class="code-var">code</span> = <span class="code-var">conn</span>.<span class="code-fn">getResponseCode</span>();
+            <span class="code-type">Scanner</span> <span class="code-var">scanner</span> = <span class="code-kw">new</span> <span class="code-type">Scanner</span>(<span class="code-var">conn</span>.<span class="code-fn">getInputStream</span>());
+            <span class="code-type">StringBuilder</span> <span class="code-var">response</span> = <span class="code-kw">new</span> <span class="code-type">StringBuilder</span>();
+            <span class="code-kw">while</span> (<span class="code-var">scanner</span>.<span class="code-fn">hasNext</span>()) {
+                <span class="code-var">response</span>.<span class="code-fn">append</span>(<span class="code-var">scanner</span>.<span class="code-fn">nextLine</span>());
+            }
+            <span class="code-var">scanner</span>.<span class="code-fn">close</span>();
+            <span class="code-type">System</span>.out.<span class="code-fn">println</span>(<span class="code-str">"Response: "</span> + <span class="code-var">response</span>.<span class="code-fn">toString</span>());
+        } <span class="code-kw">catch</span> (<span class="code-type">Exception</span> <span class="code-var">e</span>) {
+            <span class="code-var">e</span>.<span class="code-fn">printStackTrace</span>();
+        }
+    }
+}</pre>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div class="space-y-4">
+            <h3 class="text-sm font-semibold text-white light:text-ink uppercase tracking-wider">Response Schema (200 OK)</h3>
+            <pre is:raw class="font-mono text-xs p-4 rounded-xl border border-canvas-dark-border light:border-canvas-light-border bg-black/60 light:bg-canvas-light-surface text-emerald-400 light:text-emerald-700 overflow-x-auto">
+{
+  "success": true,
+  "matchCount": 1,
+  "students": [
+    {
+      "name": "SHIVAM DIXIT",
+      "rollNumber": "2200650100100",
+      "fatherName": "RAM DIXIT",
+      "gender": "MALE"
+    }
+  ]
+}</pre>
+          </div>
+
+          <div class="space-y-4">
+            <h3 class="text-sm font-semibold text-white light:text-ink uppercase tracking-wider">Response Schema (400 Bad Request)</h3>
+            <pre is:raw class="font-mono text-xs p-4 rounded-xl border border-canvas-dark-border light:border-canvas-light-border bg-black/60 light:bg-canvas-light-surface text-red-400 light:text-red-700 overflow-x-auto">
+{
+  "success": false,
+  "error": "Missing required search parameters in payload.",
+  "code": 400
+}</pre>
+          </div>
+        </div>
+      </div>
+
+      <hr class="border-canvas-dark-border light:border-canvas-light-border" />
+
+      <!-- DOB API Specifications -->
+      <div class="space-y-6">
+        <h2 class="text-xl font-bold text-white light:text-ink">3. DOB Finder API (Private/Whitelisted)</h2>
+        <p class="text-xs sm:text-sm">
+          This endpoint validates client IPs/domains and runs a calendar brute-forcing loop to discover a student's date of birth. Whitelisted hosts are defined via server environment variables (`ALLOWED_HOSTS` and `ALLOWED_DOMAINS`).
+        </p>
+
+        <!-- API Key Requirement Warning Box (Request Form Link) -->
+        <div class="p-5 rounded-xl border border-red-500/20 bg-red-500/10 space-y-3">
+          <div class="flex items-center gap-2 text-red-400 font-semibold text-sm">
+            <span>⚠️</span>
+            <span>Authentication Key Required</span>
+          </div>
+          <p class="text-xs text-gray-400 light:text-gray-600 leading-relaxed">
+            Unlike the public Search API, the DOB Finder API requires a whitelisted <code>X-API-Key</code> header to prevent abuse. Requests sent without a valid key will receive a <code>403 Forbidden</code> response.
+          </p>
+          <a href="/contact?subject=api" class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-brand-blue hover:bg-brand-blue-hover text-white rounded-lg text-xs font-semibold premium-shadow-dark transition-colors mt-1">
+            🔑 Request API Key Access
+            <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+            </svg>
+          </a>
+        </div>
+        
+        <div class="flex items-center gap-3 p-3 rounded-lg bg-canvas-dark-surface light:bg-canvas-light-surface border border-canvas-dark-border light:border-canvas-light-border font-mono text-xs sm:text-sm">
+          <span class="px-2 py-0.5 bg-blue-500/10 text-brand-blue font-bold rounded">POST</span>
+          <span class="text-white light:text-ink">/api/dob</span>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div class="space-y-4">
+            <h3 class="text-sm font-semibold text-white light:text-ink uppercase tracking-wider">Request Headers</h3>
+            <div class="font-mono text-xs p-4 rounded-xl border border-canvas-dark-border light:border-canvas-light-border bg-black/40 light:bg-canvas-light-surface text-gray-400 light:text-gray-700 space-y-1">
+              <div>Content-Type: application/json</div>
+              <div>X-API-Key: YOUR_API_KEY_HERE</div>
+              <div>Referer: https://yourdomain.com</div>
+            </div>
+
+            <h3 class="text-sm font-semibold text-white light:text-ink uppercase tracking-wider">JSON Body Parameters</h3>
+            <div class="border border-canvas-dark-border light:border-canvas-light-border rounded-xl overflow-hidden text-xs">
+              <table class="w-full border-collapse">
+                <thead>
+                  <tr class="bg-canvas-dark-surface light:bg-canvas-light-surface border-b border-canvas-dark-border light:border-canvas-light-border text-gray-400 light:text-gray-600">
+                    <th class="p-3 text-left">Parameter</th>
+                    <th class="p-3 text-left">Type</th>
+                    <th class="p-3 text-left">Default / Bounds</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-canvas-dark-border/40 light:divide-canvas-light-border/40">
+                  <tr class="hover:bg-canvas-dark-surface/20 light:hover:bg-canvas-light-surface/20">
+                    <td class="p-3 text-white light:text-ink font-mono font-medium">rollNumber</td>
+                    <td class="p-3 text-gray-500 light:text-gray-600">string</td>
+                    <td class="p-3 text-brand-blue font-semibold">Required</td>
+                  </tr>
+                  <tr class="hover:bg-canvas-dark-surface/20 light:hover:bg-canvas-light-surface/20">
+                    <td class="p-3 text-white light:text-ink font-mono font-medium">startYear</td>
+                    <td class="p-3 text-gray-500 light:text-gray-600">number</td>
+                    <td class="p-3 text-gray-500 light:text-gray-600">Default: 2000 (Min: 1999)</td>
+                  </tr>
+                  <tr class="hover:bg-canvas-dark-surface/20 light:hover:bg-canvas-light-surface/20">
+                    <td class="p-3 text-white light:text-ink font-mono font-medium">endYear</td>
+                    <td class="p-3 text-gray-500 light:text-gray-600">number</td>
+                    <td class="p-3 text-gray-500 light:text-gray-600">Default: 2006 (Max: 2010)</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="space-y-4">
+            <h3 class="text-sm font-semibold text-white light:text-ink uppercase tracking-wider">Example Payload</h3>
+            <pre is:raw class="font-mono text-xs p-4 rounded-xl border border-canvas-dark-border light:border-canvas-light-border bg-black/60 light:bg-canvas-light-surface text-emerald-400 light:text-emerald-700 overflow-x-auto">
+{
+  "rollNumber": "2200650100100",
+  "startYear": 2001,
+  "endYear": 2005
+}</pre>
+          </div>
+        </div>
+
+        <!-- Code Examples Tab Box -->
+        <div class="space-y-4">
+          <h3 class="text-sm font-semibold text-white light:text-ink uppercase tracking-wider">Implementation Code Examples</h3>
+          
+          <!-- Code Editor Window -->
+          <div class="code-editor-window">
+            <!-- Code Editor Title Bar -->
+            <div class="code-editor-header">
+              <div class="code-editor-dots">
+                <span class="code-editor-dot close"></span>
+                <span class="code-editor-dot minimize"></span>
+                <span class="code-editor-dot maximize"></span>
+              </div>
+              <div class="code-editor-title" id="dob-editor-title">request.sh</div>
+              <div class="flex gap-2">
+                <!-- Lang Selector Tabs -->
+                <div class="flex bg-black/40 light:bg-gray-200/50 p-0.5 rounded-lg border border-white/5 light:border-black/5">
+                  <button class="px-2.5 py-1 text-[10px] font-bold text-brand-blue bg-canvas-dark-surface light:bg-white rounded-md dob-tab-btn cursor-pointer" data-lang="curl" data-filename="request.sh">cURL</button>
+                  <button class="px-2.5 py-1 text-[10px] font-bold text-gray-400 hover:text-white light:hover:text-ink dob-tab-btn cursor-pointer" data-lang="nodejs" data-filename="request.js">Node.js</button>
+                  <button class="px-2.5 py-1 text-[10px] font-bold text-gray-400 hover:text-white light:hover:text-ink dob-tab-btn cursor-pointer" data-lang="python" data-filename="request.py">Python</button>
+                  <button class="px-2.5 py-1 text-[10px] font-bold text-gray-400 hover:text-white light:hover:text-ink dob-tab-btn cursor-pointer" data-lang="go" data-filename="main.go">Go</button>
+                  <button class="px-2.5 py-1 text-[10px] font-bold text-gray-400 hover:text-white light:hover:text-ink dob-tab-btn cursor-pointer" data-lang="java" data-filename="Main.java">Java</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Code Editor Body -->
+            <div class="code-editor-body">
+              <!-- Line Numbers Column -->
+              <div class="code-editor-linenos" id="dob-linenos">
+                <span>1</span><span>2</span><span>3</span><span>4</span>
+              </div>
+              
+              <!-- Code Contents -->
+              <div class="code-editor-content">
+                <!-- cURL -->
+                <pre is:raw class="dob-code-block" id="dob-code-curl" data-lines="4"><span class="code-cmd">curl</span> -X <span class="code-kw">POST</span> http://localhost:4321/api/dob \
+  -H <span class="code-str">"Content-Type: application/json"</span> \
+  -H <span class="code-str">"X-API-Key: YOUR_API_KEY_HERE"</span> \
+  -d <span class="code-str">'{"rollNumber": "2200650100100", "startYear": 2001, "endYear": 2005}'</span></pre>
+                
+                <!-- Nodejs -->
+                <pre is:raw class="dob-code-block hidden" id="dob-code-nodejs" data-lines="16"><span class="code-kw">const</span> <span class="code-var">rollNumber</span> = <span class="code-str">"2200650100100"</span>;
+
+<span class="code-fn">fetch</span>(<span class="code-str">'http://localhost:4321/api/dob'</span>, {
+  method: <span class="code-str">'POST'</span>,
+  headers: {
+    <span class="code-str">'Content-Type'</span>: <span class="code-str">'application/json'</span>,
+    <span class="code-str">'X-API-Key'</span>: <span class="code-str">'YOUR_API_KEY_HERE'</span>
+  },
+  body: <span class="code-type">JSON</span>.<span class="code-fn">stringify</span>({
+    <span class="code-var">rollNumber</span>,
+    startYear: <span class="code-num">2001</span>,
+    endYear: <span class="code-num">2005</span>
+  })
+})
+.<span class="code-fn">then</span>(<span class="code-var">res</span> => <span class="code-var">res</span>.<span class="code-fn">json</span>())
+.<span class="code-fn">then</span>(<span class="code-var">data</span> => <span class="code-type">console</span>.<span class="code-fn">log</span>(<span class="code-var">data</span>))
+.<span class="code-fn">catch</span>(<span class="code-var">err</span> => <span class="code-type">console</span>.<span class="code-fn">error</span>(<span class="code-var">err</span>));</pre>
+
+                <!-- Python -->
+                <pre is:raw class="dob-code-block hidden" id="dob-code-python" data-lines="12"><span class="code-kw">import</span> requests
+
+<span class="code-var">url</span> = <span class="code-str">"http://localhost:4321/api/dob"</span>
+<span class="code-var">payload</span> = {
+    <span class="code-str">"rollNumber"</span>: <span class="code-str">"2200650100100"</span>,
+    <span class="code-str">"startYear"</span>: <span class="code-num">2001</span>,
+    <span class="code-str">"endYear"</span>: <span class="code-num">2005</span>
+}
+<span class="code-var">headers</span> = {
+    <span class="code-str">"Content-Type"</span>: <span class="code-str">"application/json"</span>,
+    <span class="code-str">"X-API-Key"</span>: <span class="code-str">"YOUR_API_KEY_HERE"</span>
+}
+
+<span class="code-var">response</span> = requests.<span class="code-fn">post</span>(<span class="code-var">url</span>, json=<span class="code-var">payload</span>, headers=<span class="code-var">headers</span>)
+<span class="code-fn">print</span>(<span class="code-var">response</span>.<span class="code-fn">json</span>())</pre>
+
+                <!-- Go -->
+                <pre is:raw class="dob-code-block hidden" id="dob-code-go" data-lines="32"><span class="code-kw">package</span> main
+
+<span class="code-kw">import</span> (
+	<span class="code-str">"bytes"</span>
+	<span class="code-str">"encoding/json"</span>
+	<span class="code-str">"fmt"</span>
+	<span class="code-str">"io"</span>
+	<span class="code-str">"net/http"</span>
+)
+
+<span class="code-kw">func</span> <span class="code-fn">main</span>() {
+	<span class="code-var">url</span> := <span class="code-str">"http://localhost:4321/api/dob"</span>
+	<span class="code-var">payload</span> := <span class="code-kw">map</span>[<span class="code-type">string</span>]<span class="code-kw">interface</span>{}{
+		<span class="code-str">"rollNumber"</span>: <span class="code-str">"2200650100100"</span>,
+		<span class="code-str">"startYear"</span>:  <span class="code-num">2001</span>,
+		<span class="code-str">"endYear"</span>:    <span class="code-num">2005</span>,
+	}
+	<span class="code-var">jsonValue</span>, _ := json.<span class="code-fn">Marshal</span>(<span class="code-var">payload</span>)
+
+	<span class="code-var">req</span>, _ := http.<span class="code-fn">NewRequest</span>(<span class="code-str">"POST"</span>, <span class="code-var">url</span>, bytes.<span class="code-fn">NewBuffer</span>(<span class="code-var">jsonValue</span>))
+	<span class="code-var">req</span>.Header.<span class="code-fn">Set</span>(<span class="code-str">"Content-Type"</span>, <span class="code-str">"application/json"</span>)
+	<span class="code-var">req</span>.Header.<span class="code-fn">Set</span>(<span class="code-str">"X-API-Key"</span>, <span class="code-str">"YOUR_API_KEY_HERE"</span>)
+
+	<span class="code-var">client</span> := &amp;http.<span class="code-type">Client</span>{}
+	<span class="code-var">resp</span>, <span class="code-var">err</span> := <span class="code-var">client</span>.<span class="code-fn">Do</span>(<span class="code-var">req</span>)
+	<span class="code-kw">if</span> <span class="code-var">err</span> != <span class="code-num">nil</span> {
+		fmt.<span class="code-fn">Printf</span>(<span class="code-str">"Request failed: %s\n"</span>, <span class="code-var">err</span>)
+		<span class="code-kw">return</span>
+	}
+	<span class="code-kw">defer</span> <span class="code-var">resp</span>.Body.<span class="code-fn">Close</span>()
+
+	<span class="code-var">body</span>, _ := io.<span class="code-fn">ReadAll</span>(<span class="code-var">resp</span>.Body)
+	fmt.<span class="code-fn">Println</span>(<span class="code-type">string</span>(<span class="code-var">body</span>))
+}</pre>
+
+                <!-- Java -->
+                <pre is:raw class="dob-code-block hidden" id="dob-code-java" data-lines="37"><span class="code-kw">import</span> java.io.OutputStream;
+<span class="code-kw">import</span> java.net.HttpURLConnection;
+<span class="code-kw">import</span> java.net.URL;
+<span class="code-kw">import</span> java.util.Scanner;
+
+<span class="code-kw">public class</span> <span class="code-fn">Main</span> {
+    <span class="code-kw">public static void</span> <span class="code-fn">main</span>(<span class="code-type">String</span>[] args) {
+        <span class="code-kw">try</span> {
+            <span class="code-type">URL</span> <span class="code-var">url</span> = <span class="code-kw">new</span> <span class="code-type">URL</span>(<span class="code-str">"http://localhost:4321/api/dob"</span>);
+            <span class="code-type">HttpURLConnection</span> <span class="code-var">conn</span> = (<span class="code-type">HttpURLConnection</span>) <span class="code-var">url</span>.<span class="code-fn">openConnection</span>();
+            <span class="code-var">conn</span>.<span class="code-fn">setRequestMethod</span>(<span class="code-str">"POST"</span>);
+            <span class="code-var">conn</span>.<span class="code-fn">setRequestProperty</span>(<span class="code-str">"Content-Type"</span>, <span class="code-str">"application/json"</span>);
+            <span class="code-var">conn</span>.<span class="code-fn">setRequestProperty</span>(<span class="code-str">"X-API-Key"</span>, <span class="code-str">"YOUR_API_KEY_HERE"</span>);
+            <span class="code-var">conn</span>.<span class="code-fn">setDoOutput</span>(<span class="code-num">true</span>);
+
+            <span class="code-type">String</span> <span class="code-var">jsonInputString</span> = <span class="code-str">"{"</span>
+                + <span class="code-str">"\"rollNumber\": \"2200650100100\","</span>
+                + <span class="code-str">"\"startYear\": 2001,"</span>
+                + <span class="code-str">"\"endYear\": 2005"</span>
+                + <span class="code-str">"}"</span>;
+
+            <span class="code-kw">try</span> (<span class="code-type">OutputStream</span> <span class="code-var">os</span> = <span class="code-var">conn</span>.<span class="code-fn">getOutputStream</span>()) {
+                <span class="code-kw">byte</span>[] <span class="code-var">input</span> = <span class="code-var">jsonInputString</span>.<span class="code-fn">getBytes</span>(<span class="code-str">"utf-8"</span>);
+                <span class="code-var">os</span>.<span class="code-fn">write</span>(<span class="code-var">input</span>, <span class="code-num">0</span>, <span class="code-var">input</span>.length);
+            }
+
+            <span class="code-kw">int</span> <span class="code-var">code</span> = <span class="code-var">conn</span>.<span class="code-fn">getResponseCode</span>();
+            <span class="code-type">Scanner</span> <span class="code-var">scanner</span> = <span class="code-kw">new</span> <span class="code-type">Scanner</span>(<span class="code-var">conn</span>.<span class="code-fn">getInputStream</span>());
+            <span class="code-type">StringBuilder</span> <span class="code-var">response</span> = <span class="code-kw">new</span> <span class="code-type">StringBuilder</span>();
+            <span class="code-kw">while</span> (<span class="code-var">scanner</span>.<span class="code-fn">hasNext</span>()) {
+                <span class="code-var">response</span>.<span class="code-fn">append</span>(<span class="code-var">scanner</span>.<span class="code-fn">nextLine</span>());
+            }
+            <span class="code-var">scanner</span>.<span class="code-fn">close</span>();
+            <span class="code-type">System</span>.out.<span class="code-fn">println</span>(<span class="code-str">"Response: "</span> + <span class="code-var">response</span>.<span class="code-fn">toString</span>());
+        } <span class="code-kw">catch</span> (<span class="code-type">Exception</span> <span class="code-var">e</span>) {
+            <span class="code-var">e</span>.<span class="code-fn">printStackTrace</span>();
+        }
+    }
+}</pre>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div class="space-y-4">
+            <h3 class="text-sm font-semibold text-white light:text-ink uppercase tracking-wider">Response Schema (200 OK)</h3>
+            <pre is:raw class="font-mono text-xs p-4 rounded-xl border border-canvas-dark-border light:border-canvas-light-border bg-black/60 light:bg-canvas-light-surface text-emerald-400 light:text-emerald-700 overflow-x-auto">
+{
+  "success": true,
+  "name": "SHIVAM DIXIT",
+  "rollNumber": "2200650100100",
+  "dob": "14/04/2003"
+}</pre>
+          </div>
+
+          <div class="space-y-4">
+            <h3 class="text-sm font-semibold text-white light:text-ink uppercase tracking-wider">Forbidden Schema (403 Error)</h3>
+            <pre is:raw class="font-mono text-xs p-4 rounded-xl border border-canvas-dark-border light:border-canvas-light-border bg-black/60 light:bg-canvas-light-surface text-red-400 light:text-red-700 overflow-x-auto">
+{
+  "success": false,
+  "error": "Forbidden. Client IP or domain not whitelisted.",
+  "code": 403
+}</pre>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Client-side switcher script -->
+  <script is:inline>
+    // Helper to generate line numbers HTML
+    const generateLinenos = (linesCount) => {
+      let html = '';
+      for (let i = 1; i <= linesCount; i++) {
+        html += `<span>${i}</span>`;
+      }
+      return html;
+    };
+
+    // 1. Result Search API Switcher
+    const searchBtns = document.querySelectorAll(".search-tab-btn");
+    const searchBlocks = document.querySelectorAll(".search-code-block");
+    const searchLinenos = document.getElementById("search-linenos");
+    const searchTitle = document.getElementById("search-editor-title");
+
+    searchBtns.forEach(btn => {
+      btn.addEventListener("click", () => {
+        const targetLang = btn.getAttribute("data-lang");
+        const filename = btn.getAttribute("data-filename");
+        
+        searchBtns.forEach(b => {
+          b.classList.remove("text-brand-blue", "bg-canvas-dark-surface", "light:bg-white");
+          b.classList.add("text-gray-400");
+        });
+        btn.classList.add("text-brand-blue", "bg-canvas-dark-surface", "light:bg-white");
+        btn.classList.remove("text-gray-400");
+
+        if (searchTitle) searchTitle.textContent = filename;
+
+        searchBlocks.forEach(block => {
+          if (block.id === `search-code-${targetLang}`) {
+            block.classList.remove("hidden");
+            const lines = parseInt(block.getAttribute("data-lines") || "1", 10);
+            if (searchLinenos) searchLinenos.innerHTML = generateLinenos(lines);
+          } else {
+            block.classList.add("hidden");
+          }
+        });
+      });
+    });
+
+    // 2. DOB Finder API Switcher
+    const dobBtns = document.querySelectorAll(".dob-tab-btn");
+    const dobBlocks = document.querySelectorAll(".dob-code-block");
+    const dobLinenos = document.getElementById("dob-linenos");
+    const dobTitle = document.getElementById("dob-editor-title");
+
+    dobBtns.forEach(btn => {
+      btn.addEventListener("click", () => {
+        const targetLang = btn.getAttribute("data-lang");
+        const filename = btn.getAttribute("data-filename");
+        
+        dobBtns.forEach(b => {
+          b.classList.remove("text-brand-blue", "bg-canvas-dark-surface", "light:bg-white");
+          b.classList.add("text-gray-400");
+        });
+        btn.classList.add("text-brand-blue", "bg-canvas-dark-surface", "light:bg-white");
+        btn.classList.remove("text-gray-400");
+
+        if (dobTitle) dobTitle.textContent = filename;
+
+        dobBlocks.forEach(block => {
+          if (block.id === `dob-code-${targetLang}`) {
+            block.classList.remove("hidden");
+            const lines = parseInt(block.getAttribute("data-lines") || "1", 10);
+            if (dobLinenos) dobLinenos.innerHTML = generateLinenos(lines);
+          } else {
+            block.classList.add("hidden");
+          }
+        });
+      });
+    });
+
+    // 3. Roll Number Finder API Switcher
+    const finderBtns = document.querySelectorAll(".finder-tab-btn");
+    const finderBlocks = document.querySelectorAll(".finder-code-block");
+    const finderLinenos = document.getElementById("finder-linenos");
+    const finderTitle = document.getElementById("finder-editor-title");
+
+    finderBtns.forEach(btn => {
+      btn.addEventListener("click", () => {
+        const targetLang = btn.getAttribute("data-lang");
+        const filename = btn.getAttribute("data-filename");
+        
+        finderBtns.forEach(b => {
+          b.classList.remove("text-brand-blue", "bg-canvas-dark-surface", "light:bg-white");
+          b.classList.add("text-gray-400");
+        });
+        btn.classList.add("text-brand-blue", "bg-canvas-dark-surface", "light:bg-white");
+        btn.classList.remove("text-gray-400");
+
+        if (finderTitle) finderTitle.textContent = filename;
+
+        finderBlocks.forEach(block => {
+          if (block.id === `finder-code-${targetLang}`) {
+            block.classList.remove("hidden");
+            const lines = parseInt(block.getAttribute("data-lines") || "1", 10);
+            if (finderLinenos) finderLinenos.innerHTML = generateLinenos(lines);
+          } else {
+            block.classList.add("hidden");
+          }
+        });
+      });
+    });
+  </script>
+</Layout>

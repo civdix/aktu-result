@@ -1,0 +1,16 @@
+{
+  "name": "AKTU Result Without DOB",
+  "short_name": "AKTU Result",
+  "description": "Retrieve your AKTU date of birth using your roll number and check your result.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#000000",
+  "theme_color": "#0066cc",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}

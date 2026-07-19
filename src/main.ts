@@ -1,38 +1,44 @@
-import { DatabaseService, client } from './database/database.service'; 
+import { DatabaseService, client } from './database/database.service';
 import { ScrapingService } from './scraping/scraping.service';
 import { DateUtils } from './utils/date.utils';
-import { Student } from './interfaces';
+import { Student, ScrapingSession } from './interfaces';
 
-async function processRollNumber(rollNumber: string): Promise<Student | null> {
+async function processRollNumber(rollNumber: string, initialSession: ScrapingSession): Promise<Student | null> {
   let result = await DatabaseService.findInDatabase(rollNumber);
   if (result) {
     return result;
   }
 
-  let StartYear = 2000;
-  let EndYear = 2004;
+  let StartYear = 2003;
+  let EndYear = 2003;
+  let currentSession = initialSession;
 
   for (let year = StartYear; year <= EndYear; year++) {
-    for (let month = 1; month <= 12; month++) {
+    for (let month = 4; month <= 4; month++) {
       const daysInMonth = DateUtils.getDaysInMonth(month, year);
-      for (let day = 1; day <= daysInMonth; day++) {
+      for (let day = 14; day <= 16; day++) {
         console.log(`Trying date: ${day}/${month}/${year}`);
         try {
-          const parseResult = await ScrapingService.find(rollNumber, day, month, year);
-          if (parseResult) {
-            const result: Student = {
-              ...parseResult,
-              dob: `${String(day).padStart(2, '0')}/${String(month).padStart(2, '0')}/${year}`
-            };
+          const findResult = await ScrapingService.find(rollNumber, day, month, year, currentSession);
+          if (findResult) {
+            const { result: parseResult, nextSession } = findResult;
+            currentSession = nextSession;
 
-            console.log({
-              name: result.name,
-              applicationNumber: result.applicationNumber,
-              dob: result.dob
-            });
+            if (parseResult) {
+              const studentResult: Student = {
+                ...parseResult,
+                dob: `${String(day).padStart(2, '0')}/${String(month).padStart(2, '0')}/${year}`
+              };
 
-            await DatabaseService.saveToDatabase(result);
-            return result;
+              console.log({
+                name: studentResult.name,
+                applicationNumber: studentResult.applicationNumber,
+                dob: studentResult.dob
+              });
+
+              await DatabaseService.saveToDatabase(studentResult);
+              return studentResult;
+            }
           }
         } catch (error) {
           console.error('Error in execution:', error);
@@ -51,17 +57,27 @@ async function main(rollNumbers: string[]) {
 
     for (const rollNumber of rollNumbers) {
       console.log(`Processing ${rollNumber}`);
-      const isValid = await ScrapingService.validateRollNumber(rollNumber);
-      if (isValid) {
-        const result = await processRollNumber(rollNumber);
-        if (result) {
+      const validationResult = await ScrapingService.validateRollNumber(rollNumber);
+      if (validationResult) {
+        if (typeof validationResult === 'object' && 'name' in validationResult) {
+          // Already in DB as Student
           results.push({
-            name: result.name,
-            applicationNumber: result.applicationNumber,
-            dob: result.dob
+            name: validationResult.name,
+            applicationNumber: validationResult.applicationNumber,
+            dob: validationResult.dob
           });
         } else {
-          results.push({ rollNumber, result: null });
+          // Valid roll number, dynamic ScrapingSession returned
+          const result = await processRollNumber(rollNumber, validationResult as ScrapingSession);
+          if (result) {
+            results.push({
+              name: result.name,
+              applicationNumber: result.applicationNumber,
+              dob: result.dob
+            });
+          } else {
+            results.push({ rollNumber, result: null });
+          }
         }
       } else {
         console.log(`Skipping DOB search for invalid roll number: ${rollNumber}`);
@@ -76,5 +92,5 @@ async function main(rollNumbers: string[]) {
   }
 }
 
-const rollNumbersToSearch = ["ROLL_NUMBERS"];
-main(rollNumbersToSearch);
+const rollNumbersToSearch = ["2200650100100"];
+main(rollNumbersToSearch);

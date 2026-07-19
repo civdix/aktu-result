@@ -1,0 +1,229 @@
+---
+import Layout from "../layouts/Layout.astro";
+
+const email = "dixitshivam249@gmail.com";
+const phone = "+919720965985";
+const linkedin = "https://linkedin.com/in/shivdix";
+const github = "https://github.com/civdix";
+const portfolio = "https://shivamdixit.vercel.app";
+---
+
+<Layout 
+  title="Contact Developer - Custom APIs | AKTU Result Without DOB"
+  description="Get in touch with Shivam Dixit for API license purchases, support, or developer inquiries."
+>
+  <!-- Header Banner -->
+  <section class="py-16 md:py-24 border-b border-canvas-dark-border light:border-canvas-light-border bg-gradient-to-b from-black to-canvas-dark-surface light:from-white light:to-canvas-light-surface text-center">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6">
+      <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight mb-4 text-white light:text-ink">
+        Get In Touch
+      </h1>
+      <p class="text-base sm:text-lg text-gray-400 light:text-gray-600 max-w-xl mx-auto leading-relaxed">
+        Have questions about API integration, pricing, or need technical assistance? Let's connect.
+      </p>
+    </div>
+  </section>
+
+  <!-- Main Body Content -->
+  <section class="py-16 md:py-24 bg-black light:bg-white text-gray-400 light:text-gray-600">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- 2-Column Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-16">
+        
+        <!-- Column 1: Contact Details -->
+        <div class="space-y-8 text-left">
+          <div class="space-y-4">
+            <h2 class="text-xl font-bold text-white light:text-ink">Developer Info</h2>
+            <p class="text-xs sm:text-sm leading-relaxed text-gray-500 light:text-gray-600">
+              Developed and maintained by <strong>Shivam Dixit</strong>, an AI Software Engineer specializing in building scalable applications, scraper pipelines, and AIaaS workflows.
+            </p>
+          </div>
+
+          <!-- Contact items -->
+          <div class="space-y-5">
+            <!-- Email -->
+            <a href={`mailto:${email}`} class="flex items-center gap-4 p-4 rounded-xl border border-canvas-dark-border light:border-canvas-light-border bg-canvas-dark-tile light:bg-canvas-light-tile hover:border-brand-blue/30 transition-all group">
+              <div class="w-10 h-10 rounded-lg bg-brand-blue/10 text-brand-blue flex items-center justify-center font-bold text-lg">📧</div>
+              <div>
+                <h4 class="text-xs font-semibold text-gray-500 uppercase tracking-wider">Email Address</h4>
+                <p class="text-sm font-semibold text-white light:text-ink group-hover:text-brand-blue transition-colors">{email}</p>
+              </div>
+            </a>
+
+            <!-- Phone -->
+            <a href={`tel:${phone.replace(/\s+/g, '')}`} class="flex items-center gap-4 p-4 rounded-xl border border-canvas-dark-border light:border-canvas-light-border bg-canvas-dark-tile light:bg-canvas-light-tile hover:border-brand-blue/30 transition-all group">
+              <div class="w-10 h-10 rounded-lg bg-purple-500/10 text-purple-400 flex items-center justify-center font-bold text-lg">📞</div>
+              <div>
+                <h4 class="text-xs font-semibold text-gray-500 uppercase tracking-wider">Phone Support</h4>
+                <p class="text-sm font-semibold text-white light:text-ink group-hover:text-brand-blue transition-colors">{phone}</p>
+              </div>
+            </a>
+
+            <!-- LinkedIn -->
+            <a href={linkedin} target="_blank" rel="noopener noreferrer" class="flex items-center gap-4 p-4 rounded-xl border border-canvas-dark-border light:border-canvas-light-border bg-canvas-dark-tile light:bg-canvas-light-tile hover:border-brand-blue/30 transition-all group">
+              <div class="w-10 h-10 rounded-lg bg-sky-500/10 text-sky-400 flex items-center justify-center font-bold text-lg">🔗</div>
+              <div>
+                <h4 class="text-xs font-semibold text-gray-500 uppercase tracking-wider">LinkedIn Profile</h4>
+                <p class="text-sm font-semibold text-white light:text-ink group-hover:text-brand-blue transition-colors">linkedin.com/in/shivdix</p>
+              </div>
+            </a>
+          </div>
+
+          <!-- Extra details -->
+          <div class="p-5 border border-canvas-dark-border light:border-canvas-light-border rounded-xl bg-canvas-dark-surface/50 light:bg-canvas-light-surface/50 text-xs leading-relaxed space-y-2">
+            <h4 class="font-bold text-white light:text-ink">Looking for custom API integrations?</h4>
+            <p>
+              We provide enterprise-grade DOB search tunnels for college registrars, administrative dashboards, and developer systems. Bulk queries and dedicated bandwidth options are available upon request.
+            </p>
+          </div>
+        </div>
+
+        <!-- Column 2: Feedback Form -->
+        <div class="bg-canvas-dark-tile light:bg-canvas-light-tile border border-canvas-dark-border light:border-canvas-light-border p-6 sm:p-8 rounded-2xl premium-shadow-dark light:premium-shadow-light">
+          <h2 class="text-lg font-bold text-white light:text-ink mb-6">Send a Message</h2>
+          
+          <form id="contact-form" class="space-y-5 text-left">
+            <div>
+              <label for="contact-name" class="block text-xs font-semibold text-gray-400 light:text-gray-500 uppercase tracking-wider mb-2">Full Name</label>
+              <input 
+                type="text" 
+                id="contact-name" 
+                name="name" 
+                required 
+                placeholder="Shivam Dixit" 
+                class="w-full px-4 py-2.5 bg-black/50 light:bg-white border border-canvas-dark-border light:border-canvas-light-border rounded-lg text-white light:text-ink text-sm focus:outline-none focus:border-brand-blue transition-all"
+              />
+            </div>
+
+            <div>
+              <label for="contact-email" class="block text-xs font-semibold text-gray-400 light:text-gray-500 uppercase tracking-wider mb-2">Email Address</label>
+              <input 
+                type="email" 
+                id="contact-email" 
+                name="email" 
+                required 
+                placeholder="dixitshivam249@gmail.com" 
+                class="w-full px-4 py-2.5 bg-black/50 light:bg-white border border-canvas-dark-border light:border-canvas-light-border rounded-lg text-white light:text-ink text-sm focus:outline-none focus:border-brand-blue transition-all"
+              />
+            </div>
+
+            <div>
+              <label for="contact-subject" class="block text-xs font-semibold text-gray-400 light:text-gray-500 uppercase tracking-wider mb-2">Subject</label>
+              <select 
+                id="contact-subject" 
+                name="subject" 
+                class="w-full px-4 py-2.5 bg-black/50 light:bg-white border border-canvas-dark-border light:border-canvas-light-border rounded-lg text-white light:text-ink text-sm focus:outline-none focus:border-brand-blue transition-all"
+              >
+                <option value="api">Developer API Access</option>
+                <option value="support">General Support / DOB Issue</option>
+                <option value="custom">Custom Scraper Integration</option>
+                <option value="other">Other Inquiry</option>
+              </select>
+            </div>
+
+            <div>
+              <label for="contact-message" class="block text-xs font-semibold text-gray-400 light:text-gray-500 uppercase tracking-wider mb-2">Message</label>
+              <textarea 
+                id="contact-message" 
+                name="message" 
+                required 
+                rows="4" 
+                placeholder="Please write your query..." 
+                class="w-full px-4 py-2.5 bg-black/50 light:bg-white border border-canvas-dark-border light:border-canvas-light-border rounded-lg text-white light:text-ink text-sm focus:outline-none focus:border-brand-blue transition-all resize-none"
+              ></textarea>
+            </div>
+
+            <button 
+              type="submit" 
+              class="w-full py-3 bg-brand-blue text-white hover:bg-brand-blue-hover text-sm font-semibold rounded-lg premium-shadow-dark btn-press-active transition-colors"
+            >
+              Submit Inquiry
+            </button>
+          </form>
+
+          <!-- Mock Success Card -->
+          <div id="contact-success" class="hidden py-8 text-center space-y-3 animate-fade-in">
+            <div class="w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center mx-auto text-xl">✓</div>
+            <h3 class="text-sm font-semibold text-white light:text-ink">Message Sent!</h3>
+            <p class="text-xs text-gray-500 leading-relaxed max-w-xs mx-auto">
+              Thank you for contacting us. Shivam Dixit will respond to your query at {email} within 24 hours.
+            </p>
+            <button 
+              id="contact-reset-btn" 
+              class="px-4 py-1.5 bg-transparent border border-canvas-dark-border light:border-canvas-light-border text-xs text-gray-400 hover:text-white light:text-gray-600 light:hover:text-ink hover:bg-gray-900 light:hover:bg-gray-50 rounded-lg transition-colors btn-press-active"
+            >
+              Send Another Message
+            </button>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Client-side script -->
+  <script is:inline>
+    // Pre-select subject if passed in URL query parameter
+    const urlParams = new URLSearchParams(window.location.search);
+    const subjectParam = urlParams.get('subject');
+    if (subjectParam) {
+      const subjectSelect = document.getElementById("contact-subject");
+      if (subjectSelect) {
+        subjectSelect.value = subjectParam;
+      }
+    }
+
+    const form = document.getElementById("contact-form");
+    const successCard = document.getElementById("contact-success");
+    const resetFormBtn = document.getElementById("contact-reset-btn");
+    const submitBtn = form.querySelector("button[type='submit']");
+    const originalBtnText = submitBtn.textContent;
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      submitBtn.disabled = true;
+      submitBtn.textContent = "Submitting Inquiry...";
+
+      const formData = {
+        name: document.getElementById("contact-name").value,
+        email: document.getElementById("contact-email").value,
+        subject: document.getElementById("contact-subject").value,
+        message: document.getElementById("contact-message").value
+      };
+
+      try {
+        const res = await fetch("/api/contact", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(formData)
+        });
+
+        const data = await res.json();
+
+        if (res.ok && data.success) {
+          form.classList.add("hidden");
+          successCard.classList.remove("hidden");
+        } else {
+          alert(data.error || "Could not able to submit now try later");
+        }
+      } catch (err) {
+        console.error("Submission error:", err);
+        alert("Could not able to submit now try later");
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = originalBtnText;
+      }
+    });
+
+    resetFormBtn.addEventListener("click", () => {
+      form.classList.remove("hidden");
+      successCard.classList.add("hidden");
+      form.reset();
+    });
+  </script>
+</Layout>

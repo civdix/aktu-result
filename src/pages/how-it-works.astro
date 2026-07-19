@@ -1,0 +1,111 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout 
+  title="How It Works - Academic Recovery | AKTU Result Without DOB"
+  description="Learn the technical details of how we recover AKTU results without a Date of Birth. Explaining session tracking, cookie persistence, and ViewState iteration."
+>
+  <!-- Banner Header -->
+  <section class="py-16 md:py-24 border-b border-canvas-dark-border light:border-canvas-light-border bg-gradient-to-b from-black to-canvas-dark-surface light:from-white light:to-canvas-light-surface text-center">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6">
+      <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight mb-4 text-white light:text-ink">
+        How The System Works
+      </h1>
+      <p class="text-base sm:text-lg text-gray-400 light:text-gray-600 max-w-xl mx-auto leading-relaxed">
+        A deep dive into the automated session handling and dynamic academic result retrieval mechanics.
+      </p>
+    </div>
+  </section>
+
+  <!-- Technical Description -->
+  <section class="py-16 md:py-24 bg-black light:bg-white text-gray-400 light:text-gray-600">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
+      
+      <!-- Core Architecture Introduction -->
+      <div class="max-w-2xl mx-auto text-center space-y-4">
+        <h2 class="text-xl font-bold text-white light:text-ink">Real-time Session Verification</h2>
+        <p class="text-xs sm:text-sm leading-relaxed">
+          The AKTU student result system is built on an **ASP.NET WebForms** architecture. It uses cryptographically signed tokens (`__VIEWSTATE`, `__EVENTVALIDATION`) and tracking cookies (`ASP.NET_SessionId`) to validate forms. Our recovery tool acts as a headless browser client that executes these steps programmatically.
+        </p>
+      </div>
+
+      <!-- Steps Timeline Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+        
+        <!-- Step 1 Card -->
+        <div class="p-6 rounded-2xl border border-canvas-dark-border light:border-canvas-light-border bg-canvas-dark-tile light:bg-canvas-light-tile flex flex-col justify-between">
+          <div>
+            <div class="w-8 h-8 rounded-full bg-brand-blue/10 border border-brand-blue/30 text-brand-blue flex items-center justify-center font-bold text-sm mb-4">1</div>
+            <h3 class="text-base font-semibold text-white light:text-ink mb-2">Establishing Session Handshake</h3>
+            <p class="text-xs leading-relaxed mb-4 text-gray-500 light:text-gray-600">
+              The scraper issues an initial HTTP GET request to the AKTU One View gateway. This fetches a live `ASP.NET_SessionId` cookie and parses the base page's initial validation vectors.
+            </p>
+          </div>
+          <div class="font-mono text-[9px] bg-black/60 light:bg-canvas-light-surface p-2.5 rounded border border-canvas-dark-border light:border-canvas-light-border text-gray-400 light:text-gray-600">
+            Cookie: ASP.NET_SessionId=t5a3y4v...<br />
+            Parse: __VIEWSTATE = g5Y8z...
+          </div>
+        </div>
+
+        <!-- Step 2 Card -->
+        <div class="p-6 rounded-2xl border border-canvas-dark-border light:border-canvas-light-border bg-canvas-dark-tile light:bg-canvas-light-tile flex flex-col justify-between">
+          <div>
+            <div class="w-8 h-8 rounded-full bg-brand-blue/10 border border-brand-blue/30 text-brand-blue flex items-center justify-center font-bold text-sm mb-4">2</div>
+            <h3 class="text-base font-semibold text-white light:text-ink mb-2">Verifying Roll Number</h3>
+            <p class="text-xs leading-relaxed mb-4 text-gray-500 light:text-gray-600">
+              The Roll Number is validated using the active session cookie. The gateway responds by unlocking the date submission parameters if the roll number exists in the university database.
+            </p>
+          </div>
+          <div class="font-mono text-[9px] bg-black/60 light:bg-canvas-light-surface p-2.5 rounded border border-canvas-dark-border light:border-canvas-light-border text-emerald-400 light:text-emerald-700">
+            POST: /WebPages/aktu/OVEngine.aspx<br />
+            Payload: txtRollNo=2200650100100 -> Status 200 OK
+          </div>
+        </div>
+
+        <!-- Step 3 Card -->
+        <div class="p-6 rounded-2xl border border-canvas-dark-border light:border-canvas-light-border bg-canvas-dark-tile light:bg-canvas-light-tile flex flex-col justify-between">
+          <div>
+            <div class="w-8 h-8 rounded-full bg-brand-blue/10 border border-brand-blue/30 text-brand-blue flex items-center justify-center font-bold text-sm mb-4">3</div>
+            <h3 class="text-base font-semibold text-white light:text-ink mb-2">Sequential ViewState Handshaking</h3>
+            <p class="text-xs leading-relaxed mb-4 text-gray-500 light:text-gray-600">
+              To authenticate without a user-provided DOB, the search engine securely validates session candidate dates internally. Crucially, each iteration captures and returns the *updated* ViewState token.
+            </p>
+          </div>
+          <div class="font-mono text-[9px] bg-black/60 light:bg-canvas-light-surface p-2.5 rounded border border-canvas-dark-border light:border-canvas-light-border text-gray-400 light:text-gray-600">
+            Guess: 04/04/2004 -> Fails, new ViewState parsed<br />
+            Guess: 05/04/2004 -> Authentication success!
+          </div>
+        </div>
+
+        <!-- Step 4 Card -->
+        <div class="p-6 rounded-2xl border border-canvas-dark-border light:border-canvas-light-border bg-canvas-dark-tile light:bg-canvas-light-tile flex flex-col justify-between">
+          <div>
+            <div class="w-8 h-8 rounded-full bg-brand-blue/10 border border-brand-blue/30 text-brand-blue flex items-center justify-center font-bold text-sm mb-4">4</div>
+            <h3 class="text-base font-semibold text-white light:text-ink mb-2">Student Info Extraction</h3>
+            <p class="text-xs leading-relaxed mb-4 text-gray-500 light:text-gray-600">
+              Once authenticated, the server returns the student record HTML page. The scraper parses and displays the complete academic record card, including semester-wise grades, to the user.
+            </p>
+          </div>
+          <div class="font-mono text-[9px] bg-black/60 light:bg-canvas-light-surface p-2.5 rounded border border-canvas-dark-border light:border-canvas-light-border text-emerald-400 light:text-emerald-700">
+            Parsed: SHIVAM DIXIT<br />
+            Result: Complete result sheet loaded.
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Security Callout -->
+      <div class="p-6 sm:p-8 rounded-2xl bg-brand-blue/5 border border-brand-blue/20 max-w-2xl mx-auto flex items-start gap-4">
+        <span class="text-2xl mt-0.5">🔒</span>
+        <div class="text-left space-y-2">
+          <h3 class="text-sm font-semibold text-white light:text-ink">End-to-End Encryption & Security</h3>
+          <p class="text-xs text-gray-500 light:text-gray-600 leading-relaxed">
+            All requests are processed live via our proxy routers. The system acts as a pipeline: we do **not** log student credentials, keep backups of personal records, or cache results in a database. Your data is encrypted and discarded immediately after the session terminates.
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+</Layout>

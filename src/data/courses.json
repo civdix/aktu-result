@@ -1,0 +1,118 @@
+[
+  {
+    "code": "00",
+    "name": "M.Tech (Part Time)"
+  },
+  {
+    "code": "02",
+    "name": "Master of Technology"
+  },
+  {
+    "code": "03",
+    "name": "Master of Pharmacy"
+  },
+  {
+    "code": "04",
+    "name": "Bachelor of Technology"
+  },
+  {
+    "code": "05",
+    "name": "Bachelor of Pharmacy"
+  },
+  {
+    "code": "06",
+    "name": "Bachelor of Architecture"
+  },
+  {
+    "code": "07",
+    "name": "BHMCT"
+  },
+  {
+    "code": "08",
+    "name": "Masters of Business Administration"
+  },
+  {
+    "code": "09",
+    "name": "Master of Computer Applications (3 year course)"
+  },
+  {
+    "code": "11",
+    "name": "MBA(Integrated)"
+  },
+  {
+    "code": "12",
+    "name": "MCA(Integrated)"
+  },
+  {
+    "code": "13",
+    "name": "Bachelor of Business Administration"
+  },
+  {
+    "code": "14",
+    "name": "Bachelor of Design"
+  },
+  {
+    "code": "15",
+    "name": "Master of Design"
+  },
+  {
+    "code": "16",
+    "name": "Bachelor of Vocational Studies"
+  },
+  {
+    "code": "17",
+    "name": "Master Of Integrated Technology"
+  },
+  {
+    "code": "18",
+    "name": "B.Planning"
+  },
+  {
+    "code": "19",
+    "name": "Master In Urban and Regional Planning"
+  },
+  {
+    "code": "20",
+    "name": "Master of Computer Applications (2 year course)"
+  },
+  {
+    "code": "21",
+    "name": "PHARM D"
+  },
+  {
+    "code": "22",
+    "name": "BBA"
+  },
+  {
+    "code": "23",
+    "name": "BCA"
+  },
+  {
+    "code": "24",
+    "name": "Applied Art & Craft"
+  },
+  {
+    "code": "25",
+    "name": "M Plan (Infrastructure Planning and Management)"
+  },
+  {
+    "code": "65",
+    "name": "BFAD"
+  },
+  {
+    "code": "66",
+    "name": "Bachelor of Fine Art(BFA)"
+  },
+  {
+    "code": "93",
+    "name": "MAM"
+  },
+  {
+    "code": "94",
+    "name": "MCA Dual Degree"
+  },
+  {
+    "code": "99",
+    "name": "Master of Architecutre"
+  }
+]

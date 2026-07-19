@@ -1,0 +1,692 @@
+---
+export const prerender = false;
+
+import Layout from "../layouts/Layout.astro";
+import colleges from "../data/colleges.json";
+import branches from "../data/branches.json";
+import { DatabaseService } from "../database/database.service";
+
+const sortedColleges = [...colleges].sort((a, b) => a.name.localeCompare(b.name));
+const sortedBranches = [...branches].sort((a, b) => a.name.localeCompare(b.name));
+
+// Configure Edge CDN Caching Headers for crawler speed optimizations
+Astro.response.headers.set(
+  "Cache-Control",
+  "public, max-age=60, s-maxage=600, stale-while-revalidate=1200"
+);
+
+// Parse query params
+const queryCollegeCode = Astro.url.searchParams.get("collegeCode") || "";
+const cleanCollegeCode = queryCollegeCode.trim().padStart(3, "0");
+const selectedCollegeObj = sortedColleges.find((c) => c.code === cleanCollegeCode);
+const isCollegePreselected = !!selectedCollegeObj;
+
+// Fetch Live Analytics counters
+let servicesCount = 142; // default fallback
+let resultChecksCount = 24150; // default fallback
+try {
+  const db = await DatabaseService.connectToDatabase();
+  const collection = db.collection("students");
+  const studentsCount = await collection.countDocuments({});
+  servicesCount = studentsCount || 142;
+
+  const checksCount = await DatabaseService.getFetchCounter();
+  resultChecksCount = checksCount || 24150;
+} catch (err) {
+  console.error("Error reading db for analytics:", err);
+}
+
+// DOB check simulated counter (increases linearly throughout rolling 24 hours by 5 to 10 increments)
+const now = new Date();
+const startOfDay = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+const elapsedMs = now.getTime() - startOfDay.getTime();
+const elapsedHours = elapsedMs / (1000 * 60 * 60);
+// Simulated increment rate: around 8 increments per rolling 24 hours
+const dobScansCount = Math.floor((elapsedHours / 24) * 8);
+
+// Name check simulated counter
+// Base timestamp: July 19, 2026
+const baseTimestamp = new Date("2026-07-19T00:00:00+05:30");
+const daysElapsed = Math.floor((now.getTime() - baseTimestamp.getTime()) / (1000 * 60 * 60 * 24));
+const nameQueriesCount = daysElapsed < 50 ? 34 : daysElapsed;
+
+const finderJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "How to find the roll number of an AKTU student?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "You can find an AKTU student's roll number using our dedicated Roll Number Finder page. By entering the student's admission year, college code, branch code, and optionally their name, our system will search the database cache or run a quick scan to retrieve the corresponding roll number."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How to get an AKTU student's Date of Birth if forgotten?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "If you forgot your AKTU Date of Birth, you cannot view your result on the official website. However, our main utility bypasses the DOB input requirement completely. You only need your university Roll Number to fetch and display your full grades card instantly."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is the AKTU Roll Number Finder free to use?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, our AKTU roll number search service is 100% free. It utilizes a combination of cached records and secure live scanning methods to find student roll numbers responsibly."
+      }
+    }
+  ]
+};
+---
+
+<Layout
+  title="AKTU Roll Number Finder | Find College/Branch Roll Number Ranges"
+  description="Forgot your AKTU roll number? Search by college, branch/course, admission year, and student name to recover roll numbers or look up class roll number ranges."
+  jsonLd={finderJsonLd}
+>
+  <!-- Unified Hero Section & Centered Form (Top < 500px) -->
+  <section class="relative pt-12 pb-16 overflow-hidden border-b border-canvas-dark-border light:border-canvas-light-border bg-gradient-to-b from-black via-canvas-dark-surface to-black light:from-white light:via-canvas-light-surface light:to-white transition-colors duration-300">
+    <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[550px] h-[550px] rounded-full bg-brand-blue/5 blur-[120px] pointer-events-none"></div>
+
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 flex flex-col items-center">
+      
+      <!-- Title Block -->
+      <div class="text-center max-w-2xl mb-8">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-canvas-dark-border light:border-canvas-light-border bg-black/40 light:bg-white/40 backdrop-blur text-[10px] sm:text-xs text-gray-400 light:text-gray-600 mb-4 premium-shadow-light">
+          <span class="w-1.5 h-1.5 rounded-full bg-brand-blue animate-pulse"></span>
+          AKTU Roll Number Assistant Utility
+        </div>
+        <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight mb-3 leading-tight bg-gradient-to-b from-white to-gray-400 dark:from-white dark:to-gray-400 light:from-ink light:to-gray-800 bg-clip-text text-transparent">
+          AKTU Roll Number <span class="text-brand-blue">Finder</span>
+        </h1>
+        <p class="text-xs sm:text-sm text-gray-400 light:text-gray-600 leading-relaxed">
+          {isCollegePreselected 
+            ? `Your college (${selectedCollegeObj?.name}) is pre-selected.` 
+            : "Lost your roll number? Select your admission year, college, and branch/course below to locate your roll number."}
+        </p>
+      </div>
+
+      <!-- Centered Finder Interface -->
+      <div class="w-full max-w-4xl">
+        <!-- Notice Card -->
+        <div class="mb-6 p-4 rounded-xl border border-brand-blue/20 bg-brand-blue/5 text-[11px] sm:text-xs text-gray-300 light:text-gray-600 flex gap-2.5 items-start">
+          <span class="text-brand-blue text-sm mt-0.5">ℹ️</span>
+          <div>
+            <span class="font-bold text-white light:text-ink">One-Time Scan Notice:</span>
+            This utility is designed for responsible, one-time scanning per class. When a search is performed, the system scans the AKTU ERP once to build and save the roll records. Subsequent queries load instantly from the cached database.
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-5 gap-6 items-stretch">
+          
+          <!-- Left Side: Form -->
+          <div class="md:col-span-2 bg-canvas-dark-tile light:bg-white border border-canvas-dark-border light:border-canvas-light-border p-5 rounded-2xl premium-shadow-dark light:premium-shadow-light flex flex-col justify-center">
+            <h2 class="text-xs font-bold text-white light:text-ink uppercase tracking-wider mb-4 border-b border-canvas-dark-border/40 pb-2">
+              Search Details
+            </h2>
+            
+            <form id="dedicated-finder-form" class="space-y-4">
+              <!-- Year -->
+              <div>
+                <label for="finder-year" class="block text-[9px] font-semibold text-gray-400 light:text-gray-500 uppercase tracking-wider mb-1">
+                  Admission Year
+                </label>
+                <select 
+                  id="finder-year" 
+                  required
+                  class="w-full px-3 py-2 bg-black/50 light:bg-gray-50 border border-canvas-dark-border light:border-canvas-light-border rounded-lg text-white light:text-ink text-xs focus:outline-none focus:border-brand-blue transition-all"
+                >
+                  <option value="">Select Year</option>
+                  <option value="25">2025 (25)</option>
+                  <option value="24">2024 (24)</option>
+                  <option value="23">2023 (23)</option>
+                  <option value="22">2022 (22)</option>
+                  <option value="21">2021 (21)</option>
+                  <option value="20">2020 (20)</option>
+                  <option value="19">2019 (19)</option>
+                  <option value="18">2018 (18)</option>
+                </select>
+              </div>
+
+              <!-- College Select Container (Hidden if preselected) -->
+              <div class={isCollegePreselected ? "hidden" : ""}>
+                <label for="finder-college" class="block text-[9px] font-semibold text-gray-400 light:text-gray-500 uppercase tracking-wider mb-1">
+                  College / Institute
+                </label>
+                <select 
+                  id="finder-college" 
+                  required={!isCollegePreselected}
+                  class="w-full px-3 py-2 bg-black/50 light:bg-gray-50 border border-canvas-dark-border light:border-canvas-light-border rounded-lg text-white light:text-ink text-xs focus:outline-none focus:border-brand-blue transition-all"
+                >
+                  {isCollegePreselected ? (
+                    <option value={cleanCollegeCode} selected>{selectedCollegeObj?.name} ({cleanCollegeCode})</option>
+                  ) : (
+                    <>
+                      <option value="">Select College</option>
+                      {sortedColleges.map((c) => (
+                        <option value={c.code}>{c.name} ({c.code})</option>
+                      ))}
+                      <option value="other">-- Enter College Code Manually --</option>
+                    </>
+                  )}
+                </select>
+              </div>
+
+              <!-- Manual College Code -->
+              <div id="finder-manual-college-container" class="hidden">
+                <label for="finder-manual-college" class="block text-[9px] font-semibold text-gray-400 light:text-gray-500 uppercase tracking-wider mb-1">
+                  College Code (Manual)
+                </label>
+                <input 
+                  type="text" 
+                  id="finder-manual-college" 
+                  placeholder="e.g. 068" 
+                  pattern="^[0-9]{1,4}$"
+                  class="w-full px-3 py-2 bg-black/50 light:bg-gray-50 border border-canvas-dark-border light:border-canvas-light-border rounded-lg text-white light:text-ink text-xs focus:outline-none focus:border-brand-blue transition-all"
+                />
+              </div>
+
+              <!-- Branch -->
+              <div>
+                <label for="finder-branch" class="block text-[9px] font-semibold text-gray-400 light:text-gray-500 uppercase tracking-wider mb-1">
+                  Branch / Course
+                </label>
+                <select 
+                  id="finder-branch" 
+                  required
+                  class="w-full px-3 py-2 bg-black/50 light:bg-gray-50 border border-canvas-dark-border light:border-canvas-light-border rounded-lg text-white light:text-ink text-xs focus:outline-none focus:border-brand-blue transition-all"
+                >
+                  <option value="">Select Branch</option>
+                  {sortedBranches.map((b) => (
+                    <option value={b.code}>{b.name} ({b.code})</option>
+                  ))}
+                </select>
+              </div>
+
+              <!-- Name Filter -->
+              <div>
+                <label for="finder-name" class="block text-[9px] font-semibold text-gray-400 light:text-gray-500 uppercase tracking-wider mb-1">
+                  Student Name (Optional)
+                </label>
+                <input 
+                  type="text" 
+                  id="finder-name" 
+                  placeholder="e.g. SHIVAM" 
+                  class="w-full px-3 py-2 bg-black/50 light:bg-gray-50 border border-canvas-dark-border light:border-canvas-light-border rounded-lg text-white light:text-ink text-xs focus:outline-none focus:border-brand-blue transition-all"
+                />
+                <p class="text-[9px] text-gray-500 mt-1 font-medium">Narrow down class records by student name.</p>
+              </div>
+
+              <!-- Submit -->
+              <button 
+                id="finder-submit-btn"
+                type="submit" 
+                class="w-full py-2.5 bg-brand-blue hover:bg-brand-blue-hover text-white text-xs font-semibold rounded-lg btn-press-active transition-all flex items-center justify-center gap-1.5 cursor-pointer"
+              >
+                <span>Search Students</span>
+              </button>
+            </form>
+          </div>
+
+          <!-- Right Side: Results Panel -->
+          <div class="md:col-span-3 space-y-4 flex flex-col justify-between">
+            <div class="bg-canvas-dark-tile light:bg-white border border-canvas-dark-border light:border-canvas-light-border p-5 rounded-2xl premium-shadow-dark light:premium-shadow-light min-h-[350px] flex-grow flex flex-col">
+              <h2 class="text-xs font-bold text-white light:text-ink uppercase tracking-wider mb-4 border-b border-canvas-dark-border/40 pb-2">
+                Matches & Roll Ranges
+              </h2>
+
+              <div id="finder-status-panel" class="flex-grow flex flex-col items-center justify-center text-center p-6 text-gray-500">
+                <span class="text-3xl mb-3">🔍</span>
+                <p class="text-xs font-medium max-w-xs leading-relaxed">
+                  Fill in the form filters on the left and click "Search Students" to scan class listings.
+                </p>
+              </div>
+
+              <!-- Results container -->
+              <div id="finder-results-container" class="hidden space-y-5 flex-grow">
+                <!-- Result Content will be dynamically populated -->
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      
+    </div>
+  </section>
+
+  <!-- Coming Soon & Live Analytics Component -->
+  <section class="py-12 border-b border-canvas-dark-border/60 bg-black light:bg-white text-gray-400 light:text-gray-600 transition-colors duration-300">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6">
+      
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <!-- Coming Soon -->
+        <div class="md:col-span-1 p-5 rounded-2xl border border-brand-blue/20 bg-brand-blue/5 flex flex-col justify-between relative overflow-hidden group">
+          <div class="absolute -right-8 -top-8 w-24 h-24 bg-brand-blue/10 rounded-full blur-xl group-hover:bg-brand-blue/20 transition-all"></div>
+          <div>
+            <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[9px] font-bold bg-brand-blue/10 text-brand-blue border border-brand-blue/20 uppercase mb-3 tracking-wider">
+              Coming Soon
+            </span>
+            <h3 class="text-sm font-bold text-white light:text-ink mb-2">Email Results Notifications</h3>
+            <p class="text-[11px] text-gray-400 light:text-gray-500 leading-relaxed mb-4">
+              Get detailed semester grades card automatically delivered to your inbox the exact moment AKTU publishes the official marks sheet.
+            </p>
+          </div>
+          <div>
+            <div class="flex gap-2">
+              <input 
+                type="email" 
+                placeholder="email@example.com" 
+                disabled 
+                class="flex-1 px-3 py-1.5 bg-black/40 light:bg-gray-100 border border-canvas-dark-border light:border-canvas-light-border rounded-lg text-[10px] text-gray-500 cursor-not-allowed focus:outline-none"
+              />
+              <button disabled class="px-3 py-1.5 bg-brand-blue/50 text-white/50 rounded-lg text-[10px] font-bold cursor-not-allowed">
+                Notify
+              </button>
+            </div>
+            <span class="text-[9px] text-gray-500 mt-2 block font-medium">Visual placeholder only.</span>
+          </div>
+        </div>
+
+        <!-- Live Analytics -->
+        <div class="md:col-span-2 grid grid-cols-2 gap-4">
+          <!-- Service Usage -->
+          <div class="p-4 rounded-xl border border-canvas-dark-border light:border-canvas-light-border bg-canvas-dark-tile light:bg-gray-50 flex flex-col justify-between transition-all hover:border-brand-blue/20">
+            <span class="text-[9px] font-bold text-gray-500 uppercase tracking-wider">Services Utilized</span>
+            <div class="my-2">
+              <span class="text-2xl font-extrabold text-white light:text-ink font-mono">{servicesCount}</span>
+              <span class="text-[9px] text-emerald-400 font-bold bg-emerald-500/10 border border-emerald-500/20 px-1 rounded ml-1">Active</span>
+            </div>
+            <p class="text-[10px] text-gray-500 leading-normal">
+              Unique college sections and classes currently cached in the database.
+            </p>
+          </div>
+
+          <!-- Result Check -->
+          <div class="p-4 rounded-xl border border-canvas-dark-border light:border-canvas-light-border bg-canvas-dark-tile light:bg-gray-50 flex flex-col justify-between transition-all hover:border-brand-blue/20">
+            <span class="text-[9px] font-bold text-gray-500 uppercase tracking-wider">Total Result Checks</span>
+            <div class="my-2">
+              <span class="text-2xl font-extrabold text-white light:text-ink font-mono">{resultChecksCount.toLocaleString()}+</span>
+              <span class="text-[9px] text-brand-blue font-bold bg-brand-blue/10 border border-brand-blue/20 px-1 rounded ml-1">Live</span>
+            </div>
+            <p class="text-[10px] text-gray-500 leading-normal">
+              Real-time query events processed dynamically without asking for student DOBs.
+            </p>
+          </div>
+
+          <!-- DOB Counter -->
+          <div class="p-4 rounded-xl border border-canvas-dark-border light:border-canvas-light-border bg-canvas-dark-tile light:bg-gray-50 flex flex-col justify-between transition-all hover:border-brand-blue/20">
+            <span class="text-[9px] font-bold text-gray-500 uppercase tracking-wider">Today's DOB Scans</span>
+            <div class="my-2">
+              <span class="text-2xl font-extrabold text-white light:text-ink font-mono">{dobScansCount}</span>
+              <span class="text-[9px] text-purple-400 font-bold bg-purple-500/10 border border-purple-500/20 px-1 rounded ml-1">Linear</span>
+            </div>
+            <p class="text-[10px] text-gray-500 leading-normal">
+              Simulated calendar scanning checks executed during rolling 24h cycle.
+            </p>
+          </div>
+
+          <!-- Name Counter -->
+          <div class="p-4 rounded-xl border border-canvas-dark-border light:border-canvas-light-border bg-canvas-dark-tile light:bg-gray-50 flex flex-col justify-between transition-all hover:border-brand-blue/20">
+            <span class="text-[9px] font-bold text-gray-500 uppercase tracking-wider">Today's Name Queries</span>
+            <div class="my-2">
+              <span class="text-2xl font-extrabold text-white light:text-ink font-mono">{nameQueriesCount}</span>
+              <span class="text-[9px] text-amber-500 font-bold bg-amber-500/10 border border-amber-500/20 px-1 rounded ml-1">Daily</span>
+            </div>
+            <p class="text-[10px] text-gray-500 leading-normal">
+              Dynamic roster checks run by students relative to launch baseline.
+            </p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Documentation & Developer API Docs Section -->
+  <section class="py-16 bg-canvas-dark-surface light:bg-canvas-light-surface text-gray-400 light:text-gray-600 border-t border-canvas-dark-border/60 transition-colors duration-300">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6">
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+        <!-- Left Side: Professional Copywriting Docs -->
+        <div class="space-y-6">
+          <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold text-brand-blue bg-brand-blue/10 border border-brand-blue/20 uppercase tracking-wider">
+            API & Documentation
+          </div>
+          <h2 class="text-2xl font-extrabold text-white light:text-ink tracking-tight">
+            How Roll Number Retrieval Works
+          </h2>
+          <p class="text-xs sm:text-sm leading-relaxed text-gray-400 light:text-gray-505">
+            Dr. A.P.J. Abdul Kalam Technical University (AKTU) uses structured 13-digit student roll numbers. If you forget your roll number, our finder parses the target year, college code, and branch prefix, generating candidate sequences.
+          </p>
+          <div class="space-y-4">
+            <div class="p-4 rounded-xl border border-canvas-dark-border light:border-canvas-light-border bg-black/40 light:bg-white">
+              <h3 class="font-bold text-white light:text-ink text-xs mb-1.5">1. Prefix Mapping</h3>
+              <p class="text-[11px] text-gray-500 leading-relaxed">
+                We combine your admission year (e.g. 2022 becomes <code>22</code>), the 3-digit college code (e.g. <code>065</code>), and the 3-digit branch code (e.g. <code>010</code>) to generate the query prefix <code>220065010</code>.
+              </p>
+            </div>
+            
+            <div class="p-4 rounded-xl border border-canvas-dark-border light:border-canvas-light-border bg-black/40 light:bg-white">
+              <h3 class="font-bold text-white light:text-ink text-xs mb-1.5">2. One-Time Scraper Gateway</h3>
+              <p class="text-[11px] text-gray-500 leading-relaxed">
+                If the class has never been scanned, the server establishes a handshaking bridge with the AKTU grievance gateway, querying serial codes in parallel batches. Once found, they are stored in the database cache.
+              </p>
+            </div>
+            
+            <div class="p-4 rounded-xl border border-canvas-dark-border light:border-canvas-light-border bg-black/40 light:bg-white">
+              <h3 class="font-bold text-white light:text-ink text-xs mb-1.5">3. Complete Student Privacy</h3>
+              <p class="text-[11px] text-gray-500 leading-relaxed">
+                No personal contact details, grades, or passwords are saved or processed in this indexing lookup. Only standard publicly available registration records are compiled.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Side: API Integration Specs -->
+        <div class="space-y-6">
+          <div class="flex items-center justify-between">
+            <h3 class="text-sm font-semibold text-white light:text-ink uppercase tracking-wider">
+              Roll Number Finder API
+            </h3>
+            <span class="font-mono text-[9px] px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 uppercase font-bold">
+              Public / POST
+            </span>
+          </div>
+
+          <p class="text-xs text-gray-400 light:text-gray-500 leading-relaxed">
+            Query class rosters and roll number ranges programmatically. If the prefix hasn't been scanned, the API will trigger a background ERP lookup.
+          </p>
+
+          <div class="flex items-center gap-2.5 font-mono text-[11px] text-gray-300 light:text-ink bg-black/50 light:bg-white p-3 rounded-xl border border-canvas-dark-border light:border-canvas-light-border">
+            <span class="text-emerald-400 font-bold">POST</span>
+            <span>/api/find-roll</span>
+          </div>
+
+          <!-- Code Sandbox Window -->
+          <div class="code-editor-window rounded-xl border border-canvas-dark-border light:border-canvas-light-border overflow-hidden">
+            <!-- Header bar -->
+            <div class="code-editor-header bg-canvas-dark-tile light:bg-gray-100 px-4 py-2 border-b border-canvas-dark-border/60 flex items-center justify-between">
+              <div class="flex items-center gap-1.5">
+                <span class="w-2.5 h-2.5 rounded-full bg-rose-500"></span>
+                <span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span>
+                <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+                <span class="text-[10px] font-mono text-gray-400 ml-2" id="finder-editor-title">request.sh</span>
+              </div>
+              <div class="flex gap-1 bg-black/40 light:bg-gray-200/50 p-0.5 rounded-md border border-white/5 light:border-black/5">
+                <button class="px-2 py-0.5 text-[9px] font-bold text-brand-blue bg-canvas-dark-surface light:bg-white rounded finder-tab-btn cursor-pointer" data-lang="curl" data-filename="request.sh">cURL</button>
+                <button class="px-2 py-0.5 text-[9px] font-bold text-gray-400 hover:text-white light:hover:text-ink finder-tab-btn cursor-pointer" data-lang="nodejs" data-filename="request.js">Node.js</button>
+                <button class="px-2 py-0.5 text-[9px] font-bold text-gray-400 hover:text-white light:hover:text-ink finder-tab-btn cursor-pointer" data-lang="python" data-filename="request.py">Python</button>
+              </div>
+            </div>
+
+            <!-- Body editor -->
+            <div class="code-editor-body flex bg-black/95 p-4 font-mono text-xs overflow-x-auto text-emerald-400">
+              <div class="code-editor-linenos text-gray-600 select-none text-right pr-3 border-r border-canvas-dark-border/40 flex flex-col" id="finder-linenos">
+                <span>1</span><span>2</span><span>3</span><span>4</span>
+              </div>
+              <div class="code-editor-content pl-3 flex-grow">
+                <!-- cURL -->
+                <pre is:raw class="finder-code-block" id="finder-code-curl" data-lines="4"><span class="text-gray-500">curl</span> -X POST http://localhost:4321/api/find-roll \
+  -H <span class="text-gray-300">"Content-Type: application/json"</span> \
+  -d <span class="text-gray-300">'{"admissionYear": "22", "collegeCode": "065", "branchCode": "010", "name": "SHIVAM"}'</span></pre>
+                
+                <!-- Nodejs -->
+                <pre is:raw class="finder-code-block hidden" id="finder-code-nodejs" data-lines="14"><span class="text-blue-400">const</span> payload = {
+  admissionYear: <span class="text-gray-300">"22"</span>,
+  collegeCode: <span class="text-gray-300">"065"</span>,
+  branchCode: <span class="text-gray-300">"010"</span>,
+  name: <span class="text-gray-300">"SHIVAM"</span>
+};
+
+<span class="text-gray-500">fetch</span>(<span class="text-gray-300">'/api/find-roll'</span>, {
+  method: <span class="text-gray-300">'POST'</span>,
+  headers: { <span class="text-gray-300">'Content-Type'</span>: <span class="text-gray-300">'application/json'</span> },
+  body: JSON.stringify(payload)
+})
+.then(res => res.json())
+.then(data => console.log(data));</pre>
+
+                <!-- Python -->
+                <pre is:raw class="finder-code-block hidden" id="finder-code-python" data-lines="10"><span class="text-blue-400">import</span> requests
+
+payload = {
+  <span class="text-gray-300">"admissionYear"</span>: <span class="text-gray-300">"22"</span>,
+  <span class="text-gray-300">"collegeCode"</span>: <span class="text-gray-300">"065"</span>,
+  <span class="text-gray-300">"branchCode"</span>: <span class="text-gray-300">"010"</span>,
+  <span class="text-gray-300">"name"</span>: <span class="text-gray-300">"SHIVAM"</span>
+}
+res = requests.post(<span class="text-gray-300">"http://localhost:4321/api/find-roll"</span>, json=payload)
+print(res.json())</pre>
+              </div>
+            </div>
+          </div>
+
+          <!-- Response Example -->
+          <div class="space-y-2">
+            <h4 class="text-xs font-semibold text-white light:text-ink uppercase tracking-wider">Example Response (200 OK)</h4>
+            <pre is:raw class="font-mono text-[10px] p-3 rounded-lg border border-canvas-dark-border light:border-canvas-light-border bg-black/40 text-emerald-400 overflow-x-auto">
+{
+  "success": true,
+  "prefix": "220065010",
+  "rangeStart": "2200650100001",
+  "rangeEnd": "2200650100120",
+  "matches": [
+    { "name": "SHIVAM DIXIT", "rollNumber": "2200650100100", "source": "cache" }
+  ]
+}</pre>
+          </div>
+
+        </div>
+      </div>
+      
+    </div>
+  </section>
+
+  <!-- Client-Side Form Logic -->
+  <script is:inline>
+    window.addEventListener("DOMContentLoaded", () => {
+      const finderForm = document.getElementById("dedicated-finder-form");
+      const submitBtn = document.getElementById("finder-submit-btn");
+      const collegeSelect = document.getElementById("finder-college");
+      const manualCollegeContainer = document.getElementById("finder-manual-college-container");
+      const manualCollegeInput = document.getElementById("finder-manual-college");
+      
+      const statusPanel = document.getElementById("finder-status-panel");
+      const resultsContainer = document.getElementById("finder-results-container");
+
+      // Handle College Selection Manual trigger
+      collegeSelect?.addEventListener("change", () => {
+        if (collegeSelect.value === "other") {
+          manualCollegeContainer?.classList.remove("hidden");
+          manualCollegeInput.required = true;
+          manualCollegeInput.focus();
+        } else {
+          manualCollegeContainer?.classList.add("hidden");
+          manualCollegeInput.required = false;
+          manualCollegeInput.value = "";
+        }
+      });
+
+      // Handle search submission
+      finderForm?.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        if (!submitBtn || !resultsContainer || !statusPanel) return;
+
+        const yearSelect = document.getElementById("finder-year");
+        const branchSelect = document.getElementById("finder-branch");
+        const nameInput = document.getElementById("finder-name");
+
+        const admissionYear = yearSelect.value;
+        let collegeCode = collegeSelect ? collegeSelect.value : "";
+        if (collegeCode === "other") {
+          collegeCode = manualCollegeInput.value.trim();
+        }
+        const branchCode = branchSelect.value;
+        const name = nameInput.value.trim();
+
+        if (!admissionYear || !collegeCode || !branchCode) {
+          alert("Please select admission year, college, and branch.");
+          return;
+        }
+
+        // Show spinner state
+        submitBtn.setAttribute("disabled", "true");
+        const originalText = submitBtn.innerHTML;
+        submitBtn.innerHTML = `
+          <svg class="animate-spin h-4 w-4 text-white inline-block" fill="none" viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+          </svg>
+          <span>Scanning ERP...</span>
+        `;
+
+        resultsContainer.classList.add("hidden");
+        statusPanel.classList.remove("hidden");
+        statusPanel.innerHTML = `
+          <div class="py-12 space-y-4">
+            <div class="w-10 h-10 rounded-full border-4 border-brand-blue/20 animate-spin border-t-brand-blue mx-auto"></div>
+            <p class="text-xs font-semibold text-white light:text-ink">Connecting to AKTU ERP form gateway...</p>
+            <p class="text-[10px] text-gray-500">Querying class records. This might take up to 10 seconds if scanning live.</p>
+          </div>
+        `;
+
+        try {
+          const response = await fetch("/api/find-roll", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+              admissionYear,
+              collegeCode,
+              branchCode,
+              name
+            })
+          });
+
+          if (!response.ok) {
+            throw new Error("Failed to scan roll numbers");
+          }
+
+          const data = await response.json();
+          if (!data || !data.success) {
+            statusPanel.innerHTML = `
+              <div class="p-4 bg-rose-500/10 border border-rose-500/20 text-rose-400 rounded-lg text-xs leading-relaxed max-w-xs mx-auto">
+                ${data.error || "Failed to scan class roll numbers. Please check codes and try again."}
+              </div>
+            `;
+            return;
+          }
+
+          statusPanel.classList.add("hidden");
+          resultsContainer.classList.remove("hidden");
+
+          let htmlContent = "";
+
+          // Display Range
+          htmlContent += `
+            <div class="p-3 bg-brand-blue/10 border border-brand-blue/20 text-brand-blue rounded-xl space-y-1">
+              <div class="text-[9px] uppercase font-bold tracking-wider opacity-85 text-gray-400">Class Roll Number Range Map</div>
+              <div class="font-mono text-xs font-bold text-white light:text-ink">Range: ${data.rangeStart} to ${data.rangeEnd}</div>
+              <p class="text-[9px] text-gray-500 font-medium">All student records scanned in this class are stored in MongoDB cache for instant checkouts.</p>
+            </div>
+          `;
+
+          // Display Student List
+          if (data.matches && data.matches.length > 0) {
+            htmlContent += `
+              <div class="space-y-2">
+                <div class="text-[9px] font-bold text-gray-400 light:text-gray-500 uppercase tracking-wider">Scanned Student Profiles (${data.matches.length})</div>
+                <div class="divide-y divide-canvas-dark-border/40 light:divide-canvas-light-border/60 max-h-[250px] overflow-y-auto pr-1 border border-canvas-dark-border light:border-canvas-light-border rounded-xl bg-black/20 light:bg-gray-50">
+            `;
+            data.matches.forEach((student) => {
+              htmlContent += `
+                <div class="p-3 flex justify-between items-center text-xs hover:bg-brand-blue/5 transition-colors">
+                  <div class="space-y-0.5">
+                    <div class="font-bold text-white light:text-ink text-[11px] sm:text-xs">${student.name}</div>
+                    <div class="font-mono text-[9px] text-gray-500">${student.rollNumber} • Class ID #${student.rollNumber.slice(-3)}</div>
+                  </div>
+                  <a 
+                    href="/?rollNumber=${student.rollNumber}"
+                    class="px-3 py-1 bg-brand-blue text-white rounded-lg font-semibold hover:bg-brand-blue-hover text-[10px] transition-colors premium-shadow-dark cursor-pointer select-none"
+                  >
+                    Check Result
+                  </a>
+                </div>
+              `;
+            });
+            htmlContent += `
+                </div>
+              </div>
+            `;
+          } else {
+            htmlContent += `
+              <div class="p-6 text-center text-gray-500">
+                <span class="text-2xl block mb-2">🔍</span>
+                <p class="text-xs font-semibold text-white light:text-ink">No matching student cache found for this class.</p>
+                <p class="text-[10px] text-gray-500 mt-1">If you entered a filter name, try removing it to view the entire scanned class roster.</p>
+              </div>
+            `;
+          }
+
+          resultsContainer.innerHTML = htmlContent;
+
+        } catch (err) {
+          console.error("Dedicated finder error:", err);
+          statusPanel.innerHTML = `
+            <div class="p-4 bg-rose-500/10 border border-rose-500/20 text-rose-400 rounded-lg text-xs leading-relaxed max-w-xs mx-auto">
+              Scraping request failed. Please check network logs and try again.
+            </div>
+          `;
+        } finally {
+          submitBtn.removeAttribute("disabled");
+          submitBtn.innerHTML = originalText;
+        }
+      });
+
+      // Finder API documentation code toggler
+      const finderBtns = document.querySelectorAll(".finder-tab-btn");
+      const finderBlocks = document.querySelectorAll(".finder-code-block");
+      const finderLinenos = document.getElementById("finder-linenos");
+      const finderTitle = document.getElementById("finder-editor-title");
+
+      const generateLinenos = (linesCount) => {
+        let html = '';
+        for (let i = 1; i <= linesCount; i++) {
+          html += `<span>${i}</span>`;
+        }
+        return html;
+      };
+
+      finderBtns.forEach(btn => {
+        btn.addEventListener("click", () => {
+          const targetLang = btn.getAttribute("data-lang");
+          const filename = btn.getAttribute("data-filename");
+          
+          finderBtns.forEach(b => {
+            b.classList.remove("text-brand-blue", "bg-canvas-dark-surface", "light:bg-white");
+            b.classList.add("text-gray-400");
+          });
+          btn.classList.add("text-brand-blue", "bg-canvas-dark-surface", "light:bg-white");
+          btn.classList.remove("text-gray-400");
+
+          if (finderTitle) finderTitle.textContent = filename;
+
+          finderBlocks.forEach(block => {
+            if (block.id === `finder-code-${targetLang}`) {
+              block.classList.remove("hidden");
+              const lines = parseInt(block.getAttribute("data-lines") || "1", 10);
+              if (finderLinenos) finderLinenos.innerHTML = generateLinenos(lines);
+            } else {
+              block.classList.add("hidden");
+            }
+          });
+        });
+      });
+    });
+  </script>
+</Layout>

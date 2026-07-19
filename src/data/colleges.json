@@ -1,0 +1,2606 @@
+[
+  {
+    "code": "001",
+    "name": "Anand Engineering College, Agra"
+  },
+  {
+    "code": "002",
+    "name": "Faculty of Engineering, Agra College, Agra"
+  },
+  {
+    "code": "004",
+    "name": "Raja Balwant Singh Engineering Technical Campus, Agra"
+  },
+  {
+    "code": "005",
+    "name": "Raja Balwant Singh Management Technical Campus, Agra"
+  },
+  {
+    "code": "006",
+    "name": "Agra Public Institute of Technology & Computer Education, Agra"
+  },
+  {
+    "code": "007",
+    "name": "Shivdan Singh Institute of Technology & Management, Aligarh"
+  },
+  {
+    "code": "010",
+    "name": "United College of Engineering & Research, Allahabad"
+  },
+  {
+    "code": "011",
+    "name": "United Institute of Management, Allahabad"
+  },
+  {
+    "code": "012",
+    "name": "Pharmacy College, Azamgarh"
+  },
+  {
+    "code": "013",
+    "name": "Shri Gopichand College of Pharmacy, Bagpat"
+  },
+  {
+    "code": "014",
+    "name": "Shri Rammurti Smarak College of Engineering and Technology, Bareilly"
+  },
+  {
+    "code": "016",
+    "name": "Rakshpal Bahadur Management Institute, Bareilly"
+  },
+  {
+    "code": "017",
+    "name": "Kunwar Satya Veera College of Engineering & Management, Bijnaur"
+  },
+  {
+    "code": "018",
+    "name": "Babu Banarsi Das Institute of Engineering Technology & Research Centre, Bulandshahar"
+  },
+  {
+    "code": "019",
+    "name": "Marathwada Institute of Technology, Bulandshahar"
+  },
+  {
+    "code": "026",
+    "name": "Faculty of Management, Jhunjhunwaladegree College, Faizabad"
+  },
+  {
+    "code": "027",
+    "name": "Ajay Kumar Garg Engineering College, Ghaziabad"
+  },
+  {
+    "code": "028",
+    "name": "Ideal Institute of Technology, Ghaziabad"
+  },
+  {
+    "code": "029",
+    "name": "KIET Group of Institutions(krishna Institute of Engineering & Technology), Ghaziabad"
+  },
+  {
+    "code": "030",
+    "name": "Inderprastha Engineering College, Ghaziabad"
+  },
+  {
+    "code": "032",
+    "name": "ABES Engineering College, Ghaziabad"
+  },
+  {
+    "code": "033",
+    "name": "Raj Kumar Goel Institute of Technology, Ghaziabad"
+  },
+  {
+    "code": "035",
+    "name": "Babu Banarsi Das Institute of Technology, Ghaziabad"
+  },
+  {
+    "code": "036",
+    "name": "Institute of Management Studies, Ghaziabad"
+  },
+  {
+    "code": "037",
+    "name": "Institute of Management Education, Ghaziabad"
+  },
+  {
+    "code": "038",
+    "name": "Institute of Technology & Sciences, Ghaziabad"
+  },
+  {
+    "code": "039",
+    "name": "Institute of Management Research, Ghaziabad"
+  },
+  {
+    "code": "040",
+    "name": "Technical Education & Research Institute, Gazipur"
+  },
+  {
+    "code": "041",
+    "name": "Acharya Narendra Dev College of Pharmacy, Gonda"
+  },
+  {
+    "code": "043",
+    "name": "Bundelkhand Institute of Engineering & Technology, Jhansi"
+  },
+  {
+    "code": "044",
+    "name": "Uttar Pradesh Textile Technology Institute, Kanpur"
+  },
+  {
+    "code": "046",
+    "name": "Maharana Pratap Engineering College, Kanpur"
+  },
+  {
+    "code": "047",
+    "name": "Dr Virendra Swaroop Institute of Computer Studies, Kanpur"
+  },
+  {
+    "code": "048",
+    "name": "Dayanand Academy of Management Studies, Kanpur"
+  },
+  {
+    "code": "050",
+    "name": "College of Management Studies, Kanpur"
+  },
+  {
+    "code": "051",
+    "name": "Faculty of Architecture, Aktu, Lucknow"
+  },
+  {
+    "code": "052",
+    "name": "Institute of Engineering & Technology, Lucknow"
+  },
+  {
+    "code": "053",
+    "name": "Azad Institute of Engineering & Technology, Lucknow"
+  },
+  {
+    "code": "054",
+    "name": "B B D National Institute of Technology & Management, Lucknow"
+  },
+  {
+    "code": "056",
+    "name": "Babu Banarasi Das Northern India Institute of Technology, Lucknow"
+  },
+  {
+    "code": "057",
+    "name": "International Institute for Special Education, Lucknow"
+  },
+  {
+    "code": "058",
+    "name": "Institute of Environment & Management, Lucknow"
+  },
+  {
+    "code": "059",
+    "name": "Lal Bahadur Shastri Institute of Management & Development Studies, Lucknow"
+  },
+  {
+    "code": "061",
+    "name": "Sherwood College of Management, Lucknow"
+  },
+  {
+    "code": "062",
+    "name": "Motilal Rastogi School of Management, Lucknow"
+  },
+  {
+    "code": "064",
+    "name": "Hindustan College of Sciences & Technology, Mathura"
+  },
+  {
+    "code": "065",
+    "name": "B S A College of Engineering & Technology, Mathura"
+  },
+  {
+    "code": "066",
+    "name": "Rajeev Academy for Pharmacy, Mathura"
+  },
+  {
+    "code": "067",
+    "name": "Hindustan Institute of Management & Computer Studies, Mathura"
+  },
+  {
+    "code": "068",
+    "name": "Meerut Institute of Engineering & Technology, Meerut"
+  },
+  {
+    "code": "069",
+    "name": "Radha Govind Group of Institutions, Meerut"
+  },
+  {
+    "code": "070",
+    "name": "College of Engineering & Rural Technology, Meerut"
+  },
+  {
+    "code": "074",
+    "name": "Dewan Institute of Management Studies, Meerut"
+  },
+  {
+    "code": "076",
+    "name": "Ghanshyam Binani Academy of Management Sciences, Mirzapur"
+  },
+  {
+    "code": "077",
+    "name": "Dr K N Modi Institute of Engineering & Technology, Ghaziabad"
+  },
+  {
+    "code": "078",
+    "name": "Dr K N Modi Institute of Pharmaceutical Sciences & Research, Ghaziabad"
+  },
+  {
+    "code": "079",
+    "name": "Unique Institute of Management and Technalogy, , Ghaziabad"
+  },
+  {
+    "code": "082",
+    "name": "Moradabad Institute of Technology, Moradabad"
+  },
+  {
+    "code": "083",
+    "name": "S D College of Engineering & Technology, Muzaffarnagar"
+  },
+  {
+    "code": "084",
+    "name": "Bhagwant Institute of Technology, Muzaffarnagar"
+  },
+  {
+    "code": "085",
+    "name": "S D College of Management Studies, Muzaffarnagar"
+  },
+  {
+    "code": "088",
+    "name": "Apeejay Institute of Technology School of Architecture and Planning, Gautam Buddh Nagar"
+  },
+  {
+    "code": "090",
+    "name": "I E C College of Engineering & Technology, Gautam Buddh Nagar"
+  },
+  {
+    "code": "091",
+    "name": "J S S Academy of Technical Education, Gautam Buddh Nagar"
+  },
+  {
+    "code": "093",
+    "name": "Ram Eesh Institute of Vocational and Technical Education, Gautam Buddh Nagar"
+  },
+  {
+    "code": "094",
+    "name": "Galgotias Institute of Management & Technology, Gautam Buddh Nagar"
+  },
+  {
+    "code": "095",
+    "name": "Mahatama Gandhi Mission College of Engineering & Technology, Gautam Buddh Nagar"
+  },
+  {
+    "code": "096",
+    "name": "Vishveshwarya Group of Institutions, Gautam Buddh Nagar"
+  },
+  {
+    "code": "097",
+    "name": "Galgotia's College of Engineering & Technology, Gautam Buddh Nagar"
+  },
+  {
+    "code": "098",
+    "name": "Institute of Management Studies, Gautam Buddh Nagar"
+  },
+  {
+    "code": "099",
+    "name": "Harlal Institute of Management & Technology, Gautam Buddh Nagar"
+  },
+  {
+    "code": "104",
+    "name": "Kamla Nehru Institute of Technology, Sultanpur"
+  },
+  {
+    "code": "106",
+    "name": "School of Management Sciences, Varanasi"
+  },
+  {
+    "code": "107",
+    "name": "Institute of Computer Sciences & Technology, Varanasi"
+  },
+  {
+    "code": "108",
+    "name": "R S M T College, Varanasi"
+  },
+  {
+    "code": "109",
+    "name": "Aligarh College of Engineering & Technology, Aligarh"
+  },
+  {
+    "code": "110",
+    "name": "Institute of Engineering & Rural Technology, Allahabad"
+  },
+  {
+    "code": "112",
+    "name": "Indian Institute of Carpet Technology, Bhadohi"
+  },
+  {
+    "code": "113",
+    "name": "Integrated Academy of Management & Technology, Ghaziabad"
+  },
+  {
+    "code": "114",
+    "name": "Institute of Professional Excellence & Management, Ghaziabad"
+  },
+  {
+    "code": "116",
+    "name": "Jaipuria Institute of Management, Ghaziabad"
+  },
+  {
+    "code": "117",
+    "name": "Ram Chameli Chaddha Vishwash Girl College, Ghaziabad"
+  },
+  {
+    "code": "118",
+    "name": "Nandini Nagar Mahavidayala, Gonda"
+  },
+  {
+    "code": "120",
+    "name": "Institute of Technology & Management, Gorakhpur"
+  },
+  {
+    "code": "122",
+    "name": "Shri Ram Swaroop Memorial College of Engineering & Management, Lucknow"
+  },
+  {
+    "code": "123",
+    "name": "Saroj Institute of Technology & Management, Lucknow"
+  },
+  {
+    "code": "124",
+    "name": "Institute of Cooperative & Corporate Research & Training, Lucknow"
+  },
+  {
+    "code": "126",
+    "name": "Sachdeva Institute of Technology, Mathura"
+  },
+  {
+    "code": "127",
+    "name": "I I M T Engineering College, Meerut"
+  },
+  {
+    "code": "128",
+    "name": "Bharat Institute of Technology, Meerut"
+  },
+  {
+    "code": "129",
+    "name": "Fort Institute of Technology, Meerut"
+  },
+  {
+    "code": "132",
+    "name": "Greater Noida Institute of Technology, Gautam Buddh Nagar"
+  },
+  {
+    "code": "133",
+    "name": "Noida Institute of Engineering & Technology, Gautam Buddh Nagar"
+  },
+  {
+    "code": "134",
+    "name": "Sacred Heart Institute of Managament & Technology, Sitapur"
+  },
+  {
+    "code": "135",
+    "name": "Kamla Nehru Institute of Physical & Social Sciences, Management Institute, Sultanpur"
+  },
+  {
+    "code": "136",
+    "name": "S D College of Pharmacy and Vocational Studies, Muzaffarnagar"
+  },
+  {
+    "code": "138",
+    "name": "B B S College of Engginering and Technology, Allahabad"
+  },
+  {
+    "code": "139",
+    "name": "Kalicharan Nigam Institute of Technology, Banda"
+  },
+  {
+    "code": "141",
+    "name": "Sagar Institute of Technology & Management, Barabanki"
+  },
+  {
+    "code": "142",
+    "name": "Khandelwal College of Management Sciences and Technology, Bareilly"
+  },
+  {
+    "code": "143",
+    "name": "I M S Engineering College, Ghaziabad"
+  },
+  {
+    "code": "144",
+    "name": "Prasad Institute of Technology, Jaunpur"
+  },
+  {
+    "code": "145",
+    "name": "S R Group of Institutions (College of Sciences and Engineering), Jhansi"
+  },
+  {
+    "code": "150",
+    "name": "Iilm Academy of Higher Learning, College of Engineering & Technology, Gautam Buddh Nagar"
+  },
+  {
+    "code": "151",
+    "name": "Global Institute of Information Technology, Gautam Buddh Nagar"
+  },
+  {
+    "code": "152",
+    "name": "Mangalmay Institute of Management and Technology, Gautam Buddh Nagar"
+  },
+  {
+    "code": "153",
+    "name": "Sky Line Institute of Engineering & Technology, Gautam Buddh Nagar"
+  },
+  {
+    "code": "154",
+    "name": "Faculty of Management and Technology, Varanasi"
+  },
+  {
+    "code": "157",
+    "name": "Institute of Hotel Management Catering Technology & Applied Nutrition, Meerut"
+  },
+  {
+    "code": "159",
+    "name": "J P Institute of Hotel Management & Catering Technology, Meerut"
+  },
+  {
+    "code": "161",
+    "name": "Krishna Engineering College, Ghaziabad"
+  },
+  {
+    "code": "162",
+    "name": "Shambhu Nath Institute of Engineering & Technolgy, Allahabad"
+  },
+  {
+    "code": "163",
+    "name": "Dr M C Saxena College of Engineering & Technology, Lucknow"
+  },
+  {
+    "code": "164",
+    "name": "Pranveer Singh Institute of Technology, Kanpur"
+  },
+  {
+    "code": "165",
+    "name": "Kanpur Institute of Technology, Kanpur"
+  },
+  {
+    "code": "166",
+    "name": "Dr Ambedkar Institute of Technology for Handicappeds, Kanpur"
+  },
+  {
+    "code": "167",
+    "name": "Rajarshi Rananjay Singh College of Pharmacy, Sultanpur"
+  },
+  {
+    "code": "168",
+    "name": "Smt Vidyawati Colelge of Pharmacy, Jhansi"
+  },
+  {
+    "code": "169",
+    "name": "Rakshapal Bahadur College of Pharmacy, Bareilly"
+  },
+  {
+    "code": "170",
+    "name": "I T S College of Pharmacy, Ghaziabad"
+  },
+  {
+    "code": "171",
+    "name": "Sri R L T Institute of Pharmecutical Sciences & Technology, Etawah"
+  },
+  {
+    "code": "172",
+    "name": "LLOYD Institute of Management & Technology, Gautam Buddh Nagar"
+  },
+  {
+    "code": "173",
+    "name": "Rajeev Academy for Technology & Management, Mathura"
+  },
+  {
+    "code": "174",
+    "name": "Kishan Institute of Information Technology, Meerut"
+  },
+  {
+    "code": "175",
+    "name": "Al Barkat Institute of Management Studies, Aligarh"
+  },
+  {
+    "code": "177",
+    "name": "Indira Gandhi Sahkari Prabandh Sansthan, Lucknow"
+  },
+  {
+    "code": "179",
+    "name": "Jeevan Deep Institute of Management & Technology, Varanasi"
+  },
+  {
+    "code": "181",
+    "name": "Step H B T I, Kanpur"
+  },
+  {
+    "code": "182",
+    "name": "Kalka Institute for Research & Advanced Studies, Meerut"
+  },
+  {
+    "code": "186",
+    "name": "Kamla Nehru Institute of Management & Technology, Sultanpur"
+  },
+  {
+    "code": "187",
+    "name": "Feroz Gandhi Institute of Engineering &technology, Raibareilly"
+  },
+  {
+    "code": "188",
+    "name": "Advanced Institute of Bio Technology & Paramedical Sciences, Kanpur"
+  },
+  {
+    "code": "189",
+    "name": "Central Institute of Plastic Engineering & Technology, Lucknow"
+  },
+  {
+    "code": "190",
+    "name": "National Institute of Electronics & Information Technology, Gorakhpur"
+  },
+  {
+    "code": "192",
+    "name": "G L Bajaj Institute of Technology & Management, Gautam Buddh Nagar"
+  },
+  {
+    "code": "193",
+    "name": "United College of Engiineering & Research, Greater Noida, Gautam Buddh Nagar"
+  },
+  {
+    "code": "194",
+    "name": "H R Institute of Technology, Ghaziabad"
+  },
+  {
+    "code": "195",
+    "name": "Kngd Modi Engineering College, Ghaziabad"
+  },
+  {
+    "code": "196",
+    "name": "College of Engineering Sciences & Technology, Lucknow"
+  },
+  {
+    "code": "197",
+    "name": "Azad Institute of Pharmacy & Research, Lucknow"
+  },
+  {
+    "code": "199",
+    "name": "KIET Group of Institutions(kiet School of Pharmacy), Ghaziabad"
+  },
+  {
+    "code": "200",
+    "name": "Maharana Pratap College of Pharmacy, Kanpur"
+  },
+  {
+    "code": "201",
+    "name": "Nkbr College of Pharmacy & Research Centre, Meerut"
+  },
+  {
+    "code": "202",
+    "name": "Hygia Institute of Pharmaceutical Education and Research, Lucknow, Lucknow"
+  },
+  {
+    "code": "203",
+    "name": "Rameshwaram Institute of Technology & Management, Lucknow"
+  },
+  {
+    "code": "204",
+    "name": "R V Northland Institute, Gautam Buddh Nagar"
+  },
+  {
+    "code": "205",
+    "name": "Shri Harish Chandra Post Graduate College, Institute of Pharmacy, Varanasi"
+  },
+  {
+    "code": "206",
+    "name": "Translam Institute of Pharmaceutical Education & Research, Meerut"
+  },
+  {
+    "code": "210",
+    "name": "Vivek College of Technical Education, Bijnaur"
+  },
+  {
+    "code": "211",
+    "name": "Rakshapal Bahadur Management Institute, Gautam Buddh Nagar"
+  },
+  {
+    "code": "212",
+    "name": "United Institute of Management, Gautam Buddh Nagar"
+  },
+  {
+    "code": "214",
+    "name": "Himt College of Pharmacy, Gautam Buddh Nagar"
+  },
+  {
+    "code": "215",
+    "name": "Sanskar College of Engineering & Technology, Ghaziabad"
+  },
+  {
+    "code": "216",
+    "name": "Iimt College of Engineering, Gautam Buddh Nagar"
+  },
+  {
+    "code": "219",
+    "name": "Bhagawant Institute of Pharmacy, Muzaffarnagar"
+  },
+  {
+    "code": "220",
+    "name": "Hi Technology Institute of Engineering &technology, Ghaziabad"
+  },
+  {
+    "code": "221",
+    "name": "Institute of Engineering & Technology, Sitapur"
+  },
+  {
+    "code": "222",
+    "name": "I T S Engineering College, Gautam Buddh Nagar"
+  },
+  {
+    "code": "223",
+    "name": "Vivekanand Institute of Technology & Sciences, Ghaziabad"
+  },
+  {
+    "code": "225",
+    "name": "Accurate Institute of Management & Technology, Gautam Buddh Nagar"
+  },
+  {
+    "code": "227",
+    "name": "Innovative College of Pharmacy, Gautam Buddh Nagar"
+  },
+  {
+    "code": "229",
+    "name": "Vidya College of Engineering, Meerut"
+  },
+  {
+    "code": "230",
+    "name": "Dronacharya Group of Institutions, Gautam Buddh Nagar"
+  },
+  {
+    "code": "231",
+    "name": "R D Engineering College, Ghaziabad"
+  },
+  {
+    "code": "233",
+    "name": "R K Pharmacy College, Azamgarh"
+  },
+  {
+    "code": "234",
+    "name": "Aligarh College of Pharmacy, Aligarh"
+  },
+  {
+    "code": "235",
+    "name": "Rajeev Gandhi College of Pharmacy, Maharajganj"
+  },
+  {
+    "code": "236",
+    "name": "Sri Madan Lal Institute of Pharmacy, Etawah"
+  },
+  {
+    "code": "237",
+    "name": "H R Institute of Hotel Management, Ghaziabad"
+  },
+  {
+    "code": "239",
+    "name": "Ishwarchand Vidyasagar Institute of Technology, Mathura"
+  },
+  {
+    "code": "240",
+    "name": "Sunderdeep Engineering College, Ghaziabad"
+  },
+  {
+    "code": "241",
+    "name": "Shambhu Nath Institute of Pharmacy, Allahabad"
+  },
+  {
+    "code": "243",
+    "name": "College of Pharmacy, Agra"
+  },
+  {
+    "code": "244",
+    "name": "Anand College of Pharmacy, Agra"
+  },
+  {
+    "code": "245",
+    "name": "Hr Institute of Pharmacy, Ghaziabad"
+  },
+  {
+    "code": "246",
+    "name": "Dayanand Deenanath College, Institute of Pharmacy, Kanpur"
+  },
+  {
+    "code": "247",
+    "name": "Iimt College of Pharmacy, Gautam Buddh Nagar"
+  },
+  {
+    "code": "248",
+    "name": "Sams Institute of Hotel Management, Varanasi"
+  },
+  {
+    "code": "249",
+    "name": "Sri Ram College of Management, Muzaffarnagar"
+  },
+  {
+    "code": "254",
+    "name": "Bhabha Institute of Technology, Kanpur Dehat"
+  },
+  {
+    "code": "256",
+    "name": "Dns College of Engineering & Technology, J P Nagar"
+  },
+  {
+    "code": "258",
+    "name": "Institute of Pharmacy, Sitapur"
+  },
+  {
+    "code": "259",
+    "name": "Sunderdeep Pharmacy College, Ghaziabad"
+  },
+  {
+    "code": "260",
+    "name": "Ibne Seena Pharmacy College, Hardoi"
+  },
+  {
+    "code": "261",
+    "name": "Shakti College of Pharmacy, Balrampur"
+  },
+  {
+    "code": "262",
+    "name": "Institute of Pharmaceutical Sciences & Research, Unnao"
+  },
+  {
+    "code": "263",
+    "name": "Vidya School of Business, Meerut"
+  },
+  {
+    "code": "265",
+    "name": "Sir Madan Lal Institute of Management, Etawah"
+  },
+  {
+    "code": "266",
+    "name": "Ltr Institute of Technology, Meerut, Meerut"
+  },
+  {
+    "code": "267",
+    "name": "Sanjay College of Pharmacy, Mathura"
+  },
+  {
+    "code": "269",
+    "name": "Sherwood College of Pharmacy, Barabanki"
+  },
+  {
+    "code": "271",
+    "name": "Bharat Institute of Technology(mba Institute), Meerut"
+  },
+  {
+    "code": "272",
+    "name": "Greater Noida Institute of Technology(mba Institute), Gautam Buddh Nagar"
+  },
+  {
+    "code": "273",
+    "name": "Noida Institute of Engineering & Technology, (MCA Institute), Gautam Buddh Nagar"
+  },
+  {
+    "code": "274",
+    "name": "Narmadeshwar Management College, Lucknow, Lucknow"
+  },
+  {
+    "code": "277",
+    "name": "Petronage Institute of Management Studies, Greater Noida, Gautam Buddh Nagar"
+  },
+  {
+    "code": "280",
+    "name": "Apex Institute of Technology, Rampur"
+  },
+  {
+    "code": "282",
+    "name": "J P Institute of Engineering & Technology, Meerut"
+  },
+  {
+    "code": "283",
+    "name": "LDC Institute of Technical Studies, Allahabad"
+  },
+  {
+    "code": "284",
+    "name": "United Institute of Technology, Allahabad"
+  },
+  {
+    "code": "285",
+    "name": "Institute of Technology & Management, Meerut"
+  },
+  {
+    "code": "286",
+    "name": "Vishveshwarya Institute of Technology, Gautam Buddh Nagar"
+  },
+  {
+    "code": "287",
+    "name": "Naraina College of Engineering & Technology, Kanpur"
+  },
+  {
+    "code": "290",
+    "name": "ABES Institute of Technology, Ghaziabad"
+  },
+  {
+    "code": "292",
+    "name": "Meerut Institute of Technology, Meerut"
+  },
+  {
+    "code": "295",
+    "name": "B B S Institute of Pharmecutical & Allied Sciences, , Gautam Buddh Nagar"
+  },
+  {
+    "code": "299",
+    "name": "Doon College of Education, , Saharanpur"
+  },
+  {
+    "code": "300",
+    "name": "Sarswati Highier Education & Technical College of Pharmacy, , Varanasi"
+  },
+  {
+    "code": "301",
+    "name": "Sagar Institute of Technology & Management, Deptt of Pharmacy, , Barabanki"
+  },
+  {
+    "code": "303",
+    "name": "Dr M C Saxena College of Pharmacy, , Lucknow"
+  },
+  {
+    "code": "306",
+    "name": "Disha Institute of Sciences and Technology, , Bijnaur"
+  },
+  {
+    "code": "307",
+    "name": "Dayanand Deena Nath College of Management, , Kanpur"
+  },
+  {
+    "code": "310",
+    "name": "Dr Rizvi College of Engineering, , Kaushambi"
+  },
+  {
+    "code": "311",
+    "name": "Deewan V S Institute of Engineering & Technology, Meerut, Meerut"
+  },
+  {
+    "code": "312",
+    "name": "Abss Institute of Technology, Meerut, Meerut"
+  },
+  {
+    "code": "315",
+    "name": "United Institute of Pharmacy, United College of Engineering & Research, , Allahabad"
+  },
+  {
+    "code": "316",
+    "name": "Aryakul College of Pharmacy & Research, , Lucknow"
+  },
+  {
+    "code": "318",
+    "name": "Vidya Institute of Fashion Technology, Meerut"
+  },
+  {
+    "code": "319",
+    "name": "Rakshpal Bahadur College of Engineering & Technology, Bareilly"
+  },
+  {
+    "code": "321",
+    "name": "Translam Institute of Technology & Management, Meerut"
+  },
+  {
+    "code": "323",
+    "name": "Spectrum Institute of Pharmaceutical Sciences & Research, Gautam Buddh Nagar"
+  },
+  {
+    "code": "324",
+    "name": "Anjali College of Pharmacy & Sciences, Agra"
+  },
+  {
+    "code": "326",
+    "name": "Sunder Deep College of Hotel Management, Ghaziabad"
+  },
+  {
+    "code": "327",
+    "name": "Sunder Deep College of Architecture, Ghaziabad"
+  },
+  {
+    "code": "330",
+    "name": "Sarswati Institute of Engineering & Technology, Ghaziabad"
+  },
+  {
+    "code": "331",
+    "name": "Devender Singh Institute of Technology & Management, Ghaziabad"
+  },
+  {
+    "code": "333",
+    "name": "Raj Kumar Goel Institute of Technology & Management, Ghaziabad"
+  },
+  {
+    "code": "334",
+    "name": "Rishi Chadha Viswas Girls Institute of Technology for Women, Ghaziabad"
+  },
+  {
+    "code": "338",
+    "name": "Kp Engineering College, Agra"
+  },
+  {
+    "code": "339",
+    "name": "Acn College of Engineering & Management Studies, Aligarh"
+  },
+  {
+    "code": "340",
+    "name": "Vivekananda College of Technology & Management, Aligarh"
+  },
+  {
+    "code": "341",
+    "name": "Institute of Technology & Management, Aligarh"
+  },
+  {
+    "code": "342",
+    "name": "United College of Engineering & Management, Allahabad"
+  },
+  {
+    "code": "345",
+    "name": "SETH Vishambhar Nath Institute of Engineering & Technology, Barabanki"
+  },
+  {
+    "code": "348",
+    "name": "PSIT College of Engineering, Kanpur"
+  },
+  {
+    "code": "349",
+    "name": "Maharana Institute of Professional Studies, Kanpur"
+  },
+  {
+    "code": "350",
+    "name": "Indus Institute of Technology & Management, Kanpur"
+  },
+  {
+    "code": "351",
+    "name": "Krishna Institute of Technology, Kanpur"
+  },
+  {
+    "code": "353",
+    "name": "Apollo Institute of Technology, Kanpur"
+  },
+  {
+    "code": "355",
+    "name": "Bhabha College of Engineering, Kanpur Dehat"
+  },
+  {
+    "code": "358",
+    "name": "Rameshwaram Institute of Technology & Management, Lucknow"
+  },
+  {
+    "code": "360",
+    "name": "Goel Institute of Technology & Management, Lucknow"
+  },
+  {
+    "code": "361",
+    "name": "R R Institute of Modern Technology, Lucknow"
+  },
+  {
+    "code": "362",
+    "name": "Lucknow Institute of Technology, Lucknow"
+  },
+  {
+    "code": "363",
+    "name": "Ambalika Institute of Management & Technology, Lucknow"
+  },
+  {
+    "code": "364",
+    "name": "S P Memorial Institute of Technology, Kaushambi"
+  },
+  {
+    "code": "366",
+    "name": "Nikhil Institute of Engineering & Management, Mathura"
+  },
+  {
+    "code": "370",
+    "name": "Shanti Institute of Technology, Meerut"
+  },
+  {
+    "code": "373",
+    "name": "Neelkanth Institute of Technology, Meerut"
+  },
+  {
+    "code": "374",
+    "name": "Rishi Institute of Engineering & Technology, Meerut"
+  },
+  {
+    "code": "377",
+    "name": "Gyan Bharti Institute of Technology, Meerut"
+  },
+  {
+    "code": "380",
+    "name": "Modinagar Institute of Technology, Ghaziabad"
+  },
+  {
+    "code": "382",
+    "name": "Kamla Nehru Institute of Physical & Social Sciences, Sultanpur"
+  },
+  {
+    "code": "383",
+    "name": "Rajarshi Rananjay Singh Institute of Management & Technology, Sultanpur"
+  },
+  {
+    "code": "384",
+    "name": "Saraswati Higher Education & Technical College of Engineering, Varanasi"
+  },
+  {
+    "code": "387",
+    "name": "Sr Group of Institutions (College of Pharmacy), Jhansi"
+  },
+  {
+    "code": "389",
+    "name": "Oxford College of Pharmacy, Ghaziabad"
+  },
+  {
+    "code": "390",
+    "name": "K R S College of Pharmacy, Gonda"
+  },
+  {
+    "code": "391",
+    "name": "Mahatma Gandhi Institute of Pharmacy, Lucknow"
+  },
+  {
+    "code": "392",
+    "name": "Goel Institute of Pharmacy & Sciences, Lucknow"
+  },
+  {
+    "code": "393",
+    "name": "Varanasi College of Pharmacy, Varanasi"
+  },
+  {
+    "code": "394",
+    "name": "College of Business Studies, Agra"
+  },
+  {
+    "code": "395",
+    "name": "Vtech Institue of Integrated Technology, Bulandshahar"
+  },
+  {
+    "code": "396",
+    "name": "Aryakul Colege of Management, Lucknow"
+  },
+  {
+    "code": "397",
+    "name": "Tdl College of Technology & Management, Lucknow"
+  },
+  {
+    "code": "398",
+    "name": "Bhalchndra Institute of Education & Management, Lucknow"
+  },
+  {
+    "code": "403",
+    "name": "K R S College of Management, Gonda"
+  },
+  {
+    "code": "408",
+    "name": "Chandramauli Institute of Management Sciences & Technology, Gorakhpur"
+  },
+  {
+    "code": "410",
+    "name": "RSD Academy, College of Management & Technology, Moradabad"
+  },
+  {
+    "code": "411",
+    "name": "HMFA Memorial Institute of Engineering & Technology, Allahabad"
+  },
+  {
+    "code": "412",
+    "name": "Aryan Institute of Technology, Ghaziabad"
+  },
+  {
+    "code": "414",
+    "name": "Bhagwati Institute of Technology & Sciences, Ghaziabad"
+  },
+  {
+    "code": "419",
+    "name": "Prabhat Engineering College, Kanpur Dehat"
+  },
+  {
+    "code": "422",
+    "name": "Bansal Institute of Engineering & Technology, Lucknow"
+  },
+  {
+    "code": "423",
+    "name": "School of Management Sciences (SMS Institute of Technology), Lucknow"
+  },
+  {
+    "code": "425",
+    "name": "Meerut International Institute of Technology, Meerut"
+  },
+  {
+    "code": "427",
+    "name": "Mahatma Gandhi Universe Institute(mgui), Unnao"
+  },
+  {
+    "code": "428",
+    "name": "Kashi Institute of Technology, Varanasi"
+  },
+  {
+    "code": "429",
+    "name": "Naraina Vidya Peeth Engineering & Management Institute, Kanpur"
+  },
+  {
+    "code": "430",
+    "name": "Maharana Institute of Technology & Sciences, Lucknow"
+  },
+  {
+    "code": "431",
+    "name": "B N College of Engineering & Technology(bncet), Lucknow"
+  },
+  {
+    "code": "434",
+    "name": "Jagaran Institute of Management, Kanpur"
+  },
+  {
+    "code": "438",
+    "name": "Vivek College of Management & Technology, Bijnaur"
+  },
+  {
+    "code": "440",
+    "name": "Narayan Vidya Peeth Management Institute, Kanpur"
+  },
+  {
+    "code": "441",
+    "name": "Central Institute of Management & Technology, Lucknow"
+  },
+  {
+    "code": "442",
+    "name": "Sardar Bhagat Singh College of Technology & Management, Lucknow"
+  },
+  {
+    "code": "444",
+    "name": "Mahavir Institute of Technology, Meerut"
+  },
+  {
+    "code": "445",
+    "name": "Dr Ram Manohar Lohia Institute, Ghaziabad"
+  },
+  {
+    "code": "446",
+    "name": "Institute of Professional Studies & Research, Unnao"
+  },
+  {
+    "code": "447",
+    "name": "Gokaran Narvadeshwar Institute of Technology & Management, Barabanki"
+  },
+  {
+    "code": "448",
+    "name": "Neelam College of Engineering & Technology, Agra"
+  },
+  {
+    "code": "450",
+    "name": "Sri Rammurti Smarak College of Engineering Technology & Research, Bareilly"
+  },
+  {
+    "code": "453",
+    "name": "Kunwar Haribansh Singh College of Pharmacy, Jaunpur"
+  },
+  {
+    "code": "455",
+    "name": "Navneet College of Technology & Management, Azamgarh"
+  },
+  {
+    "code": "456",
+    "name": "Pratap College of Management, Fatehpur"
+  },
+  {
+    "code": "465",
+    "name": "Himalayan Institute of Technology & Management, Lucknow"
+  },
+  {
+    "code": "467",
+    "name": "Madhu Vachaspati Institute of Engineering & Technology, Kaushambi"
+  },
+  {
+    "code": "471",
+    "name": "Eshan College of Engineering, Mathura"
+  },
+  {
+    "code": "472",
+    "name": "Institute of Technology & Management, Maharajganj"
+  },
+  {
+    "code": "473",
+    "name": "G C R G Memorial Trust's Group of Institutions, Faculty of Engineering, Lucknow"
+  },
+  {
+    "code": "474",
+    "name": "Shri Sidhi Vinayak Institute of Technology, Bareilly"
+  },
+  {
+    "code": "475",
+    "name": "Shri Jeet Ram Smarak Institute of Engineering & Technology, Bareilly"
+  },
+  {
+    "code": "476",
+    "name": "Future Institute of Engineering & Technology, Bareilly"
+  },
+  {
+    "code": "479",
+    "name": "Rajshree Institute of Management & Technology, Bareilly"
+  },
+  {
+    "code": "480",
+    "name": "North India Institute of Technology, Bijnaur"
+  },
+  {
+    "code": "483",
+    "name": "Institute of Technology & Management, Lucknow"
+  },
+  {
+    "code": "484",
+    "name": "Lucknow Model Institute of Technology & Management, Lucknow"
+  },
+  {
+    "code": "485",
+    "name": "S R Institute of Management & Technology, Lucknow"
+  },
+  {
+    "code": "486",
+    "name": "A N A College of Engineering & Management, Bareilly"
+  },
+  {
+    "code": "487",
+    "name": "Panchwati Institute of Engineering & Technology, Meerut"
+  },
+  {
+    "code": "488",
+    "name": "Shri Nath Ji Institute for Technical Education, Meerut"
+  },
+  {
+    "code": "490",
+    "name": "Suyash Institute of Information Technology, Gorakhpur"
+  },
+  {
+    "code": "492",
+    "name": "KCC Institute of Technology & Management, Gautam Buddh Nagar"
+  },
+  {
+    "code": "493",
+    "name": "Maharaja Agrasen College of Engineering & Technology, J P Nagar"
+  },
+  {
+    "code": "496",
+    "name": "FIT Engineering College, Meerut"
+  },
+  {
+    "code": "498",
+    "name": "Delhi Institute of Engineering & Technology, Meerut"
+  },
+  {
+    "code": "499",
+    "name": "Veer Kunwar Institute of Technology, Bijnaur"
+  },
+  {
+    "code": "501",
+    "name": "R V Institute of Technology, Bijnaur"
+  },
+  {
+    "code": "502",
+    "name": "Dev Bhoomi Group of Institutions, Saharanpur"
+  },
+  {
+    "code": "505",
+    "name": "Allenhouse Institute of Technology, Kanpur"
+  },
+  {
+    "code": "508",
+    "name": "Babu Banarasi Das Engineering, College, Lucknow"
+  },
+  {
+    "code": "511",
+    "name": "G L Bajaj Group of Institutions, Mathura"
+  },
+  {
+    "code": "514",
+    "name": "Faculty of Engineering Shanti Niketan Trust's Group of Institutions, Meerut"
+  },
+  {
+    "code": "516",
+    "name": "Kailash Institute of Pharmacy & Management, Gorakhpur"
+  },
+  {
+    "code": "517",
+    "name": "Kipm College of Management, Gorakhpur"
+  },
+  {
+    "code": "518",
+    "name": "Ssld Varshney Engineering College, Aligarh"
+  },
+  {
+    "code": "520",
+    "name": "Indraprastha Institute of Management & Technology, Saharanpur"
+  },
+  {
+    "code": "521",
+    "name": "Kothiwal Institute of Technology & Professional Studies, Moradabad"
+  },
+  {
+    "code": "522",
+    "name": "Maharana Prataap College of Engineering, Kanpur"
+  },
+  {
+    "code": "523",
+    "name": "Vision Institute of Technology, Kanpur"
+  },
+  {
+    "code": "524",
+    "name": "Vision Institute of Technology, Aligarh"
+  },
+  {
+    "code": "525",
+    "name": "Buddha Institute of Technology, Gorakhpur"
+  },
+  {
+    "code": "527",
+    "name": "Sunrise Institute of Engineering Technical & Management, Unnao"
+  },
+  {
+    "code": "529",
+    "name": "Saroj Institute of Management & Technology, Lucknow"
+  },
+  {
+    "code": "533",
+    "name": "RV Northland Institue of Management, Gautam Buddh Nagar"
+  },
+  {
+    "code": "534",
+    "name": "Mahaveer Institute of Technology & Management, Raibareilly"
+  },
+  {
+    "code": "535",
+    "name": "Rajendra Prasad College of Management, Azamgarh"
+  },
+  {
+    "code": "536",
+    "name": "Shree Ji Baba Institue of Professional Studies, Mathura"
+  },
+  {
+    "code": "538",
+    "name": "AKS Management College, Lucknow"
+  },
+  {
+    "code": "540",
+    "name": "Krishna Institute of Management, Meerut"
+  },
+  {
+    "code": "541",
+    "name": "Amardeep College of Engineering & Management, Firozabad"
+  },
+  {
+    "code": "544",
+    "name": "Kalka Engineering College, Meerut"
+  },
+  {
+    "code": "545",
+    "name": "Jahangirabad Educational Trust's Group of Institutions, Faculty of Engineering, Barabanki"
+  },
+  {
+    "code": "547",
+    "name": "Chaudhary Beeri Singh College of Engineering & Management, Agra"
+  },
+  {
+    "code": "548",
+    "name": "Dewan V S Institute of Hotel Management & Technology, Meerut"
+  },
+  {
+    "code": "549",
+    "name": "Radha Govind Institute of Pharmacy, Moradabad"
+  },
+  {
+    "code": "550",
+    "name": "Kanpur Institute of Technology & Pharmacy, Kanpur"
+  },
+  {
+    "code": "551",
+    "name": "Kashi Institute of Pharmacy, Varanasi"
+  },
+  {
+    "code": "552",
+    "name": "Chandra Shekhar Singh College of Pharmacy, Kaushambi"
+  },
+  {
+    "code": "554",
+    "name": "Naraina Vidya Peeth \" Group of Institutions\" Faculty of Pharmacy, Kanpur"
+  },
+  {
+    "code": "557",
+    "name": "Shanti Niketan Trust's Group of Institutiona, Faculty of Management, Meerut"
+  },
+  {
+    "code": "561",
+    "name": "Hari College of Management, Saharanpur"
+  },
+  {
+    "code": "566",
+    "name": "Future Institute of Management & Technology, Bareilly"
+  },
+  {
+    "code": "567",
+    "name": "Bora Institute of Management Sciences, Lucknow"
+  },
+  {
+    "code": "568",
+    "name": "SETH Sri Nivas Agrawal Institute of Management, Kanpur"
+  },
+  {
+    "code": "571",
+    "name": "Dr B R Ambedkar Pooja College of Pharmacy, Gorakhpur"
+  },
+  {
+    "code": "572",
+    "name": "Lucknow Institute of Pharmacy, Lucknow"
+  },
+  {
+    "code": "575",
+    "name": "Malti Memorial Trusts CSM \"group of Institutions\" Faculty of B Pharmacy, Allahabad"
+  },
+  {
+    "code": "576",
+    "name": "CSM Group of Institutions, Faculty of Management, Allahabad"
+  },
+  {
+    "code": "579",
+    "name": "HLM College, Ghaziabad"
+  },
+  {
+    "code": "581",
+    "name": "Shri Girairaj Maharaj Institute of Management, Mathura"
+  },
+  {
+    "code": "582",
+    "name": "Sun Institute of Management & Technology, Shahjahanpur"
+  },
+  {
+    "code": "583",
+    "name": "Lakshya Institute of Management & Information Technology, Shahjahanpur"
+  },
+  {
+    "code": "584",
+    "name": "Banshi College of Management & Technology, Kanpur"
+  },
+  {
+    "code": "586",
+    "name": "Dev Bhoomi Group of Institutions, Faculty of Computer Application, Saharanpur"
+  },
+  {
+    "code": "588",
+    "name": "Prince Institute of Innovative Technology, Gautam Buddh Nagar"
+  },
+  {
+    "code": "593",
+    "name": "Vinayak Vidyapeeth, Meerut"
+  },
+  {
+    "code": "595",
+    "name": "Srajan Institute of Management & Technology, Bareilly"
+  },
+  {
+    "code": "597",
+    "name": "Khandelwal College of Architecture & Design, Bareilly"
+  },
+  {
+    "code": "598",
+    "name": "Moradabd Educational Trust(met) \"group of Institutions\" Faculty of Pharmacy, Moradabad"
+  },
+  {
+    "code": "599",
+    "name": "Jahangirabad Educational Trust's Group of Institutions, Faculty of Management, Barabanki"
+  },
+  {
+    "code": "602",
+    "name": "Aashlar Business School, Mathura"
+  },
+  {
+    "code": "603",
+    "name": "Sri Rlt Institute of Management, Etawah"
+  },
+  {
+    "code": "604",
+    "name": "Prem Prakash Gupta Institute of Management, Bareilly"
+  },
+  {
+    "code": "605",
+    "name": "Unnati Management College, Mathura"
+  },
+  {
+    "code": "607",
+    "name": "Dr Virendra Swaroop Institute of Professional Studies, Kanpur"
+  },
+  {
+    "code": "609",
+    "name": "J P School of Business, Meerut"
+  },
+  {
+    "code": "614",
+    "name": "Shree Satya Institute of Management, Moradabad"
+  },
+  {
+    "code": "617",
+    "name": "Uttam Institute of Management Studies, Agra"
+  },
+  {
+    "code": "620",
+    "name": "GCRG Memorial Trust's Group of Institutions, Faculty of Management, Lucknow"
+  },
+  {
+    "code": "621",
+    "name": "Dev Bhoomi Group of Institutions Faculty of Management, Saharanpur"
+  },
+  {
+    "code": "622",
+    "name": "Modern Institute of Technology & Management, Ghaziabad"
+  },
+  {
+    "code": "623",
+    "name": "Bharti Institute of Management & Technology, Meerut"
+  },
+  {
+    "code": "625",
+    "name": "Sanskar College of Management & Computer Application, Allahabad"
+  },
+  {
+    "code": "631",
+    "name": "Moradabad Educational Trust(met) \"group of Institutions\" Faculty of B Architecture, Moradabad"
+  },
+  {
+    "code": "636",
+    "name": "Saharanpur Institute of Advance Studies, Saharanpur"
+  },
+  {
+    "code": "640",
+    "name": "Dr Virendra Swarup Memorial Trust Group of Institutions, Unnao"
+  },
+  {
+    "code": "641",
+    "name": "Ashoka Institute of Technology & Management, Varanasi"
+  },
+  {
+    "code": "643",
+    "name": "Abhay Memorial Trust Group of Institutions, Allahabad"
+  },
+  {
+    "code": "644",
+    "name": "Svs Group of Institutions, Meerut"
+  },
+  {
+    "code": "645",
+    "name": "Ideal Institute of Management & Technology, Ghaziabad"
+  },
+  {
+    "code": "647",
+    "name": "Indraprasrh Institute of Technology, J P Nagar"
+  },
+  {
+    "code": "648",
+    "name": "Babu Sunder Singh Institute of Technology & Management, Lucknow"
+  },
+  {
+    "code": "649",
+    "name": "MG Institute of Management & Technology, Lucknow"
+  },
+  {
+    "code": "653",
+    "name": "Prem Prakash Gupta Institute of Engineering, Bareilly"
+  },
+  {
+    "code": "657",
+    "name": "Krishnapit Institute of Pharmacy, Allahabad"
+  },
+  {
+    "code": "659",
+    "name": "Heritage Instiute of Hotel & Tourism, Agra"
+  },
+  {
+    "code": "660",
+    "name": "Goel Institute of Higher Studies, Lucknow"
+  },
+  {
+    "code": "661",
+    "name": "Krishnarpit Institute of Management & Technology, Allahabad"
+  },
+  {
+    "code": "662",
+    "name": "Ss Institute of Management, Lucknow"
+  },
+  {
+    "code": "666",
+    "name": "SRM Business School, Lucknow"
+  },
+  {
+    "code": "670",
+    "name": "Lucknow Model Institute of Management, Lucknow"
+  },
+  {
+    "code": "671",
+    "name": "Brahmanand Group of Institutions, Bulandshahar"
+  },
+  {
+    "code": "672",
+    "name": "ITM School of Architecture & Town Planning, Lucknow"
+  },
+  {
+    "code": "673",
+    "name": "ITM School of Management, Lucknow"
+  },
+  {
+    "code": "679",
+    "name": "Iterc College of Management, Ghaziabad"
+  },
+  {
+    "code": "680",
+    "name": "City College of Management & Technology, Lucknow"
+  },
+  {
+    "code": "681",
+    "name": "Lioyd Business School, Gautam Buddh Nagar"
+  },
+  {
+    "code": "682",
+    "name": "Bimt College, Meerut"
+  },
+  {
+    "code": "686",
+    "name": "Accurate Institute of Advance Management, Gautam Buddh Nagar"
+  },
+  {
+    "code": "687",
+    "name": "ANA College of Management Studies, Bareilly"
+  },
+  {
+    "code": "688",
+    "name": "Dev Prayag Institute of Management, Allahabad"
+  },
+  {
+    "code": "689",
+    "name": "Institute of Information Management & Technology, Aligarh"
+  },
+  {
+    "code": "692",
+    "name": "Sky Line Institute of Managemnt & Technology, Gautam Buddh Nagar"
+  },
+  {
+    "code": "695",
+    "name": "Sri Ram Group of Colleges, Muzaffarnagar"
+  },
+  {
+    "code": "697",
+    "name": "Agra Public College of Technology & Management, Agra"
+  },
+  {
+    "code": "698",
+    "name": "Dwarikadheesh Research Education & Management School, Saharanpur"
+  },
+  {
+    "code": "702",
+    "name": "MIT College of Management, Moradabad"
+  },
+  {
+    "code": "703",
+    "name": "Shri Siddhi Vinayak Institute of Management, Bareilly"
+  },
+  {
+    "code": "705",
+    "name": "JMS Group of Institutions, Ghaziabad"
+  },
+  {
+    "code": "708",
+    "name": "Ssld Varshney Institute of Management & Engineering, Aligarh"
+  },
+  {
+    "code": "710",
+    "name": "Ch Harchand Singh College of Management, Bulandshahar"
+  },
+  {
+    "code": "711",
+    "name": "Vishveshwarya College of Education, Meerut"
+  },
+  {
+    "code": "714",
+    "name": "Kanpur Institute of Management Studies, Unnao"
+  },
+  {
+    "code": "715",
+    "name": "Sr Group of Institutions(College of Engineering Management & Technology), Jhansi"
+  },
+  {
+    "code": "717",
+    "name": "FMG Academy Group of Institutions, Gautam Buddh Nagar"
+  },
+  {
+    "code": "719",
+    "name": "Axis Institute of Technology & Management, Kanpur"
+  },
+  {
+    "code": "720",
+    "name": "Axis Institute of Fashion Technology, Kanpur"
+  },
+  {
+    "code": "721",
+    "name": "Axis Institute of Architecture, Kanpur"
+  },
+  {
+    "code": "722",
+    "name": "Axis Busines School, Kanpur"
+  },
+  {
+    "code": "723",
+    "name": "Axis Institute of Planning & Management, Kanpur"
+  },
+  {
+    "code": "726",
+    "name": "Institute of Management & Sciences, J P Nagar"
+  },
+  {
+    "code": "727",
+    "name": "Shambhunath Institute of Management, Allahabad"
+  },
+  {
+    "code": "732",
+    "name": "Rudra Group of Institutions, Meerut"
+  },
+  {
+    "code": "733",
+    "name": "High Rank Business School, Gautam Buddh Nagar"
+  },
+  {
+    "code": "734",
+    "name": "Rajkiya Engineering College, Banda"
+  },
+  {
+    "code": "735",
+    "name": "Rajkiya Engineering College, Bijnaur"
+  },
+  {
+    "code": "736",
+    "name": "Rajkiya Engineering College, Azamgarh"
+  },
+  {
+    "code": "737",
+    "name": "Rajkiya Engineering College, Ambedkar Nagar"
+  },
+  {
+    "code": "740",
+    "name": "Prayag Institute of Technology & Management, Allahabad"
+  },
+  {
+    "code": "741",
+    "name": "J K Institute of Pharmacy & Management, Bulandshahar"
+  },
+  {
+    "code": "743",
+    "name": "Bhavdiya Institute of Business Management, Faizabad"
+  },
+  {
+    "code": "745",
+    "name": "Sri Rammurti Smarak College of Engineering & Technology, Unnao"
+  },
+  {
+    "code": "746",
+    "name": "Kunwar Haribansh Singh Institute of Management, Jaunpur"
+  },
+  {
+    "code": "747",
+    "name": "Raj School of Management & Sciences, Varanasi"
+  },
+  {
+    "code": "749",
+    "name": "Madhu Vachaspati School of Management, Kaushambi"
+  },
+  {
+    "code": "751",
+    "name": "Kipm College of Engineering & Technology, Gorakhpur"
+  },
+  {
+    "code": "752",
+    "name": "Nandini Nagar Technical Campus, Gonda"
+  },
+  {
+    "code": "753",
+    "name": "Lakshya Technical Campus, Shahjahanpur"
+  },
+  {
+    "code": "754",
+    "name": "Dnm Institute of Engineering & Technology, Lucknow"
+  },
+  {
+    "code": "756",
+    "name": "Institute of Management Research & Technology, Lucknow"
+  },
+  {
+    "code": "757",
+    "name": "Utkarsh College of Management Education, Bareilly"
+  },
+  {
+    "code": "759",
+    "name": "Dr Om Prakash Institute of Management & Technology, Farrukhabad"
+  },
+  {
+    "code": "760",
+    "name": "Lotus Institute of Management, Bareilly"
+  },
+  {
+    "code": "761",
+    "name": "Maa Vaishno Devi Educational & Law College, Lucknow"
+  },
+  {
+    "code": "762",
+    "name": "Noble Institute of Management & Technology, Lucknow"
+  },
+  {
+    "code": "763",
+    "name": "Maa Bhagwata Kunwar Institute of Management, Mau"
+  },
+  {
+    "code": "764",
+    "name": "Smt Fulehra Smarak College of Pharmacy, Ballia"
+  },
+  {
+    "code": "765",
+    "name": "Remote Sensing Application Centre, Lucknow"
+  },
+  {
+    "code": "766",
+    "name": "Purvanchal Institute of Architecture & Design, Gorakhpur"
+  },
+  {
+    "code": "780",
+    "name": "Landmark Technical Campus, J P Nagar"
+  },
+  {
+    "code": "781",
+    "name": "Hardayal Technical Campus, Mathura"
+  },
+  {
+    "code": "783",
+    "name": "R D Engineering College Research Centre, Ghaziabad"
+  },
+  {
+    "code": "785",
+    "name": "G & R Institute of Management & Technology, Bulandshahar"
+  },
+  {
+    "code": "786",
+    "name": "Mangalmay Institute of Technology, Gautam Buddh Nagar"
+  },
+  {
+    "code": "789",
+    "name": "Dayannad Vidyapeeth Education, Meerut"
+  },
+  {
+    "code": "790",
+    "name": "School of Business Management & Technology, Bulandshahar"
+  },
+  {
+    "code": "791",
+    "name": "Disha Bharti College of Management & Education, Saharanpur"
+  },
+  {
+    "code": "792",
+    "name": "Institute of Advanced Management & Research, Ghaziabad"
+  },
+  {
+    "code": "796",
+    "name": "Adhunik College of Engineering, Ghaziabad"
+  },
+  {
+    "code": "797",
+    "name": "Adhunik Institute of Productivity Management & Research, Ghaziabad"
+  },
+  {
+    "code": "798",
+    "name": "Anand College of Architecture, Agra"
+  },
+  {
+    "code": "799",
+    "name": "Ace College of Engineering & Management, Agra"
+  },
+  {
+    "code": "800",
+    "name": "Jagmohan Institute of Management & Technology, Bagpat"
+  },
+  {
+    "code": "801",
+    "name": "G L Bajaj Institute of Management & Research, Gautam Buddh Nagar"
+  },
+  {
+    "code": "802",
+    "name": "Nitra Technical Campus, Ghaziabad"
+  },
+  {
+    "code": "803",
+    "name": "Greater Noida Institute of Business Maagement, Gautam Buddh Nagar"
+  },
+  {
+    "code": "804",
+    "name": "Aps College of Education & Technology, Meerut"
+  },
+  {
+    "code": "805",
+    "name": "Accurate Institute of Architecture & Planning, Gautam Buddh Nagar"
+  },
+  {
+    "code": "810",
+    "name": "Greater Noida College of Technology, Gautam Buddh Nagar"
+  },
+  {
+    "code": "811",
+    "name": "Forth Dimention College of Architecture, Saharanpur"
+  },
+  {
+    "code": "812",
+    "name": "Cbs College of Management, Agra"
+  },
+  {
+    "code": "815",
+    "name": "Amani Group of Institutions, Amroha"
+  },
+  {
+    "code": "817",
+    "name": "Ar Institute of Management & Technology, Meerut"
+  },
+  {
+    "code": "820",
+    "name": "Ajay Kumar Garg Institute of Management, Ghaziabad"
+  },
+  {
+    "code": "821",
+    "name": "Mahaveer College of Pharmacy, Meerut"
+  },
+  {
+    "code": "822",
+    "name": "Eshan College of Management, Mathura"
+  },
+  {
+    "code": "825",
+    "name": "IMS, J P Nagar"
+  },
+  {
+    "code": "826",
+    "name": "Sanskar College of Architecture & Planning, Ghaziabad"
+  },
+  {
+    "code": "827",
+    "name": "Mascot Institute of Management, Bareilly"
+  },
+  {
+    "code": "828",
+    "name": "Dayal Group of Institutions, Lucknow"
+  },
+  {
+    "code": "829",
+    "name": "Iilm Academy of Highier Learning, Lucknow"
+  },
+  {
+    "code": "830",
+    "name": "Devidayal Memorial Institutions, Kanpur Dehat"
+  },
+  {
+    "code": "834",
+    "name": "Integrated Academy of Management & Technology(inmantec), Ghaziabad"
+  },
+  {
+    "code": "835",
+    "name": "Ltr Institute of Management, Meerut"
+  },
+  {
+    "code": "836",
+    "name": "Bhagwant Institute of Technology, Ghaziabad"
+  },
+  {
+    "code": "839",
+    "name": "Rajkiya Engineering College, Kannauj"
+  },
+  {
+    "code": "840",
+    "name": "Rajkiya Engineering College, Mainpuri"
+  },
+  {
+    "code": "841",
+    "name": "Rajkiya Engineering College, Sonebhadra"
+  },
+  {
+    "code": "842",
+    "name": "Devrishi Institute of Management & Technology, Saharanpur"
+  },
+  {
+    "code": "844",
+    "name": "Janta College of Pharmacy, Bijnor"
+  },
+  {
+    "code": "845",
+    "name": "Krishna Pharmacy College, Bijnor"
+  },
+  {
+    "code": "846",
+    "name": "Sanskar College of Pharmacy & Research, Ghaziabad"
+  },
+  {
+    "code": "848",
+    "name": "PSIT College of Management, Kanpur"
+  },
+  {
+    "code": "849",
+    "name": "Isabella Thoburn College (Professional Studies), Lucknow"
+  },
+  {
+    "code": "850",
+    "name": "Future Institute of Pharmacy, Bareilly"
+  },
+  {
+    "code": "851",
+    "name": "Bhavdiya Institute of Pharmaceutical Sciences and Research, Faizabad"
+  },
+  {
+    "code": "852",
+    "name": "Metro College of Health Sciences & Research, Gautam Buddh Nagar"
+  },
+  {
+    "code": "853",
+    "name": "Naraina School of Planning & Architecture, Kanpur"
+  },
+  {
+    "code": "854",
+    "name": "Saharanpur Pharmacy College, Saharanpur"
+  },
+  {
+    "code": "855",
+    "name": "Shri Rawatpura Sarkar Institute of Pharmacy, Jhansi"
+  },
+  {
+    "code": "856",
+    "name": "Veer Vijay Pharmacy College, Saharanpur"
+  },
+  {
+    "code": "857",
+    "name": "U P Institute of Design, Noida"
+  },
+  {
+    "code": "858",
+    "name": "Centre for Advance Studies, Lucknow"
+  },
+  {
+    "code": "859",
+    "name": "Mesco Institute of Pharmacy, Moradabad"
+  },
+  {
+    "code": "860",
+    "name": "Rahul Sankrityayan College of Pharmacy, Azamgarh"
+  },
+  {
+    "code": "861",
+    "name": "Saras College of Pharmacy, Baghpat"
+  },
+  {
+    "code": "862",
+    "name": "SETH Vishambhar Nath Institute of Pharmaceutical Sciences, Barabanki"
+  },
+  {
+    "code": "863",
+    "name": "SETH Vishambhar Nath Institute of Pharmacy, Barabanki"
+  },
+  {
+    "code": "864",
+    "name": "TRC Mahavidyalaya, Department of Pharmacy, Barabanki"
+  },
+  {
+    "code": "865",
+    "name": "Aurous Institute of Management, Barabanki"
+  },
+  {
+    "code": "866",
+    "name": "A N A Institute of Pharmaceutical Sciences & Research, Bareilly"
+  },
+  {
+    "code": "867",
+    "name": "S R Institute of Pharmacy, Bareilly"
+  },
+  {
+    "code": "868",
+    "name": "Steller Institute of Pharmacy, Bareilly"
+  },
+  {
+    "code": "869",
+    "name": "Krishna Institute, Bijnor"
+  },
+  {
+    "code": "870",
+    "name": "D N College, Bulandshahr"
+  },
+  {
+    "code": "871",
+    "name": "Hillwood Medical School, Bulandshahr"
+  },
+  {
+    "code": "872",
+    "name": "Dr Om Prakash School of Pharmacy, Farrukhabad"
+  },
+  {
+    "code": "873",
+    "name": "Shiv Bali Singh Group of Educational and Training Institute College of Pharmacy, Fatehpur"
+  },
+  {
+    "code": "874",
+    "name": "Ch Charan Singh College of Pharmacy, Gautam Buddha Nagar"
+  },
+  {
+    "code": "875",
+    "name": "Skyline Institute of Pharmacy, Gautam Buddha Nagar"
+  },
+  {
+    "code": "876",
+    "name": "Maharishi Institute of Management, Gautam Buddha Nagar"
+  },
+  {
+    "code": "877",
+    "name": "BBDIT College of Pharmacy, Ghaziabad"
+  },
+  {
+    "code": "878",
+    "name": "D J College of Pharmacy, Ghaziabad"
+  },
+  {
+    "code": "879",
+    "name": "Dr Ram Manohar Lohia College of Pharmacy, Ghaziabad"
+  },
+  {
+    "code": "880",
+    "name": "Lutawan Institute of Pharmacy, Ghazipur"
+  },
+  {
+    "code": "881",
+    "name": "Satyadeo College of Pharmacy, Ghazipur"
+  },
+  {
+    "code": "882",
+    "name": "Tahira Institute of Medical Sciences, Gorakhpur"
+  },
+  {
+    "code": "883",
+    "name": "R D S College of Pharmacy, Jaunpur"
+  },
+  {
+    "code": "886",
+    "name": "Yogendra Nath Saxena College of Pharmacy & Research, Jyotiba Phule Nagar"
+  },
+  {
+    "code": "887",
+    "name": "Vision Institute of Management, Kanpur Nagar"
+  },
+  {
+    "code": "888",
+    "name": "Sanskriti College of Higher Education and Studies, Kanpur Dehat"
+  },
+  {
+    "code": "889",
+    "name": "Maharana Pratap College of Pharmaceutical Sciences, Kanpur Nagar"
+  },
+  {
+    "code": "890",
+    "name": "Late Ravindranand Baronia College of Pharmacy Mahroni, Lalitpur"
+  },
+  {
+    "code": "892",
+    "name": "F I Pharmacy College, Lucknow"
+  },
+  {
+    "code": "893",
+    "name": "GCRG College of Pharmacy, Lucknow"
+  },
+  {
+    "code": "894",
+    "name": "Gsrm Memorial College of Pharmacy, Lucknow"
+  },
+  {
+    "code": "895",
+    "name": "Hygia Institute of Pharmacy, Lucknow"
+  },
+  {
+    "code": "896",
+    "name": "J P College of Pharmacy, Lucknow"
+  },
+  {
+    "code": "897",
+    "name": "Jan Kalyan Institute of Technical Excellence, Lucknow"
+  },
+  {
+    "code": "898",
+    "name": "Yash Raj Institute of Pharmacy, Lucknow"
+  },
+  {
+    "code": "899",
+    "name": "Sri Sharda Institute of Management and Technology, Lucknow"
+  },
+  {
+    "code": "900",
+    "name": "ITM College of Pharmacy, Maharajganj"
+  },
+  {
+    "code": "901",
+    "name": "Divya College of Pharmacy, Mathura"
+  },
+  {
+    "code": "902",
+    "name": "Nss College of Management, Mathura"
+  },
+  {
+    "code": "903",
+    "name": "Aps College of Education, Meerut"
+  },
+  {
+    "code": "904",
+    "name": "Apex Institute of Pharmacy, Mirzapur"
+  },
+  {
+    "code": "905",
+    "name": "Vindhya Gurukul College of Pharmacy, Mirzapur"
+  },
+  {
+    "code": "906",
+    "name": "R K College of Pharmacy, Moradabad"
+  },
+  {
+    "code": "907",
+    "name": "Suyash Institute of Pharmacy, Gorakhpur"
+  },
+  {
+    "code": "908",
+    "name": "Noida Institute of Engineering & Technology(Pharmacy Institute), Gautam Buddh Nagar"
+  },
+  {
+    "code": "909",
+    "name": "Maa Bhagwati College of Pharmacy, Lucknow"
+  },
+  {
+    "code": "910",
+    "name": "Sai Meer College of Pharmacy, Kannauj"
+  },
+  {
+    "code": "911",
+    "name": "Sarvodhya Adarsh Pharmacy College, Agra"
+  },
+  {
+    "code": "912",
+    "name": "Shri Siddhi Vinayak College of Pharmacy, Agra"
+  },
+  {
+    "code": "913",
+    "name": "ABESIT College of Pharmacy, Ghaziabad"
+  },
+  {
+    "code": "914",
+    "name": "Rj College of Pharmacy, Aligarh"
+  },
+  {
+    "code": "915",
+    "name": "Maa Gayatri College of Pharmacy, Allahabad"
+  },
+  {
+    "code": "916",
+    "name": "Maya Institute of Pharmacy, Hathras"
+  },
+  {
+    "code": "917",
+    "name": "R K College of Pharmacy, Allahabad"
+  },
+  {
+    "code": "918",
+    "name": "M G B Rajat College of Pharmacy and Management, Ambedkar Nagar"
+  },
+  {
+    "code": "919",
+    "name": "B N College of Pharmacy, Lucknow"
+  },
+  {
+    "code": "920",
+    "name": "Ramdeni Singh Jagdish Singh Memorial Samiti, Azamgarh"
+  },
+  {
+    "code": "921",
+    "name": "Swami Sahajanand College of Pharmacy, Azamgarh"
+  },
+  {
+    "code": "922",
+    "name": "S S S College of Pharmacy, Azamgarh"
+  },
+  {
+    "code": "923",
+    "name": "S K Mishra College of Pharmacy, Azamgarh"
+  },
+  {
+    "code": "924",
+    "name": "Bhagwan Adarsh Pharmacy College, Azamgarh"
+  },
+  {
+    "code": "925",
+    "name": "Babu Satiram Jaikaran Smarak Pharmacy College, Azamgarh"
+  },
+  {
+    "code": "926",
+    "name": "Mata Dulari Devi Pharmacy College, Azamgarh"
+  },
+  {
+    "code": "927",
+    "name": "B N Pharmacy College, Azamgarh"
+  },
+  {
+    "code": "928",
+    "name": "J D College of Pharmacy, Azamgarh"
+  },
+  {
+    "code": "929",
+    "name": "Shri Kashi Chandradev Yadav Pharmacy College, Azamgarh"
+  },
+  {
+    "code": "930",
+    "name": "Jainath Memorial Pharmacy College, Azamgarh"
+  },
+  {
+    "code": "931",
+    "name": "Vinayak Pharmacy College, Azamgarh"
+  },
+  {
+    "code": "932",
+    "name": "Buddha Institute of Pharmacy, Gorakhpur"
+  },
+  {
+    "code": "933",
+    "name": "Prabhakar College of Pharmacy, Azamgarh"
+  },
+  {
+    "code": "934",
+    "name": "Pt Nagina College of Pharmacy, Azamgarh"
+  },
+  {
+    "code": "935",
+    "name": "Krishna Pharmacy College, Agra"
+  },
+  {
+    "code": "936",
+    "name": "Bhagwati College of Pharmacy, Baghpat"
+  },
+  {
+    "code": "937",
+    "name": "Government Pharmacy College, BRD Medical College Campus, Gorakhpur, Gorakhpur"
+  },
+  {
+    "code": "938",
+    "name": "Maa Maturni Devi Mahavidyalay, Ballia"
+  },
+  {
+    "code": "939",
+    "name": "City College of Pharmacy, Barabanki"
+  },
+  {
+    "code": "940",
+    "name": "Ram Nagina Pharmacy College, Sonbhadra"
+  },
+  {
+    "code": "941",
+    "name": "Sagar College of Pharmacy, Barabanki"
+  },
+  {
+    "code": "942",
+    "name": "City School of Pharmacy, Barabanki"
+  },
+  {
+    "code": "943",
+    "name": "Bhagwan Singh Institute of Pharmacy, Jalaun"
+  },
+  {
+    "code": "944",
+    "name": "Nandlal Prabhu Devi Professional Institute, Barabanki"
+  },
+  {
+    "code": "945",
+    "name": "S N A Institute of Pharmacy, Barabanki"
+  },
+  {
+    "code": "946",
+    "name": "Jagmeet Memorial College of Pharmacy, Bijnor"
+  },
+  {
+    "code": "947",
+    "name": "Dr Rajendra Prasad Sikshan Sansthan Gangchauli, Barabanki"
+  },
+  {
+    "code": "948",
+    "name": "Poineer Institute of Pharmacy, Bareilly"
+  },
+  {
+    "code": "949",
+    "name": "Universal Institute of Pharmacy, Bareilly"
+  },
+  {
+    "code": "950",
+    "name": "Iif Business School, Gautam Buddha Nagar"
+  },
+  {
+    "code": "951",
+    "name": "Indu Prakash Pharmacy College, Mau"
+  },
+  {
+    "code": "952",
+    "name": "Acme Institute of Pharmacy, Bareilly"
+  },
+  {
+    "code": "953",
+    "name": "Pt Rajendra Prasad Smarak College of Pharmacy, Bareilly"
+  },
+  {
+    "code": "954",
+    "name": "Samahi College of Pharmacy, Auraiya"
+  },
+  {
+    "code": "955",
+    "name": "Kritika Pharmacy College, Bareilly"
+  },
+  {
+    "code": "956",
+    "name": "Arya College of Pharmacy, Bareilly"
+  },
+  {
+    "code": "957",
+    "name": "Lotus Institute of Pharmacy, Bareilly"
+  },
+  {
+    "code": "958",
+    "name": "R C C College of Pharmacy, Basti"
+  },
+  {
+    "code": "959",
+    "name": "Praduman Singh Shikshan Prashikshan Sansthan Pharmacy College, Basti"
+  },
+  {
+    "code": "960",
+    "name": "Goel Institute of Pharmaceutical Sciences, Lucknow"
+  },
+  {
+    "code": "961",
+    "name": "Lakshya College of Management and Technology, Bijnor"
+  },
+  {
+    "code": "962",
+    "name": "Veer Kunwar College of Pharmacy, Bijnor"
+  },
+  {
+    "code": "963",
+    "name": "R K Institute of Pharmacy, Bareilly"
+  },
+  {
+    "code": "964",
+    "name": "Prathviraj Chauhan Institute of Medical Sciences, Bijnor"
+  },
+  {
+    "code": "965",
+    "name": "Lbss Degree College, Bijnor"
+  },
+  {
+    "code": "966",
+    "name": "S P College of Pharmaceutical Sciences & Research, Bijnor"
+  },
+  {
+    "code": "967",
+    "name": "Roots Institute of Professional Education, Bijnor"
+  },
+  {
+    "code": "968",
+    "name": "A R Institute of Pharmacy, Bijnor"
+  },
+  {
+    "code": "969",
+    "name": "Shikhar Institute of Pharmacy, Budaun"
+  },
+  {
+    "code": "970",
+    "name": "L N Pharmacy College, Deoria"
+  },
+  {
+    "code": "971",
+    "name": "Lpm College of Pharmacy, Deoria"
+  },
+  {
+    "code": "972",
+    "name": "Bps Educational Institution of Pharmacy, Etah"
+  },
+  {
+    "code": "973",
+    "name": "Faculty of Pharmacy Future Institute of Medical Sciences, Bareilly"
+  },
+  {
+    "code": "974",
+    "name": "Ch Sughar Singh Pharmacy College, Etawah"
+  },
+  {
+    "code": "975",
+    "name": "Urmila College of Pharmacy, Faizabad"
+  },
+  {
+    "code": "976",
+    "name": "Maa Sharda Pharmacy College, Faizabad"
+  },
+  {
+    "code": "977",
+    "name": "Shakuntala Devi College of Pharmacy, Farrukhabad"
+  },
+  {
+    "code": "978",
+    "name": "Dr Pushpendra Singh College of Pharmacy, Farrukhabad"
+  },
+  {
+    "code": "979",
+    "name": "Th Yugraj Singh Pharmacy College, Fatehpur"
+  },
+  {
+    "code": "980",
+    "name": "Parmarth College of Pharmacy, Ghaziabad"
+  },
+  {
+    "code": "981",
+    "name": "Amardeep College of Pharmacy, Firozabad"
+  },
+  {
+    "code": "982",
+    "name": "Mahalaxmi Institute of Management & Technology, Meerut"
+  },
+  {
+    "code": "983",
+    "name": "Asha Pharmacy College, Varanasi"
+  },
+  {
+    "code": "984",
+    "name": "Orlean College of Pharmacy, Gautam Buddha Nagar"
+  },
+  {
+    "code": "985",
+    "name": "GNIT College of Pharmacy, Gautam Buddha Nagar"
+  },
+  {
+    "code": "986",
+    "name": "Accurate College of Pharmacy, Gautam Buddha Nagar"
+  },
+  {
+    "code": "987",
+    "name": "Vishveshwarya College of Pharmacy, Gautam Buddha Nagar"
+  },
+  {
+    "code": "988",
+    "name": "College of Pharmacy Jss Academy of Technical Education, Gautam Buddha Nagar"
+  },
+  {
+    "code": "989",
+    "name": "United College of Engineering and Research(Pharmacy), Greater Noida, Gautam Buddha Nagar"
+  },
+  {
+    "code": "990",
+    "name": "Dr Virendra Swarup Memorial Trust Group of Instituions, Kanpur Nagar"
+  },
+  {
+    "code": "991",
+    "name": "Maa Saraswati Paramedical Institute, Ghazipur"
+  },
+  {
+    "code": "992",
+    "name": "Vishwanath Institute of Pharmacy, Ghazipur"
+  },
+  {
+    "code": "993",
+    "name": "S G M Institute of Pharmacy, Ghazipur"
+  },
+  {
+    "code": "994",
+    "name": "Shri Rajendar Singh College of Pharmacy, Hardoi"
+  },
+  {
+    "code": "995",
+    "name": "I D Memorial College of Pharmacy, Ghazipur"
+  },
+  {
+    "code": "996",
+    "name": "Techno Institute of Management Sciences, Lucknow"
+  },
+  {
+    "code": "997",
+    "name": "Hakikullah Chaudary College of Pharmacy, Gonda"
+  },
+  {
+    "code": "998",
+    "name": "Cross Belly College of Pharmacy, Azamgarh"
+  }
+]

@@ -1,0 +1,16 @@
+{"message":"Enabling sessions with filesystem storage","label":"@astrojs/node","level":"info"}
+{"message":"connected.","label":"vite","level":"info"}
+{"message":"Generated 3ms","label":"types","level":"info"}
+{"message":"connected.","label":"vite","level":"info"}
+{"message":"Re-optimizing dependencies because vite config has changed","label":"vite","level":"info"}
+{"message":" astro  v7.0.9 ready in 8774 ms\n┃ Local    http://localhost:4321/\n┃ Network  use --host to expose","label":"SKIP_FORMAT","level":"info"}
+{"message":"watching for file changes...","label":null,"level":"info"}
+{"message":"[200] / 342ms","label":null,"level":"info"}
+{"message":"[200] /api/counter 524ms","label":null,"level":"info"}
+{"message":"[200] POST /api/find-roll 33ms","label":null,"level":"info"}
+{"message":"[200] / 83ms","label":null,"level":"info"}
+{"message":"[200] /api/counter 651ms","label":null,"level":"info"}
+{"message":"[200] / 24ms","label":null,"level":"info"}
+{"message":"[200] /api/counter 241ms","label":null,"level":"info"}
+{"message":"[200] / 36ms","label":null,"level":"info"}
+{"message":"[200] /api/counter 29ms","label":null,"level":"info"}

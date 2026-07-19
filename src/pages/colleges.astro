@@ -1,0 +1,158 @@
+---
+import Layout from "../layouts/Layout.astro";
+import colleges from "../data/colleges.json";
+
+// Sort colleges alphabetically
+const sortedColleges = [...colleges].sort((a, b) => a.name.localeCompare(b.name));
+
+const collegesJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "AKTU Affiliated Colleges Result Directory",
+  "description": "Complete directory list of all colleges and institutes affiliated with Dr. A.P.J. Abdul Kalam Technical University (AKTU) Lucknow. View result recovery options by institute.",
+  "url": "https://akturesultwithoutdob.com/colleges"
+};
+---
+
+<Layout
+  title="AKTU Affiliated Colleges | Result without DOB Search Directory"
+  description="Search and browse Dr. A.P.J. Abdul Kalam Technical University (AKTU) affiliated colleges. Recover semester and carryover results without date of birth."
+  jsonLd={collegesJsonLd}
+>
+  <!-- Header Banner -->
+  <section class="py-16 md:py-24 border-b border-canvas-dark-border light:border-canvas-light-border bg-gradient-to-b from-black to-canvas-dark-surface light:from-white light:to-canvas-light-surface text-center">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6">
+      <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight mb-4 text-white light:text-ink">
+        AKTU Colleges Directory
+      </h1>
+      <p class="text-base sm:text-lg text-gray-400 light:text-gray-600 max-w-xl mx-auto leading-relaxed">
+        Browse all 1,300+ colleges affiliated with Dr. A.P.J. Abdul Kalam Technical University. Recover grades cards and marks sheets without Date of Birth.
+      </p>
+    </div>
+  </section>
+
+  <!-- Interactive Directory Search -->
+  <section class="py-12 bg-black light:bg-white text-gray-400 light:text-gray-600">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6">
+      
+      <!-- Search Input Island -->
+      <div class="max-w-xl mx-auto mb-10">
+        <label for="college-directory-search" class="block text-xs font-semibold text-gray-400 light:text-gray-500 uppercase tracking-wider mb-2 text-center">
+          Search College by Name or Code
+        </label>
+        <div class="relative">
+          <input 
+            type="text" 
+            id="college-directory-search" 
+            placeholder="e.g. BSA Mathura or 068"
+            class="w-full px-4 py-3 bg-black/50 light:bg-gray-50 border border-canvas-dark-border light:border-canvas-light-border rounded-xl text-white light:text-ink placeholder-gray-600 light:placeholder-gray-400 focus:outline-none focus:border-brand-blue focus:ring-1 focus:ring-brand-blue transition-all text-center text-sm font-semibold"
+          />
+          <span class="absolute right-4 top-3.5 text-gray-500 text-sm">🔍</span>
+        </div>
+        <p class="text-[10px] text-gray-600 light:text-gray-400 mt-2 text-center">
+          Showing <span id="displayed-count">{sortedColleges.length}</span> of {sortedColleges.length} institutes.
+        </p>
+      </div>
+
+      <!-- Colleges Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="colleges-grid-container">
+        {sortedColleges.map((c) => (
+          <div class="college-card p-5 rounded-2xl border border-canvas-dark-border light:border-canvas-light-border bg-canvas-dark-tile light:bg-white transition-all hover:border-brand-blue/30 premium-shadow-dark light:premium-shadow-light flex flex-col justify-between" data-code={c.code} data-name={c.name.toLowerCase()}>
+            <div>
+              <div class="flex justify-between items-start gap-4 mb-2">
+                <span class="px-2 py-0.5 rounded bg-brand-blue/10 text-brand-blue text-[10px] font-bold font-mono">
+                  Code {c.code}
+                </span>
+                <span class="text-[10px] text-gray-500 font-medium uppercase">Affiliated College</span>
+              </div>
+              <h3 class="text-xs sm:text-sm font-bold text-white light:text-ink line-clamp-2 leading-snug">
+                {c.name}
+              </h3>
+            </div>
+            
+            <div class="mt-4 pt-3 border-t border-canvas-dark-border/20 light:border-gray-100 flex justify-between items-center">
+              <a 
+                href={`/roll-number-finder?collegeCode=${c.code}`}
+                class="text-[10px] font-bold text-brand-blue hover:underline cursor-pointer"
+              >
+                Scan class rolls &rarr;
+              </a>
+              <span class="text-[9px] text-gray-500 font-medium">B.Tech / B.Pharm / MBA / MCA</span>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <!-- Complete Static SEO Crawler Landing List -->
+      <div class="mt-20 border-t border-canvas-dark-border/40 light:border-canvas-light-border/40 pt-16">
+        <details class="group cursor-pointer select-none">
+          <summary class="list-none flex items-center justify-between text-xs font-semibold text-gray-500 uppercase tracking-wider hover:text-white light:hover:text-ink transition-colors">
+            <span>Show Complete Affiliated Colleges SEO Index</span>
+            <span class="text-xs transform group-open:rotate-180 transition-transform">&darr;</span>
+          </summary>
+          
+          <div class="mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 text-[10px] sm:text-xs text-gray-500 border border-canvas-dark-border/40 light:border-canvas-light-border/60 bg-black/40 light:bg-gray-50 rounded-2xl p-6 select-text cursor-default">
+            {sortedColleges.map((c) => (
+              <div class="space-y-1.5 p-3 rounded-lg border border-canvas-dark-border/10 light:border-canvas-light-border/20 bg-black/25 light:bg-white">
+                <h4 class="font-bold text-white light:text-ink text-[11px]">{c.name} (Code {c.code})</h4>
+                <div class="space-y-1 text-gray-500">
+                  <div class="flex items-center gap-1.5">
+                    <span class="w-1 h-1 rounded-full bg-brand-blue"></span>
+                    <span>{c.name} Btech result</span>
+                  </div>
+                  <div class="flex items-center gap-1.5">
+                    <span class="w-1 h-1 rounded-full bg-brand-blue"></span>
+                    <span>{c.name} Bpharma result</span>
+                  </div>
+                  <div class="flex items-center gap-1.5">
+                    <span class="w-1 h-1 rounded-full bg-brand-blue"></span>
+                    <span>{c.name} MBA result</span>
+                  </div>
+                  <div class="flex items-center gap-1.5">
+                    <span class="w-1 h-1 rounded-full bg-brand-blue"></span>
+                    <span>{c.name} MCA result</span>
+                  </div>
+                  <div class="flex items-center gap-1.5">
+                    <span class="w-1 h-1 rounded-full bg-brand-blue"></span>
+                    <span>{c.name} result without dob</span>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </details>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Client-Side Directory Filtering Script -->
+  <script is:inline>
+    window.addEventListener("DOMContentLoaded", () => {
+      const searchInput = document.getElementById("college-directory-search");
+      const displayedCount = document.getElementById("displayed-count");
+      const cards = document.querySelectorAll(".college-card");
+      
+      searchInput?.addEventListener("input", () => {
+        const query = searchInput.value.trim().toLowerCase();
+        let matchesCount = 0;
+        
+        cards.forEach((card) => {
+          const name = card.getAttribute("data-name") || "";
+          const code = card.getAttribute("data-code") || "";
+          
+          if (name.includes(query) || code.includes(query)) {
+            card.classList.remove("hidden");
+            matchesCount++;
+          } else {
+            card.classList.add("hidden");
+          }
+        });
+        
+        if (displayedCount) {
+          displayedCount.textContent = matchesCount;
+        }
+      });
+    });
+  </script>
+</Layout>

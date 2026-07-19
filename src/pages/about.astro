@@ -1,0 +1,108 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout 
+  title="About Us | AKTU Result Without DOB"
+  description="Learn why the AKTU result lookup tool was built, our core mission, and our commitment to student privacy."
+>
+  <!-- Main Banner Header -->
+  <section class="py-16 md:py-24 border-b border-canvas-dark-border light:border-canvas-light-border bg-gradient-to-b from-black to-canvas-dark-surface light:from-white light:to-canvas-light-surface text-center">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6">
+      <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight mb-4 text-white light:text-ink">
+        About the Project
+      </h1>
+      <p class="text-base sm:text-lg text-gray-400 light:text-gray-600 max-w-xl mx-auto leading-relaxed">
+        Helping AKTU college students regain access to their grades and official university records.
+      </p>
+    </div>
+  </section>
+
+  <!-- Mission Content -->
+  <section class="py-16 md:py-24 bg-black light:bg-white text-gray-400 light:text-gray-600">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+      
+      <!-- Section 1: The Problem -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-baseline">
+        <h2 class="text-lg font-bold text-white light:text-ink tracking-tight uppercase border-l-2 border-brand-blue pl-3">
+          The Problem
+        </h2>
+        <div class="col-span-2 text-sm sm:text-base leading-relaxed space-y-4">
+          <p>
+            The official **AKTU One View** dashboard is the primary portal for students at Dr. A.P.J. Abdul Kalam Technical University to inspect semester grades, results, and degree statuses. However, accessing the dashboard requires two credentials: the student's **Roll Number** and their **Date of Birth (DOB)**.
+          </p>
+          <p>
+            It is surprisingly common for students to forget their registered Date of Birth or face issues where their registered birth date differs from official personal documentation. Without the exact DOB, students are effectively locked out of their academic records, resulting in significant anxiety during exam and job placement cycles.
+          </p>
+        </div>
+      </div>
+
+      <hr class="border-canvas-dark-border light:border-canvas-light-border" />
+
+      <!-- Section 2: The Solution -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-baseline">
+        <h2 class="text-lg font-bold text-white light:text-ink tracking-tight uppercase border-l-2 border-brand-blue pl-3">
+          The Solution
+        </h2>
+        <div class="col-span-2 text-sm sm:text-base leading-relaxed space-y-4">
+          <p>
+            We created the **AKTU Result Without DOB** utility to act as an automated result query assistant. The service works by establishing a secure session pipeline with the AKTU database to safely retrieve and render academic records without requiring or exposing your Date of Birth.
+          </p>
+          <p>
+            By dynamically managing session tokens and verifying credentials, the tool removes the need for students to make physical visits or write formal request letters to the university administrative registrar simply to access their grade card.
+          </p>
+        </div>
+      </div>
+
+      <hr class="border-canvas-dark-border light:border-canvas-light-border" />
+
+      <!-- Section 3: Privacy & Security -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-baseline">
+        <h2 class="text-lg font-bold text-white light:text-ink tracking-tight uppercase border-l-2 border-brand-blue pl-3">
+          Data Privacy
+        </h2>
+        <div class="col-span-2 text-sm sm:text-base leading-relaxed space-y-4">
+          <p>
+            We prioritize student privacy. Our tool acts purely as a transient helper interface:
+          </p>
+          <ul class="list-disc pl-5 space-y-2 text-xs sm:text-sm">
+            <li>We do **not** store or record student marks transcripts.</li>
+            <li>No database is maintained containing personal contact details or grades.</li>
+            <li>Search parameters are sent over encrypted SSL tunnels directly to the query router.</li>
+          </ul>
+        </div>
+      </div>
+
+      <hr class="border-canvas-dark-border light:border-canvas-light-border" />
+
+      <!-- Section 4: The Creator -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-center">
+        <h2 class="text-lg font-bold text-white light:text-ink tracking-tight uppercase border-l-2 border-brand-blue pl-3">
+          The Creator
+        </h2>
+        <div class="col-span-2 flex flex-col sm:flex-row items-center gap-6 p-6 rounded-2xl bg-canvas-dark-surface light:bg-canvas-light-surface border border-canvas-dark-border light:border-canvas-light-border">
+          <div class="w-16 h-16 rounded-full bg-gradient-to-tr from-brand-blue to-purple-600 flex items-center justify-center text-white font-extrabold text-2xl premium-shadow-dark select-none">
+            SD
+          </div>
+          <div class="text-left flex-1">
+            <h3 class="text-sm font-semibold text-white light:text-ink mb-1">Shivam Dixit</h3>
+            <p class="text-xs text-gray-500 mb-3">AI Software Engineer & Student, AKTU Class of 2026</p>
+            <p class="text-xs text-gray-400 light:text-gray-600 leading-relaxed mb-4">
+              Shivam is a Computer Science major studying at AKTU. He builds full-stack systems, AI-powered applications, and RAG pipelines.
+            </p>
+            <div class="flex items-center gap-3 flex-wrap">
+              <a href="https://linkedin.com/in/shivdix" target="_blank" rel="noopener noreferrer" class="text-xs text-brand-blue hover:underline">LinkedIn</a>
+              <a href="https://github.com/civdix" target="_blank" rel="noopener noreferrer" class="text-xs text-brand-blue hover:underline">GitHub</a>
+              <a href="https://shivamdixit.vercel.app" target="_blank" rel="noopener noreferrer" class="text-xs text-brand-blue hover:underline">Portfolio</a>
+              <span class="text-gray-600">|</span>
+              <button class="coffee-trigger text-xs text-[#72a4f2] font-semibold hover:text-[#5b8ddb] flex items-center gap-0.5 cursor-pointer bg-transparent border-none p-0">
+                💙 Support on Ko-fi
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+</Layout>

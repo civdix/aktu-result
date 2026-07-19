@@ -1,0 +1,450 @@
+@import "tailwindcss";
+
+@theme {
+  --color-brand-blue: #0066cc;
+  --color-brand-blue-hover: #0071e3;
+  --color-brand-blue-light: #2997ff;
+  
+  --color-ink: #1d1d1f;
+  --color-ink-muted: #86868b;
+  
+  --color-canvas-dark: #000000;
+  --color-canvas-dark-surface: #0a0a0a;
+  --color-canvas-dark-tile: #121212;
+  --color-canvas-dark-border: #1f1f1f;
+  
+  --color-canvas-light: #ffffff;
+  --color-canvas-light-surface: #f5f5f7;
+  --color-canvas-light-tile: #fafafc;
+  --color-canvas-light-border: #e5e5e7;
+  
+  --radius-apple-sm: 8px;
+  --radius-apple-md: 11px;
+  --radius-apple-lg: 18px;
+  --radius-apple-pill: 9999px;
+  
+  --font-sans: "Inter", "SF Pro Text", "SF Pro Display", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+/* Custom variants for class-based theme toggling in Tailwind v4 */
+@custom-variant dark (&:where(.dark, .dark *));
+@custom-variant light (&:where(.light, .light *));
+
+@layer base {
+  html {
+    font-family: var(--font-sans);
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  body {
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  select option {
+    background-color: var(--color-canvas-dark-surface);
+    color: #ffffff;
+  }
+
+  .light select option {
+    background-color: #ffffff;
+    color: var(--color-ink);
+  }
+}
+
+/* Premium utility classes */
+.frosted-glass {
+  background-color: rgba(10, 10, 10, 0.75);
+  backdrop-filter: saturate(180%) blur(20px);
+}
+
+.light .frosted-glass {
+  background-color: rgba(255, 255, 255, 0.8);
+  backdrop-filter: saturate(180%) blur(20px);
+}
+
+.iphone-glass {
+  background: rgba(18, 18, 18, 0.4);
+  backdrop-filter: saturate(210%) blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.35),
+              inset 0 1px 1px 0 rgba(255, 255, 255, 0.12);
+}
+
+.light .iphone-glass {
+  background: rgba(255, 255, 255, 0.65);
+  backdrop-filter: saturate(210%) blur(24px);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.05),
+              inset 0 1px 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+/* Subtle 3D elevations and shadows */
+.premium-shadow-light {
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.02),
+              0 1px 3px rgba(0, 0, 0, 0.05),
+              inset 0 1px 0 rgba(255, 255, 255, 0.6);
+}
+
+.premium-shadow-dark {
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4),
+              0 1px 5px rgba(0, 0, 0, 0.2),
+              inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+/* Scale-down click micro-interaction */
+.btn-press-active {
+  transition: transform 0.1s ease;
+}
+.btn-press-active:active {
+  transform: scale(0.97);
+}
+
+/* Sleek border animation */
+.animated-glow-border {
+  position: relative;
+}
+.animated-glow-border::after {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  background: linear-gradient(90deg, transparent, rgba(0, 102, 204, 0.3), transparent);
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.animated-glow-border:hover::after {
+  opacity: 1;
+}
+
+/* Custom scrollbars */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #2a2a2c;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #3a3a3c;
+}
+.light ::-webkit-scrollbar-thumb {
+  background: #d2d2d7;
+}
+.light ::-webkit-scrollbar-thumb:hover {
+  background: #acacb0;
+}
+
+/* Code Editor & Terminal Styles */
+.code-editor-window {
+  border-radius: 12px;
+  background-color: #0d1117;
+  border: 1px solid #21262d;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  font-family: ui-monospace, SFMono-Regular, SF Pro Text, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  overflow: hidden;
+}
+
+.light .code-editor-window {
+  background-color: #f6f8fa;
+  border: 1px solid #d0d7de;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+.code-editor-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 16px;
+  background-color: #161b22;
+  border-bottom: 1px solid #21262d;
+}
+
+.light .code-editor-header {
+  background-color: #f3f4f6;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.code-editor-dots {
+  display: flex;
+  gap: 6px;
+}
+
+.code-editor-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.code-editor-dot.close { background-color: #ff5f56; }
+.code-editor-dot.minimize { background-color: #ffbd2e; }
+.code-editor-dot.maximize { background-color: #27c93f; }
+
+.code-editor-title {
+  font-size: 11px;
+  color: #8b949e;
+  font-weight: 500;
+}
+
+.light .code-editor-title {
+  color: #6b7280;
+}
+
+.code-editor-body {
+  display: flex;
+  font-size: 11px;
+  line-height: 1.6;
+  overflow-x: auto;
+  padding: 16px 0;
+}
+
+.code-editor-linenos {
+  display: flex;
+  flex-direction: column;
+  text-align: right;
+  padding-left: 16px;
+  padding-right: 12px;
+  color: #484f58;
+  user-select: none;
+  border-right: 1px solid #21262d;
+}
+
+.light .code-editor-linenos {
+  color: #9ca3af;
+  border-right: 1px solid #e5e7eb;
+}
+
+.code-editor-content {
+  flex-grow: 1;
+  padding-left: 12px;
+  padding-right: 16px;
+  white-space: pre;
+  color: #c9d1d9;
+}
+
+.light .code-editor-content {
+  color: #24292f;
+}
+
+/* Syntax Highlighting Tokens */
+.code-kw { color: #ff7b72; font-weight: bold; } /* keyword */
+.code-str { color: #a5d6ff; } /* string */
+.code-fn { color: #d2a8ff; } /* function/method */
+.code-var { color: #ffa657; } /* variable/parameter */
+.code-num { color: #79c0ff; } /* number */
+.code-comment { color: #8b949e; font-style: italic; } /* comment */
+.code-type { color: #ff7b72; } /* type */
+.code-url { color: #a5d6ff; text-decoration: underline; } /* URL */
+.code-cmd { color: #7ee787; } /* commands */
+.code-header { color: #79c0ff; } /* HTTP Header */
+
+.light .code-kw { color: #cf222e; }
+.light .code-str { color: #0a3069; }
+.light .code-fn { color: #8250df; }
+.light .code-var { color: #953800; }
+.light .code-num { color: #0550ae; }
+.light .code-comment { color: #6e7781; }
+.light .code-type { color: #cf222e; }
+.light .code-url { color: #0a3069; }
+.light .code-cmd { color: #116329; }
+.light .code-header { color: #0550ae; }
+
+/* Print Stylesheet */
+@media print {
+  /* Hide all non-printable elements */
+  header,
+  footer,
+  nav,
+  button:not([class*="coffee-trigger"]), /* Hide standard buttons except we will hide specific ones */
+  a,
+  input,
+  #floating-coffee-btn,
+  #forgot-roll-btn,
+  #live-counter,
+  .inline-flex,
+  h1,
+  p:not(.text-xs), /* Hide page copywriting paragraphs */
+  section:not(.relative),
+  #search-form,
+  #loader-state,
+  #error-state,
+  .coffee-trigger,
+  #print-result-btn,
+  #reset-form-btn,
+  .text-center,
+  .absolute {
+    display: none !important;
+  }
+
+  /* Reset main layouts, grids, sections */
+  html, body, main, section.relative, .max-w-6xl, .grid, .md\:col-span-5 {
+    background: #ffffff !important;
+    color: #000000 !important;
+    display: block !important;
+    position: static !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    box-shadow: none !important;
+    border: none !important;
+    transition: none !important;
+  }
+
+  /* Marksheet printable wrapper layout */
+  #printable-marksheet {
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 20px !important;
+    background: #ffffff !important;
+    color: #000000 !important;
+    border: 1.5px solid #000000 !important;
+    border-radius: 8px !important;
+    box-shadow: none !important;
+  }
+
+  /* Force all elements inside the marksheet to have black text on transparent/white background */
+  #printable-marksheet * {
+    color: #000000 !important;
+    background: transparent !important;
+    background-color: transparent !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+
+  /* Clean print borders */
+  #printable-marksheet .border-canvas-dark-border,
+  #printable-marksheet .border-canvas-light-border,
+  #printable-marksheet border,
+  #printable-marksheet table,
+  #printable-marksheet tr,
+  #printable-marksheet td,
+  #printable-marksheet th {
+    border-color: #666666 !important;
+  }
+
+  /* Accordion items for all semesters */
+  #semesters-accordion-container {
+    display: block !important;
+  }
+
+  #semesters-accordion-container > div {
+    display: block !important;
+    border-color: #666666 !important;
+    margin-bottom: 15px !important;
+    page-break-inside: avoid;
+    overflow: visible !important;
+  }
+
+  /* Force the header button of accordion items to be visible like a static section title */
+  #semesters-accordion-container > div > button {
+    display: block !important;
+    width: 100% !important;
+    background: #f0f0f0 !important;
+    color: #000000 !important;
+    border-bottom: 1.5px solid #666666 !important;
+    padding: 10px 15px !important;
+    cursor: default !important;
+    text-align: left !important;
+  }
+
+  /* Force the content divs (which contain the subject tables) to show */
+  #semesters-accordion-container > div > div {
+    display: block !important;
+    max-height: none !important;
+    height: auto !important;
+    overflow: visible !important;
+    border-top: none !important;
+    padding: 0 !important;
+  }
+
+  /* The table layout should remain intact */
+  #semesters-accordion-container table {
+    display: table !important;
+    width: 100% !important;
+    border-collapse: collapse !important;
+  }
+
+  #semesters-accordion-container tr {
+    display: table-row !important;
+  }
+
+  #semesters-accordion-container th,
+  #semesters-accordion-container td {
+    display: table-cell !important;
+    padding: 8px !important;
+    border-bottom: 1px solid #666666 !important;
+  }
+
+  /* Hide the expand/collapse chevron */
+  #semesters-accordion-container svg.sem-icon,
+  #semesters-accordion-container .sem-icon {
+    display: none !important;
+  }
+
+  /* Print layout for final result panel */
+  #final-result-summary-container {
+    display: block !important;
+    page-break-inside: avoid !important;
+    margin-top: 20px !important;
+    border-top: 1.5px solid #000000 !important;
+    padding-top: 15px !important;
+  }
+  #final-result-summary-content {
+    background: transparent !important;
+    border: none !important;
+    padding: 0 !important;
+  }
+  #final-result-summary-content table {
+    border: 1px solid #000000 !important;
+  }
+  #final-result-summary-content tr {
+    border-bottom: 1px solid #000000 !important;
+  }
+  #final-result-summary-content td,
+  #final-result-summary-content th {
+    color: #000000 !important;
+    border-right: 1px solid #000000 !important;
+    padding: 6px 10px !important;
+  }
+}
+
+/* Styling for dynamically injected final result panel summary */
+#final-result-summary-content table {
+  width: 100% !important;
+  border-collapse: collapse !important;
+  margin-top: 4px !important;
+}
+
+#final-result-summary-content tr {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+.light #final-result-summary-content tr {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08) !important;
+}
+
+#final-result-summary-content td,
+#final-result-summary-content th {
+  padding: 8px 12px !important;
+  text-align: left !important;
+  color: #d1d5db !important; /* text-gray-300 */
+}
+
+.light #final-result-summary-content td,
+.light #final-result-summary-content th {
+  color: #374151 !important; /* text-gray-700 */
+}
+
+#final-result-summary-content td span,
+#final-result-summary-content td strong {
+  font-weight: 600 !important;
+}

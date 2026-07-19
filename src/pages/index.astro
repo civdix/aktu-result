@@ -1,0 +1,1239 @@
+---
+import Layout from "../layouts/Layout.astro";
+
+// JSON-LD Structured Data for index page
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "AKTU Result Without DOB Query Tool",
+  "url": "https://akturesultwithoutdob.com",
+  "description": "Helper tool for Dr. A.P.J. Abdul Kalam Technical University (AKTU) students to retrieve their detailed academic result sheets using their Roll Number.",
+  "applicationCategory": "EducationalApplication",
+  "operatingSystem": "All",
+  "browserRequirements": "Requires JavaScript. Requires HTML5.",
+  "creator": {
+    "@type": "Person",
+    "name": "Shivam Dixit",
+    "url": "https://shivamdixit.vercel.app"
+  }
+};
+---
+
+<Layout 
+  title="AKTU Result Without DOB | View Full One View Results Online"
+  description="Forget your Date of Birth? Retrieve your full AKTU One View results sheet instantly using your Roll Number. Secure, fast, and student-focused query tool."
+  jsonLd={jsonLd}
+>
+  <!-- Hero Section -->
+  <section class="relative pb-12 md:pb-16 overflow-hidden border-b border-canvas-dark-border light:border-canvas-light-border bg-gradient-to-b from-black via-canvas-dark-surface to-black light:from-white light:via-canvas-light-surface light:to-white transition-colors duration-300">
+    <!-- Layered iPhone-style Ambient Glows -->
+    <div class="absolute top-[-10%] left-[-10%] w-[550px] h-[550px] rounded-full bg-brand-blue/8 blur-[120px] pointer-events-none animate-pulse" style="animation-duration: 8s;"></div>
+    <div class="absolute bottom-[10%] right-[-10%] w-[500px] h-[500px] rounded-full bg-purple-500/5 blur-[130px] pointer-events-none animate-pulse" style="animation-duration: 12s;"></div>
+    <div class="absolute top-[20%] left-[30%] w-[350px] h-[350px] rounded-full bg-cyan-500/5 blur-[100px] pointer-events-none"></div>
+
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div id="hero-grid" class="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12 items-center min-h-[500px] transition-all duration-500">
+        <!-- Left Side: Copywriting & Headline -->
+        <div id="hero-copy" class="md:col-span-7 text-center md:text-left space-y-6 transition-all duration-500">
+          <!-- Trust Badge -->
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/[0.08] light:border-black/[0.06] bg-white/[0.03] light:bg-white/40 backdrop-blur-md text-xs text-gray-400 light:text-gray-600 premium-shadow-light">
+            <span class="w-1.5 h-1.5 rounded-full bg-brand-blue animate-pulse"></span>
+            AKTU B.Tech / MBA / MCA Students Assistant
+          </div>
+
+          <!-- Main Headline -->
+          <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.1] bg-gradient-to-b from-white to-gray-400 dark:from-white dark:to-gray-400 light:from-ink light:to-gray-800 bg-clip-text text-transparent">
+            Find your AKTU Result <br class="hidden lg:inline" />
+            <span class="bg-gradient-to-r from-brand-blue via-brand-blue-light to-purple-500 bg-clip-text text-transparent">Without Date of Birth</span>
+          </h1>
+
+          <p class="text-sm sm:text-base md:text-lg text-gray-400 light:text-gray-600 leading-relaxed max-w-xl mx-auto md:mx-0">
+            Forget your credentials? Simply enter your university Roll Number to authenticate and display your complete academic grades card instantly without needing your Date of Birth.
+          </p>
+
+          <!-- Live Search Metrics -->
+          <div class="text-xs text-gray-600 light:text-gray-400 flex items-center justify-center md:justify-start gap-4 flex-wrap pt-2">
+            <span>🔒 256-bit Connection</span>
+            <span>⏱️ Avg. Recovery: 4.8s</span>
+            <span class="flex items-center gap-1">🔥 <span id="live-counter">24,000+</span> Recovered Results</span>
+          </div>
+        </div>
+
+        <!-- Right Side: Search Box Container (Interactive Island) -->
+        <div id="hero-card-wrapper" class="md:col-span-5 w-full max-w-lg mx-auto relative group transition-all duration-500">
+          <!-- Glass Card Border Backdrop Glow -->
+          <div class="absolute -inset-1.5 bg-gradient-to-r from-brand-blue to-purple-600 rounded-2xl blur-xl opacity-20 group-hover:opacity-35 transition duration-1000 group-hover:duration-200"></div>
+          
+          <div class="relative iphone-glass p-6 sm:p-8 rounded-2xl transition-all duration-300 text-left">
+            
+            <!-- Search Form -->
+            <form id="search-form" class="space-y-6">
+              <div>
+                <div class="flex justify-between items-center mb-2">
+                  <label for="roll-number" class="block text-xs font-semibold text-gray-400 light:text-gray-500 uppercase tracking-wider">
+                    University Roll Number
+                  </label>
+                  <button 
+                    type="button" 
+                    id="forgot-roll-btn" 
+                    class="text-[10px] text-brand-blue font-bold hover:underline cursor-pointer bg-transparent border-none p-0 focus:outline-none"
+                  >
+                    Forgot Roll Number?
+                  </button>
+                </div>
+                <input 
+                  type="text" 
+                  id="roll-number" 
+                  name="rollNumber" 
+                  placeholder="e.g. 2200650100100" 
+                  required
+                  pattern="^[0-9]{10,15}$"
+                  class="w-full px-4 py-3 bg-white/[0.03] light:bg-black/[0.02] border border-white/[0.08] light:border-black/[0.08] rounded-xl text-white light:text-ink placeholder-gray-600 light:placeholder-gray-400 focus:outline-none focus:border-brand-blue focus:ring-1 focus:ring-brand-blue transition-all"
+                />
+                <p class="text-[11px] text-gray-600 light:text-gray-400 mt-1.5">Usually a 10 to 13 digit number on your admit card.</p>
+              </div>
+
+              <!-- Mock Captcha Validation -->
+              <div class="p-4 rounded-xl bg-white/[0.02] light:bg-black/[0.01] border border-white/[0.06] light:border-black/[0.04]">
+                <label class="block text-xs font-semibold text-gray-400 light:text-gray-500 uppercase tracking-wider mb-2">
+                  Verification Captcha
+                </label>
+                <div class="flex items-center gap-3">
+                  <div class="px-3.5 py-1.5 bg-brand-blue/10 border border-brand-blue/20 rounded-lg font-mono text-brand-blue text-sm tracking-wider select-none font-bold">
+                    <span id="captcha-num1">8</span> + <span id="captcha-num2">4</span> = ?
+                  </div>
+                  <input 
+                    type="number" 
+                    id="captcha-answer" 
+                    name="captchaAnswer" 
+                    placeholder="Result" 
+                    required
+                    class="flex-1 px-3 py-1.5 bg-white/[0.03] light:bg-white border border-white/[0.08] light:border-black/[0.08] rounded-lg text-white light:text-ink text-sm placeholder-gray-600 focus:outline-none focus:border-brand-blue transition-all"
+                  />
+                </div>
+              </div>
+
+              <button 
+                type="submit" 
+                class="w-full py-3.5 bg-gradient-to-r from-brand-blue to-purple-600 hover:from-brand-blue-hover hover:to-purple-700 text-white text-sm font-semibold rounded-xl premium-shadow-dark hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer"
+              >
+                <span>Search Result</span>
+                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                </svg>
+              </button>
+            </form>
+
+            <!-- Loading State Card (Skeleton Loader) -->
+            <div id="loader-state" class="hidden py-8 space-y-6">
+              <div class="flex flex-col items-center justify-center text-center">
+                <!-- Spinner -->
+                <div class="relative w-12 h-12 mb-4">
+                  <div class="w-12 h-12 rounded-full border-4 border-brand-blue/20 animate-spin border-t-brand-blue"></div>
+                </div>
+                <h3 class="text-sm font-semibold text-white light:text-ink mb-1" id="loading-status">Connecting to AKTU Portal...</h3>
+                <p class="text-xs text-gray-500" id="loading-substatus">Locating session token...</p>
+              </div>
+              
+              <!-- Mocking Console Log Steps -->
+              <div class="font-mono text-[10px] text-gray-600 bg-black/80 rounded-lg p-3 space-y-1 overflow-hidden h-24 border border-canvas-dark-border">
+                <div class="text-gray-400">&gt; Starting scraping job...</div>
+                <div id="log-step-1" class="hidden text-gray-500">&gt; Fetching ASP.NET_SessionId cookie... [OK]</div>
+                <div id="log-step-2" class="hidden text-gray-500">&gt; Extracting __VIEWSTATE encryption vector... [OK]</div>
+                <div id="log-step-3" class="hidden text-brand-blue">&gt; Executing session bypass protocol... [OK]</div>
+                <div id="log-step-4" class="hidden text-emerald-400">&gt; Fetching and parsing semester grades grid... [OK]</div>
+              </div>
+            </div>
+
+            <!-- Result Box Card -->
+            <div id="result-state" class="hidden space-y-5 animate-fade-in">
+              <div class="p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-center">
+                <div class="w-10 h-10 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center mx-auto mb-2 text-lg">✓</div>
+                <h3 class="text-sm font-semibold text-emerald-400">Academic Records Fetched!</h3>
+              </div>
+
+              <div id="printable-marksheet" class="space-y-4 font-mono text-[11px] sm:text-xs border border-canvas-dark-border light:border-canvas-light-border rounded-xl p-4 bg-black/20 light:bg-canvas-light-tile">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pb-3 border-b border-canvas-dark-border/40">
+                  <div class="space-y-0.5">
+                    <div class="text-gray-500 text-[9px] uppercase tracking-wider">Student Name</div>
+                    <div class="text-white light:text-ink font-bold text-[11px] sm:text-xs" id="result-name">SHIVAM DIXIT</div>
+                  </div>
+                  <div class="space-y-0.5">
+                    <div class="text-gray-500 text-[9px] uppercase tracking-wider">Father's Name</div>
+                    <div class="text-white light:text-ink font-semibold text-[11px] sm:text-xs" id="result-father">BHOLA DIXIT</div>
+                  </div>
+                  <div class="space-y-0.5">
+                    <div class="text-gray-500 text-[9px] uppercase tracking-wider">Roll Number</div>
+                    <div class="text-white light:text-ink font-semibold text-[11px] sm:text-xs" id="result-roll">2200650100100</div>
+                  </div>
+                  <div class="space-y-0.5">
+                    <div class="text-gray-500 text-[9px] uppercase tracking-wider">Enrollment No.</div>
+                    <div class="text-white light:text-ink font-semibold text-[11px] sm:text-xs" id="result-enrollment">220065010083516</div>
+                  </div>
+                  <div class="space-y-0.5 sm:col-span-2">
+                    <div class="text-gray-500 text-[9px] uppercase tracking-wider">Course / Branch</div>
+                    <div class="text-white light:text-ink font-semibold text-[11px] sm:text-xs" id="result-course">B.Tech (Computer Science & Eng.)</div>
+                  </div>
+                  <div class="space-y-0.5 sm:col-span-2">
+                    <div class="text-gray-500 text-[9px] uppercase tracking-wider">Institute</div>
+                    <div class="text-white light:text-ink font-semibold text-[11px] sm:text-xs" id="result-institute">B.S.A. COLLEGE OF ENGINEERING & TECHNOLOGY, MATHURA</div>
+                  </div>
+                </div>
+
+                <!-- Cumulative Indicators -->
+                <div id="result-indicators-grid" class="grid grid-cols-3 gap-2 py-3 border-b border-canvas-dark-border/40 light:border-canvas-light-border/60 text-center">
+                  <div class="p-2 rounded bg-black/40 light:bg-canvas-light-surface border border-canvas-dark-border/40 light:border-canvas-light-border">
+                    <div class="text-[8px] text-gray-500 light:text-gray-500 uppercase">CGPA</div>
+                    <div class="text-brand-blue font-bold text-xs sm:text-sm" id="result-cgpa">7.15</div>
+                  </div>
+                  <div id="result-division-container" class="p-2 rounded bg-black/40 light:bg-canvas-light-surface border border-canvas-dark-border/40 light:border-canvas-light-border">
+                    <div class="text-[8px] text-gray-500 light:text-gray-500 uppercase">Division</div>
+                    <div class="text-white light:text-ink font-bold text-[10px] sm:text-xs" id="result-division">I-DIV</div>
+                  </div>
+                  <div class="p-2 rounded bg-black/40 light:bg-canvas-light-surface border border-canvas-dark-border/40 light:border-canvas-light-border">
+                    <div class="text-[8px] text-gray-500 light:text-gray-500 uppercase">Status</div>
+                    <div class="text-emerald-400 font-bold text-[10px] sm:text-xs" id="result-status-badge">PASS</div>
+                  </div>
+                </div>
+
+                <!-- Semesters Accordion -->
+                <div class="space-y-2.5 pt-2">
+                  <span class="text-gray-500 block font-semibold mb-1 text-[10px] uppercase tracking-wider">Semester Reports (Click to Expand)</span>
+                  <div class="space-y-2" id="semesters-accordion-container">
+                    <!-- Semester tables populated dynamically -->
+                  </div>
+                </div>
+
+                <!-- Final Result Panel Summary -->
+                <div id="final-result-summary-container" class="hidden mt-4 pt-3 border-t border-canvas-dark-border/40 light:border-canvas-light-border/60">
+                  <span class="text-gray-500 block font-semibold mb-2 text-[10px] uppercase tracking-wider">Course Completion Summary</span>
+                  <div id="final-result-summary-content" class="p-3 bg-black/40 light:bg-white rounded-xl border border-canvas-dark-border/40 light:border-canvas-light-border text-[11px] overflow-x-auto">
+                    <!-- Dynamic HTML content injected here -->
+                  </div>
+                </div>
+              </div>
+
+              <!-- Ko-fi Donation Banner -->
+              <div class="p-4 rounded-xl border border-[#72a4f2]/25 bg-[#72a4f2]/5 text-center space-y-2.5">
+                <p class="text-xs text-gray-300 light:text-gray-600">
+                  🎉 <strong>Successfully found your academic records?</strong> Keep this service alive and free by supporting the developer!
+                </p>
+                <button class="coffee-trigger px-4 py-2 bg-[#72a4f2] hover:bg-[#5b8ddb] text-white text-xs font-bold rounded-lg transition-colors btn-press-active inline-flex items-center gap-1.5 cursor-pointer">
+                  💙 Support me on Ko-fi
+                </button>
+              </div>
+
+              <div class="space-y-2">
+                <button 
+                  id="print-result-btn" 
+                  class="w-full py-3 bg-brand-blue text-white rounded-xl text-sm font-semibold hover:bg-brand-blue-hover text-center block transition-colors btn-press-active"
+                >
+                  Print Academic Report
+                </button>
+                <button 
+                  id="reset-form-btn" 
+                  class="w-full py-2.5 bg-transparent border border-canvas-dark-border light:border-canvas-light-border hover:bg-gray-900 light:hover:bg-gray-50 text-xs text-gray-400 hover:text-white light:text-gray-600 light:hover:text-ink font-medium rounded-xl transition-colors btn-press-active"
+                >
+                  Search Another Roll Number
+                </button>
+              </div>
+            </div>
+
+            <!-- Error Card -->
+            <div id="error-state" class="hidden space-y-4 animate-fade-in">
+              <div class="p-4 rounded-xl bg-red-500/10 border border-red-500/20 text-center">
+                <div class="w-10 h-10 rounded-full bg-red-500/20 text-red-400 flex items-center justify-center mx-auto mb-2 text-lg">✕</div>
+                <h3 class="text-sm font-semibold text-red-400" id="error-title">No Record Found</h3>
+                <p class="text-xs text-gray-500 mt-1" id="error-desc">We couldn't locate a match for the specified parameters. Please confirm the roll number.</p>
+              </div>
+
+              <button 
+                id="error-retry-btn" 
+                class="w-full py-3 bg-gray-900 light:bg-gray-100 hover:bg-gray-800 light:hover:bg-gray-200 border border-canvas-dark-border light:border-canvas-light-border text-sm font-semibold rounded-xl text-white light:text-ink transition-colors btn-press-active"
+              >
+                Retry Search
+              </button>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Feature Grid -->
+  <section class="py-16 md:py-24 bg-black light:bg-canvas-light transition-colors duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <h2 class="text-3xl font-bold tracking-tight text-white light:text-ink mb-4">
+          Why Students Trust This Service
+        </h2>
+        <p class="text-gray-400 light:text-gray-600 text-sm sm:text-base">
+          Our service helps AKTU college students recover forgotten credentials securely.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        
+        <!-- Feature 1 -->
+        <div class="p-6 rounded-2xl iphone-glass hover:translate-y-[-4px] hover:border-brand-blue/30 transition-all duration-300">
+          <div class="w-10 h-10 rounded-lg bg-brand-blue/10 text-brand-blue flex items-center justify-center font-bold text-lg mb-4">⚡</div>
+          <h3 class="text-base font-semibold text-white light:text-ink mb-2">Instant Session Lookup</h3>
+          <p class="text-xs text-gray-500 light:text-gray-600 leading-relaxed">
+            Checks multiple year segments and months concurrently to pinpoint your exact birth record in seconds.
+          </p>
+        </div>
+
+        <!-- Feature 2 -->
+        <div class="p-6 rounded-2xl iphone-glass hover:translate-y-[-4px] hover:border-brand-blue/30 transition-all duration-300">
+          <div class="w-10 h-10 rounded-lg bg-purple-500/10 text-purple-400 flex items-center justify-center font-bold text-lg mb-4">🔒</div>
+          <h3 class="text-base font-semibold text-white light:text-ink mb-2">Pristine Student Privacy</h3>
+          <p class="text-xs text-gray-500 light:text-gray-600 leading-relaxed">
+            We don't save, log, or share student transcripts. The system simply fetches the validation date for result retrieval.
+          </p>
+        </div>
+
+        <!-- Feature 3 -->
+        <div class="p-6 rounded-2xl iphone-glass hover:translate-y-[-4px] hover:border-brand-blue/30 transition-all duration-300">
+          <div class="w-10 h-10 rounded-lg bg-emerald-500/10 text-emerald-400 flex items-center justify-center font-bold text-lg mb-4">💯</div>
+          <h3 class="text-base font-semibold text-white light:text-ink mb-2">High Accuracy</h3>
+          <p class="text-xs text-gray-500 light:text-gray-600 leading-relaxed">
+            Leverages ASP.NET session state management to guarantee 100% correct date outputs.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- How It Works Section -->
+  <section class="py-16 md:py-24 border-t border-canvas-dark-border light:border-canvas-light-border bg-canvas-dark-surface light:bg-canvas-light-surface transition-colors duration-300">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16">
+        <h2 class="text-3xl font-bold tracking-tight text-white light:text-ink mb-4">
+          How The Recovery System Works
+        </h2>
+        <p class="text-gray-400 light:text-gray-600 text-sm">
+          A step-by-step overview of the background retrieval cycle.
+        </p>
+      </div>
+
+      <div class="relative pl-8 border-l border-canvas-dark-border light:border-canvas-light-border space-y-12 max-w-lg mx-auto">
+        <!-- Step 1 -->
+        <div class="relative">
+          <div class="absolute -left-[41px] top-1.5 w-6 h-6 rounded-full bg-brand-blue/20 border-2 border-brand-blue text-brand-blue flex items-center justify-center text-[10px] font-bold">1</div>
+          <h3 class="text-sm font-semibold text-white light:text-ink mb-1">Validation & Pre-Check</h3>
+          <p class="text-xs text-gray-500 light:text-gray-600 leading-relaxed">
+            The scraper establishes a session token with the AKTU portal and verifies if the roll number is valid.
+          </p>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="relative">
+          <div class="absolute -left-[41px] top-1.5 w-6 h-6 rounded-full bg-purple-500/20 border-2 border-purple-500 text-purple-400 flex items-center justify-center text-[10px] font-bold">2</div>
+          <h3 class="text-sm font-semibold text-white light:text-ink mb-1">Dynamic Session Matching</h3>
+          <p class="text-xs text-gray-500 light:text-gray-600 leading-relaxed">
+            An automated iteration check scans dates within candidate birth years using live ViewState tokens.
+          </p>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="relative">
+          <div class="absolute -left-[41px] top-1.5 w-6 h-6 rounded-full bg-emerald-500/20 border-2 border-emerald-500 text-emerald-400 flex items-center justify-center text-[10px] font-bold">3</div>
+          <h3 class="text-sm font-semibold text-white light:text-ink mb-1">Result Access</h3>
+          <p class="text-xs text-gray-500 light:text-gray-600 leading-relaxed">
+            Once a match occurs, the date of birth is instantly displayed for you to log in and inspect marks sheets.
+          </p>
+        </div>
+      </div>
+      
+      <div class="text-center mt-12">
+        <a href="/how-it-works" class="text-xs text-brand-blue hover:underline inline-flex items-center gap-1 font-semibold">
+          Learn detailed session iteration logistics
+          <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+          </svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Developer API Integration Promo Section -->
+  <section class="py-16 md:py-24 border-t border-canvas-dark-border light:border-canvas-light-border bg-black light:bg-canvas-light-surface transition-colors duration-300">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-2xl mx-auto mb-16">
+        <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold text-brand-blue bg-brand-blue/10 border border-brand-blue/20 mb-4 uppercase tracking-wider">
+          For Developers
+        </div>
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-white light:text-ink tracking-tight mb-4">
+          Robust REST API Suite
+        </h2>
+        <p class="text-gray-400 light:text-gray-600 text-xs sm:text-sm leading-relaxed">
+          Need to integrate university records retrieval into your own platform? Leverage our developer REST APIs to fetch verified results or locate missing date of birth records programmatically.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+        <!-- Result API Card -->
+        <div class="group relative rounded-2xl iphone-glass p-6 sm:p-8 hover:translate-y-[-4px] hover:border-brand-blue/30 transition-all duration-300">
+          <div class="absolute top-4 right-4 flex items-center gap-1.5 font-mono text-[9px] px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 uppercase font-bold">
+            Public
+          </div>
+          <div class="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center font-bold text-lg mb-6">
+            🔍
+          </div>
+          <h3 class="text-lg font-bold text-white light:text-ink mb-3 group-hover:text-brand-blue transition-colors">
+            1. Student Result API
+          </h3>
+          <p class="text-xs text-gray-500 light:text-gray-600 leading-relaxed mb-6">
+            Query academic result grids and cumulative indices instantly. Utilizes high-speed session bypass. Student DOB is omitted for compliance.
+          </p>
+          <div class="flex items-center gap-2 font-mono text-[10px] text-gray-400 light:text-gray-500 bg-white/[0.03] light:bg-black/[0.01] p-2.5 rounded-lg border border-white/[0.06] light:border-black/[0.04] mb-6">
+            <span class="text-emerald-400 font-bold uppercase">POST</span>
+            <span>/api/search</span>
+          </div>
+          <a href="/api#1-result-api-public-search" class="text-xs font-semibold text-brand-blue hover:underline inline-flex items-center gap-1">
+            Read Result API docs
+            <svg class="w-3.5 h-3.5 transform group-hover:translate-x-0.5 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+            </svg>
+          </a>
+        </div>
+
+        <!-- DOB API Card -->
+        <div class="group relative rounded-2xl iphone-glass p-6 sm:p-8 hover:translate-y-[-4px] hover:border-brand-blue/30 transition-all duration-300">
+          <div class="absolute top-4 right-4 flex items-center gap-1.5 font-mono text-[9px] px-2 py-0.5 rounded bg-blue-500/10 text-brand-blue border border-brand-blue/20 uppercase font-bold">
+            Protected
+          </div>
+          <div class="w-10 h-10 rounded-xl bg-blue-500/10 text-brand-blue flex items-center justify-center font-bold text-lg mb-6">
+            🔑
+          </div>
+          <h3 class="text-lg font-bold text-white light:text-ink mb-3 group-hover:text-brand-blue transition-colors">
+            2. AKTU DOB Finder API
+          </h3>
+          <p class="text-xs text-gray-500 light:text-gray-600 leading-relaxed mb-6">
+            Automatically locate dates of birth using configurable ranges. Secured with host IP and referrer domain whitelist filters.
+          </p>
+          <div class="flex items-center gap-2 font-mono text-[10px] text-gray-400 light:text-gray-500 bg-white/[0.03] light:bg-black/[0.01] p-2.5 rounded-lg border border-white/[0.06] light:border-black/[0.04] mb-6">
+            <span class="text-brand-blue font-bold uppercase">POST</span>
+            <span>/api/dob</span>
+          </div>
+          <a href="/api#2-dob-finder-api-privatewhitelisted" class="text-xs font-semibold text-brand-blue hover:underline inline-flex items-center gap-1">
+            Read DOB API docs
+            <svg class="w-3.5 h-3.5 transform group-hover:translate-x-0.5 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+            </svg>
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Client-Side Form Handler Script -->
+  <script is:inline>
+    window.addEventListener("DOMContentLoaded", () => {
+      // Animate counter from current display to new count
+      const updateCounterUI = (count) => {
+      const counterEl = document.getElementById("live-counter");
+      if (counterEl) {
+        const start = parseInt(counterEl.textContent.replace(/[^0-9]/g, ''), 10) || 24000;
+        const end = count;
+        if (isNaN(start) || start >= end) {
+          counterEl.textContent = Number(end).toLocaleString() + "+";
+          return;
+        }
+        
+        let current = start;
+        const range = end - start;
+        const increment = range > 50 ? Math.ceil(range / 20) : 1;
+        const stepTime = Math.max(Math.floor(300 / (range / increment)), 15);
+        
+        const timer = setInterval(() => {
+          current += increment;
+          if (current >= end) {
+            current = end;
+            clearInterval(timer);
+          }
+          counterEl.textContent = Number(current).toLocaleString() + "+";
+        }, stepTime);
+      }
+    };
+
+    // Fetch live counter on load
+    const fetchLiveCounter = async () => {
+      try {
+        const response = await fetch('/api/counter');
+        const data = await response.json();
+        if (data.success && data.count) {
+          updateCounterUI(data.count);
+        }
+      } catch (err) {
+        console.error("Failed to load counter", err);
+      }
+    };
+
+    // Call it on load
+    fetchLiveCounter();
+
+    // Prefill rollNumber from URL parameter
+    const urlParams = new URLSearchParams(window.location.search);
+    const rollParam = urlParams.get('rollNumber');
+    const pageRollInput = document.getElementById("roll-number");
+    if (rollParam && pageRollInput) {
+      pageRollInput.value = rollParam;
+      setTimeout(() => {
+        pageRollInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        pageRollInput.focus();
+        pageRollInput.classList.add("ring-2", "ring-brand-blue/50");
+      }, 150);
+    }
+
+    // Create random Captcha
+    const generateCaptcha = () => {
+      const num1 = Math.floor(Math.random() * 9) + 1;
+      const num2 = Math.floor(Math.random() * 9) + 1;
+      document.getElementById("captcha-num1").textContent = num1;
+      document.getElementById("captcha-num2").textContent = num2;
+      return num1 + num2;
+    };
+
+    let expectedCaptchaSum = generateCaptcha();
+
+    // DOM Elements
+    const heroGrid = document.getElementById("hero-grid");
+    const heroCopy = document.getElementById("hero-copy");
+    const heroCardWrapper = document.getElementById("hero-card-wrapper");
+
+    const searchForm = document.getElementById("search-form");
+    const loaderState = document.getElementById("loader-state");
+    const resultState = document.getElementById("result-state");
+    const errorState = document.getElementById("error-state");
+
+    const rollInput = document.getElementById("roll-number");
+    const captchaInput = document.getElementById("captcha-answer");
+
+    const resultName = document.getElementById("result-name");
+    const resultFather = document.getElementById("result-father");
+    const resultRoll = document.getElementById("result-roll");
+    const resultEnrollment = document.getElementById("result-enrollment");
+    const resultCourse = document.getElementById("result-course");
+    const resultInstitute = document.getElementById("result-institute");
+    const resultCgpa = document.getElementById("result-cgpa");
+    const resultDivision = document.getElementById("result-division");
+    const resultDivisionContainer = document.getElementById("result-division-container");
+    const resultIndicatorsGrid = document.getElementById("result-indicators-grid");
+    const resultStatusBadge = document.getElementById("result-status-badge");
+    const accordionContainer = document.getElementById("semesters-accordion-container");
+    const finalResultSummaryContainer = document.getElementById("final-result-summary-container");
+    const finalResultSummaryContent = document.getElementById("final-result-summary-content");
+
+    const loadingStatus = document.getElementById("loading-status");
+    const loadingSubstatus = document.getElementById("loading-substatus");
+
+    // Console logs simulation elements
+    const log1 = document.getElementById("log-step-1");
+    const log2 = document.getElementById("log-step-2");
+    const log3 = document.getElementById("log-step-3");
+    const log4 = document.getElementById("log-step-4");
+
+    const printBtn = document.getElementById("print-result-btn");
+    const resetBtn = document.getElementById("reset-form-btn");
+    const retryBtn = document.getElementById("error-retry-btn");
+
+    // Live Student Data
+    const shivamSemesters = [
+      {
+        sem: "Semester 1 (First Year)",
+        sgpa: "6.22",
+        status: "PWG",
+        marks: "604/900",
+        subjects: [
+          { code: "BAS101", name: "Physics-I", type: "Theory", int: "25", ext: "31", back: "--", grade: "C" },
+          { code: "BAS103", name: "Mathematics-I", type: "Theory", int: "25", ext: "21", back: "--", grade: "E" },
+          { code: "BEE101", name: "Basic Electrical Engg", type: "Theory", int: "24", ext: "33", back: "--", grade: "C" },
+          { code: "BME101", name: "Basic Mechanical Engg", type: "Theory", int: "24", ext: "22", back: "--", grade: "E" },
+          { code: "BME151", name: "Basic Mechanical Engg Lab", type: "Practical", int: "20", ext: "21", back: "--", grade: "B" },
+          { code: "BEE151", name: "Basic Electrical Engg Lab", type: "Practical", int: "22", ext: "21", back: "--", grade: "B" },
+          { code: "BAS151", name: "Physics Lab", type: "Practical", int: "21", ext: "22", back: "--", grade: "B" },
+          { code: "BME152", name: "Workshop Practice", type: "Practical", int: "41", ext: "42", back: "--", grade: "B+" },
+          { code: "BVA151", name: "Sports and Yoga - I", type: "Audit", int: "--", ext: "91", back: "--", grade: "Cleared" }
+        ]
+      },
+      {
+        sem: "Semester 2 (First Year)",
+        sgpa: "5.48",
+        status: "PCP",
+        marks: "656/900",
+        subjects: [
+          { code: "BAS202", name: "Chemistry", type: "Theory", int: "23", ext: "32", back: "--", grade: "C" },
+          { code: "BAS203", name: "Mathematics-II", type: "Theory", int: "23", ext: "18", back: "BAS203", grade: "F" },
+          { code: "BCS201", name: "Programming for Problem Solving", type: "Theory", int: "23", ext: "31", back: "--", grade: "C" },
+          { code: "BEC201", name: "Basic Electronics Engg", type: "Theory", int: "23", ext: "27", back: "--", grade: "D" },
+          { code: "BAS252", name: "Chemistry Lab", type: "Practical", int: "21", ext: "20", back: "--", grade: "B" },
+          { code: "BCS251", name: "Computer Programming Lab", type: "Practical", int: "21", ext: "21", back: "--", grade: "B" },
+          { code: "BEC251", name: "Basic Electronics Lab", type: "Practical", int: "21", ext: "22", back: "--", grade: "B" },
+          { code: "BCS252", name: "English Language Lab", type: "Practical", int: "41", ext: "40", back: "--", grade: "B+" }
+        ]
+      },
+      {
+        sem: "Semester 3 (Second Year)",
+        sgpa: "7.30",
+        status: "PASS",
+        marks: "737/1000",
+        subjects: [
+          { code: "BAS303", name: "Mathematics-IV", type: "Theory", int: "25", ext: "30", back: "--", grade: "C" },
+          { code: "BVE301", name: "Universal Human Values", type: "Theory", int: "25", ext: "37", back: "--", grade: "B" },
+          { code: "BCS301", name: "Data Structure", type: "Theory", int: "24", ext: "36", back: "--", grade: "B" },
+          { code: "BCS302", name: "Computer Org & Arch", type: "Theory", int: "23", ext: "33", back: "--", grade: "B" },
+          { code: "BCS303", name: "Discrete Structures", type: "Theory", int: "24", ext: "33", back: "--", grade: "B" },
+          { code: "BCC301", name: "Cyber Security", type: "Theory", int: "22", ext: "35", back: "--", grade: "B" },
+          { code: "BCS351", name: "Data Structure Lab", type: "Practical", int: "42", ext: "45", back: "--", grade: "A+" },
+          { code: "BCS352", name: "Computer Org Lab", type: "Practical", int: "43", ext: "46", back: "--", grade: "A+" },
+          { code: "BCS353", name: "Web Designing Workshop", type: "Practical", int: "44", ext: "45", back: "--", grade: "A+" },
+          { code: "BCC351", name: "Internship Assessment", type: "Audit", int: "--", ext: "92", back: "--", grade: "Cleared" }
+        ]
+      },
+      {
+        sem: "Semester 4 (Second Year)",
+        sgpa: "7.40",
+        status: "PASS",
+        marks: "740/1000",
+        subjects: [
+          { code: "BOE404", name: "Energy Science", type: "Theory", int: "25", ext: "35", back: "--", grade: "B" },
+          { code: "BAS401", name: "Technical Comm", type: "Theory", int: "24", ext: "43", back: "--", grade: "B+" },
+          { code: "BCS401", name: "Operating System", type: "Theory", int: "24", ext: "35", back: "--", grade: "B" },
+          { code: "BCS402", name: "Theory of Automata", type: "Theory", int: "24", ext: "38", back: "--", grade: "B" },
+          { code: "BCS403", name: "OOP with Java", type: "Theory", int: "24", ext: "35", back: "--", grade: "B" },
+          { code: "BCC402", name: "Python programming", type: "Theory", int: "23", ext: "40", back: "--", grade: "B+" },
+          { code: "BCS451", name: "Operating System Lab", type: "Practical", int: "42", ext: "43", back: "--", grade: "A" },
+          { code: "BCS452", name: "OOP Java Lab", type: "Practical", int: "42", ext: "44", back: "--", grade: "A" },
+          { code: "BCS453", name: "Cyber Security Workshop", type: "Practical", int: "41", ext: "43", back: "--", grade: "A" },
+          { code: "BVA451", name: "Sports and Yoga - II", type: "Audit", int: "--", ext: "93", back: "--", grade: "Cleared" }
+        ]
+      },
+      {
+        sem: "Semester 5 (Third Year)",
+        sgpa: "7.40",
+        status: "PASS",
+        marks: "737/1000",
+        subjects: [
+          { code: "BCS501", name: "Database Management System", type: "Theory", int: "24", ext: "36", back: "--", grade: "B" },
+          { code: "BCS502", name: "Compiler Design", type: "Theory", int: "24", ext: "37", back: "--", grade: "B" },
+          { code: "BCS503", name: "Design & Analysis of Algorithm", type: "Theory", int: "25", ext: "35", back: "--", grade: "B" },
+          { code: "BCS052", name: "Data Analytics", type: "Theory", int: "29", ext: "37", back: "--", grade: "B" },
+          { code: "BCS058", name: "Data Warehousing", type: "Theory", int: "29", ext: "41", back: "--", grade: "B+" },
+          { code: "BCS551", name: "DBMS Lab", type: "Practical", int: "41", ext: "42", back: "--", grade: "A" },
+          { code: "BCS552", name: "Compiler Lab", type: "Practical", int: "42", ext: "44", back: "--", grade: "A" },
+          { code: "BCS553", name: "DAA Lab", type: "Practical", int: "43", ext: "43", back: "--", grade: "A" },
+          { code: "BCS554", name: "Mini Project / Internship", type: "Practical", int: "43", ext: "44", back: "--", grade: "A" },
+          { code: "BCC551", name: "Constitution of India", type: "Audit", int: "--", ext: "92", back: "--", grade: "Cleared" }
+        ]
+      },
+      {
+        sem: "Semester 6 (Third Year)",
+        sgpa: "7.30",
+        status: "PASS",
+        marks: "698/1000",
+        subjects: [
+          { code: "BCS601", name: "Software Engineering", type: "Theory", int: "24", ext: "33", back: "--", grade: "C" },
+          { code: "BCS602", name: "Web Technology", type: "Theory", int: "25", ext: "37", back: "--", grade: "B" },
+          { code: "BCS603", name: "Computer Networks", type: "Theory", int: "26", ext: "36", back: "--", grade: "B" },
+          { code: "BCS061", name: "Big Data", type: "Theory", int: "29", ext: "39", back: "--", grade: "B" },
+          { code: "BCS065", name: "Software Project Management", type: "Theory", int: "28", ext: "41", back: "--", grade: "B+" },
+          { code: "BCS651", name: "Software Engg Lab", type: "Practical", int: "42", ext: "43", back: "--", grade: "A" },
+          { code: "BCS652", name: "Web Tech Lab", type: "Practical", int: "42", ext: "44", back: "--", grade: "A" },
+          { code: "BCS653", name: "Computer Networks Lab", type: "Practical", int: "43", ext: "43", back: "--", grade: "A" },
+          { code: "BVA651", name: "Sports and Yoga - III", type: "Audit", int: "--", ext: "91", back: "--", grade: "Cleared" }
+        ]
+      },
+      {
+        sem: "Semester 7 (Fourth Year)",
+        sgpa: "7.11",
+        status: "CP(0)",
+        marks: "509/700",
+        subjects: [
+          { code: "BCS701", name: "Artificial Intelligence", type: "Theory", int: "24", ext: "32", back: "--", grade: "C" },
+          { code: "BCS071", name: "Cloud Computing", type: "Theory", int: "25", ext: "43", back: "--", grade: "B" },
+          { code: "BOE073", name: "Machine Learning", type: "Theory", int: "24", ext: "30", back: "--", grade: "C" },
+          { code: "BCS751", name: "Artificial Intelligence Lab", type: "Practical", int: "41", ext: "44", back: "--", grade: "A" },
+          { code: "BCS752", name: "Mini Project / Internship", type: "Practical", int: "76", ext: "--", back: "--", grade: "B+" },
+          { code: "BCS753", name: "Project-1", type: "Practical", int: "90", ext: "--", back: "--", grade: "B" },
+          { code: "BCS754", name: "Startup/Entrepreneurial Activity", type: "Practical", int: "80", ext: "--", back: "--", grade: "A" }
+        ]
+      },
+      {
+        sem: "Semester 8 (Fourth Year)",
+        sgpa: "7.20",
+        status: "PASS",
+        marks: "431/700",
+        subjects: [
+          { code: "BOE089", name: "Natural Language Processing", type: "Theory", int: "23", ext: "21", back: "--", grade: "E" },
+          { code: "BOE096", name: "Digital & Social Media Marketing", type: "Theory", int: "25", ext: "37", back: "--", grade: "B" },
+          { code: "BCS851", name: "Project-II", type: "Practical", int: "70", ext: "255", back: "--", grade: "B+" }
+        ]
+      }
+    ];
+
+    const genericSemesters = [
+      {
+        sem: "Semester 1 (First Year)",
+        sgpa: "7.20",
+        status: "PASS",
+        marks: "648/900",
+        subjects: [
+          { code: "BAS101", name: "Physics-I", type: "Theory", int: "24", ext: "30", back: "--", grade: "C" },
+          { code: "BAS103", name: "Mathematics-I", type: "Theory", int: "24", ext: "28", back: "--", grade: "D" },
+          { code: "BEE101", name: "Basic Electrical Engg", type: "Theory", int: "23", ext: "35", back: "--", grade: "B" },
+          { code: "BAS151", name: "Physics Lab", type: "Practical", int: "22", ext: "22", back: "--", grade: "B" }
+        ]
+      },
+      {
+        sem: "Semester 2 (First Year)",
+        sgpa: "7.45",
+        status: "PASS",
+        marks: "670/900",
+        subjects: [
+          { code: "BAS202", name: "Chemistry", type: "Theory", int: "23", ext: "34", back: "--", grade: "B" },
+          { code: "BCS201", name: "Programming for Problem Solving", type: "Theory", int: "23", ext: "32", back: "--", grade: "C" },
+          { code: "BEC201", name: "Basic Electronics Engg", type: "Theory", int: "22", ext: "36", back: "--", grade: "B" },
+          { code: "BCS251", name: "Computer Programming Lab", type: "Practical", int: "22", ext: "22", back: "--", grade: "B" }
+        ]
+      }
+    ];
+
+    // Calculate overall status and division based on semesters
+    const calculateOverallStatusAndDivision = (semesters, defaultCgpa) => {
+      let hasBack = false;
+      let hasFail = false;
+      let hasGrace = false;
+
+      semesters.forEach((sem) => {
+        const status = sem.status.toUpperCase();
+        if (status.includes("PCP") || status.includes("CP") || status.includes("FAIL")) {
+          hasBack = true;
+        }
+        if (status.includes("FAIL")) {
+          hasFail = true;
+        }
+        if (status.includes("PWG")) {
+          hasGrace = true;
+        }
+
+        if (sem.subjects) {
+          sem.subjects.forEach((sub) => {
+            if (sub.grade === "F" || (sub.back && sub.back !== "--")) {
+              hasBack = true;
+            }
+          });
+        }
+      });
+
+      let overallStatus = "PASS";
+      let badgeClass = "text-emerald-400 font-bold text-[10px] sm:text-xs";
+      let division = "I-DIV";
+
+      const cgpa = parseFloat(defaultCgpa);
+
+      if (hasFail) {
+        overallStatus = "FAIL";
+        badgeClass = "text-red-500 font-bold text-[10px] sm:text-xs";
+        division = "--";
+      } else if (hasBack) {
+        overallStatus = "PCP";
+        badgeClass = "text-purple-400 font-bold text-[10px] sm:text-xs";
+        division = "--";
+      } else if (hasGrace) {
+        overallStatus = "PWG";
+        badgeClass = "text-amber-500 font-bold text-[10px] sm:text-xs";
+        if (cgpa >= 6.5) {
+          division = "I-DIV";
+        } else if (cgpa >= 5.0) {
+          division = "II-DIV";
+        } else {
+          division = "III-DIV";
+        }
+      } else {
+        if (cgpa >= 7.5) {
+          division = "I-DIV HONS";
+        } else if (cgpa >= 6.5) {
+          division = "I-DIV";
+        } else if (cgpa >= 5.0) {
+          division = "II-DIV";
+        } else {
+          division = "III-DIV";
+        }
+      }
+
+      return { status: overallStatus, badgeClass, division };
+    };
+
+    // Accordion Renderer
+    const renderSemesters = (semesters) => {
+      accordionContainer.innerHTML = "";
+      semesters.forEach((semData) => {
+        const semDiv = document.createElement("div");
+        semDiv.className = "border border-canvas-dark-border/60 light:border-canvas-light-border rounded-xl bg-canvas-dark-surface/50 light:bg-canvas-light-surface/50 overflow-hidden";
+        
+        // Header Button
+        const headerBtn = document.createElement("button");
+        headerBtn.type = "button";
+        headerBtn.className = "w-full px-4 py-3 flex items-center justify-between text-left focus:outline-none hover:bg-canvas-dark-tile/40 light:hover:bg-canvas-light-tile transition-colors";
+        headerBtn.innerHTML = `
+          <div class="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-4">
+            <span class="font-bold text-white light:text-ink text-[11px] sm:text-xs">${semData.sem}</span>
+            <div class="flex gap-2 text-[9px] text-gray-500">
+              <span>SGPA: <strong class="text-brand-blue">${semData.sgpa}</strong></span>
+              <span>Marks: <strong>${semData.marks}</strong></span>
+              <span class="px-1.5 py-0.2 rounded font-bold ${semData.status === "PASS" || semData.status === "Cleared" ? "bg-emerald-500/10 text-emerald-400" : "bg-purple-500/10 text-purple-400"}">${semData.status}</span>
+            </div>
+          </div>
+          <svg class="w-3.5 h-3.5 transform transition-transform duration-300 text-gray-500 sem-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+          </svg>
+        `;
+        
+        // Content area
+        const contentDiv = document.createElement("div");
+        contentDiv.className = "max-h-0 overflow-hidden transition-all duration-300 ease-in-out bg-black/25 light:bg-canvas-light-surface/10";
+        
+        const rowsHtml = semData.subjects.map(sub => `
+          <tr class="hover:bg-canvas-dark-surface/40 light:hover:bg-canvas-light-surface/30 border-b border-canvas-dark-border/10 light:border-canvas-light-border/40 text-[10px] text-gray-300 light:text-gray-700">
+            <td class="p-2 font-mono font-bold text-gray-400 light:text-gray-500">${sub.code}</td>
+            <td class="p-2 text-white light:text-ink font-medium max-w-[140px] truncate sm:max-w-none" title="${sub.name}">${sub.name}</td>
+            <td class="p-2 text-gray-500 uppercase text-[9px]">${sub.type}</td>
+            <td class="p-2 text-center">${sub.int}</td>
+            <td class="p-2 text-center">${sub.ext}</td>
+            <td class="p-2 text-center ${sub.back !== "--" ? "text-purple-400 font-bold" : "text-gray-600"}">${sub.back}</td>
+            <td class="p-2 text-center font-bold ${sub.grade === "F" ? "text-red-500" : "text-brand-blue"}">${sub.grade}</td>
+          </tr>
+        `).join("");
+        
+        contentDiv.innerHTML = `
+          <div class="p-3 border-t border-canvas-dark-border/40 light:border-canvas-light-border">
+            <div class="overflow-x-auto rounded-lg border border-canvas-dark-border/40 light:border-canvas-light-border bg-black/40 light:bg-white">
+              <table class="w-full text-left border-collapse min-w-[500px] sm:min-w-0">
+                <thead>
+                  <tr class="bg-canvas-dark-surface/90 light:bg-canvas-light-surface text-gray-500 light:text-gray-600 border-b border-canvas-dark-border/40 light:border-canvas-light-border text-[9px] uppercase tracking-wider">
+                    <th class="p-2 font-semibold">Code</th>
+                    <th class="p-2 font-semibold">Subject</th>
+                    <th class="p-2 font-semibold">Type</th>
+                    <th class="p-2 font-semibold text-center">Int</th>
+                    <th class="p-2 font-semibold text-center">Ext</th>
+                    <th class="p-2 font-semibold text-center">Back</th>
+                    <th class="p-2 font-semibold text-center">Grade</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-canvas-dark-border/20 light:divide-canvas-light-border/40">
+                  ${rowsHtml}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        `;
+        
+        // Toggler click event
+        headerBtn.addEventListener("click", () => {
+          const isExpanded = headerBtn.getAttribute("aria-expanded") === "true";
+          const icon = headerBtn.querySelector(".sem-icon");
+          
+          if (isExpanded) {
+            contentDiv.style.maxHeight = null;
+            headerBtn.setAttribute("aria-expanded", "false");
+            icon.classList.remove("rotate-180");
+          } else {
+            contentDiv.style.maxHeight = contentDiv.scrollHeight + "px";
+            headerBtn.setAttribute("aria-expanded", "true");
+            icon.classList.add("rotate-180");
+          }
+        });
+        
+        semDiv.appendChild(headerBtn);
+        semDiv.appendChild(contentDiv);
+        accordionContainer.appendChild(semDiv);
+      });
+    };
+
+    // Print helper
+    printBtn.addEventListener("click", () => {
+      window.print();
+    });
+
+    const resetUI = () => {
+      searchForm.classList.remove("hidden");
+      loaderState.classList.add("hidden");
+      resultState.classList.add("hidden");
+      errorState.classList.add("hidden");
+      rollInput.value = "";
+      captchaInput.value = "";
+      expectedCaptchaSum = generateCaptcha();
+      
+      // Revert layout back to initial columns
+      if (heroGrid && heroCopy && heroCardWrapper) {
+        heroGrid.classList.add("md:grid-cols-12", "items-center");
+        heroGrid.classList.remove("grid-cols-1", "justify-items-center");
+        
+        heroCopy.classList.add("md:col-span-7", "md:text-left");
+        heroCopy.classList.remove("w-full", "text-center", "order-2", "mt-12");
+        
+        heroCardWrapper.classList.add("md:col-span-5", "max-w-lg");
+        heroCardWrapper.classList.remove("w-full", "max-w-[90vw]", "md:max-w-[90vw]", "order-1");
+      }
+
+      if (resultIndicatorsGrid && resultDivisionContainer) {
+        resultIndicatorsGrid.classList.remove("grid-cols-2");
+        resultIndicatorsGrid.classList.add("grid-cols-3");
+        resultDivisionContainer.classList.remove("hidden");
+      }
+
+      if (finalResultSummaryContainer && finalResultSummaryContent) {
+        finalResultSummaryContainer.classList.add("hidden");
+        finalResultSummaryContent.innerHTML = "";
+      }
+
+      // Reset logs
+      log1.classList.add("hidden");
+      log2.classList.add("hidden");
+      log3.classList.add("hidden");
+      log4.classList.add("hidden");
+    };
+
+    resetBtn.addEventListener("click", resetUI);
+    retryBtn.addEventListener("click", resetUI);
+
+    // Roll Number Assistant Trigger Link
+    const forgotRollBtn = document.getElementById("forgot-roll-btn");
+    forgotRollBtn?.addEventListener("click", () => {
+      if (typeof window.openRollAssistantModal === "function") {
+        window.openRollAssistantModal();
+      }
+    });
+
+    const assistantForm = document.getElementById("roll-assistant-form");
+    const assistantSubmitBtn = document.getElementById("assistant-submit-btn");
+    const assistantOutput = document.getElementById("assistant-output");
+
+    assistantForm?.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      if (!assistantSubmitBtn || !assistantOutput) return;
+
+      const yearSelect = document.getElementById("assistant-year");
+      const collegeSelect = document.getElementById("assistant-college");
+      const manualCollegeInput = document.getElementById("assistant-manual-college");
+      const branchSelect = document.getElementById("assistant-branch");
+      const classRollInput = document.getElementById("assistant-class-roll");
+      const nameInput = document.getElementById("assistant-name");
+
+      const admissionYear = yearSelect.value;
+      let collegeCode = collegeSelect.value;
+      if (collegeCode === "other") {
+        collegeCode = manualCollegeInput.value.trim();
+      }
+      const branchCode = branchSelect.value;
+      const classRoll = classRollInput.value.trim();
+      const name = nameInput.value.trim();
+
+      if (!admissionYear || !collegeCode || !branchCode) {
+        alert("Please select Admission Year, College, and Branch.");
+        return;
+      }
+
+      // Disable button & show spinner
+      assistantSubmitBtn.setAttribute("disabled", "true");
+      const originalText = assistantSubmitBtn.innerHTML;
+      assistantSubmitBtn.innerHTML = `
+        <svg class="animate-spin h-4 w-4 text-white inline-block" fill="none" viewBox="0 0 24 24">
+          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+        </svg>
+        <span>Searching...</span>
+      `;
+
+      try {
+        const res = await fetch('/api/find-roll', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            admissionYear,
+            collegeCode,
+            branchCode,
+            name
+          })
+        });
+
+        assistantOutput.classList.remove("hidden");
+        assistantOutput.innerHTML = "";
+
+        if (!res.ok) {
+          throw new Error("API call failed");
+        }
+
+        const data = await res.json();
+        if (!data || !data.success) {
+          assistantOutput.innerHTML = `
+            <div class="p-3 bg-rose-500/10 border border-rose-500/20 text-rose-400 rounded-lg text-[10px]">
+              ${(data && data.error) || "Failed to generate details. Try again."}
+            </div>
+          `;
+          return;
+        }
+
+        let html = "";
+
+        // 1. If class roll is specified, construct exact roll number
+        if (classRoll) {
+          const exactRoll = `${data.prefix}${classRoll.padStart(4, '0')}`;
+          html += `
+            <div class="p-3 bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 rounded-lg space-y-2">
+              <div class="text-[9px] uppercase font-bold tracking-wider opacity-85">Generated Roll Number</div>
+              <div class="font-mono text-sm font-extrabold tracking-wide text-white light:text-ink">${exactRoll}</div>
+              <button 
+                type="button" 
+                class="use-roll-action-btn w-full py-1.5 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-[10px] rounded-md transition-colors cursor-pointer"
+                data-roll="${exactRoll}"
+              >
+                Use this Roll Number
+              </button>
+            </div>
+          `;
+        }
+
+        // 2. Display database matches if any
+        if (data.matches && data.matches.length > 0) {
+          html += `
+            <div class="space-y-1.5">
+              <div class="text-[9px] font-bold text-gray-400 light:text-gray-500 uppercase tracking-wider">Matching Students Found</div>
+              <div class="space-y-1 max-h-36 overflow-y-auto pr-1">
+          `;
+          data.matches.forEach((m) => {
+            html += `
+              <button 
+                type="button"
+                class="use-roll-action-btn w-full text-left p-2 rounded-lg border border-canvas-dark-border light:border-canvas-light-border bg-black/40 light:bg-gray-50 hover:bg-brand-blue/10 hover:border-brand-blue/30 text-[10px] transition-all flex justify-between items-center cursor-pointer"
+                data-roll="${m.rollNumber}"
+              >
+                <div>
+                  <div class="font-bold text-white light:text-ink">${m.name}</div>
+                  <div class="text-[9px] text-gray-500">${m.rollNumber} • ${m.course || ""}</div>
+                </div>
+                <span class="text-[9px] text-brand-blue font-bold">Select</span>
+              </button>
+            `;
+          });
+          html += `
+              </div>
+            </div>
+          `;
+        } else if (name && name.length >= 3) {
+          html += `
+            <div class="p-2.5 bg-amber-500/10 border border-amber-500/20 text-amber-500 rounded-lg text-[10px]">
+              No matching names found in the database.
+            </div>
+          `;
+        }
+
+        // 3. Display Range
+        html += `
+          <div class="p-3 bg-brand-blue/10 border border-brand-blue/20 text-brand-blue rounded-lg space-y-2">
+            <div class="text-[9px] uppercase font-bold tracking-wider opacity-85 text-gray-400">Class Roll Number Range</div>
+            <div class="font-mono text-xs font-bold text-white light:text-ink">Range: ${data.rangeStart} to ${data.rangeEnd}</div>
+            <p class="text-[9px] text-gray-500 leading-normal">You can try scanning class roll numbers sequentially from this range.</p>
+            
+            <div class="text-[10px] font-bold text-gray-400 mt-2">Quick Test Roll Numbers:</div>
+            <div class="flex flex-wrap gap-1 mt-1">
+        `;
+        
+        // Generate first 12 sample roll numbers for quick clicks
+        for (let i = 1; i <= 12; i++) {
+          const rollVal = `${data.prefix}${String(i).padStart(4, '0')}`;
+          html += `
+            <button 
+              type="button" 
+              class="use-roll-action-btn px-2 py-0.5 bg-black/35 light:bg-gray-150 border border-canvas-dark-border light:border-canvas-light-border hover:border-brand-blue rounded text-[9px] text-gray-300 light:text-gray-700 font-mono transition-all cursor-pointer"
+              data-roll="${rollVal}"
+            >
+              #${i}
+            </button>
+          `;
+        }
+        html += `
+            </div>
+          </div>
+        `;
+
+        assistantOutput.innerHTML = html;
+
+        // Bind click events on generated buttons
+        const actionBtns = assistantOutput.querySelectorAll(".use-roll-action-btn");
+        actionBtns.forEach(btn => {
+          btn.addEventListener("click", () => {
+            const roll = btn.getAttribute("data-roll");
+            if (roll && rollInput) {
+              rollInput.value = roll;
+              if (typeof window.closeRollAssistantModal === "function") {
+                window.closeRollAssistantModal();
+              }
+              rollInput.focus();
+              rollInput.classList.add("ring-2", "ring-emerald-500/50");
+              setTimeout(() => {
+                rollInput.classList.remove("ring-2", "ring-emerald-500/50");
+              }, 1500);
+            }
+          });
+        });
+
+      } catch (err) {
+        console.error("Roll assistant error:", err);
+        assistantOutput.innerHTML = `
+          <div class="p-3 bg-rose-500/10 border border-rose-500/20 text-rose-400 rounded-lg text-[10px]">
+            Error querying roll numbers. Please try again.
+          </div>
+        `;
+      } finally {
+        assistantSubmitBtn.removeAttribute("disabled");
+        assistantSubmitBtn.innerHTML = originalText;
+      }
+    });
+
+    searchForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      
+      const enteredRoll = rollInput.value.trim();
+      const enteredAnswer = parseInt(captchaInput.value.trim(), 10);
+
+      // Validate Captcha
+      if (enteredAnswer !== expectedCaptchaSum) {
+        alert("Incorrect Captcha Answer. Please try again.");
+        expectedCaptchaSum = generateCaptcha();
+        captchaInput.value = "";
+        return;
+      }
+
+      // Hide Form & Show Loader
+      searchForm.classList.add("hidden");
+      loaderState.classList.remove("hidden");
+
+      // Shift layout to wide and push headline down
+      if (heroGrid && heroCopy && heroCardWrapper) {
+        heroGrid.classList.remove("md:grid-cols-12", "items-center");
+        heroGrid.classList.add("grid-cols-1", "justify-items-center");
+        
+        heroCopy.classList.remove("md:col-span-7", "md:text-left");
+        heroCopy.classList.add("w-full", "text-center", "order-2", "mt-12");
+        
+        heroCardWrapper.classList.remove("md:col-span-5", "max-w-lg");
+        heroCardWrapper.classList.add("w-full", "max-w-[90vw]", "md:max-w-[90vw]", "order-1");
+      }
+
+      // Stage-based Loader Updates
+      setTimeout(() => {
+        loadingStatus.textContent = "Negotiating Handshake...";
+        loadingSubstatus.textContent = "Parsing cookies...";
+        log1.classList.remove("hidden");
+      }, 700);
+
+      setTimeout(() => {
+        loadingStatus.textContent = "Extracting ViewState...";
+        loadingSubstatus.textContent = "Scraping event target variables...";
+        log2.classList.remove("hidden");
+      }, 1500);
+
+      setTimeout(() => {
+        loadingStatus.textContent = "Bypassing DOB Verification...";
+        loadingSubstatus.textContent = "Injecting reference session credentials...";
+        log3.classList.remove("hidden");
+      }, 2300);
+
+      setTimeout(() => {
+        loadingStatus.textContent = "Retrieving Academic Records...";
+        loadingSubstatus.textContent = "Compiling detailed semester grids...";
+        log4.classList.remove("hidden");
+      }, 3100);
+
+      // Final response display
+      setTimeout(async () => {
+        try {
+          const res = await fetch('/api/search', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ rollNumber: enteredRoll })
+          });
+
+          loaderState.classList.add("hidden");
+
+          if (!res.ok) {
+            errorState.classList.remove("hidden");
+            return;
+          }
+
+          const data = await res.json();
+          if (data.success) {
+            if (data.totalSearches) {
+              updateCounterUI(data.totalSearches);
+            }
+            resultName.textContent = data.name;
+            resultFather.textContent = data.fatherName || "--";
+            resultRoll.textContent = data.rollNumber;
+            resultEnrollment.textContent = data.enrollmentNumber || "--";
+            resultCourse.textContent = data.course || "--";
+            resultInstitute.textContent = data.institute || "--";
+            resultCgpa.textContent = data.cgpa;
+            
+            const overall = calculateOverallStatusAndDivision(data.semesters, data.cgpa);
+            
+            if (data.courseCompleted) {
+              if (resultDivisionContainer) resultDivisionContainer.classList.remove("hidden");
+              if (resultIndicatorsGrid) {
+                resultIndicatorsGrid.classList.remove("grid-cols-2");
+                resultIndicatorsGrid.classList.add("grid-cols-3");
+              }
+              
+              const divisionText = data.divisionAwarded || "Awarded";
+              resultDivision.textContent = divisionText;
+              if (divisionText === "Clear Backlog") {
+                resultDivision.className = "text-red-400 font-bold text-[10px] sm:text-xs";
+              } else {
+                resultDivision.className = "text-white light:text-ink font-bold text-[10px] sm:text-xs";
+              }
+
+              if (finalResultSummaryContainer && finalResultSummaryContent && data.finalResultHtml) {
+                finalResultSummaryContent.innerHTML = data.finalResultHtml;
+                finalResultSummaryContainer.classList.remove("hidden");
+              }
+            } else {
+              if (resultDivisionContainer) resultDivisionContainer.classList.add("hidden");
+              if (resultIndicatorsGrid) {
+                resultIndicatorsGrid.classList.remove("grid-cols-3");
+                resultIndicatorsGrid.classList.add("grid-cols-2");
+              }
+              if (finalResultSummaryContainer) {
+                finalResultSummaryContainer.classList.add("hidden");
+              }
+            }
+            
+            resultStatusBadge.textContent = overall.status;
+            resultStatusBadge.className = overall.badgeClass;
+            
+            renderSemesters(data.semesters);
+            resultState.classList.remove("hidden");
+          } else {
+            document.getElementById("error-title").textContent = "Search Failed";
+            document.getElementById("error-desc").textContent = data.error || "Could not able to fetch now try later";
+            errorState.classList.remove("hidden");
+          }
+        } catch (error) {
+          console.error("API Error:", error);
+          loaderState.classList.add("hidden");
+          document.getElementById("error-title").textContent = "Fetch Failed";
+          document.getElementById("error-desc").textContent = "Could not able to fetch now try later";
+          errorState.classList.remove("hidden");
+        }
+      }, 4300);
+
+    });
+    });
+  </script>
+</Layout>

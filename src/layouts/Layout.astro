@@ -1,0 +1,717 @@
+---
+import "../styles/global.css";
+import colleges from "../data/colleges.json";
+import branches from "../data/branches.json";
+
+interface Props {
+  title: string;
+  description: string;
+  canonicalUrl?: string;
+  ogType?: string;
+  jsonLd?: Record<string, any>;
+}
+
+const {
+  title,
+  description,
+  canonicalUrl = Astro.url.href,
+  ogType = "website",
+  jsonLd
+} = Astro.props;
+
+const sortedColleges = [...colleges].sort((a, b) => a.name.localeCompare(b.name));
+const sortedBranches = [...branches].sort((a, b) => a.name.localeCompare(b.name));
+
+const brandUrl = "https://akturesultwithoutdob.com";
+const authorName = "Shivam Dixit";
+const authorWebsite = "https://shivamdixit.vercel.app";
+
+// Compute active page status
+const currentPath = Astro.url.pathname;
+const isActive = (path: string) => {
+  if (path === "/" && currentPath === "/") return true;
+  if (path !== "/" && currentPath.startsWith(path)) return true;
+  return false;
+};
+---
+
+<!doctype html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <!-- Favicon & Brand Icons -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    
+    <!-- Meta SEO Tags -->
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalUrl} />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="robots" content="index, follow" />
+    <meta name="author" content={authorName} />
+
+    <!-- Open Graph (Facebook / LinkedIn) -->
+    <meta property="og:type" content={ogType} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:site_name" content="AKTU Result Without DOB" />
+    <meta property="og:image" content={`${brandUrl}/og-image.png`} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+
+    <!-- Twitter Cards -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={`${brandUrl}/og-image.png`} />
+    <meta name="twitter:creator" content="@civdix" />
+
+    <!-- JSON-LD Structured Data -->
+    {jsonLd && (
+      <script type="application/ld+json" is:inline set:html={JSON.stringify(jsonLd)}></script>
+    )}
+    
+    <!-- Google Fonts Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+    <!-- Inline Script to prevent Theme FOUC -->
+    <script is:inline>
+      const getThemePreference = () => {
+        if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
+          return localStorage.getItem('theme');
+        }
+        return window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+      };
+      const theme = getThemePreference();
+      if (theme === 'light') {
+        document.documentElement.classList.remove('dark');
+        document.documentElement.classList.add('light');
+      } else {
+        document.documentElement.classList.remove('light');
+        document.documentElement.classList.add('dark');
+      }
+    </script>
+  </head>
+  <body class="bg-canvas-dark text-white dark:bg-canvas-dark dark:text-white light:bg-canvas-light light:text-ink min-h-screen flex flex-flow flex-col justify-between overflow-x-hidden selection:bg-brand-blue selection:text-white">
+    
+    <!-- Floating iOS/macOS-style Dock Navbar -->
+    <div class="fixed top-4 left-0 right-0 z-50 flex justify-center px-4">
+      <header 
+        id="floating-header" 
+        class="w-full max-w-5xl border border-canvas-dark-border/60 light:border-canvas-light-border/60 rounded-full frosted-glass bg-black/60 light:bg-white/80 premium-shadow-dark light:premium-shadow-light py-2 px-4 md:px-6 transition-all duration-300 ease-in-out"
+      >
+        <div class="flex items-center justify-between h-12">
+          <!-- Logo / Brand Title -->
+          <div class="flex items-center">
+            <a href="/" class="flex items-center gap-2 group">
+              <div class="w-8 h-8 rounded-lg bg-gradient-to-tr from-brand-blue to-purple-600 flex items-center justify-center text-white font-black text-sm premium-shadow-dark transition-all duration-300 group-hover:scale-105">
+                ⚡
+              </div>
+              <span class="font-bold tracking-tight text-sm sm:text-base bg-gradient-to-r from-white to-gray-400 dark:from-white dark:to-gray-400 light:from-ink light:to-gray-700 bg-clip-text text-transparent group-hover:opacity-90">
+                AKTU Result <span class="text-brand-blue font-semibold">Without DOB</span>
+              </span>
+            </a>
+          </div>
+
+          <!-- Desktop Navigation Dock Links -->
+          <nav class="hidden md:flex items-center gap-1 bg-black/20 dark:bg-black/25 light:bg-gray-100/50 p-1 rounded-full border border-white/5 light:border-black/5">
+            <a href="/" class={`px-4 py-1.5 rounded-full text-xs font-semibold transition-all duration-200 ${isActive('/') ? 'bg-brand-blue text-white premium-shadow-dark' : 'text-gray-400 hover:text-white light:text-gray-600 light:hover:text-ink'}`}>Home</a>
+            <a href="/roll-number-finder" class={`px-4 py-1.5 rounded-full text-xs font-semibold transition-all duration-200 ${isActive('/roll-number-finder') ? 'bg-brand-blue text-white premium-shadow-dark' : 'text-gray-400 hover:text-white light:text-gray-600 light:hover:text-ink'}`}>Roll Finder</a>
+            <a href="/colleges" class={`px-4 py-1.5 rounded-full text-xs font-semibold transition-all duration-200 ${isActive('/colleges') ? 'bg-brand-blue text-white premium-shadow-dark' : 'text-gray-400 hover:text-white light:text-gray-600 light:hover:text-ink'}`}>Colleges</a>
+            <a href="/faq" class={`px-4 py-1.5 rounded-full text-xs font-semibold transition-all duration-200 ${isActive('/faq') ? 'bg-brand-blue text-white premium-shadow-dark' : 'text-gray-400 hover:text-white light:text-gray-600 light:hover:text-ink'}`}>FAQ</a>
+            <a href="/api" class={`px-4 py-1.5 rounded-full text-xs font-semibold transition-all duration-200 ${isActive('/api') ? 'bg-brand-blue text-white premium-shadow-dark' : 'text-gray-400 hover:text-white light:text-gray-600 light:hover:text-ink'}`}>Developer API</a>
+            <a href="/about" class={`px-4 py-1.5 rounded-full text-xs font-semibold transition-all duration-200 ${isActive('/about') ? 'bg-brand-blue text-white premium-shadow-dark' : 'text-gray-400 hover:text-white light:text-gray-600 light:hover:text-ink'}`}>About</a>
+            <a href="/contact" class={`px-4 py-1.5 rounded-full text-xs font-semibold transition-all duration-200 ${isActive('/contact') ? 'bg-brand-blue text-white premium-shadow-dark' : 'text-gray-400 hover:text-white light:text-gray-600 light:hover:text-ink'}`}>Contact</a>
+          </nav>
+
+          <!-- Navigation Right Controls -->
+          <div class="hidden md:flex items-center gap-3">
+            <!-- Theme Toggle Button -->
+            <button id="theme-toggle" aria-label="Toggle dark mode" class="w-8 h-8 flex items-center justify-center rounded-full border border-canvas-dark-border/60 light:border-canvas-light-border/60 hover:bg-gray-900 light:hover:bg-gray-100 transition-colors btn-press-active text-gray-400 hover:text-white light:text-gray-600 light:hover:text-ink">
+              <!-- Sun Icon -->
+              <svg id="theme-toggle-sun" class="w-3.5 h-3.5 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707-.707m12.728 12.728A9 9 0 115.636 5.636a9 9 0 0112.728 12.728z" />
+              </svg>
+              <!-- Moon Icon -->
+              <svg id="theme-toggle-moon" class="w-3.5 h-3.5 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+              </svg>
+            </button>
+          </div>
+
+          <!-- Mobile Dynamic Island Trigger -->
+          <div class="flex items-center gap-2 md:hidden">
+            <button id="theme-toggle-mobile" aria-label="Toggle dark mode" class="w-8 h-8 flex items-center justify-center rounded-full border border-canvas-dark-border/60 light:border-canvas-light-border/60 text-gray-400 light:text-gray-600">
+              <svg class="w-3.5 h-3.5 block dark:hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707-.707" /></svg>
+              <svg class="w-3.5 h-3.5 hidden dark:block" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21" /></svg>
+            </button>
+            <button id="mobile-menu-trigger" aria-label="Toggle Menu" class="w-8 h-8 flex items-center justify-center rounded-full border border-canvas-dark-border/60 light:border-canvas-light-border/60 text-gray-400 hover:text-white light:text-gray-600 light:hover:text-ink">
+              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16m-7 6h7" />
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Mobile Dynamic Island expanded Menu Tray -->
+        <div id="mobile-menu-tray" class="hidden md:hidden overflow-hidden transition-all duration-300 max-h-0 opacity-0 flex flex-col gap-3">
+          <div class="h-px bg-canvas-dark-border/40 light:bg-canvas-light-border/40 my-2"></div>
+          <a href="/" class={`text-sm font-semibold py-1.5 px-3 rounded-xl ${isActive('/') ? 'bg-brand-blue/10 text-brand-blue' : 'text-gray-400 light:text-gray-600'}`}>Home</a>
+          <a href="/roll-number-finder" class={`text-sm font-semibold py-1.5 px-3 rounded-xl ${isActive('/roll-number-finder') ? 'bg-brand-blue/10 text-brand-blue' : 'text-gray-400 light:text-gray-600'}`}>Roll Finder</a>
+          <a href="/colleges" class={`text-sm font-semibold py-1.5 px-3 rounded-xl ${isActive('/colleges') ? 'bg-brand-blue/10 text-brand-blue' : 'text-gray-400 light:text-gray-600'}`}>Colleges</a>
+          <a href="/faq" class={`text-sm font-semibold py-1.5 px-3 rounded-xl ${isActive('/faq') ? 'bg-brand-blue/10 text-brand-blue' : 'text-gray-400 light:text-gray-600'}`}>FAQ</a>
+          <a href="/api" class={`text-sm font-semibold py-1.5 px-3 rounded-xl ${isActive('/api') ? 'bg-brand-blue/10 text-brand-blue' : 'text-gray-400 light:text-gray-600'}`}>Developer API</a>
+          <a href="/about" class={`text-sm font-semibold py-1.5 px-3 rounded-xl ${isActive('/about') ? 'bg-brand-blue/10 text-brand-blue' : 'text-gray-400 light:text-gray-600'}`}>About</a>
+          <a href="/contact" class={`text-sm font-semibold py-1.5 px-3 rounded-xl ${isActive('/contact') ? 'bg-brand-blue/10 text-brand-blue' : 'text-gray-400 light:text-gray-600'}`}>Contact</a>
+        </div>
+      </header>
+    </div>
+
+    <!-- Main Content Container -->
+    <main class="flex-grow pt-20 md:pt-20">
+      <slot />
+    </main>
+
+    <!-- Vercel-style Footer -->
+    <footer class="border-t border-canvas-dark-border light:border-canvas-light-border bg-canvas-dark-surface light:bg-canvas-light-surface py-12 md:py-16 text-gray-500 light:text-gray-500 transition-colors duration-300">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12">
+          
+          <!-- Column 1: Application -->
+          <div>
+            <h3 class="text-xs font-semibold text-white light:text-ink tracking-wider uppercase mb-4">Application</h3>
+            <ul class="space-y-3">
+              <li><a href="/" class="text-sm hover:text-white light:hover:text-ink transition-colors">Recover DOB</a></li>
+              <li><a href="/roll-number-finder" class="text-sm hover:text-white light:hover:text-ink transition-colors">Roll Finder</a></li>
+              <li><a href="/colleges" class="text-sm hover:text-white light:hover:text-ink transition-colors">Colleges Directory</a></li>
+              <li><a href="/how-it-works" class="text-sm hover:text-white light:hover:text-ink transition-colors">How it Works</a></li>
+              <li><a href="/faq" class="text-sm hover:text-white light:hover:text-ink transition-colors">FAQs</a></li>
+              <li><a href="/api" class="text-sm hover:text-white light:hover:text-ink transition-colors">API Docs</a></li>
+            </ul>
+          </div>
+
+          <!-- Column 2: Legal Documentation -->
+          <div>
+            <h3 class="text-xs font-semibold text-white light:text-ink tracking-wider uppercase mb-4">Legal</h3>
+            <ul class="space-y-3">
+              <li><a href="/privacy-policy" class="text-sm hover:text-white light:hover:text-ink transition-colors">Privacy Policy</a></li>
+              <li><a href="/terms" class="text-sm hover:text-white light:hover:text-ink transition-colors">Terms of Service</a></li>
+              <li><a href="/disclaimer" class="text-sm hover:text-white light:hover:text-ink transition-colors">Disclaimer</a></li>
+            </ul>
+          </div>
+
+          <!-- Column 3: Developer Info -->
+          <div>
+            <h3 class="text-xs font-semibold text-white light:text-ink tracking-wider uppercase mb-4">Developer</h3>
+            <ul class="space-y-3">
+              <li><a href={authorWebsite} target="_blank" rel="noopener noreferrer" class="text-sm hover:text-white light:hover:text-ink transition-colors">{authorName}</a></li>
+              <li><a href="/about" class="text-sm hover:text-white light:hover:text-ink transition-colors">About Us</a></li>
+              <li><a href="/contact" class="text-sm hover:text-white light:hover:text-ink transition-colors">Get in Touch</a></li>
+            </ul>
+          </div>
+
+          <!-- Column 4: Trust Metrics -->
+          <div class="col-span-2 md:col-span-1">
+            <h3 class="text-xs font-semibold text-white light:text-ink tracking-wider uppercase mb-4">Trust & Security</h3>
+            <p class="text-xs leading-relaxed text-gray-500 light:text-gray-600 mb-2">
+              All queries are compiled live without storing sensitive student records locally. Fully secure data transfers.
+            </p>
+            <div class="flex items-center gap-2">
+              <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-500/10 text-emerald-400">
+                SSL Secured
+              </span>
+              <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-brand-blue/10 text-brand-blue">
+                GDPR Compliant
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-12 pt-8 border-t border-canvas-dark-border light:border-canvas-light-border flex flex-col md:flex-row items-center justify-between gap-6 text-xs text-gray-600">
+          <div>
+            &copy; {new Date().getFullYear()} AKTU Result Without DOB. All rights reserved.
+          </div>
+          
+          <!-- Explicit Third-Party Disclaimer Banner -->
+          <div class="max-w-md text-center md:text-right leading-relaxed text-[11px] text-gray-600 light:text-gray-500">
+            <strong>Disclaimer:</strong> This website is an independent search assistant. It is <strong>NOT</strong> affiliated with, authorized, or endorsed by Dr. A.P.J. Abdul Kalam Technical University (AKTU) or the Government of Uttar Pradesh.
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Client-Side Layout Scripts (Hamburger menu & theme toggling) -->
+    <script>
+      // Setup elements
+      const themeToggle = document.getElementById("theme-toggle");
+      const themeToggleSun = document.getElementById("theme-toggle-sun");
+      const themeToggleMoon = document.getElementById("theme-toggle-moon");
+      const themeToggleMobile = document.getElementById("theme-toggle-mobile");
+      
+      const menuTrigger = document.getElementById("mobile-menu-trigger");
+      const menuTray = document.getElementById("mobile-menu-tray");
+
+      // Update theme toggle icons visibility
+      const updateToggleIcons = (isLight: boolean) => {
+        if (isLight) {
+          themeToggleSun?.classList.add("hidden");
+          themeToggleMoon?.classList.remove("hidden");
+        } else {
+          themeToggleSun?.classList.remove("hidden");
+          themeToggleMoon?.classList.add("hidden");
+        }
+      };
+
+      // Initial state load
+      const isCurrentlyLight = document.documentElement.classList.contains("light");
+      updateToggleIcons(isCurrentlyLight);
+
+      // Handle desktop toggling
+      themeToggle?.addEventListener("click", () => {
+        const isLight = document.documentElement.classList.toggle("light");
+        document.documentElement.classList.toggle("dark", !isLight);
+        localStorage.setItem("theme", isLight ? "light" : "dark");
+        updateToggleIcons(isLight);
+      });
+
+      // Handle mobile toggling
+      themeToggleMobile?.addEventListener("click", () => {
+        const isLight = document.documentElement.classList.toggle("light");
+        document.documentElement.classList.toggle("dark", !isLight);
+        localStorage.setItem("theme", isLight ? "light" : "dark");
+        updateToggleIcons(isLight);
+      });
+
+      // Hamburger menu toggling (Dynamic Island animation)
+      const floatingHeader = document.getElementById("floating-header");
+      menuTrigger?.addEventListener("click", () => {
+        if (menuTray?.classList.contains("hidden")) {
+          // Open transition
+          floatingHeader?.classList.remove("rounded-full");
+          floatingHeader?.classList.add("rounded-[28px]");
+          menuTray.classList.remove("hidden");
+          setTimeout(() => {
+            menuTray.classList.remove("max-h-0", "opacity-0");
+            menuTray.classList.add("max-h-[500px]", "opacity-100");
+          }, 10);
+        } else {
+          // Close transition
+          menuTray?.classList.remove("max-h-[500px]", "opacity-100");
+          menuTray?.classList.add("max-h-0", "opacity-0");
+          setTimeout(() => {
+            menuTray?.classList.add("hidden");
+            floatingHeader?.classList.remove("rounded-[28px]");
+            floatingHeader?.classList.add("rounded-full");
+          }, 300);
+        }
+      });
+
+      // Buy Me A Coffee Modal Handler
+      const coffeeModal = document.getElementById("coffee-modal");
+      const coffeeModalContent = document.getElementById("coffee-modal-content");
+      const coffeeModalClose = document.getElementById("coffee-modal-close");
+      const coffeeModalBackdrop = document.getElementById("coffee-modal-backdrop");
+      const floatingCoffeeBtn = document.getElementById("floating-coffee-btn");
+      
+      const tabUpi = document.getElementById("tab-upi");
+      const tabBmac = document.getElementById("tab-bmac");
+      const sectionUpi = document.getElementById("section-upi");
+      const sectionBmac = document.getElementById("section-bmac");
+      
+      const copyUpiBtn = document.getElementById("copy-upi-btn");
+      const upiIdText = document.getElementById("upi-id-text");
+
+      const openCoffeeModal = () => {
+        if (!coffeeModal || !coffeeModalContent) return;
+        coffeeModal.classList.remove("hidden");
+        document.body.classList.add("overflow-hidden");
+        setTimeout(() => {
+          coffeeModalContent.classList.remove("scale-95", "opacity-0");
+          coffeeModalContent.classList.add("scale-100", "opacity-100");
+        }, 10);
+      };
+
+      const closeCoffeeModal = () => {
+        if (!coffeeModal || !coffeeModalContent) return;
+        coffeeModalContent.classList.remove("scale-100", "opacity-100");
+        coffeeModalContent.classList.add("scale-95", "opacity-0");
+        document.body.classList.remove("overflow-hidden");
+        setTimeout(() => {
+          coffeeModal.classList.add("hidden");
+        }, 300);
+      };
+
+      if (floatingCoffeeBtn) {
+        // Initial state: hide when scrolled near top of page to prevent form overlap
+        if (window.scrollY < 180) {
+          floatingCoffeeBtn.style.opacity = "0";
+          floatingCoffeeBtn.style.pointerEvents = "none";
+          floatingCoffeeBtn.style.transform = "scale(0.8)";
+        }
+        floatingCoffeeBtn.style.transition = "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)";
+
+        window.addEventListener("scroll", () => {
+          if (window.scrollY < 180) {
+            floatingCoffeeBtn.style.opacity = "0";
+            floatingCoffeeBtn.style.pointerEvents = "none";
+            floatingCoffeeBtn.style.transform = "scale(0.8)";
+          } else {
+            floatingCoffeeBtn.style.opacity = "1";
+            floatingCoffeeBtn.style.pointerEvents = "auto";
+            floatingCoffeeBtn.style.transform = "scale(1)";
+          }
+        });
+      }
+
+      floatingCoffeeBtn?.addEventListener("click", openCoffeeModal);
+      coffeeModalClose?.addEventListener("click", closeCoffeeModal);
+      coffeeModalBackdrop?.addEventListener("click", closeCoffeeModal);
+
+      // Handle custom triggers from anywhere with class 'coffee-trigger'
+      document.addEventListener("click", (e) => {
+        const target = e.target as any;
+        const trigger = target.closest(".coffee-trigger");
+        if (trigger) {
+          e.preventDefault();
+          openCoffeeModal();
+        }
+      });
+
+      // Roll Assistant Modal Handler
+      const rollModal = document.getElementById("roll-assistant-modal");
+      const rollModalContent = document.getElementById("roll-assistant-modal-content");
+      const rollModalClose = document.getElementById("roll-assistant-modal-close");
+      const rollModalBackdrop = document.getElementById("roll-assistant-modal-backdrop");
+      const assistantCollege = document.getElementById("assistant-college") as HTMLSelectElement;
+      const manualCollegeContainer = document.getElementById("manual-college-container");
+      const manualCollegeInput = document.getElementById("assistant-manual-college") as HTMLInputElement;
+
+      const openRollModal = () => {
+        if (!rollModal || !rollModalContent) return;
+        rollModal.classList.remove("hidden");
+        document.body.classList.add("overflow-hidden");
+        setTimeout(() => {
+          rollModalContent.classList.remove("scale-95", "opacity-0");
+          rollModalContent.classList.add("scale-100", "opacity-100");
+        }, 10);
+      };
+
+      const closeRollModal = () => {
+        if (!rollModal || !rollModalContent) return;
+        rollModalContent.classList.remove("scale-100", "opacity-100");
+        rollModalContent.classList.add("scale-95", "opacity-0");
+        document.body.classList.remove("overflow-hidden");
+        setTimeout(() => {
+          rollModal.classList.add("hidden");
+          const form = document.getElementById("roll-assistant-form") as HTMLFormElement;
+          form?.reset();
+          manualCollegeContainer?.classList.add("hidden");
+          const output = document.getElementById("assistant-output");
+          if (output) {
+            output.innerHTML = "";
+            output.classList.add("hidden");
+          }
+        }, 300);
+      };
+
+      rollModalClose?.addEventListener("click", closeRollModal);
+      rollModalBackdrop?.addEventListener("click", closeRollModal);
+
+      // Dismiss modals with Escape key
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") {
+          closeCoffeeModal();
+          closeRollModal();
+        }
+      });
+
+      // Expose globally so index page trigger can open/close it
+      (window as any).openRollAssistantModal = openRollModal;
+      (window as any).closeRollAssistantModal = closeRollModal;
+
+      // Handle Manual College input toggling
+      assistantCollege?.addEventListener("change", () => {
+        if (assistantCollege.value === "other") {
+          manualCollegeContainer?.classList.remove("hidden");
+          manualCollegeInput.required = true;
+          manualCollegeInput.focus();
+        } else {
+          manualCollegeContainer?.classList.add("hidden");
+          manualCollegeInput.required = false;
+          manualCollegeInput.value = "";
+        }
+      });
+
+      // Tabs switching
+      tabUpi?.addEventListener("click", () => {
+        tabUpi.classList.add("bg-brand-blue", "text-white");
+        tabUpi.classList.remove("text-gray-400", "hover:text-white", "light:hover:text-ink");
+        tabBmac?.classList.remove("bg-brand-blue", "text-white");
+        tabBmac?.classList.add("text-gray-400", "hover:text-white", "light:hover:text-ink");
+        
+        sectionUpi?.classList.remove("hidden");
+        sectionBmac?.classList.add("hidden");
+      });
+
+      tabBmac?.addEventListener("click", () => {
+        tabBmac.classList.add("bg-brand-blue", "text-white");
+        tabBmac.classList.remove("text-gray-400", "hover:text-white", "light:hover:text-ink");
+        tabUpi?.classList.remove("bg-brand-blue", "text-white");
+        tabUpi?.classList.add("text-gray-400", "hover:text-white", "light:hover:text-ink");
+        
+        sectionBmac?.classList.remove("hidden");
+        sectionUpi?.classList.add("hidden");
+      });
+
+      // Copy UPI ID
+      copyUpiBtn?.addEventListener("click", () => {
+        const upiId = upiIdText?.textContent || "shivdix@axl";
+        navigator.clipboard.writeText(upiId).then(() => {
+          copyUpiBtn.textContent = "Copied!";
+          copyUpiBtn.classList.remove("bg-brand-blue");
+          copyUpiBtn.classList.add("bg-emerald-600");
+          setTimeout(() => {
+            copyUpiBtn.textContent = "Copy";
+            copyUpiBtn.classList.remove("bg-emerald-600");
+            copyUpiBtn.classList.add("bg-brand-blue");
+          }, 2000);
+        });
+      });
+    </script>
+
+    <!-- Buy Me A Coffee Modal -->
+    <div id="coffee-modal" class="fixed inset-0 z-50 flex items-center justify-center hidden p-4">
+      <!-- Backdrop -->
+      <div id="coffee-modal-backdrop" class="absolute inset-0 bg-black/60 backdrop-blur-md"></div>
+      
+      <!-- Modal Content -->
+      <div class="relative w-full max-w-sm bg-canvas-dark-tile light:bg-white border border-canvas-dark-border light:border-canvas-light-border rounded-2xl overflow-hidden shadow-2xl z-10 transform scale-95 opacity-0 transition-all duration-300 ease-out max-h-[90vh] flex flex-col" id="coffee-modal-content">
+        <!-- Close Button -->
+        <button id="coffee-modal-close" class="absolute top-4 right-4 text-gray-500 hover:text-white light:hover:text-ink focus:outline-none cursor-pointer">
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+
+        <div class="p-6 text-center overflow-y-auto flex-1 custom-scrollbar">
+          <div class="w-14 h-14 bg-[#72a4f2]/10 text-[#72a4f2] rounded-full flex items-center justify-center mx-auto mb-4 text-2xl">
+            💙
+          </div>
+          
+          <h3 class="text-lg font-bold text-white light:text-ink mb-1.5">Support on Ko-fi</h3>
+          <p class="text-[11px] text-gray-400 light:text-gray-500 leading-relaxed mb-5">
+            If this helper tool successfully recovered your credentials, consider supporting to keep the servers running. Even a small tip makes a huge difference!
+          </p>
+
+          <!-- Toggle Options -->
+          <div class="flex bg-black/45 light:bg-gray-100 p-0.5 rounded-xl mb-5 border border-white/5 light:border-black/5">
+            <button id="tab-upi" class="flex-1 py-1.5 text-[10px] font-bold rounded-lg bg-brand-blue text-white focus:outline-none cursor-pointer transition-all">
+              UPI (India)
+            </button>
+            <button id="tab-bmac" class="flex-1 py-1.5 text-[10px] font-bold text-gray-400 hover:text-white light:hover:text-ink focus:outline-none cursor-pointer transition-all">
+              Ko-fi
+            </button>
+          </div>
+
+          <!-- UPI Section -->
+          <div id="section-upi" class="space-y-4">
+            <!-- UPI QR Code -->
+            <div class="bg-white p-3 rounded-xl inline-block shadow-inner border border-gray-200">
+              <img 
+                src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=upi%3A%2F%2Fpay%3Fpa%3Dshivdix%40axl%26pn%3DShivam%2520Dixit%26cu%3DINR" 
+                alt="UPI QR Code" 
+                class="w-32 h-32 mx-auto"
+                loading="lazy"
+              />
+            </div>
+            
+            <p class="text-[9px] text-gray-500">Scan QR using any UPI app (GPay, PhonePe, Paytm)</p>
+            
+            <div class="flex items-center justify-between bg-black/40 light:bg-gray-50 p-2 rounded-xl border borderq-canvas-dark-border light:border-canvas-light-border text-xs">
+              <span class="font-mono text-gray-300 light:text-ink font-semibold" id="upi-id-text">shivdix@axl</span>
+              <button id="copy-upi-btn" class="px-2.5 py-1 bg-brand-blue hover:bg-brand-blue-hover text-[10px] text-white font-bold rounded-lg cursor-pointer transition-colors">
+                Copy
+              </button>
+            </div>
+          </div>
+
+          <!-- BMAC Section -->
+          <div id="section-bmac" class="hidden space-y-4 py-4">
+            <p class="text-gray-400 light:text-gray-500 text-xs">
+              Support via standard Ko-fi portal.
+            </p>
+            
+            <a 
+              href="https://ko-fi.com/shivamdiixt" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              class="inline-flex items-center gap-1.5 px-5 py-2.5 bg-[#72a4f2] text-white font-extrabold rounded-xl hover:bg-[#5b8ddb] transition-all shadow-lg text-xs"
+            >
+              <span class="text-sm">💙</span>
+              <span>Support me on Ko-fi</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Roll Number Assistant Modal -->
+    <div id="roll-assistant-modal" class="fixed inset-0 z-50 flex items-center justify-center hidden p-4">
+      <!-- Backdrop -->
+      <div id="roll-assistant-modal-backdrop" class="absolute inset-0 bg-black/60 backdrop-blur-md"></div>
+      
+      <!-- Modal Content -->
+      <div class="relative w-full max-w-md bg-canvas-dark-tile light:bg-white border border-canvas-dark-border light:border-canvas-light-border rounded-2xl overflow-hidden shadow-2xl z-10 transform scale-95 opacity-0 transition-all duration-300 ease-out max-h-[90vh] flex flex-col" id="roll-assistant-modal-content">
+        <!-- Close Button -->
+        <button id="roll-assistant-modal-close" class="absolute top-4 right-4 text-gray-500 hover:text-white light:hover:text-ink focus:outline-none cursor-pointer">
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+
+        <div class="p-6 overflow-y-auto flex-1 custom-scrollbar">
+          <div class="flex items-center gap-2 mb-2">
+            <span class="text-xl">🔍</span>
+            <h3 class="text-base font-bold text-white light:text-ink">Roll Number Assistant</h3>
+          </div>
+          <p class="text-[11px] text-gray-400 light:text-gray-500 leading-relaxed mb-4">
+            If you don't know your roll number, enter your details below to find or generate it.
+          </p>
+
+          <form id="roll-assistant-form" class="space-y-3.5" onsubmit="event.preventDefault();">
+            <!-- Admission Year -->
+            <div>
+              <label for="assistant-year" class="block text-[9px] font-semibold text-gray-400 light:text-gray-500 uppercase tracking-wider mb-1">
+                Admission Year
+              </label>
+              <select 
+                id="assistant-year" 
+                required
+                class="w-full px-3 py-2 bg-black/50 light:bg-gray-50 border border-canvas-dark-border light:border-canvas-light-border rounded-lg text-white light:text-ink text-xs focus:outline-none focus:border-brand-blue"
+              >
+                <option value="">Select Year</option>
+                <option value="25">2025 (25)</option>
+                <option value="24">2024 (24)</option>
+                <option value="23">2023 (23)</option>
+                <option value="22">2022 (22)</option>
+                <option value="21">2021 (21)</option>
+                <option value="20">2020 (20)</option>
+                <option value="19">2019 (19)</option>
+                <option value="18">2018 (18)</option>
+              </select>
+            </div>
+
+            <!-- College -->
+            <div>
+              <label for="assistant-college" class="block text-[9px] font-semibold text-gray-400 light:text-gray-500 uppercase tracking-wider mb-1">
+                College / Institute
+              </label>
+              <select 
+                id="assistant-college" 
+                required
+                class="w-full px-3 py-2 bg-black/50 light:bg-gray-50 border border-canvas-dark-border light:border-canvas-light-border rounded-lg text-white light:text-ink text-xs focus:outline-none focus:border-brand-blue"
+              >
+                <option value="">Select College</option>
+                {sortedColleges.map((c) => (
+                  <option value={c.code}>{c.name} ({c.code})</option>
+                ))}
+                <option value="other">-- My College is Not Listed --</option>
+              </select>
+            </div>
+
+            <!-- Manual College Code (Hidden by default) -->
+            <div id="manual-college-container" class="hidden">
+              <label for="assistant-manual-college" class="block text-[9px] font-semibold text-gray-400 light:text-gray-500 uppercase tracking-wider mb-1">
+                Enter College Code Manually
+              </label>
+              <input 
+                type="text" 
+                id="assistant-manual-college" 
+                placeholder="e.g. 67" 
+                pattern="^[0-9]{1,4}$"
+                class="w-full px-3 py-2 bg-black/50 light:bg-gray-50 border border-canvas-dark-border light:border-canvas-light-border rounded-lg text-white light:text-ink text-xs focus:outline-none focus:border-brand-blue"
+              />
+            </div>
+
+            <!-- Branch -->
+            <div>
+              <label for="assistant-branch" class="block text-[9px] font-semibold text-gray-400 light:text-gray-500 uppercase tracking-wider mb-1">
+                Branch / Course
+              </label>
+              <select 
+                id="assistant-branch" 
+                required
+                class="w-full px-3 py-2 bg-black/50 light:bg-gray-50 border border-canvas-dark-border light:border-canvas-light-border rounded-lg text-white light:text-ink text-xs focus:outline-none focus:border-brand-blue"
+              >
+                <option value="">Select Branch</option>
+                {sortedBranches.map((b) => (
+                  <option value={b.code}>{b.name} ({b.code})</option>
+                ))}
+              </select>
+            </div>
+
+            <!-- Class Roll (Optional) -->
+            <div>
+              <label for="assistant-class-roll" class="block text-[9px] font-semibold text-gray-400 light:text-gray-500 uppercase tracking-wider mb-1">
+                Class Roll Number (Optional)
+              </label>
+              <input 
+                type="number" 
+                id="assistant-class-roll" 
+                placeholder="e.g. 100 or 12" 
+                min="1"
+                max="9999"
+                class="w-full px-3 py-2 bg-black/50 light:bg-gray-50 border border-canvas-dark-border light:border-canvas-light-border rounded-lg text-white light:text-ink text-xs focus:outline-none focus:border-brand-blue"
+              />
+              <p class="text-[9px] text-gray-500 mt-0.5 font-medium">Leave blank if you don't know it.</p>
+            </div>
+
+            <!-- Name (Optional) -->
+            <div id="assistant-name-container">
+              <label for="assistant-name" class="block text-[9px] font-semibold text-gray-400 light:text-gray-500 uppercase tracking-wider mb-1">
+                Student Name (A Part of Name also works) (Optional)
+              </label>
+              <input 
+                type="text" 
+                id="assistant-name" 
+                placeholder="e.g. SHIVAM DIXIT" 
+                class="w-full px-3 py-2 bg-black/50 light:bg-gray-50 border border-canvas-dark-border light:border-canvas-light-border rounded-lg text-white light:text-ink text-xs focus:outline-none focus:border-brand-blue"
+              />
+              <p class="text-[9px] text-gray-500 mt-0.5 font-medium">Used to search matching roll numbers in our database.</p>
+            </div>
+
+            <button 
+              id="assistant-submit-btn"
+              type="submit" 
+              class="w-full py-2 bg-brand-blue hover:bg-brand-blue-hover text-white text-xs font-semibold rounded-lg btn-press-active transition-all flex items-center justify-center gap-1.5 cursor-pointer"
+            >
+              <span>Get Roll Number / Range</span>
+            </button>
+          </form>
+
+          <!-- Assistant Output Panel -->
+          <div id="assistant-output" class="hidden mt-4 pt-3 border-t border-canvas-dark-border/40 light:border-canvas-light-border/40 space-y-3">
+            <!-- Content gets injected dynamically -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Floating Ko-fi Button -->
+    <button 
+      id="floating-coffee-btn" 
+      class="fixed bottom-24 right-6 md:bottom-8 md:right-8 z-40 w-11 h-11 rounded-full bg-[#72a4f2] hover:bg-[#5b8ddb] text-white flex items-center justify-center shadow-xl hover:shadow-[#72a4f2]/25 hover:scale-105 active:scale-95 transition-all duration-300 cursor-pointer"
+      title="Support me on Ko-fi"
+    >
+      <span class="text-lg">💙</span>
+    </button>
+  </body>
+</html>

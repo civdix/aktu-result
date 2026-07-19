@@ -4,6 +4,15 @@ export interface Student {
   COP: string;
   sgpaValues: string[];
   dob?: string;
+  fatherName?: string;
+  enrollmentNumber?: string;
+  course?: string;
+  institute?: string;
+  cgpa?: string;
+  semesters?: any[];
+  courseCompleted?: boolean;
+  divisionAwarded?: string;
+  finalResultHtml?: string;
 }
 
 export interface ParseResult {
@@ -12,6 +21,15 @@ export interface ParseResult {
   name: string;
   COP: string;
   sgpaValues: string[];
+  fatherName?: string;
+  enrollmentNumber?: string;
+  course?: string;
+  institute?: string;
+  cgpa?: string;
+  semesters?: any[];
+  courseCompleted?: boolean;
+  divisionAwarded?: string;
+  finalResultHtml?: string;
 }
 
 export interface ViewStateParams {
@@ -19,3 +37,8 @@ export interface ViewStateParams {
   viewStateGenerator: string;
   eventValidation: string;
 }
+
+export interface ScrapingSession {
+  cookieHeader: string;
+  viewStateParams: ViewStateParams;
+}
