@@ -17,7 +17,7 @@ export class DatabaseService {
       database = client.db(process.env.DATABASE_NAME || 'AKTU_RESULTS');
       return database;
     } catch (error) {
-      console.warn('MongoDB connection unavailable in edge worker environment:', error);
+      console.warn('MongoDB connection unavailable in edge worker environment :', error);
       return null;
     }
   }
@@ -51,13 +51,13 @@ export class DatabaseService {
   static async findInDatabase(rollNumber: string): Promise<Student | null> {
     const db = await DatabaseService.connectToDatabase();
     if (!db) return null;
-    const collection = db.collection<Student>('students'); 
+    const collection = db.collection<Student>('students');
     const student = await collection.findOne({ applicationNumber: rollNumber });
     if (student && student.semesters) {
       const originalNames = student.semesters.map((s: any) => s.sem).join(',');
       student.semesters = DatabaseService.healSemesters(student.semesters);
       const healedNames = student.semesters.map((s: any) => s.sem).join(',');
-      
+
       // Clean up legacy duplicate semesters in DB if names changed
       if (originalNames !== healedNames) {
         try {
@@ -77,7 +77,7 @@ export class DatabaseService {
   static async saveToDatabase(data: Student): Promise<void> {
     const db = await DatabaseService.connectToDatabase();
     if (!db) return;
-    const collection = db.collection<Student>('students'); 
+    const collection = db.collection<Student>('students');
     await collection.updateOne(
       { applicationNumber: data.applicationNumber },
       { $set: data },
@@ -143,17 +143,17 @@ export class DatabaseService {
     try {
       const db = await DatabaseService.connectToDatabase();
       const collection = db.collection<Student>('students');
-      
+
       const query: any = {};
       if (name) {
         query.name = { $regex: name, $options: 'i' };
       }
-      
+
       const prefix = `${admissionYear}${collegeCode}${branchCode}`;
       if (prefix) {
         query.applicationNumber = { $regex: `^${prefix}` };
       }
-      
+
       return await collection.find(query).limit(150).toArray();
     } catch (error) {
       console.error('Error searching students by name and filters:', error);
