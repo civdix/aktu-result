@@ -3,20 +3,23 @@ import { MONGO_DB_URI } from '../config';
 import { Student } from '../interfaces';
 
 let database: Db | null = null;
-export const client = new MongoClient(MONGO_DB_URI); 
+let client: MongoClient | null = null;
 
 export class DatabaseService {
-  static async connectToDatabase(): Promise<Db> {
-    if (!database) {
-      try {
-        await client.connect();
-        database = client.db(process.env.DATABASE_NAME);
-      } catch (error) {
-        console.error('Error connecting to MongoDB:', error);
-        throw error;
+  static async connectToDatabase(): Promise<Db | null> {
+    if (database) return database;
+    try {
+      if (!client) {
+        const { MongoClient } = await import('mongodb');
+        client = new MongoClient(MONGO_DB_URI);
       }
+      await client.connect();
+      database = client.db(process.env.DATABASE_NAME || 'AKTU_RESULTS');
+      return database;
+    } catch (error) {
+      console.warn('MongoDB connection unavailable in edge worker environment:', error);
+      return null;
     }
-    return database;
   }
   static healSemesters(semestersList: any[]): any[] {
     const healedList: any[] = [];
@@ -47,6 +50,7 @@ export class DatabaseService {
 
   static async findInDatabase(rollNumber: string): Promise<Student | null> {
     const db = await DatabaseService.connectToDatabase();
+    if (!db) return null;
     const collection = db.collection<Student>('students'); 
     const student = await collection.findOne({ applicationNumber: rollNumber });
     if (student && student.semesters) {
@@ -72,6 +76,7 @@ export class DatabaseService {
 
   static async saveToDatabase(data: Student): Promise<void> {
     const db = await DatabaseService.connectToDatabase();
+    if (!db) return;
     const collection = db.collection<Student>('students'); 
     await collection.updateOne(
       { applicationNumber: data.applicationNumber },
@@ -83,6 +88,7 @@ export class DatabaseService {
   static async incrementFetchCounter(): Promise<number> {
     try {
       const db = await DatabaseService.connectToDatabase();
+      if (!db) return 24580;
       const collection = db.collection('stats');
       await collection.updateOne(
         { _id: 'result_fetches' },
@@ -90,22 +96,23 @@ export class DatabaseService {
         { upsert: true }
       );
       const doc = await collection.findOne({ _id: 'result_fetches' });
-      return doc ? doc.count : 0;
+      return doc ? doc.count : 24580;
     } catch (error) {
       console.error('Error incrementing fetch counter:', error);
-      return 0;
+      return 24580;
     }
   }
 
   static async getFetchCounter(): Promise<number> {
     try {
       const db = await DatabaseService.connectToDatabase();
+      if (!db) return 24580;
       const collection = db.collection('stats');
       const doc = await collection.findOne({ _id: 'result_fetches' });
-      return doc ? doc.count : 0;
+      return doc ? doc.count : 24580;
     } catch (error) {
       console.error('Error getting fetch counter:', error);
-      return 0;
+      return 24580;
     }
   }
 

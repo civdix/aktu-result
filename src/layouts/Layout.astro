@@ -25,8 +25,8 @@ const sortedColleges = [...colleges].sort((a, b) => a.name.localeCompare(b.name)
 const sortedBranches = [...branches].sort((a, b) => a.name.localeCompare(b.name));
 
 const brandUrl = "https://akturesultwithoutdob.com";
-const authorName = "Shivam Dixit";
-const authorWebsite = "https://shivamdixit.vercel.app";
+const authorName = "AKTU Student Portal";
+const authorWebsite = "https://akturesultwithoutdob.com";
 
 // Compute active page status
 const currentPath = Astro.url.pathname;
@@ -73,7 +73,7 @@ const isActive = (path: string) => {
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={`${brandUrl}/og-image.png`} />
-    <meta name="twitter:creator" content="@civdix" />
+    <meta name="twitter:creator" content="@akturesult" />
 
     <!-- JSON-LD Structured Data -->
     {jsonLd && (
