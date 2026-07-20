@@ -1,6 +1,5 @@
 import qs from 'qs';
 import * as cheerio from 'cheerio';
-import axios from 'axios';
 import { AKTU_URL, getRandomHeaders } from '../config';
 import { ViewStateParams, ParseResult, Student, ScrapingSession } from '../interfaces';
 
@@ -399,12 +398,13 @@ export class ScrapingService {
 
     try {
       const headers = getRandomHeaders();
-      const response = await axios.get(AKTU_URL, { headers });
-      
-      const cookies = response.headers['set-cookie'] || [];
+      const response = await fetch(AKTU_URL, { method: 'GET', headers });
+      const responseText = await response.text();
+
+      const cookies = getSetCookieHeaders(response);
       const cookieHeader = cookies.map(c => c.split(';')[0]).join('; ');
 
-      const { viewState, viewStateGenerator, eventValidation } = await ScrapingService.extractViewStateParams(response.data);
+      const { viewState, viewStateGenerator, eventValidation } = await ScrapingService.extractViewStateParams(responseText);
 
       const formData = qs.stringify({
         '__EVENTTARGET': '',
@@ -416,27 +416,30 @@ export class ScrapingService {
         '__EVENTVALIDATION': eventValidation
       });
 
-      const validationResponse = await axios.post(AKTU_URL, formData, {
+      const validationResponse = await fetch(AKTU_URL, {
+        method: 'POST',
         headers: {
           ...headers,
           'Content-Type': 'application/x-www-form-urlencoded',
           'Cookie': cookieHeader
-        }
+        },
+        body: formData
       });
+      const validationResponseText = await validationResponse.text();
 
       const invalidMessages = [
         'गलत अनुक्रमांक',
         'आपके द्वारा प्रदान किया गया अनुक्रमांक गलत है'
       ];
 
-      if (invalidMessages.some(msg => validationResponse.data.includes(msg))) {
+      if (invalidMessages.some(msg => validationResponseText.includes(msg))) {
         console.log('Invalid roll number.');
         return false;
       }
 
       console.log('Roll number is valid!');
       
-      const nextCookies = validationResponse.headers['set-cookie'] || [];
+      const nextCookies = getSetCookieHeaders(validationResponse);
       let finalCookieHeader = cookieHeader;
       if (nextCookies.length > 0) {
         const existingMap = new Map(cookieHeader.split(';').map(c => {
@@ -451,7 +454,7 @@ export class ScrapingService {
         finalCookieHeader = Array.from(existingMap.entries()).map(([k, v]) => `${k}=${v}`).join('; ');
       }
 
-      const nextViewStateParams = await ScrapingService.extractViewStateParams(validationResponse.data);
+      const nextViewStateParams = await ScrapingService.extractViewStateParams(validationResponseText);
 
       return {
         cookieHeader: finalCookieHeader,
