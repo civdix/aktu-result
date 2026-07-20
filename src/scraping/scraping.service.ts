@@ -1,8 +1,8 @@
 import qs from 'qs';
 import * as cheerio from 'cheerio';
+import axios from 'axios';
 import { AKTU_URL, getRandomHeaders } from '../config';
 import { ViewStateParams, ParseResult, Student, ScrapingSession } from '../interfaces';
-import { DatabaseService } from '../database/database.service';
 
 function getSetCookieHeaders(response: Response): string[] {
   if (typeof (response.headers as any).getSetCookie === 'function') {
@@ -13,6 +13,25 @@ function getSetCookieHeaders(response: Response): string[] {
 }
 
 export class ScrapingService {
+  private static async safeFindInDatabase(rollNumber: string): Promise<Student | null> {
+    try {
+      const { DatabaseService } = await import('../database/database.service');
+      return await DatabaseService.findInDatabase(rollNumber);
+    } catch (error) {
+      console.warn('Database lookup unavailable in this runtime:', error);
+      return null;
+    }
+  }
+
+  private static async safeSaveToDatabase(data: Student): Promise<void> {
+    try {
+      const { DatabaseService } = await import('../database/database.service');
+      await DatabaseService.saveToDatabase(data);
+    } catch (error) {
+      console.warn('Database save unavailable in this runtime:', error);
+    }
+  }
+
   static async extractViewStateParams(htmlText: string): Promise<ViewStateParams> {
     const viewState = htmlText.match(/name="__VIEWSTATE" id="__VIEWSTATE" value="([^"]+)"/)?.[1] || '';
     const viewStateGenerator = htmlText.match(/name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="([^"]+)"/)?.[1] || '';
@@ -365,7 +384,7 @@ export class ScrapingService {
 
   static async validateRollNumber(rollNumber: string, force = false): Promise<Student | ScrapingSession | boolean> {
     if (!force) {
-      const alreadyInDb = await DatabaseService.findInDatabase(rollNumber);
+      const alreadyInDb = await ScrapingService.safeFindInDatabase(rollNumber);
       if (alreadyInDb) {
         console.log(`${rollNumber} found in DB.....skipping Validation`);
         return alreadyInDb;
@@ -524,7 +543,7 @@ export class ScrapingService {
           ...parseResult,
           dob: '--'
         };
-        await DatabaseService.saveToDatabase(studentResult);
+        await ScrapingService.safeSaveToDatabase(studentResult);
         console.log(`[Bypass] Successfully fetched and cached result for roll number: ${rollNumber}`);
         return studentResult;
       }
