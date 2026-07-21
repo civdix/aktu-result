@@ -44,10 +44,29 @@ const calculateOverallStatusAndDivision = (semesters: any[], defaultCgpa: string
   return overallStatus;
 };
 
-import { DatabaseService } from '../../database/database.service';
 import { ScrapingService } from '../../scraping/scraping.service';
 import { DateUtils } from '../../utils/date.utils';
 import type { Student, ScrapingSession } from '../../interfaces';
+
+async function findStudentInDatabase(rollNumber: string): Promise<Student | null> {
+  try {
+    const { DatabaseService } = await import('../../database/database.service');
+    return await DatabaseService.findInDatabase(rollNumber);
+  } catch (error) {
+    console.warn('Database lookup unavailable in this runtime:', error);
+    return null;
+  }
+}
+
+async function incrementFetchCounterSafe(): Promise<number> {
+  try {
+    const { DatabaseService } = await import('../../database/database.service');
+    return await DatabaseService.incrementFetchCounter();
+  } catch (error) {
+    console.warn('Fetch counter unavailable in this runtime:', error);
+    return 0;
+  }
+}
 
 export const GET: APIRoute = async () => {
   return new Response(
@@ -112,7 +131,7 @@ export const POST: APIRoute = async ({ request }) => {
     // 2. Query MongoDB for student record
     let student = null;
     try {
-      student = await DatabaseService.findInDatabase(rollNumber);
+      student = await findStudentInDatabase(rollNumber);
     } catch (dbError) {
       console.error("DB Query Error:", dbError);
     }
@@ -130,7 +149,7 @@ export const POST: APIRoute = async ({ request }) => {
     if (student) {
       let totalSearches = 0;
       try {
-        totalSearches = await DatabaseService.incrementFetchCounter();
+        totalSearches = await incrementFetchCounterSafe();
       } catch (err) {
         console.error("Counter error:", err);
       }
