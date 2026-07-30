@@ -140,9 +140,9 @@ export const POST: APIRoute = async ({ request }) => {
 
     const liveMatches: any[] = [];
 
-    // Only run live ERP scanning if host is localhost and the class hasn't been scanned/cached yet
-    if (isLocalhost && !alreadyScanned) {
-      console.log(`[ERP SCAN] Initiating live ERP scan for prefix ${prefix} on localhost.`);
+    // Only run live ERP scanning if the class hasn't been scanned/cached yet
+    if (!alreadyScanned) {
+      console.log(`[ERP SCAN] Initiating live ERP scan for prefix ${prefix}.`);
       const erpUrl = "https://erp.aktu.ac.in/WebPages/StudentServices/frmStudentGrievanceForm.aspx";
 
       // Set headers

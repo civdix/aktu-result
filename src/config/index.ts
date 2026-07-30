@@ -19,6 +19,9 @@ export const USER_AGENTS = [
 ];
 
 export const getRandomHeaders = () => ({
+  'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
+  'Accept-Language': 'en-US,en;q=0.9',
+  'Cache-Control': 'no-cache',
   'DNT': '1',
   'Origin': 'https://oneview.aktu.ac.in',
   'Referer': AKTU_URL,

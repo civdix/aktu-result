@@ -32,9 +32,29 @@ export class ScrapingService {
   }
 
   static async extractViewStateParams(htmlText: string): Promise<ViewStateParams> {
-    const viewState = htmlText.match(/name="__VIEWSTATE" id="__VIEWSTATE" value="([^"]+)"/)?.[1] || '';
-    const viewStateGenerator = htmlText.match(/name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="([^"]+)"/)?.[1] || '';
-    const eventValidation = htmlText.match(/name="__EVENTVALIDATION" id="__EVENTVALIDATION" value="([^"]+)"/)?.[1] || '';
+    if (!htmlText) return { viewState: '', viewStateGenerator: '', eventValidation: '' };
+
+    const viewState = htmlText.match(/name="__VIEWSTATE"\s+id="__VIEWSTATE"\s+value="([^"]*)"/i)?.[1]
+      || htmlText.match(/id="__VIEWSTATE"\s+value="([^"]*)"/i)?.[1]
+      || htmlText.match(/name="__VIEWSTATE"\s+value="([^"]*)"/i)?.[1]
+      || (typeof process !== 'undefined' && process.env?.VIEWSTATE)
+      || (import.meta as any).env?.VIEWSTATE
+      || '';
+
+    const viewStateGenerator = htmlText.match(/name="__VIEWSTATEGENERATOR"\s+id="__VIEWSTATEGENERATOR"\s+value="([^"]*)"/i)?.[1]
+      || htmlText.match(/id="__VIEWSTATEGENERATOR"\s+value="([^"]*)"/i)?.[1]
+      || htmlText.match(/name="__VIEWSTATEGENERATOR"\s+value="([^"]*)"/i)?.[1]
+      || (typeof process !== 'undefined' && process.env?.VIEWSTATEGENERATOR)
+      || (import.meta as any).env?.VIEWSTATEGENERATOR
+      || '';
+
+    const eventValidation = htmlText.match(/name="__EVENTVALIDATION"\s+id="__EVENTVALIDATION"\s+value="([^"]*)"/i)?.[1]
+      || htmlText.match(/id="__EVENTVALIDATION"\s+value="([^"]*)"/i)?.[1]
+      || htmlText.match(/name="__EVENTVALIDATION"\s+value="([^"]*)"/i)?.[1]
+      || (typeof process !== 'undefined' && process.env?.EVENTVALIDATION)
+      || (import.meta as any).env?.EVENTVALIDATION
+      || '';
+
     return { viewState, viewStateGenerator, eventValidation };
   }
 
@@ -517,15 +537,19 @@ export class ScrapingService {
 
       const proceedParams = await ScrapingService.extractViewStateParams(proceedHtml);
 
+      const targetViewState = proceedParams.viewState || initialParams.viewState;
+      const targetViewStateGen = proceedParams.viewStateGenerator || initialParams.viewStateGenerator;
+      const targetEventVal = proceedParams.eventValidation || initialParams.eventValidation;
+
       // Step 3: Post the target roll number using the bypassed session
       const targetData = qs.stringify({
         '__EVENTTARGET': '',
         '__EVENTARGUMENT': '',
         'txtRollNo': rollNumber,
         'btnSearch': 'खोजें',
-        '__VIEWSTATE': proceedParams.viewState,
-        '__VIEWSTATEGENERATOR': proceedParams.viewStateGenerator,
-        '__EVENTVALIDATION': proceedParams.eventValidation
+        '__VIEWSTATE': targetViewState,
+        '__VIEWSTATEGENERATOR': targetViewStateGen,
+        '__EVENTVALIDATION': targetEventVal
       });
 
       const targetRes = await fetch(AKTU_URL, {
@@ -551,7 +575,8 @@ export class ScrapingService {
         return studentResult;
       }
       
-      console.log(`[Bypass] Parse failed for roll number: ${rollNumber}`);
+      console.log(`[Bypass] Parse failed for roll number: ${rollNumber}. HTML status: ${targetRes.status}, HTML length: ${targetHtml.length}`);
+      return null;
       return null;
     } catch (error: any) {
       console.error('[Bypass] Error in bypass flow:', error.message);
