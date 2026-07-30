@@ -76,7 +76,7 @@ export class ScrapingService {
       'btnSearch': 'खोजें',
       'hidForModel': ''
     });
-  
+
     try {
       const response = await fetch(AKTU_URL, {
         method: 'POST',
@@ -88,10 +88,10 @@ export class ScrapingService {
         body: data
       });
       const htmlData = await response.text();
-      
+
       const parsed = ScrapingService.parseHtml(htmlData);
       const viewStateParams = await ScrapingService.extractViewStateParams(htmlData);
-      
+
       const newCookies = getSetCookieHeaders(response);
       let updatedCookieHeader = session.cookieHeader;
       if (newCookies.length > 0) {
@@ -117,7 +117,7 @@ export class ScrapingService {
     } catch (error) {
       console.error('Error in find function:', error);
       return null;
-    } 
+    }
   }
 
   static findSemesterName(tableEl: any, $: cheerio.CheerioAPI, fallbackIndex: number): string {
@@ -128,8 +128,8 @@ export class ScrapingService {
       const headerDiv = contentDiv.prev('.headerclass');
       if (headerDiv.length > 0) {
         const sessionText = headerDiv.find('[id$="_lblSession"]').text().trim();
-        const match = sessionText.match(/Session\s*:\s*([0-9-]{7,9})\s*\(([^)]+)\)/i) || 
-                      sessionText.match(/Session\s*:\s*([^\s]+)/i);
+        const match = sessionText.match(/Session\s*:\s*([0-9-]{7,9})\s*\(([^)]+)\)/i) ||
+          sessionText.match(/Session\s*:\s*([^\s]+)/i);
         if (match) {
           if (match[2]) {
             sessionType = match[2].trim().toUpperCase();
@@ -190,8 +190,8 @@ export class ScrapingService {
     let semNum = '';
     if (semText) {
       let cleanSem = semText.replace(/\s+/g, ' ').trim();
-      const numMatch = cleanSem.match(/(?:semester|sem)\s*:?\s*([0-9a-zA-Z_#-]+)/i) || 
-                       cleanSem.match(/([0-9a-zA-Z_#-]+)\s*(?:semester|sem)/i);
+      const numMatch = cleanSem.match(/(?:semester|sem)\s*:?\s*([0-9a-zA-Z_#-]+)/i) ||
+        cleanSem.match(/([0-9a-zA-Z_#-]+)\s*(?:semester|sem)/i);
       if (numMatch) {
         semNum = numMatch[1].trim();
       }
@@ -227,16 +227,16 @@ export class ScrapingService {
     const applicationNumber = $('#lblRollNo').text().trim() || 'N/A';
     const name = $('#lblFullName').text().trim() || 'N/A';
     const COP = $('#ctl04_lblCOP').text().trim() || 'N/A';
-    
+
     const fatherName = $('#lblFatherName').text().trim() || $('#lblFather').text().trim() || 'N/A';
-    
-    let enrollmentNumber = $('#lblEnrollmentNo').text().trim() || 
-                           $('[id$="lblEnrollmentNo"]').text().trim() || 
-                           $('#lblEnrollNo').text().trim() || 
-                           $('[id$="lblEnrollNo"]').text().trim() || 
-                           $('#lblEnrollment').text().trim() || 
-                           $('[id$="lblEnrollment"]').text().trim() || 
-                           '';
+
+    let enrollmentNumber = $('#lblEnrollmentNo').text().trim() ||
+      $('[id$="lblEnrollmentNo"]').text().trim() ||
+      $('#lblEnrollNo').text().trim() ||
+      $('[id$="lblEnrollNo"]').text().trim() ||
+      $('#lblEnrollment').text().trim() ||
+      $('[id$="lblEnrollment"]').text().trim() ||
+      '';
     if (!enrollmentNumber) {
       $('td, span, th').each((_, el) => {
         const txt = $(el).text().trim();
@@ -325,7 +325,7 @@ export class ScrapingService {
     // Calculate CGPA from the latest SGPA of each unique semester
     let cgpa = '0.00';
     const uniqueSgpas = new Map<string, number>();
-    
+
     semesters.forEach(sem => {
       const baseSem = sem.sem.replace(/\s*\(.*\)$/, '');
       const val = parseFloat(sem.sgpa);
@@ -345,13 +345,13 @@ export class ScrapingService {
     let courseCompleted = false;
     let divisionAwarded = '';
     let finalResultHtml = '';
-    
+
     if (pnlFinalResult.length > 0) {
       courseCompleted = true;
       finalResultHtml = pnlFinalResult.html() || '';
       const divVal = pnlFinalResult.find('[id$="lblDivisionAwarded"]').text().trim() ||
-                     pnlFinalResult.find('[id$="lblDivision"]').text().trim() ||
-                     '';
+        pnlFinalResult.find('[id$="lblDivision"]').text().trim() ||
+        '';
       if (divVal) {
         divisionAwarded = divVal;
       } else {
@@ -369,15 +369,15 @@ export class ScrapingService {
 
       if (!divisionAwarded) {
         const pnlText = pnlFinalResult.text();
-        const match = pnlText.match(/Division(?:\s*Awarded)?\s*:\s*([^\n\r]+)/i) || 
-                      pnlText.match(/Division\s+([^\n\r]+)/i);
+        const match = pnlText.match(/Division(?:\s*Awarded)?\s*:\s*([^\n\r]+)/i) ||
+          pnlText.match(/Division\s+([^\n\r]+)/i);
         if (match) {
           divisionAwarded = match[1].trim();
         }
       }
 
       divisionAwarded = divisionAwarded.replace(/\s+/g, ' ').replace(/^:\s*/, '').trim();
-      
+
       if (divisionAwarded.toUpperCase().includes('NOT AWARDED') || divisionAwarded.toUpperCase().includes('NOT_AWARDED')) {
         divisionAwarded = 'Clear Backlog';
       }
@@ -458,7 +458,7 @@ export class ScrapingService {
       }
 
       console.log('Roll number is valid!');
-      
+
       const nextCookies = getSetCookieHeaders(validationResponse);
       let finalCookieHeader = cookieHeader;
       if (nextCookies.length > 0) {
@@ -490,7 +490,7 @@ export class ScrapingService {
     const headers = getRandomHeaders();
     try {
       console.log(`[Bypass] Initiating bypass request for roll number: ${rollNumber}`);
-      
+
       // Step 1: Fetch initial page to get initial ViewState and cookies
       const initialRes = await fetch(AKTU_URL, { method: 'GET', headers });
       const initialHtml = await initialRes.text();
@@ -574,9 +574,10 @@ export class ScrapingService {
         console.log(`[Bypass] Successfully fetched and cached result for roll number: ${rollNumber}`);
         return studentResult;
       }
-      
+
+      console.log(targetHtml);
+
       console.log(`[Bypass] Parse failed for roll number: ${rollNumber}. HTML status: ${targetRes.status}, HTML length: ${targetHtml.length}`);
-      return null;
       return null;
     } catch (error: any) {
       console.error('[Bypass] Error in bypass flow:', error.message);

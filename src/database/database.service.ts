@@ -19,7 +19,11 @@ export class DatabaseService {
 
       if (!client) {
         const { MongoClient } = await import('mongodb');
-        client = new MongoClient(uri);
+        client = new MongoClient(uri, {
+          serverSelectionTimeoutMS: 2000,
+          connectTimeoutMS: 2000,
+          maxPoolSize: 1
+        });
       }
       await client.connect();
       database = client.db(dbName);
