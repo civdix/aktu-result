@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "dev": "astro dev",
-    "build": "rm -f wrangler.jsonc && astro build && node -e \"const fs=require('fs');const c=JSON.parse(fs.readFileSync('dist/server/wrangler.json','utf8'));c.main='./dist/server/entry.mjs';if(c.assets&&c.assets.directory){c.assets.directory='./dist/client';}c.name='aktu-result';c.topLevelName='aktu-result';c.compatibility_flags=Array.from(new Set([...(c.compatibility_flags||[]),'nodejs_compat']));fs.writeFileSync('wrangler.jsonc', JSON.stringify(c,null,2));\"",
+    "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
     "build:scraper": "tsc",
