@@ -1,4 +1,14 @@
-export const MONGO_DB_URI = process.env.MONGO_DB_URI || 'mongodb://localhost:27017';
+export const getMongoUri = () => {
+  if (typeof process !== 'undefined' && process.env?.MONGO_DB_URI) {
+    return process.env.MONGO_DB_URI;
+  }
+  if (typeof import.meta !== 'undefined' && (import.meta as any).env?.MONGO_DB_URI) {
+    return (import.meta as any).env.MONGO_DB_URI;
+  }
+  return 'mongodb://localhost:27017';
+};
+
+export const MONGO_DB_URI = getMongoUri();
 export const AKTU_URL = 'https://oneview.aktu.ac.in/WebPages/aktu/OneView.aspx';
 
 export const USER_AGENTS = [

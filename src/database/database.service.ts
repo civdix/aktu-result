@@ -9,12 +9,20 @@ export class DatabaseService {
   static async connectToDatabase(): Promise<Db | null> {
     if (database) return database;
     try {
+      const uri = (typeof process !== 'undefined' && process.env?.MONGO_DB_URI) 
+        || (import.meta as any).env?.MONGO_DB_URI 
+        || MONGO_DB_URI;
+
+      const dbName = (typeof process !== 'undefined' && process.env?.DATABASE_NAME) 
+        || (import.meta as any).env?.DATABASE_NAME 
+        || 'AKTU_RESULTS';
+
       if (!client) {
         const { MongoClient } = await import('mongodb');
-        client = new MongoClient(MONGO_DB_URI);
+        client = new MongoClient(uri);
       }
       await client.connect();
-      database = client.db(process.env.DATABASE_NAME || 'AKTU_RESULTS');
+      database = client.db(dbName);
       return database;
     } catch (error) {
       console.warn('MongoDB connection unavailable in edge worker environment :', error);
@@ -123,6 +131,7 @@ export class DatabaseService {
   ): Promise<number> {
     try {
       const db = await DatabaseService.connectToDatabase();
+      if (!db) return 0;
       const collection = db.collection<Student>('students');
       const prefix = `${admissionYear}${collegeCode}${branchCode}`;
       return await collection.countDocuments({
@@ -142,6 +151,7 @@ export class DatabaseService {
   ): Promise<Student[]> {
     try {
       const db = await DatabaseService.connectToDatabase();
+      if (!db) return [];
       const collection = db.collection<Student>('students');
 
       const query: any = {};
