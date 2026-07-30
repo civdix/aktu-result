@@ -2,7 +2,6 @@ import qs from 'qs';
 import * as cheerio from 'cheerio';
 import { AKTU_URL, getRandomHeaders } from '../config';
 import { ViewStateParams, ParseResult, Student, ScrapingSession } from '../interfaces';
-import { DatabaseService } from '../database/database.service';
 
 function getSetCookieHeaders(response: Response): string[] {
   if (typeof (response.headers as any).getSetCookie === 'function') {
@@ -13,6 +12,25 @@ function getSetCookieHeaders(response: Response): string[] {
 }
 
 export class ScrapingService {
+  private static async safeFindInDatabase(rollNumber: string): Promise<Student | null> {
+    try {
+      const { DatabaseService } = await import('../database/database.service');
+      return await DatabaseService.findInDatabase(rollNumber);
+    } catch (error) {
+      console.warn('Database lookup unavailable in this runtime:', error);
+      return null;
+    }
+  }
+
+  private static async safeSaveToDatabase(data: Student): Promise<void> {
+    try {
+      const { DatabaseService } = await import('../database/database.service');
+      await DatabaseService.saveToDatabase(data);
+    } catch (error) {
+      console.warn('Database save unavailable in this runtime:', error);
+    }
+  }
+
   static async extractViewStateParams(htmlText: string): Promise<ViewStateParams> {
     const viewState = htmlText.match(/name="__VIEWSTATE" id="__VIEWSTATE" value="([^"]+)"/)?.[1] || '';
     const viewStateGenerator = htmlText.match(/name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="([^"]+)"/)?.[1] || '';
@@ -365,7 +383,7 @@ export class ScrapingService {
 
   static async validateRollNumber(rollNumber: string, force = false): Promise<Student | ScrapingSession | boolean> {
     if (!force) {
-      const alreadyInDb = await DatabaseService.findInDatabase(rollNumber);
+      const alreadyInDb = await ScrapingService.safeFindInDatabase(rollNumber);
       if (alreadyInDb) {
         console.log(`${rollNumber} found in DB.....skipping Validation`);
         return alreadyInDb;
@@ -380,12 +398,13 @@ export class ScrapingService {
 
     try {
       const headers = getRandomHeaders();
-      const response = await axios.get(AKTU_URL, { headers });
-      
-      const cookies = response.headers['set-cookie'] || [];
+      const response = await fetch(AKTU_URL, { method: 'GET', headers });
+      const responseText = await response.text();
+
+      const cookies = getSetCookieHeaders(response);
       const cookieHeader = cookies.map(c => c.split(';')[0]).join('; ');
 
-      const { viewState, viewStateGenerator, eventValidation } = await ScrapingService.extractViewStateParams(response.data);
+      const { viewState, viewStateGenerator, eventValidation } = await ScrapingService.extractViewStateParams(responseText);
 
       const formData = qs.stringify({
         '__EVENTTARGET': '',
@@ -397,27 +416,30 @@ export class ScrapingService {
         '__EVENTVALIDATION': eventValidation
       });
 
-      const validationResponse = await axios.post(AKTU_URL, formData, {
+      const validationResponse = await fetch(AKTU_URL, {
+        method: 'POST',
         headers: {
           ...headers,
           'Content-Type': 'application/x-www-form-urlencoded',
           'Cookie': cookieHeader
-        }
+        },
+        body: formData
       });
+      const validationResponseText = await validationResponse.text();
 
       const invalidMessages = [
         'गलत अनुक्रमांक',
         'आपके द्वारा प्रदान किया गया अनुक्रमांक गलत है'
       ];
 
-      if (invalidMessages.some(msg => validationResponse.data.includes(msg))) {
+      if (invalidMessages.some(msg => validationResponseText.includes(msg))) {
         console.log('Invalid roll number.');
         return false;
       }
 
       console.log('Roll number is valid!');
       
-      const nextCookies = validationResponse.headers['set-cookie'] || [];
+      const nextCookies = getSetCookieHeaders(validationResponse);
       let finalCookieHeader = cookieHeader;
       if (nextCookies.length > 0) {
         const existingMap = new Map(cookieHeader.split(';').map(c => {
@@ -432,7 +454,7 @@ export class ScrapingService {
         finalCookieHeader = Array.from(existingMap.entries()).map(([k, v]) => `${k}=${v}`).join('; ');
       }
 
-      const nextViewStateParams = await ScrapingService.extractViewStateParams(validationResponse.data);
+      const nextViewStateParams = await ScrapingService.extractViewStateParams(validationResponseText);
 
       return {
         cookieHeader: finalCookieHeader,
@@ -524,7 +546,7 @@ export class ScrapingService {
           ...parseResult,
           dob: '--'
         };
-        await DatabaseService.saveToDatabase(studentResult);
+        await ScrapingService.safeSaveToDatabase(studentResult);
         console.log(`[Bypass] Successfully fetched and cached result for roll number: ${rollNumber}`);
         return studentResult;
       }
