@@ -577,7 +577,7 @@ export class ScrapingService {
 
       console.log(targetHtml);
 
-      console.log(`[Bypass] Parse failed for roll number: ${rollNumber}. HTML status: ${targetRes.status}, HTML length: ${targetHtml.length}`);
+      console.log(`[Bypass] ${targetHtml} Parse failed for roll number: ${rollNumber}. HTML status: ${targetRes.status}, HTML length: ${targetHtml.length}`);
       return null;
     } catch (error: any) {
       console.error('[Bypass] Error in bypass flow:', error.message);
