@@ -4,6 +4,8 @@ import { Student } from '../interfaces';
 
 let database: Db | null = null;
 let client: MongoClient | null = null;
+let lastConnectAttempt = 0;
+const CONNECT_COOLDOWN_MS = 30000; // 30 seconds
 
 export class DatabaseService {
   static async connectToDatabase(): Promise<Db | null> {
@@ -18,7 +20,7 @@ export class DatabaseService {
         if (timeoutId) clearTimeout(timeoutId);
         return database;
       } catch (err) {
-        console.warn('Cached MongoDB connection is dead or ping timed out, reconnecting...', err);
+        console.warn('Cached MongoDB connection is dead or ping timed out, cleaning up and returning null for this request...', err);
         database = null;
         if (client) {
           try {
@@ -28,8 +30,17 @@ export class DatabaseService {
           }
           client = null;
         }
+        return null;
       }
     }
+
+    const now = Date.now();
+    if (now - lastConnectAttempt < CONNECT_COOLDOWN_MS) {
+      console.warn('MongoDB connection in cooldown, skipping connection attempt.');
+      return null;
+    }
+    lastConnectAttempt = now;
+
     try {
       const uri = (typeof process !== 'undefined' && process.env?.MONGO_DB_URI) 
         || (import.meta as any).env?.MONGO_DB_URI 

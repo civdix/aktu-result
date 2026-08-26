@@ -1,5 +1,4 @@
 import type { APIRoute } from 'astro';
-import { DatabaseService } from '../../database/database.service';
 
 export const prerender = false;
 
@@ -101,47 +100,15 @@ export const POST: APIRoute = async ({ request }) => {
 
     const searchName = name ? name.trim().toUpperCase() : '';
 
-    // First try searching in local database cache
+    // Database cache disabled for roll number finder
     let cachedMatches: any[] = [];
     let minValidSerial = 9999;
     let maxValidSerial = 0;
 
-    try {
-      const dbMatches = await DatabaseService.searchByNameAndFilters(
-        searchName,
-        yearStr,
-        collegeStr,
-        branchStr
-      );
-      cachedMatches = dbMatches.map(m => {
-        const roll = m.applicationNumber;
-        const serialStr = roll.slice(-4);
-        const serialVal = parseInt(serialStr, 10);
-        if (!isNaN(serialVal)) {
-          minValidSerial = Math.min(minValidSerial, serialVal);
-          maxValidSerial = Math.max(maxValidSerial, serialVal);
-        }
-        return {
-          name: m.name,
-          rollNumber: roll,
-          source: 'cache'
-        };
-      });
-    } catch (err) {
-      console.error("Local database cache query error:", err);
-    }
-
-    // Determine host and count cached records to enforce localhost only and single scan rule
-    const host = request.headers.get('host') || '';
-    const isLocalhost = host.includes('localhost') || host.includes('127.0.0.1');
-
-    const cachedCount = await DatabaseService.countByFilters(yearStr, collegeStr, branchStr);
-    const alreadyScanned = cachedCount > 0;
-
+    // Always scan ERP directly as database cache is disabled for finder
     const liveMatches: any[] = [];
 
-    // Only run live ERP scanning if the class hasn't been scanned/cached yet
-    if (!alreadyScanned) {
+    if (true) {
       console.log(`[ERP SCAN] Initiating live ERP scan for prefix ${prefix}.`);
       const erpUrl = "https://erp.aktu.ac.in/WebPages/StudentServices/frmStudentGrievanceForm.aspx";
 
@@ -286,22 +253,7 @@ export const POST: APIRoute = async ({ request }) => {
               minValidSerial = Math.min(minValidSerial, res.serial);
               maxValidSerial = Math.max(maxValidSerial, res.serial);
 
-              // Save dynamically discovered record to MongoDB
-              DatabaseService.saveToDatabase({
-                applicationNumber: res.roll,
-                name: studentName,
-                rollNumber: res.roll,
-                gender: "--",
-                fatherName: "--",
-                course: "AKTU Student",
-                institute: `College Code ${collegeStr}`,
-                verified: true,
-                dobFound: false,
-                cgpa: "0.00",
-                semesters: []
-              }).catch(dbErr => {
-                console.error("Failed to cache dynamic student name to db:", dbErr);
-              });
+              // Database caching disabled
 
               // If searchName is blank (no filter name) or studentName matches query pattern, include it
               if (!searchName || studentName.includes(searchName)) {
@@ -325,8 +277,6 @@ export const POST: APIRoute = async ({ request }) => {
       } catch (erpFetchErr) {
         console.error("Failed executing live ERP grievance search:", erpFetchErr);
       }
-    } else {
-      console.log(`[ERP SCAN] Skipping live ERP scan for prefix ${prefix} (isLocalhost=${isLocalhost}, alreadyScanned=${alreadyScanned}).`);
     }
 
     // Merge cached and live results, keeping unique ones
