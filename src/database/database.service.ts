@@ -7,7 +7,29 @@ let client: MongoClient | null = null;
 
 export class DatabaseService {
   static async connectToDatabase(): Promise<Db | null> {
-    if (database) return database;
+    if (database) {
+      try {
+        const pingPromise = database.command({ ping: 1 });
+        let timeoutId: any;
+        const timeoutPromise = new Promise<never>((_, reject) => {
+          timeoutId = setTimeout(() => reject(new Error('Ping timed out')), 500);
+        });
+        await Promise.race([pingPromise, timeoutPromise]);
+        if (timeoutId) clearTimeout(timeoutId);
+        return database;
+      } catch (err) {
+        console.warn('Cached MongoDB connection is dead or ping timed out, reconnecting...', err);
+        database = null;
+        if (client) {
+          try {
+            await client.close(true);
+          } catch (e) {
+            // ignore
+          }
+          client = null;
+        }
+      }
+    }
     try {
       const uri = (typeof process !== 'undefined' && process.env?.MONGO_DB_URI) 
         || (import.meta as any).env?.MONGO_DB_URI 
