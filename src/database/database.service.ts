@@ -44,6 +44,15 @@ export class DatabaseService {
       return database;
     } catch (error) {
       console.warn('MongoDB connection unavailable in edge worker environment:', error);
+      if (client) {
+        try {
+          await client.close(true);
+        } catch (closeError) {
+          // ignore
+        }
+        client = null;
+      }
+      database = null;
       return null;
     }
   }
