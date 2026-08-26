@@ -63,7 +63,8 @@ export class ScrapingService {
     day: number,
     month: number,
     year: number,
-    session: ScrapingSession
+    session: ScrapingSession,
+    gRecaptchaResponse = ''
   ): Promise<{ result: ParseResult | null; nextSession: ScrapingSession } | null> {
     const data = qs.stringify({
       '__EVENTTARGET': '',
@@ -74,7 +75,8 @@ export class ScrapingService {
       'txtRollNo': rollNumber,
       'txtDOB': `${String(day).padStart(2, '0')}/${String(month).padStart(2, '0')}/${year}`,
       'btnSearch': 'खोजें',
-      'hidForModel': ''
+      'hidForModel': '',
+      'g-recaptcha-response': gRecaptchaResponse
     });
 
     try {
@@ -87,6 +89,7 @@ export class ScrapingService {
         },
         body: data
       });
+      console.log(response)
       const htmlData = await response.text();
 
       const parsed = ScrapingService.parseHtml(htmlData);
@@ -401,7 +404,7 @@ export class ScrapingService {
     };
   }
 
-  static async validateRollNumber(rollNumber: string, force = false): Promise<Student | ScrapingSession | boolean> {
+  static async validateRollNumber(rollNumber: string, force = false, gRecaptchaResponse = ''): Promise<Student | ScrapingSession | boolean> {
     if (!force) {
       const alreadyInDb = await ScrapingService.safeFindInDatabase(rollNumber);
       if (alreadyInDb) {
@@ -433,7 +436,8 @@ export class ScrapingService {
         'btnProceed': 'आगे बढ़े',
         '__VIEWSTATE': viewState,
         '__VIEWSTATEGENERATOR': viewStateGenerator,
-        '__EVENTVALIDATION': eventValidation
+        '__EVENTVALIDATION': eventValidation,
+        'g-recaptcha-response': gRecaptchaResponse
       });
 
       const validationResponse = await fetch(AKTU_URL, {
@@ -486,7 +490,7 @@ export class ScrapingService {
     }
   }
 
-  static async fetchResultWithBypass(rollNumber: string): Promise<Student | null> {
+  static async fetchResultWithBypass(rollNumber: string, gRecaptchaResponse = ''): Promise<Student | null> {
     const headers = getRandomHeaders();
     try {
       console.log(`[Bypass] Initiating bypass request for roll number: ${rollNumber}`);
@@ -506,7 +510,8 @@ export class ScrapingService {
         'btnProceed': 'आगे बढ़े',
         '__VIEWSTATE': initialParams.viewState,
         '__VIEWSTATEGENERATOR': initialParams.viewStateGenerator,
-        '__EVENTVALIDATION': initialParams.eventValidation
+        '__EVENTVALIDATION': initialParams.eventValidation,
+        'g-recaptcha-response': gRecaptchaResponse
       });
 
       const proceedRes = await fetch(AKTU_URL, {
@@ -549,7 +554,8 @@ export class ScrapingService {
         'btnSearch': 'खोजें',
         '__VIEWSTATE': targetViewState,
         '__VIEWSTATEGENERATOR': targetViewStateGen,
-        '__EVENTVALIDATION': targetEventVal
+        '__EVENTVALIDATION': targetEventVal,
+        'g-recaptcha-response': gRecaptchaResponse
       });
 
       const targetRes = await fetch(AKTU_URL, {
@@ -575,9 +581,12 @@ export class ScrapingService {
         return studentResult;
       }
 
-      console.log(targetHtml);
-
-      console.log(`[Bypass] ${targetHtml} Parse failed for roll number: ${rollNumber}. HTML status: ${targetRes.status}, HTML length: ${targetHtml.length}`);
+      if (targetHtml.includes('कैप्चा गलत है')) {
+        console.log(targetHtml)
+        console.warn(`[Bypass] AKTU server requested reCAPTCHA validation for roll number: ${rollNumber}`);
+      } else {
+        console.log(`[Bypass] Parse failed for roll number: ${rollNumber}. HTML status: ${targetRes.status}, HTML length: ${targetHtml.length}`);
+      }
       return null;
     } catch (error: any) {
       console.error('[Bypass] Error in bypass flow:', error.message);

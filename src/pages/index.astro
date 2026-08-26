@@ -1,5 +1,11 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import colleges from "../data/colleges.json";
+import branches from "../data/branches.json";
+
+const sortedColleges = [...colleges].sort((a, b) => a.name.localeCompare(b.name));
+const sortedBranches = [...branches].sort((a, b) => a.name.localeCompare(b.name));
+
 
 // JSON-LD Structured Data for index page
 const jsonLd = {
@@ -21,8 +27,8 @@ const homeKeywords = "aktu result without dob, aktu one view, aktu result direct
 ---
 
 <Layout 
-  title="AKTU Result Without DOB | View Full One View Results Online"
-  description="Forget your Date of Birth? Retrieve your full AKTU One View results sheet instantly using your Roll Number. Secure, fast, and student-focused query tool."
+  title="Find AKTU Roll Number by Name & College | Class Roster Finder"
+  description="Easily find Dr. A.P.J. Abdul Kalam Technical University (AKTU) roll numbers by student name, college, and branch. Check class rosters and student lists instantly."
   keywords={homeKeywords}
   jsonLd={jsonLd}
 >
@@ -45,12 +51,12 @@ const homeKeywords = "aktu result without dob, aktu one view, aktu result direct
 
           <!-- Main Headline -->
           <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.1] bg-gradient-to-b from-white to-gray-400 dark:from-white dark:to-gray-400 light:from-ink light:to-gray-800 bg-clip-text text-transparent">
-            Find your AKTU Result <br class="hidden lg:inline" />
-            <span class="bg-gradient-to-r from-brand-blue via-brand-blue-light to-purple-500 bg-clip-text text-transparent">Without Date of Birth</span>
+            Find AKTU Roll Number <br class="hidden lg:inline" />
+            <span class="bg-gradient-to-r from-brand-blue via-brand-blue-light to-purple-500 bg-clip-text text-transparent">By Name & College</span>
           </h1>
 
           <p class="text-sm sm:text-base md:text-lg text-gray-400 light:text-gray-600 leading-relaxed max-w-xl mx-auto md:mx-0">
-            Forget your credentials? Simply enter your university Roll Number to authenticate and display your complete academic grades card instantly without needing your Date of Birth.
+            Forgot your roll number or date of birth? Search students by name, select your college and branch, and instantly find valid AKTU roll numbers and class rosters.
           </p>
 
           <!-- Live Search Metrics -->
@@ -68,63 +74,312 @@ const homeKeywords = "aktu result without dob, aktu one view, aktu result direct
           
           <div class="relative iphone-glass p-6 sm:p-8 rounded-2xl transition-all duration-300 text-left">
             
-            <!-- Search Form -->
-            <form id="search-form" class="space-y-6">
-              <div>
-                <div class="flex justify-between items-center mb-2">
-                  <label for="roll-number" class="block text-xs font-semibold text-gray-400 light:text-gray-500 uppercase tracking-wider">
-                    University Roll Number
-                  </label>
-                  <button 
-                    type="button" 
-                    id="forgot-roll-btn" 
-                    class="text-[10px] text-brand-blue font-bold hover:underline cursor-pointer bg-transparent border-none p-0 focus:outline-none"
-                  >
-                    Forgot Roll Number?
-                  </button>
-                </div>
-                <input 
-                  type="text" 
-                  id="roll-number" 
-                  name="rollNumber" 
-                  placeholder="e.g. 2200650100100" 
-                  required
-                  pattern="^[0-9]{10,15}$"
-                  class="w-full px-4 py-3 bg-white/[0.03] light:bg-black/[0.02] border border-white/[0.08] light:border-black/[0.08] rounded-xl text-white light:text-ink placeholder-gray-600 light:placeholder-gray-400 focus:outline-none focus:border-brand-blue focus:ring-1 focus:ring-brand-blue transition-all"
-                />
-                <p class="text-[11px] text-gray-600 light:text-gray-400 mt-1.5">Usually a 10 to 13 digit number on your admit card.</p>
-              </div>
+            <!-- Interactive Tabs for Navigation -->
+            <div class="flex bg-black/40 light:bg-gray-100 p-1 rounded-xl mb-6 border border-white/5 light:border-black/5 text-[10px] sm:text-xs font-bold gap-x-2">
+              <button 
+                type="button"
+                id="home-tab-roll-finder" 
+                class="flex-1 py-2 text-center rounded-lg bg-brand-blue text-white focus:outline-none transition-all flex items-center justify-center gap-1.5 cursor-pointer select-none"
+              >
+                <span>🔍 Roll Finder</span>
+                <span class="px-1.5 py-0.5 text-[8px] bg-emerald-500/20 text-emerald-400 rounded-md font-extrabold uppercase tracking-wide">Active</span>
+              </button>
+              <button 
+                type="button"
+                id="home-tab-check-result" 
+                class="flex-1 py-2 text-center rounded-lg text-gray-400 hover:text-white light:text-gray-600 light:hover:text-ink focus:outline-none transition-all flex items-center justify-center gap-1.5 cursor-pointer select-none"
+              >
+                <span>⚡ Result</span>
+                <span class="px-1.5 py-0.5 text-[8px] bg-amber-500/20 text-amber-500 rounded-md font-extrabold uppercase tracking-wide">Offline</span>
+              </button>
+              <button 
+                type="button"
+                id="home-tab-dob-finder" 
+                class="flex-1 py-2 text-center rounded-lg text-gray-400 hover:text-white light:text-gray-600 light:hover:text-ink focus:outline-none transition-all flex items-center justify-center gap-1.5 cursor-pointer select-none"
+              >
+                <span>🔑 DOB Finder</span>
+                <span class="px-1.5 py-0.5 text-[8px] bg-amber-500/20 text-amber-500 rounded-md font-extrabold uppercase tracking-wide">Offline</span>
+              </button>
+            </div>
 
-              <!-- Mock Captcha Validation -->
-              <div class="p-4 rounded-xl bg-white/[0.02] light:bg-black/[0.01] border border-white/[0.06] light:border-black/[0.04]">
-                <label class="block text-xs font-semibold text-gray-400 light:text-gray-500 uppercase tracking-wider mb-2">
-                  Verification Captcha
-                </label>
-                <div class="flex items-center gap-3">
-                  <div class="px-3.5 py-1.5 bg-brand-blue/10 border border-brand-blue/20 rounded-lg font-mono text-brand-blue text-sm tracking-wider select-none font-bold">
-                    <span id="captcha-num1">8</span> + <span id="captcha-num2">4</span> = ?
+            <!-- TAB 1: Roll Finder Content -->
+            <div id="home-view-roll-finder" class="space-y-6">
+              <form id="home-finder-form" class="space-y-5">
+                <!-- Admission Year -->
+                <div class="relative" id="home-year-combobox">
+                  <label class="block text-xs font-semibold text-gray-400 light:text-gray-500 uppercase tracking-wider mb-2">
+                    Admission Year
+                  </label>
+                  <div class="relative">
+                    <input 
+                      type="text" 
+                      id="home-year-search" 
+                      placeholder="Select Year"
+                      readonly
+                      required
+                      class="w-full px-4 py-3 bg-white/[0.03] light:bg-black/[0.02] border border-white/[0.08] light:border-black/[0.08] rounded-xl text-white light:text-ink placeholder-gray-500 focus:outline-none focus:border-brand-blue focus:ring-1 focus:ring-brand-blue transition-all pr-10 cursor-pointer text-xs"
+                    />
+                    <input type="hidden" id="home-finder-year" name="admissionYear" />
+                    <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none text-gray-500">
+                      <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                      </svg>
+                    </div>
                   </div>
+                  <!-- Dropdown Options List -->
+                  <div 
+                    id="home-year-dropdown" 
+                    class="hidden absolute z-50 w-full mt-1 bg-[#121212]/95 light:bg-white/95 backdrop-blur-md border border-white/[0.1] light:border-black/[0.1] rounded-xl shadow-2xl max-h-60 overflow-y-auto"
+                  >
+                    <div class="p-1 space-y-0.5" id="home-year-list">
+                      <button type="button" data-value="2025" class="w-full text-left px-3 py-2.5 rounded-lg text-xs text-gray-300 light:text-gray-700 hover:bg-brand-blue hover:text-white light:hover:bg-brand-blue light:hover:text-white transition-all cursor-pointer">2025</button>
+                      <button type="button" data-value="2024" class="w-full text-left px-3 py-2.5 rounded-lg text-xs text-gray-300 light:text-gray-700 hover:bg-brand-blue hover:text-white light:hover:bg-brand-blue light:hover:text-white transition-all cursor-pointer">2024</button>
+                      <button type="button" data-value="2023" class="w-full text-left px-3 py-2.5 rounded-lg text-xs text-gray-300 light:text-gray-700 hover:bg-brand-blue hover:text-white light:hover:bg-brand-blue light:hover:text-white transition-all cursor-pointer">2023</button>
+                      <button type="button" data-value="2022" class="w-full text-left px-3 py-2.5 rounded-lg text-xs text-gray-300 light:text-gray-700 hover:bg-brand-blue hover:text-white light:hover:bg-brand-blue light:hover:text-white transition-all cursor-pointer">2022</button>
+                      <button type="button" data-value="2021" class="w-full text-left px-3 py-2.5 rounded-lg text-xs text-gray-300 light:text-gray-705 hover:bg-brand-blue hover:text-white light:hover:bg-brand-blue light:hover:text-white transition-all cursor-pointer">2021</button>
+                      <button type="button" data-value="2020" class="w-full text-left px-3 py-2.5 rounded-lg text-xs text-gray-300 light:text-gray-705 hover:bg-brand-blue hover:text-white light:hover:bg-brand-blue light:hover:text-white transition-all cursor-pointer">2020</button>
+                      <button type="button" data-value="2019" class="w-full text-left px-3 py-2.5 rounded-lg text-xs text-gray-300 light:text-gray-705 hover:bg-brand-blue hover:text-white light:hover:bg-brand-blue light:hover:text-white transition-all cursor-pointer">2019</button>
+                      <button type="button" data-value="2018" class="w-full text-left px-3 py-2.5 rounded-lg text-xs text-gray-300 light:text-gray-705 hover:bg-brand-blue hover:text-white light:hover:bg-brand-blue light:hover:text-white transition-all cursor-pointer">2018</button>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- College -->
+                <div class="relative" id="home-college-combobox">
+                  <label class="block text-xs font-semibold text-gray-400 light:text-gray-500 uppercase tracking-wider mb-2">
+                    College / Institute
+                  </label>
+                  <div class="relative">
+                    <input 
+                      type="text" 
+                      id="home-college-search" 
+                      placeholder="Type college name or code..."
+                      autocomplete="off"
+                      required
+                      class="w-full px-4 py-3 bg-white/[0.03] light:bg-black/[0.02] border border-white/[0.08] light:border-black/[0.08] rounded-xl text-white light:text-ink placeholder-gray-500 focus:outline-none focus:border-brand-blue focus:ring-1 focus:ring-brand-blue transition-all pr-10 text-xs"
+                    />
+                    <input type="hidden" id="home-finder-college" name="collegeCode" />
+                    <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none text-gray-500">
+                      <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                      </svg>
+                    </div>
+                  </div>
+                  <!-- Dropdown Options List -->
+                  <div 
+                    id="home-college-dropdown" 
+                    class="hidden absolute z-50 w-full mt-1 bg-[#121212]/95 light:bg-white/95 backdrop-blur-md border border-white/[0.1] light:border-black/[0.1] rounded-xl shadow-2xl max-h-60 overflow-y-auto"
+                  >
+                    <div class="p-1 space-y-0.5" id="home-college-list">
+                      {sortedColleges.map((c) => (
+                        <button
+                          type="button"
+                          data-code={c.code}
+                          data-name={c.name}
+                          class="w-full text-left px-3 py-2.5 rounded-lg text-xs text-gray-300 light:text-gray-700 hover:bg-brand-blue hover:text-white light:hover:bg-brand-blue light:hover:text-white transition-all flex justify-between items-center gap-2 cursor-pointer"
+                        >
+                          <span class="font-medium truncate">{c.name}</span>
+                          <span class="font-mono text-[9px] opacity-60 bg-white/10 px-1.5 py-0.5 rounded">{c.code}</span>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Branch -->
+                <div class="relative" id="home-branch-combobox">
+                  <label class="block text-xs font-semibold text-gray-400 light:text-gray-500 uppercase tracking-wider mb-2">
+                    Branch / Course
+                  </label>
+                  <div class="relative">
+                    <input 
+                      type="text" 
+                      id="home-branch-search" 
+                      placeholder="Type branch name or code..."
+                      autocomplete="off"
+                      required
+                      class="w-full px-4 py-3 bg-white/[0.03] light:bg-black/[0.02] border border-white/[0.08] light:border-black/[0.08] rounded-xl text-white light:text-ink placeholder-gray-500 focus:outline-none focus:border-brand-blue focus:ring-1 focus:ring-brand-blue transition-all pr-10 text-xs"
+                    />
+                    <input type="hidden" id="home-finder-branch" name="branchCode" />
+                    <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none text-gray-500">
+                      <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                      </svg>
+                    </div>
+                  </div>
+                  <!-- Dropdown Options List -->
+                  <div 
+                    id="home-branch-dropdown" 
+                    class="hidden absolute z-50 w-full mt-1 bg-[#121212]/95 light:bg-white/95 backdrop-blur-md border border-white/[0.1] light:border-black/[0.1] rounded-xl shadow-2xl max-h-60 overflow-y-auto"
+                  >
+                    <div class="p-1 space-y-0.5" id="home-branch-list">
+                      {sortedBranches.map((b) => (
+                        <button
+                          type="button"
+                          data-code={b.code}
+                          data-name={b.name}
+                          class="w-full text-left px-3 py-2.5 rounded-lg text-xs text-gray-300 light:text-gray-700 hover:bg-brand-blue hover:text-white light:hover:bg-brand-blue light:hover:text-white transition-all flex justify-between items-center gap-2 cursor-pointer"
+                        >
+                          <span class="font-medium truncate">{b.name}</span>
+                          <span class="font-mono text-[9px] opacity-60 bg-white/10 px-1.5 py-0.5 rounded">{b.code}</span>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Student Name -->
+                <div>
+                  <label for="home-finder-name" class="block text-xs font-semibold text-gray-400 light:text-gray-500 uppercase tracking-wider mb-2">
+                    Student Name (Optional)
+                  </label>
                   <input 
-                    type="number" 
-                    id="captcha-answer" 
-                    name="captchaAnswer" 
-                    placeholder="Result" 
-                    required
-                    class="flex-1 px-3 py-1.5 bg-white/[0.03] light:bg-white border border-white/[0.08] light:border-black/[0.08] rounded-lg text-white light:text-ink text-sm placeholder-gray-600 focus:outline-none focus:border-brand-blue transition-all"
+                    type="text" 
+                    id="home-finder-name" 
+                    name="name" 
+                    placeholder="e.g. SHIVAM" 
+                    class="w-full px-4 py-3 bg-white/[0.03] light:bg-black/[0.02] border border-white/[0.08] light:border-black/[0.08] rounded-xl text-white light:text-ink placeholder-gray-600 focus:outline-none focus:border-brand-blue transition-all"
                   />
                 </div>
+
+                <!-- Captcha -->
+                <div class="p-4 rounded-xl bg-white/[0.02] light:bg-black/[0.01] border border-white/[0.06] light:border-black/[0.04]">
+                  <label class="block text-xs font-semibold text-gray-400 light:text-gray-500 uppercase tracking-wider mb-2">
+                    Verification Captcha
+                  </label>
+                  <div class="flex items-center gap-3">
+                    <div class="px-3.5 py-1.5 bg-brand-blue/10 border border-brand-blue/20 rounded-lg font-mono text-brand-blue text-sm tracking-wider select-none font-bold">
+                      <span id="home-finder-captcha-num1">3</span> + <span id="home-finder-captcha-num2">5</span> = ?
+                    </div>
+                    <input 
+                      type="number" 
+                      id="home-finder-captcha-answer" 
+                      name="captchaAnswer" 
+                      placeholder="Result" 
+                      required
+                      class="flex-1 px-3 py-1.5 bg-white/[0.03] light:bg-white border border-white/[0.08] light:border-black/[0.08] rounded-lg text-white light:text-ink text-sm placeholder-gray-600 focus:outline-none focus:border-brand-blue transition-all"
+                    />
+                  </div>
+                </div>
+
+                <button 
+                  type="submit" 
+                  id="home-finder-submit-btn"
+                  class="w-full py-3.5 bg-gradient-to-r from-brand-blue to-purple-600 hover:from-brand-blue-hover hover:to-purple-700 text-white text-sm font-semibold rounded-xl premium-shadow-dark hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer"
+                >
+                  <span>Search Class Roster</span>
+                  <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                  </svg>
+                </button>
+              </form>
+
+              <!-- Finder Loader -->
+              <div id="home-finder-loader-state" class="hidden py-8 space-y-6">
+                <div class="flex flex-col items-center justify-center text-center">
+                  <div class="relative w-12 h-12 mb-4">
+                    <div class="w-12 h-12 rounded-full border-4 border-brand-blue/20 animate-spin border-t-brand-blue"></div>
+                  </div>
+                  <h3 class="text-sm font-semibold text-white light:text-ink mb-1">Scanning AKTU ERP Directory...</h3>
+                  <p class="text-xs text-gray-500" id="home-finder-loading-substatus">Negotiating ASP.NET state verification...</p>
+                </div>
               </div>
 
-              <button 
-                type="submit" 
-                class="w-full py-3.5 bg-gradient-to-r from-brand-blue to-purple-600 hover:from-brand-blue-hover hover:to-purple-700 text-white text-sm font-semibold rounded-xl premium-shadow-dark hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer"
-              >
-                <span>Search Result</span>
-                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                </svg>
-              </button>
-            </form>
+              <!-- Finder Output Results -->
+              <div id="home-finder-output" class="hidden space-y-4">
+                <!-- Dynamic Content Injection -->
+              </div>
+            </div>
+
+            <!-- TAB 2: Check Result Content (Maintenance state) -->
+            <div id="home-view-check-result" class="hidden space-y-6">
+              <!-- Maintenance Overlay Panel -->
+              <div class="p-4 rounded-xl border border-amber-500/20 bg-amber-500/5 text-amber-500 text-xs leading-relaxed space-y-3">
+                <div class="flex items-center gap-2 font-bold text-sm">
+                  <span>🛠️</span>
+                  <span>System Maintenance in Progress</span>
+                </div>
+                <p>
+                  The AKTU One View results parser is currently undergoing critical updates. Due to recent security upgrades on the official university portal, result queries via roll number bypass are temporarily offline.
+                </p>
+                <div class="text-[10px] text-gray-400">
+                  Status: <strong class="text-amber-400 font-bold uppercase tracking-wider">Awaiting Engine Patch</strong>
+                </div>
+              </div>
+
+              <!-- Grayed-out/Disabled Form Preview for Premium Feel -->
+              <div class="opacity-30 pointer-events-none select-none relative">
+                <form id="search-form" class="space-y-6">
+                  <div>
+                    <label class="block text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">
+                      University Roll Number
+                    </label>
+                    <input 
+                      type="text" 
+                      id="roll-number" 
+                      placeholder="e.g. 2200650100100" 
+                      disabled
+                      class="w-full px-4 py-3 bg-white/[0.03] border border-white/[0.08] rounded-xl text-white placeholder-gray-600"
+                    />
+                  </div>
+
+                  <div class="p-4 rounded-xl bg-white/[0.02] border border-white/[0.06]">
+                    <label class="block text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">
+                      Verification Captcha
+                    </label>
+                    <div class="flex items-center gap-3">
+                      <div class="px-3.5 py-1.5 bg-brand-blue/10 border border-brand-blue/20 rounded-lg font-mono text-brand-blue text-sm font-bold">
+                        <span id="captcha-num1">8</span> + <span id="captcha-num2">4</span> = ?
+                      </div>
+                      <input 
+                        type="number" 
+                        id="captcha-answer" 
+                        placeholder="Result" 
+                        disabled
+                        class="flex-1 px-3 py-1.5 bg-white/[0.03] border border-white/[0.08] rounded-lg"
+                      />
+                    </div>
+                  </div>
+
+                  <button 
+                    type="button" 
+                    disabled
+                    class="w-full py-3.5 bg-gray-700 text-gray-400 text-sm font-semibold rounded-xl"
+                  >
+                    Unavailable (Under Maintenance)
+                  </button>
+                </form>
+              </div>
+            </div>
+
+            <!-- TAB 3: DOB Finder Content (Maintenance state) -->
+            <div id="home-view-dob-finder" class="hidden space-y-6 py-4 text-center">
+              <div class="w-14 h-14 bg-amber-500/10 text-amber-500 rounded-full flex items-center justify-center text-xl mx-auto border border-amber-500/20 premium-shadow-dark">
+                🔒
+              </div>
+              <div class="space-y-2">
+                <h3 class="text-sm font-bold text-white light:text-ink">Automated Scanner Offline</h3>
+                <p class="text-xs text-gray-450 light:text-gray-500 leading-relaxed max-w-sm mx-auto">
+                  The automated student Date of Birth range scanner is currently offline. Host whitelists are active but session validation is paused due to portal security patches.
+                </p>
+              </div>
+
+              <div class="grid grid-cols-3 gap-2 text-[9px] font-bold border-t border-b border-white/[0.06] py-3 text-gray-400">
+                <div>
+                  <div>IP Nodes</div>
+                  <span class="text-amber-500 mt-1 block">⚠️ Blocked</span>
+                </div>
+                <div>
+                  <div>Scanner</div>
+                  <span class="text-gray-500 mt-1 block">💤 Paused</span>
+                </div>
+                <div>
+                  <div>Database API</div>
+                  <span class="text-emerald-500 mt-1 block">🟢 Live</span>
+                </div>
+              </div>
+            </div>
+
 
             <!-- Loading State Card (Skeleton Loader) -->
             <div id="loader-state" class="hidden py-8 space-y-6">
@@ -1095,6 +1350,310 @@ const homeKeywords = "aktu result without dob, aktu one view, aktu result direct
       } finally {
         assistantSubmitBtn.removeAttribute("disabled");
         assistantSubmitBtn.innerHTML = originalText;
+      }
+    });
+
+    // Setup combobox dropdown helper
+    const setupCombobox = (comboboxId, searchInputId, hiddenInputId, dropdownId, listId, isSearchable) => {
+      const combobox = document.getElementById(comboboxId);
+      const searchInput = document.getElementById(searchInputId);
+      const hiddenInput = document.getElementById(hiddenInputId);
+      const dropdown = document.getElementById(dropdownId);
+      const list = document.getElementById(listId);
+      if (!combobox || !searchInput || !hiddenInput || !dropdown || !list) return;
+
+      const items = Array.from(list.querySelectorAll("button"));
+
+      // Click to toggle dropdown
+      searchInput.addEventListener("focus", () => {
+        dropdown.classList.remove("hidden");
+        // Ensure all options are visible initially on focus
+        items.forEach(item => item.classList.remove("hidden"));
+      });
+
+      // Filter options as user types
+      if (isSearchable) {
+        searchInput.addEventListener("input", () => {
+          const query = searchInput.value.trim().toLowerCase();
+          dropdown.classList.remove("hidden");
+          
+          items.forEach(item => {
+            const name = item.getAttribute("data-name") ? item.getAttribute("data-name").toLowerCase() : "";
+            const code = item.getAttribute("data-code") ? item.getAttribute("data-code").toLowerCase() : "";
+            const labelText = item.textContent.trim().toLowerCase();
+            if (name.includes(query) || code.includes(query) || labelText.includes(query)) {
+              item.classList.remove("hidden");
+            } else {
+              item.classList.add("hidden");
+            }
+          });
+        });
+      }
+
+      // Handle item selection
+      list.addEventListener("click", (e) => {
+        const itemBtn = e.target.closest("button");
+        if (!itemBtn) return;
+
+        const val = itemBtn.getAttribute("data-code") || itemBtn.getAttribute("data-value") || itemBtn.textContent.trim();
+        const displayName = itemBtn.getAttribute("data-name") || itemBtn.textContent.trim();
+
+        hiddenInput.value = val;
+        searchInput.value = displayName;
+        
+        // Trigger validation if form expects it
+        hiddenInput.dispatchEvent(new Event("change"));
+
+        dropdown.classList.add("hidden");
+      });
+
+      // Hide dropdown when clicking outside
+      document.addEventListener("click", (e) => {
+        if (!combobox.contains(e.target)) {
+          dropdown.classList.add("hidden");
+          // If searchInput value doesn't match hiddenInput value name, reset or clear
+          if (!hiddenInput.value) {
+            searchInput.value = "";
+          } else {
+            // Find selected item to restore its name
+            const activeItem = items.find(item => (item.getAttribute("data-code") || item.getAttribute("data-value")) === hiddenInput.value);
+            if (activeItem) {
+              searchInput.value = activeItem.getAttribute("data-name") || activeItem.textContent.trim();
+            }
+          }
+        }
+      });
+    };
+
+    // Initialize custom comboboxes
+    setupCombobox("home-year-combobox", "home-year-search", "home-finder-year", "home-year-dropdown", "home-year-list", false);
+    setupCombobox("home-college-combobox", "home-college-search", "home-finder-college", "home-college-dropdown", "home-college-list", true);
+    setupCombobox("home-branch-combobox", "home-branch-search", "home-finder-branch", "home-branch-dropdown", "home-branch-list", true);
+
+    // Tab switching logic
+    const tabRollFinder = document.getElementById("home-tab-roll-finder");
+    const tabCheckResult = document.getElementById("home-tab-check-result");
+    const tabDobFinder = document.getElementById("home-tab-dob-finder");
+
+    const viewRollFinder = document.getElementById("home-view-roll-finder");
+    const viewCheckResult = document.getElementById("home-view-check-result");
+    const viewDobFinder = document.getElementById("home-view-dob-finder");
+
+    const switchTab = (activeTab, activeView) => {
+      // Hide all views
+      viewRollFinder.classList.add("hidden");
+      viewCheckResult.classList.add("hidden");
+      viewDobFinder.classList.add("hidden");
+
+      // Show active view
+      activeView.classList.remove("hidden");
+
+      // Reset tab button styles
+      [tabRollFinder, tabCheckResult, tabDobFinder].forEach(btn => {
+        if (btn) {
+          btn.className = "flex-1 py-2 text-center rounded-lg text-gray-400 hover:text-white light:text-gray-650 light:hover:text-ink focus:outline-none transition-all flex items-center justify-center gap-1.5 cursor-pointer select-none";
+        }
+      });
+
+      // Highlight active tab button
+      if (activeTab) {
+        activeTab.className = "flex-1 py-2 text-center rounded-lg bg-brand-blue text-white focus:outline-none transition-all flex items-center justify-center gap-1.5 cursor-pointer select-none";
+      }
+    };
+
+    tabRollFinder?.addEventListener("click", () => switchTab(tabRollFinder, viewRollFinder));
+    tabCheckResult?.addEventListener("click", () => switchTab(tabCheckResult, viewCheckResult));
+    tabDobFinder?.addEventListener("click", () => switchTab(tabDobFinder, viewDobFinder));
+
+    // Home Roll Finder Captcha Generator
+    const generateHomeFinderCaptcha = () => {
+      const num1 = Math.floor(Math.random() * 9) + 1;
+      const num2 = Math.floor(Math.random() * 9) + 1;
+      const el1 = document.getElementById("home-finder-captcha-num1");
+      const el2 = document.getElementById("home-finder-captcha-num2");
+      if (el1 && el2) {
+        el1.textContent = num1;
+        el2.textContent = num2;
+      }
+      return num1 + num2;
+    };
+    let expectedHomeFinderCaptchaSum = generateHomeFinderCaptcha();
+
+    const homeFinderForm = document.getElementById("home-finder-form");
+    const homeFinderSubmitBtn = document.getElementById("home-finder-submit-btn");
+    const homeFinderLoader = document.getElementById("home-finder-loader-state");
+    const homeFinderOutput = document.getElementById("home-finder-output");
+
+    homeFinderForm?.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      
+      // Verify Captcha
+      const captchaAnsInput = document.getElementById("home-finder-captcha-answer");
+      const captchaAns = parseInt(captchaAnsInput?.value.trim(), 10);
+      if (captchaAns !== expectedHomeFinderCaptchaSum) {
+        alert("Incorrect Captcha Answer. Please try again.");
+        expectedHomeFinderCaptchaSum = generateHomeFinderCaptcha();
+        if (captchaAnsInput) captchaAnsInput.value = "";
+        return;
+      }
+
+      const yearVal = document.getElementById("home-finder-year").value;
+      const collegeVal = document.getElementById("home-finder-college").value;
+      const branchVal = document.getElementById("home-finder-branch").value;
+      const nameVal = document.getElementById("home-finder-name").value.trim();
+
+      if (!yearVal || !collegeVal || !branchVal) {
+        alert("Please select Admission Year, College, and Branch.");
+        return;
+      }
+
+      // Show loader
+      homeFinderForm.classList.add("hidden");
+      homeFinderLoader.classList.remove("hidden");
+      homeFinderOutput.classList.add("hidden");
+
+      const loadingSub = document.getElementById("home-finder-loading-substatus");
+      
+      const stages = [
+        "Connecting to AKTU ERP portals...",
+        "Authenticating session tokens...",
+        "Querying database records...",
+        "Compiling matching student details..."
+      ];
+      let stageIdx = 0;
+      if (loadingSub) loadingSub.textContent = stages[stageIdx++];
+      const interval = setInterval(() => {
+        if (loadingSub && stageIdx < stages.length) {
+          loadingSub.textContent = stages[stageIdx++];
+        }
+      }, 800);
+
+      try {
+        const res = await fetch('/api/find-roll', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            admissionYear: yearVal,
+            collegeCode: collegeVal,
+            branchCode: branchVal,
+            name: nameVal
+          })
+        });
+
+        clearInterval(interval);
+        homeFinderLoader.classList.add("hidden");
+        homeFinderOutput.classList.remove("hidden");
+        homeFinderOutput.innerHTML = "";
+
+        if (!res.ok) {
+          throw new Error("Server error");
+        }
+
+        const data = await res.json();
+        if (!data || !data.success) {
+          homeFinderOutput.innerHTML = `
+            <div class="p-4 rounded-xl border border-rose-500/20 bg-rose-500/5 text-rose-400 text-xs text-center">
+              ${data.error || "No student details found. Check parameters."}
+            </div>
+            <button type="button" id="home-finder-retry-btn" class="w-full py-2.5 bg-white/[0.05] hover:bg-white/[0.1] text-white text-xs font-semibold rounded-lg mt-2 cursor-pointer transition-all">Retry Search</button>
+          `;
+          document.getElementById("home-finder-retry-btn")?.addEventListener("click", () => {
+            homeFinderOutput.classList.add("hidden");
+            homeFinderForm.classList.remove("hidden");
+            expectedHomeFinderCaptchaSum = generateHomeFinderCaptcha();
+            if (captchaAnsInput) captchaAnsInput.value = "";
+          });
+          return;
+        }
+
+        let html = "";
+
+        // Display Roll Range
+        html += `
+          <div class="p-4 rounded-xl border border-white/[0.08] bg-white/[0.03] space-y-2 text-left">
+            <div class="text-[10px] uppercase font-bold text-gray-400 tracking-wider">Class Roll Range</div>
+            <div class="flex justify-between items-center text-xs">
+              <div>Start: <span class="font-mono font-bold text-white">${data.rangeStart}</span></div>
+              <div>End: <span class="font-mono font-bold text-white">${data.rangeEnd}</span></div>
+            </div>
+            <p class="text-[10px] text-gray-450 leading-relaxed mt-1">Found ${data.matches ? data.matches.length : 0} matching students.</p>
+          </div>
+        `;
+
+        // Display Matches
+        if (data.matches && data.matches.length > 0) {
+          html += `
+            <div class="space-y-2 text-left">
+              <div class="text-[10px] uppercase font-bold text-gray-400 tracking-wider">Matches List</div>
+              <div class="space-y-1.5 max-h-56 overflow-y-auto pr-1">
+          `;
+          data.matches.forEach((student) => {
+            html += `
+              <div class="p-3 bg-black/45 hover:bg-brand-blue/5 border border-white/[0.06] hover:border-brand-blue/30 rounded-xl flex justify-between items-center transition-all">
+                <div>
+                  <div class="font-bold text-xs text-white">${student.name}</div>
+                  <div class="text-[10px] font-mono text-gray-500 mt-0.5">${student.rollNumber}</div>
+                </div>
+                <button 
+                  type="button" 
+                  class="home-select-student-btn px-3 py-1 bg-brand-blue/20 hover:bg-brand-blue text-brand-blue hover:text-white rounded-lg text-[10px] font-bold transition-all cursor-pointer"
+                  data-roll="${student.rollNumber}"
+                  data-name="${student.name}"
+                >
+                  Get Result
+                </button>
+              </div>
+            `;
+          });
+          html += `
+              </div>
+            </div>
+          `;
+        } else {
+          html += `
+            <div class="p-4 rounded-xl border border-white/[0.06] text-center text-xs text-gray-500">
+              No specific matching students found. Try selecting the base range from above.
+            </div>
+          `;
+        }
+
+        html += `
+          <button type="button" id="home-finder-back-btn" class="w-full py-2.5 bg-white/[0.05] hover:bg-white/[0.1] text-white text-xs font-semibold rounded-lg mt-2 cursor-pointer transition-all">New Search</button>
+        `;
+
+        homeFinderOutput.innerHTML = html;
+
+        // Bind Select buttons
+        homeFinderOutput.querySelectorAll(".home-select-student-btn").forEach(btn => {
+          btn.addEventListener("click", () => {
+            alert("AKTU One View Result Retrieval is currently under maintenance. We are patching the scraper to bypass the new CAPTCHA updates. Please try again later.");
+          });
+        });
+
+        // Bind back button
+        document.getElementById("home-finder-back-btn")?.addEventListener("click", () => {
+          homeFinderOutput.classList.add("hidden");
+          homeFinderForm.classList.remove("hidden");
+          expectedHomeFinderCaptchaSum = generateHomeFinderCaptcha();
+          if (captchaAnsInput) captchaAnsInput.value = "";
+        });
+
+      } catch (err) {
+        clearInterval(interval);
+        homeFinderLoader.classList.add("hidden");
+        homeFinderOutput.classList.remove("hidden");
+        homeFinderOutput.innerHTML = `
+          <div class="p-4 rounded-xl border border-rose-500/20 bg-rose-500/5 text-rose-400 text-xs text-center">
+            Failed to connect to ERP scanner. Please retry.
+          </div>
+          <button type="button" id="home-finder-retry-btn" class="w-full py-2.5 bg-white/[0.05] hover:bg-white/[0.1] text-white text-xs font-semibold rounded-lg mt-2 cursor-pointer transition-all">Retry Search</button>
+        `;
+        document.getElementById("home-finder-retry-btn")?.addEventListener("click", () => {
+          homeFinderOutput.classList.add("hidden");
+          homeFinderForm.classList.remove("hidden");
+          expectedHomeFinderCaptchaSum = generateHomeFinderCaptcha();
+          if (captchaAnsInput) captchaAnsInput.value = "";
+        });
       }
     });
 

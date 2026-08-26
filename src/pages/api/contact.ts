@@ -17,16 +17,20 @@ export const POST: APIRoute = async ({ request }) => {
 
     // 1. Save to MongoDB Database in 'contact_inquiries' collection
     const db = await DatabaseService.connectToDatabase();
-    const collection = db.collection('contact_inquiries');
-    const inquiry = {
-      name,
-      email,
-      subject,
-      message,
-      createdAt: new Date()
-    };
-    await collection.insertOne(inquiry);
-    console.log('Inquiry saved to MongoDB database:', name, email);
+    if (db) {
+      const collection = db.collection('contact_inquiries');
+      const inquiry = {
+        name,
+        email,
+        subject,
+        message,
+        createdAt: new Date()
+      };
+      await collection.insertOne(inquiry);
+      console.log('Inquiry saved to MongoDB database:', name, email);
+    } else {
+      console.warn('Database connection unavailable, skipping MongoDB inquiry save.');
+    }
 
     // 2. Send email via Gmail nodemailer if credentials exist
     const gmailUser = process.env.GMAIL_USER || '';

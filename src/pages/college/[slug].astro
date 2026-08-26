@@ -1,0 +1,512 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import colleges from "../../data/colleges.json";
+import branches from "../../data/branches.json";
+import { slugifyCollege } from "../../utils/slugify";
+
+export async function getStaticPaths() {
+  return colleges.map((college) => ({
+    params: { slug: slugifyCollege(college.name, college.code) },
+    props: { college },
+  }));
+}
+
+const { slug } = Astro.params;
+const { college } = Astro.props;
+
+const sortedBranches = [...branches].sort((a, b) => a.name.localeCompare(b.name));
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": `Find AKTU Roll Number of ${college.name} by Name`,
+  "url": `https://akturesultwithoutdob.com/college/${slug}`,
+  "description": `Search and find roll numbers of students at ${college.name} (${college.code}) by name. Complete class roster finder tool for AKTU.`,
+  "isPartOf": {
+    "@type": "WebSite",
+    "name": "AKTU Assistant",
+    "url": "https://akturesultwithoutdob.com"
+  }
+};
+
+const collegeKeywords = `find aktu roll number of ${college.name}, ${college.name} roll number by name, ${college.name} college code ${college.code}, aktu roll finder ${college.code}, search aktu class roster, student list ${college.name}`;
+---
+
+<Layout 
+  title={`Find AKTU Roll Number of ${college.name} | Class Roster`}
+  description={`Search and find roll numbers of students at ${college.name} (${college.code}) by name. Complete class roster finder tool for AKTU.`}
+  keywords={collegeKeywords}
+  jsonLd={jsonLd}
+>
+  <!-- Hero Section -->
+  <section class="relative pb-12 md:pb-16 overflow-hidden border-b border-canvas-dark-border light:border-canvas-light-border bg-gradient-to-b from-black via-canvas-dark-surface to-black light:from-white light:via-canvas-light-surface light:to-white transition-colors duration-300">
+    <!-- Ambient Glows -->
+    <div class="absolute top-[-10%] left-[-10%] w-[550px] h-[550px] rounded-full bg-brand-blue/8 blur-[120px] pointer-events-none animate-pulse" style="animation-duration: 8s;"></div>
+    <div class="absolute bottom-[10%] right-[-10%] w-[500px] h-[500px] rounded-full bg-purple-500/5 blur-[130px] pointer-events-none animate-pulse" style="animation-duration: 12s;"></div>
+
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <!-- Breadcrumbs -->
+      <nav class="flex items-center gap-2 py-4 text-[10px] text-gray-500 font-mono">
+        <a href="/" class="hover:text-white light:hover:text-ink transition-colors">Home</a>
+        <span>/</span>
+        <a href="/colleges" class="hover:text-white light:hover:text-ink transition-colors">Colleges</a>
+        <span>/</span>
+        <span class="text-brand-blue font-bold">{college.code}</span>
+      </nav>
+
+      <div id="hero-grid" class="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12 items-center min-h-[500px] transition-all duration-500">
+        <!-- Left Side: Copywriting -->
+        <div id="hero-copy" class="md:col-span-7 text-center md:text-left space-y-6 transition-all duration-500">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/[0.08] light:border-black/[0.06] bg-white/[0.03] light:bg-white/40 backdrop-blur-md text-xs text-gray-400 light:text-gray-600 premium-shadow-light">
+            <span class="w-1.5 h-1.5 rounded-full bg-brand-blue animate-pulse"></span>
+            College Code {college.code}
+          </div>
+
+          <h1 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold tracking-tight leading-[1.1] text-white light:text-ink">
+            Find AKTU Roll Number of <br />
+            <span class="bg-gradient-to-r from-brand-blue via-brand-blue-light to-purple-500 bg-clip-text text-transparent">{college.name}</span>
+          </h1>
+
+          <p class="text-xs sm:text-sm md:text-base text-gray-400 light:text-gray-600 leading-relaxed max-w-xl">
+            Search students by name, select their course/branch and year of admission to find valid AKTU roll numbers and complete class student lists for this institute.
+          </p>
+
+          <div class="p-4 rounded-xl border border-canvas-dark-border light:border-canvas-light-border bg-canvas-dark-tile/50 light:bg-gray-50 text-xs space-y-2">
+            <h3 class="font-bold text-white light:text-ink">SEO Search Queries:</h3>
+            <ul class="grid grid-cols-1 sm:grid-cols-2 gap-1 text-[10px] text-gray-500 list-inside font-mono">
+              <li>• Find roll number of {college.name}</li>
+              <li>• {college.name} student search</li>
+              <li>• AKTU roll number list for code {college.code}</li>
+              <li>• Check class roster of code {college.code}</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Right Side: Search Form -->
+        <div id="hero-card-wrapper" class="md:col-span-5 w-full max-w-lg mx-auto relative group transition-all duration-500">
+          <div class="absolute -inset-1.5 bg-gradient-to-r from-brand-blue to-purple-600 rounded-2xl blur-xl opacity-20 group-hover:opacity-35 transition duration-1000 group-hover:duration-200"></div>
+          
+          <div class="relative iphone-glass p-6 sm:p-8 rounded-2xl transition-all duration-300 text-left">
+            <div id="home-view-roll-finder" class="space-y-6">
+              <form id="home-finder-form" class="space-y-5">
+                <!-- Admission Year -->
+                <div class="relative" id="home-year-combobox">
+                  <label class="block text-xs font-semibold text-gray-400 light:text-gray-500 uppercase tracking-wider mb-2">
+                    Admission Year
+                  </label>
+                  <div class="relative">
+                    <input 
+                      type="text" 
+                      id="home-year-search" 
+                      placeholder="Select Year"
+                      readonly
+                      required
+                      class="w-full px-4 py-3 bg-white/[0.03] light:bg-black/[0.02] border border-white/[0.08] light:border-black/[0.08] rounded-xl text-white light:text-ink placeholder-gray-500 focus:outline-none focus:border-brand-blue focus:ring-1 focus:ring-brand-blue transition-all pr-10 cursor-pointer text-xs"
+                    />
+                    <input type="hidden" id="home-finder-year" name="admissionYear" />
+                    <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none text-gray-500">
+                      <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                      </svg>
+                    </div>
+                  </div>
+                  <!-- Dropdown Options List -->
+                  <div 
+                    id="home-year-dropdown" 
+                    class="hidden absolute z-50 w-full mt-1 bg-[#121212]/95 light:bg-white/95 backdrop-blur-md border border-white/[0.1] light:border-black/[0.1] rounded-xl shadow-2xl max-h-60 overflow-y-auto"
+                  >
+                    <div class="p-1 space-y-0.5" id="home-year-list">
+                      <button type="button" data-value="2025" class="w-full text-left px-3 py-2.5 rounded-lg text-xs text-gray-300 light:text-gray-700 hover:bg-brand-blue hover:text-white light:hover:bg-brand-blue light:hover:text-white transition-all cursor-pointer">2025</button>
+                      <button type="button" data-value="2024" class="w-full text-left px-3 py-2.5 rounded-lg text-xs text-gray-300 light:text-gray-700 hover:bg-brand-blue hover:text-white light:hover:bg-brand-blue light:hover:text-white transition-all cursor-pointer">2024</button>
+                      <button type="button" data-value="2023" class="w-full text-left px-3 py-2.5 rounded-lg text-xs text-gray-300 light:text-gray-700 hover:bg-brand-blue hover:text-white light:hover:bg-brand-blue light:hover:text-white transition-all cursor-pointer">2023</button>
+                      <button type="button" data-value="2022" class="w-full text-left px-3 py-2.5 rounded-lg text-xs text-gray-300 light:text-gray-700 hover:bg-brand-blue hover:text-white light:hover:bg-brand-blue light:hover:text-white transition-all cursor-pointer">2022</button>
+                      <button type="button" data-value="2021" class="w-full text-left px-3 py-2.5 rounded-lg text-xs text-gray-300 light:text-gray-705 hover:bg-brand-blue hover:text-white light:hover:bg-brand-blue light:hover:text-white transition-all cursor-pointer">2021</button>
+                      <button type="button" data-value="2020" class="w-full text-left px-3 py-2.5 rounded-lg text-xs text-gray-300 light:text-gray-705 hover:bg-brand-blue hover:text-white light:hover:bg-brand-blue light:hover:text-white transition-all cursor-pointer">2020</button>
+                      <button type="button" data-value="2019" class="w-full text-left px-3 py-2.5 rounded-lg text-xs text-gray-300 light:text-gray-705 hover:bg-brand-blue hover:text-white light:hover:bg-brand-blue light:hover:text-white transition-all cursor-pointer">2019</button>
+                      <button type="button" data-value="2018" class="w-full text-left px-3 py-2.5 rounded-lg text-xs text-gray-300 light:text-gray-705 hover:bg-brand-blue hover:text-white light:hover:bg-brand-blue light:hover:text-white transition-all cursor-pointer">2018</button>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- College (Prefilled & Readonly) -->
+                <div>
+                  <label class="block text-xs font-semibold text-gray-400 light:text-gray-500 uppercase tracking-wider mb-2">
+                    College / Institute
+                  </label>
+                  <input 
+                    type="text" 
+                    id="home-college-search" 
+                    value={`${college.name} (${college.code})`}
+                    readonly
+                    class="w-full px-4 py-3 bg-white/[0.03] light:bg-black/[0.02] border border-white/[0.08] light:border-black/[0.08] rounded-xl text-white light:text-ink text-xs focus:outline-none cursor-not-allowed opacity-80"
+                  />
+                  <input type="hidden" id="home-finder-college" name="collegeCode" value={college.code} />
+                </div>
+
+                <!-- Branch -->
+                <div class="relative" id="home-branch-combobox">
+                  <label class="block text-xs font-semibold text-gray-400 light:text-gray-500 uppercase tracking-wider mb-2">
+                    Branch / Course
+                  </label>
+                  <div class="relative">
+                    <input 
+                      type="text" 
+                      id="home-branch-search" 
+                      placeholder="Type branch name or code..."
+                      autocomplete="off"
+                      required
+                      class="w-full px-4 py-3 bg-white/[0.03] light:bg-black/[0.02] border border-white/[0.08] light:border-black/[0.08] rounded-xl text-white light:text-ink placeholder-gray-500 focus:outline-none focus:border-brand-blue focus:ring-1 focus:ring-brand-blue transition-all pr-10 text-xs"
+                    />
+                    <input type="hidden" id="home-finder-branch" name="branchCode" />
+                    <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none text-gray-500">
+                      <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                      </svg>
+                    </div>
+                  </div>
+                  <!-- Dropdown Options List -->
+                  <div 
+                    id="home-branch-dropdown" 
+                    class="hidden absolute z-50 w-full mt-1 bg-[#121212]/95 light:bg-white/95 backdrop-blur-md border border-white/[0.1] light:border-black/[0.1] rounded-xl shadow-2xl max-h-60 overflow-y-auto"
+                  >
+                    <div class="p-1 space-y-0.5" id="home-branch-list">
+                      {sortedBranches.map((b) => (
+                        <button
+                          type="button"
+                          data-code={b.code}
+                          data-name={b.name}
+                          class="w-full text-left px-3 py-2.5 rounded-lg text-xs text-gray-300 light:text-gray-700 hover:bg-brand-blue hover:text-white light:hover:bg-brand-blue light:hover:text-white transition-all flex justify-between items-center gap-2 cursor-pointer"
+                        >
+                          <span class="font-medium truncate">{b.name}</span>
+                          <span class="font-mono text-[9px] opacity-60 bg-white/10 px-1.5 py-0.5 rounded">{b.code}</span>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Student Name -->
+                <div>
+                  <label for="home-finder-name" class="block text-xs font-semibold text-gray-400 light:text-gray-500 uppercase tracking-wider mb-2">
+                    Student Name (Optional)
+                  </label>
+                  <input 
+                    type="text" 
+                    id="home-finder-name" 
+                    placeholder="Enter student first/last name"
+                    class="w-full px-4 py-3 bg-white/[0.03] light:bg-black/[0.02] border border-white/[0.08] light:border-black/[0.08] rounded-xl text-white light:text-ink placeholder-gray-500 focus:outline-none focus:border-brand-blue focus:ring-1 focus:ring-brand-blue transition-all text-xs font-medium"
+                  />
+                </div>
+
+                <!-- Captcha Validation -->
+                <div class="p-3 bg-white/[0.02] light:bg-black/[0.01] border border-white/[0.06] light:border-black/[0.06] rounded-xl flex items-center justify-between gap-4">
+                  <div class="text-xs text-gray-300 light:text-gray-700">
+                    Solve: <span id="home-finder-captcha-num1" class="font-bold text-white light:text-ink">?</span> + <span id="home-finder-captcha-num2" class="font-bold text-white light:text-ink">?</span> =
+                  </div>
+                  <input 
+                    type="number" 
+                    id="home-finder-captcha-answer" 
+                    required 
+                    placeholder="Ans"
+                    class="w-20 px-3 py-1.5 bg-black/40 light:bg-white border border-white/[0.1] light:border-black/[0.1] rounded-lg text-white light:text-ink focus:outline-none focus:border-brand-blue text-xs text-center font-bold"
+                  />
+                </div>
+
+                <button 
+                  type="submit" 
+                  id="home-finder-submit-btn" 
+                  class="w-full py-3 bg-brand-blue hover:bg-brand-blue-hover text-white text-xs font-semibold rounded-xl transition-all shadow-lg hover:shadow-brand-blue/20 cursor-pointer"
+                >
+                  Search Class Roster
+                </button>
+              </form>
+
+              <!-- Loading State -->
+              <div id="home-finder-loader-state" class="hidden py-8 text-center space-y-4">
+                <div class="relative w-12 h-12 mx-auto">
+                  <div class="absolute inset-0 rounded-full border-4 border-brand-blue/20"></div>
+                  <div class="absolute inset-0 rounded-full border-4 border-brand-blue border-t-transparent animate-spin"></div>
+                </div>
+                <div class="text-xs text-gray-400 light:text-gray-650" id="home-finder-loading-substatus">Searching database...</div>
+              </div>
+
+              <!-- Output Results -->
+              <div id="home-finder-output" class="hidden space-y-4"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Client-Side Form & Combobox Handler Script -->
+  <script is:inline>
+    window.addEventListener("DOMContentLoaded", () => {
+      // Setup combobox dropdown helper
+      const setupCombobox = (comboboxId, searchInputId, hiddenInputId, dropdownId, listId, isSearchable) => {
+        const combobox = document.getElementById(comboboxId);
+        const searchInput = document.getElementById(searchInputId);
+        const hiddenInput = document.getElementById(hiddenInputId);
+        const dropdown = document.getElementById(dropdownId);
+        const list = document.getElementById(listId);
+        if (!combobox || !searchInput || !hiddenInput || !dropdown || !list) return;
+
+        const items = Array.from(list.querySelectorAll("button"));
+
+        // Click to toggle dropdown
+        searchInput.addEventListener("focus", () => {
+          dropdown.classList.remove("hidden");
+          items.forEach(item => item.classList.remove("hidden"));
+        });
+
+        // Filter options as user types
+        if (isSearchable) {
+          searchInput.addEventListener("input", () => {
+            const query = searchInput.value.trim().toLowerCase();
+            dropdown.classList.remove("hidden");
+            
+            items.forEach(item => {
+              const name = item.getAttribute("data-name") ? item.getAttribute("data-name").toLowerCase() : "";
+              const code = item.getAttribute("data-code") ? item.getAttribute("data-code").toLowerCase() : "";
+              const labelText = item.textContent.trim().toLowerCase();
+              if (name.includes(query) || code.includes(query) || labelText.includes(query)) {
+                item.classList.remove("hidden");
+              } else {
+                item.classList.add("hidden");
+              }
+            });
+          });
+        }
+
+        // Handle item selection
+        list.addEventListener("click", (e) => {
+          const itemBtn = e.target.closest("button");
+          if (!itemBtn) return;
+
+          const val = itemBtn.getAttribute("data-code") || itemBtn.getAttribute("data-value") || itemBtn.textContent.trim();
+          const displayName = itemBtn.getAttribute("data-name") || itemBtn.textContent.trim();
+
+          hiddenInput.value = val;
+          searchInput.value = displayName;
+          hiddenInput.dispatchEvent(new Event("change"));
+          dropdown.classList.add("hidden");
+        });
+
+        // Hide dropdown when clicking outside
+        document.addEventListener("click", (e) => {
+          if (!combobox.contains(e.target)) {
+            dropdown.classList.add("hidden");
+            if (!hiddenInput.value) {
+              searchInput.value = "";
+            } else {
+              const activeItem = items.find(item => (item.getAttribute("data-code") || item.getAttribute("data-value")) === hiddenInput.value);
+              if (activeItem) {
+                searchInput.value = activeItem.getAttribute("data-name") || activeItem.textContent.trim();
+              }
+            }
+          }
+        });
+      };
+
+      // Initialize Year and Branch comboboxes
+      setupCombobox("home-year-combobox", "home-year-search", "home-finder-year", "home-year-dropdown", "home-year-list", false);
+      setupCombobox("home-branch-combobox", "home-branch-search", "home-finder-branch", "home-branch-dropdown", "home-branch-list", true);
+
+      // Captcha Generator
+      const generateHomeFinderCaptcha = () => {
+        const num1 = Math.floor(Math.random() * 9) + 1;
+        const num2 = Math.floor(Math.random() * 9) + 1;
+        const el1 = document.getElementById("home-finder-captcha-num1");
+        const el2 = document.getElementById("home-finder-captcha-num2");
+        if (el1 && el2) {
+          el1.textContent = num1;
+          el2.textContent = num2;
+        }
+        return num1 + num2;
+      };
+      let expectedHomeFinderCaptchaSum = generateHomeFinderCaptcha();
+
+      const homeFinderForm = document.getElementById("home-finder-form");
+      const homeFinderSubmitBtn = document.getElementById("home-finder-submit-btn");
+      const homeFinderLoader = document.getElementById("home-finder-loader-state");
+      const homeFinderOutput = document.getElementById("home-finder-output");
+
+      homeFinderForm?.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        
+        // Verify Captcha
+        const captchaAnsInput = document.getElementById("home-finder-captcha-answer");
+        const captchaAns = parseInt(captchaAnsInput?.value.trim(), 10);
+        if (captchaAns !== expectedHomeFinderCaptchaSum) {
+          alert("Incorrect Captcha Answer. Please try again.");
+          expectedHomeFinderCaptchaSum = generateHomeFinderCaptcha();
+          if (captchaAnsInput) captchaAnsInput.value = "";
+          return;
+        }
+
+        const yearVal = document.getElementById("home-finder-year").value;
+        const collegeVal = document.getElementById("home-finder-college").value;
+        const branchVal = document.getElementById("home-finder-branch").value;
+        const nameVal = document.getElementById("home-finder-name").value.trim();
+
+        if (!yearVal || !collegeVal || !branchVal) {
+          alert("Please select Admission Year, College, and Branch.");
+          return;
+        }
+
+        // Show loader
+        homeFinderForm.classList.add("hidden");
+        homeFinderLoader.classList.remove("hidden");
+        homeFinderOutput.classList.add("hidden");
+
+        const loadingSub = document.getElementById("home-finder-loading-substatus");
+        
+        const stages = [
+          "Connecting to AKTU ERP portals...",
+          "Authenticating session tokens...",
+          "Querying database records...",
+          "Compiling matching student details..."
+        ];
+        let stageIdx = 0;
+        if (loadingSub) loadingSub.textContent = stages[stageIdx++];
+        const interval = setInterval(() => {
+          if (loadingSub && stageIdx < stages.length) {
+            loadingSub.textContent = stages[stageIdx++];
+          }
+        }, 800);
+
+        try {
+          const res = await fetch('/api/find-roll', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              admissionYear: yearVal,
+              collegeCode: collegeVal,
+              branchCode: branchVal,
+              name: nameVal
+            })
+          });
+
+          clearInterval(interval);
+          homeFinderLoader.classList.add("hidden");
+          homeFinderOutput.classList.remove("hidden");
+          homeFinderOutput.innerHTML = "";
+
+          if (!res.ok) {
+            throw new Error("Server error");
+          }
+
+          const data = await res.json();
+          if (!data || !data.success) {
+            homeFinderOutput.innerHTML = `
+              <div class="p-4 rounded-xl border border-rose-500/20 bg-rose-500/5 text-rose-400 text-xs text-center">
+                ${data.error || "No student details found. Check parameters."}
+              </div>
+              <button type="button" id="home-finder-retry-btn" class="w-full py-2.5 bg-white/[0.05] hover:bg-white/[0.1] text-white text-xs font-semibold rounded-lg mt-2 cursor-pointer transition-all">Retry Search</button>
+            `;
+            document.getElementById("home-finder-retry-btn")?.addEventListener("click", () => {
+              homeFinderOutput.classList.add("hidden");
+              homeFinderForm.classList.remove("hidden");
+              expectedHomeFinderCaptchaSum = generateHomeFinderCaptcha();
+              if (captchaAnsInput) captchaAnsInput.value = "";
+            });
+            return;
+          }
+
+          let html = "";
+
+          // Display Roll Range
+          html += `
+            <div class="p-4 rounded-xl border border-white/[0.08] bg-white/[0.03] space-y-2 text-left">
+              <div class="text-[10px] uppercase font-bold text-gray-400 tracking-wider">Class Roll Range</div>
+              <div class="flex justify-between items-center text-xs">
+                <div>Start: <span class="font-mono font-bold text-white">${data.rangeStart}</span></div>
+                <div>End: <span class="font-mono font-bold text-white">${data.rangeEnd}</span></div>
+              </div>
+              <p class="text-[10px] text-gray-405 leading-relaxed mt-1">Found ${data.matches ? data.matches.length : 0} matching students.</p>
+            </div>
+          `;
+
+          // Display matches if any
+          if (data.matches && data.matches.length > 0) {
+            html += `
+              <div class="space-y-2 text-left">
+                <div class="text-[10px] uppercase font-bold text-gray-400 tracking-wider">Matched Students</div>
+                <div class="max-h-60 overflow-y-auto border border-white/[0.08] rounded-xl divide-y divide-white/[0.05] bg-black/20">
+            `;
+            data.matches.forEach((m) => {
+              html += `
+                <div class="p-3 flex justify-between items-center hover:bg-white/[0.02] transition-all">
+                  <div class="space-y-0.5">
+                    <div class="text-xs font-bold text-white">${m.name}</div>
+                    <div class="text-[10px] text-gray-500 font-mono">${m.rollNumber}</div>
+                  </div>
+                  <button 
+                    type="button" 
+                    class="copy-roll-btn px-2 py-1 bg-brand-blue hover:bg-brand-blue-hover text-white text-[9px] font-bold rounded cursor-pointer transition-colors"
+                    data-roll="${m.rollNumber}"
+                  >
+                    Copy
+                  </button>
+                </div>
+              `;
+            });
+            html += `
+                </div>
+              </div>
+            `;
+          }
+
+          html += `
+            <button type="button" id="home-finder-new-search-btn" class="w-full py-3 bg-white/[0.05] hover:bg-white/[0.1] text-white text-xs font-semibold rounded-xl transition-all cursor-pointer">Start New Search</button>
+          `;
+
+          homeFinderOutput.innerHTML = html;
+
+          // Copy Button listener
+          const copyButtons = homeFinderOutput.querySelectorAll(".copy-roll-btn");
+          copyButtons.forEach((btn) => {
+            btn.addEventListener("click", () => {
+              const roll = btn.getAttribute("data-roll");
+              if (roll) {
+                navigator.clipboard.writeText(roll).then(() => {
+                  btn.textContent = "Copied!";
+                  btn.classList.replace("bg-brand-blue", "bg-emerald-600");
+                  setTimeout(() => {
+                    btn.textContent = "Copy";
+                    btn.classList.replace("bg-emerald-600", "bg-brand-blue");
+                  }, 1500);
+                });
+              }
+            });
+          });
+
+          // Reset button listener
+          document.getElementById("home-finder-new-search-btn")?.addEventListener("click", () => {
+            homeFinderOutput.classList.add("hidden");
+            homeFinderForm.classList.remove("hidden");
+            expectedHomeFinderCaptchaSum = generateHomeFinderCaptcha();
+            if (captchaAnsInput) captchaAnsInput.value = "";
+          });
+
+        } catch (err) {
+          clearInterval(interval);
+          homeFinderLoader.classList.add("hidden");
+          homeFinderOutput.classList.remove("hidden");
+          homeFinderOutput.innerHTML = `
+            <div class="p-4 rounded-xl border border-rose-500/20 bg-rose-500/5 text-rose-400 text-xs text-center">
+              Network error occurred. Please verify your connection and try again.
+            </div>
+            <button type="button" id="home-finder-retry-btn" class="w-full py-2.5 bg-white/[0.05] hover:bg-white/[0.1] text-white text-xs font-semibold rounded-lg mt-2 cursor-pointer transition-all">Retry Search</button>
+          `;
+          document.getElementById("home-finder-retry-btn")?.addEventListener("click", () => {
+            homeFinderOutput.classList.add("hidden");
+            homeFinderForm.classList.remove("hidden");
+            expectedHomeFinderCaptchaSum = generateHomeFinderCaptcha();
+            if (captchaAnsInput) captchaAnsInput.value = "";
+          });
+        }
+      });
+    });
+  </script>
+</Layout>

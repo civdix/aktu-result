@@ -448,3 +448,41 @@
 #final-result-summary-content td strong {
   font-weight: 600 !important;
 }
+
+/* Custom scrollbar for custom dropdown lists */
+#home-college-dropdown::-webkit-scrollbar,
+#home-branch-dropdown::-webkit-scrollbar,
+#home-year-dropdown::-webkit-scrollbar {
+  width: 6px;
+}
+
+#home-college-dropdown::-webkit-scrollbar-track,
+#home-branch-dropdown::-webkit-scrollbar-track,
+#home-year-dropdown::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+#home-college-dropdown::-webkit-scrollbar-thumb,
+#home-branch-dropdown::-webkit-scrollbar-thumb,
+#home-year-dropdown::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 99px;
+}
+
+.light #home-college-dropdown::-webkit-scrollbar-thumb,
+.light #home-branch-dropdown::-webkit-scrollbar-thumb,
+.light #home-year-dropdown::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.15);
+}
+
+#home-college-dropdown::-webkit-scrollbar-thumb:hover,
+#home-branch-dropdown::-webkit-scrollbar-thumb:hover,
+#home-year-dropdown::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.light #home-college-dropdown::-webkit-scrollbar-thumb:hover,
+.light #home-branch-dropdown::-webkit-scrollbar-thumb:hover,
+.light #home-year-dropdown::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.3);
+}
