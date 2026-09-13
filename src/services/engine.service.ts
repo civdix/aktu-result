@@ -6,6 +6,7 @@
 import * as cheerio from 'cheerio';
 import sharp from 'sharp';
 import dotenv from 'dotenv';
+import { ProxyAgent } from 'undici';
 import colleges from '../data/colleges.json';
 import aktuColleges from '../data/AKTUCollege.json';
 
@@ -173,11 +174,21 @@ async function fetchWithCookies(
       headers['User-Agent'] = USER_AGENT;
     }
 
-    const res = await fetch(currentUrl, {
+    const proxyUrl = process.env.PROXY_URL || process.env.HTTP_PROXY || process.env.HTTPS_PROXY;
+    const fetchOptions: any = {
       ...currentOptions,
       headers,
       redirect: 'manual'
-    });
+    };
+    if (proxyUrl) {
+      try {
+        fetchOptions.dispatcher = new ProxyAgent(proxyUrl);
+      } catch (proxyErr: any) {
+        console.warn('[EngineService] Could not initialize ProxyAgent:', proxyErr.message);
+      }
+    }
+
+    const res = await fetch(currentUrl, fetchOptions);
 
     parseCookies(res, cookieMap);
 
