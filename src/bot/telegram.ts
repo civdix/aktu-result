@@ -1,4 +1,5 @@
 import { Bot, InlineKeyboard, Keyboard, InputFile } from 'grammy';
+import http from 'http';
 import dotenv from 'dotenv';
 import { AktuEngineService } from '../services/engine.service.js';
 import { DatabaseService } from '../database/database.service.js';
@@ -1032,6 +1033,25 @@ bot.on('message:text', async (ctx) => {
   );
 });
 
+// 🌐 Lightweight HTTP Health-Check Server (Required by Render Free Web Service)
+const PORT = process.env.PORT ? parseInt(process.env.PORT, 10) : 10000;
+const server = http.createServer((req, res) => {
+  res.writeHead(200, { 'Content-Type': 'application/json' });
+  res.end(
+    JSON.stringify({
+      status: 'online',
+      service: 'AKTU Telegram Bot',
+      bot: '@akturesultwithoutdobbot',
+      uptimeSeconds: Math.floor(process.uptime()),
+      timestamp: new Date().toISOString()
+    })
+  );
+});
+
+server.listen(PORT, '0.0.0.0', () => {
+  console.log(`🌐 [Render/Web] Health-check HTTP server listening on 0.0.0.0:${PORT}`);
+});
+
 // Launch Bot
 console.log('🚀 [TelegramBot] Starting Telegram bot listener...');
 bot.start({
@@ -1039,3 +1059,4 @@ bot.start({
     console.log(`✅ [TelegramBot] Bot @${botInfo.username} is LIVE and listening for messages!`);
   }
 });
+
