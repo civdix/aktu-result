@@ -13,6 +13,7 @@ export interface Student {
   courseCompleted?: boolean;
   divisionAwarded?: string;
   finalResultHtml?: string;
+  rawHtml?: string;
 }
 
 export interface ParseResult {
@@ -30,6 +31,7 @@ export interface ParseResult {
   courseCompleted?: boolean;
   divisionAwarded?: string;
   finalResultHtml?: string;
+  rawHtml?: string;
 }
 
 export interface ViewStateParams {

@@ -9,3 +9,6 @@ wrangler.jsonc
 
 # Local Astro cache/dev settings
 .astro/
+
+# Local Vercel settings/cache
+.vercel/

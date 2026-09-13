@@ -1,0 +1,206 @@
+---
+import Layout from "../layouts/Layout.astro";
+
+const roll = Astro.url.searchParams.get("roll") || "";
+const dob = Astro.url.searchParams.get("dob") || "";
+const hideDob = Astro.url.searchParams.get("hide") !== "0";
+
+const pageTitle = roll ? `AKTU OneView Assistant - Roll ${roll}` : "AKTU OneView Auto-Fill Assistant";
+---
+
+<Layout 
+  title={pageTitle}
+  description="Automated AKTU OneView Assistant: Auto-fills Roll Number and Date of Birth with DOM masking."
+>
+  <div class="min-h-screen bg-black text-white px-4 py-12 flex items-center justify-center">
+    <div class="max-w-md w-full space-y-6">
+      
+      <!-- Top Brand Header -->
+      <div class="text-center space-y-2">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/10 bg-white/5 text-xs text-brand-blue font-medium">
+          <span class="w-2 h-2 rounded-full bg-brand-blue animate-pulse"></span>
+          AKTU OneView Automation Bridge
+        </div>
+        <h1 class="text-2xl font-black tracking-tight bg-gradient-to-r from-white via-gray-200 to-gray-400 bg-clip-text text-transparent">
+          OneView Auto-Fill Assistant
+        </h1>
+        <p class="text-xs text-gray-400">
+          Automated Roll Number & DOB injector for AKTU OneView.
+        </p>
+      </div>
+
+      <!-- Main Action Card -->
+      <div class="p-6 rounded-2xl bg-white/[0.03] border border-white/10 backdrop-blur-xl space-y-5 shadow-2xl">
+        
+        <!-- Student Info Fields -->
+        <div class="space-y-3">
+          <div>
+            <label class="text-[10px] uppercase font-bold text-gray-400 tracking-wider block mb-1">University Roll Number</label>
+            <div class="p-3 bg-white/5 border border-white/10 rounded-xl font-mono text-sm text-white font-bold flex items-center justify-between">
+              <span id="display-roll">{roll || "Not Specified"}</span>
+              <span class="text-[10px] text-emerald-400 font-sans font-semibold bg-emerald-500/10 px-2 py-0.5 rounded-full border border-emerald-500/20">Pre-filled</span>
+            </div>
+          </div>
+
+          <div>
+            <label class="text-[10px] uppercase font-bold text-gray-400 tracking-wider block mb-1">Registered Date of Birth</label>
+            <div class="p-3 bg-white/5 border border-white/10 rounded-xl font-mono text-sm text-white font-bold flex items-center justify-between">
+              <span id="display-dob">{dob ? (hideDob ? "••••••••" : dob) : "Auto-Resolved"}</span>
+              <button 
+                type="button" 
+                id="toggle-dob-btn" 
+                class="text-[10px] text-gray-400 hover:text-white transition-colors cursor-pointer"
+                title="Toggle visibility"
+              >
+                👁️ Toggle
+              </button>
+            </div>
+            <p class="text-[10px] text-gray-500 mt-1">DOB is secured and will be injected into OneView DOM automatically.</p>
+          </div>
+        </div>
+
+        <!-- Launch Buttons -->
+        <div class="space-y-3 pt-2">
+          <!-- Primary 1-Click Launch -->
+          <button 
+            type="button" 
+            id="launch-oneview-btn" 
+            class="w-full py-3.5 bg-gradient-to-r from-brand-blue to-purple-600 hover:from-brand-blue-hover hover:to-purple-700 text-white text-sm font-bold rounded-xl shadow-lg transition-all transform hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2 cursor-pointer"
+          >
+            <span>🚀 Open OneView (Auto-Fill & Copy)</span>
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
+          </button>
+
+          <!-- 1-Click Bookmarklet Button -->
+          <button 
+            type="button" 
+            id="copy-script-btn" 
+            class="w-full py-2.5 bg-white/5 hover:bg-white/10 text-gray-300 hover:text-white rounded-xl border border-white/10 text-xs font-semibold transition-all flex items-center justify-center gap-2 cursor-pointer"
+          >
+            <span>⚡ Copy 1-Click Auto-Fill JavaScript</span>
+          </button>
+
+          <!-- Direct In-Page Academic Result Button -->
+          <button 
+            type="button" 
+            id="fetch-result-btn" 
+            class="w-full py-2.5 bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 rounded-xl border border-emerald-500/30 text-xs font-semibold transition-all flex items-center justify-center gap-2 cursor-pointer"
+          >
+            <span>📊 View Semester Result Right Here</span>
+          </button>
+        </div>
+
+        <!-- Instructions Accordion -->
+        <div class="p-3 bg-black/40 rounded-xl border border-white/5 text-[11px] text-gray-400 space-y-1.5">
+          <div class="font-semibold text-gray-300 flex items-center gap-1.5">
+            <span>💡</span>
+            <span>How the OneView Auto-Fill works:</span>
+          </div>
+          <p>1. Tapping <b>Open OneView</b> copies your DOB to your clipboard and opens the official portal.</p>
+          <p>2. Or tap <b>Copy 1-Click JavaScript</b>, open OneView, paste it into the browser URL bar or Developer Console, and press Enter to instantly prefill & hide the DOB field!</p>
+        </div>
+      </div>
+
+      <!-- In-Page Result Container (Initially hidden) -->
+      <div id="result-container" class="hidden p-6 rounded-2xl bg-white/[0.03] border border-white/10 backdrop-blur-xl space-y-4">
+        <div id="result-content"></div>
+      </div>
+
+      <!-- Return Button -->
+      <div class="text-center">
+        <a href="/" class="text-xs text-gray-500 hover:text-gray-300 transition-colors">
+          ← Return to Home Page
+        </a>
+      </div>
+
+    </div>
+  </div>
+
+  <script define:vars={{ roll, dob }}>
+    var actualDob = dob;
+    var isHidden = true;
+
+    // Toggle DOB Visibility
+    document.getElementById("toggle-dob-btn")?.addEventListener("click", function() {
+      var dobEl = document.getElementById("display-dob");
+      if (!dobEl) return;
+      if (isHidden) {
+        dobEl.textContent = actualDob;
+        isHidden = false;
+      } else {
+        dobEl.textContent = "••••••••";
+        isHidden = true;
+      }
+    });
+
+    // 1-Click Open OneView + Copy DOB
+    document.getElementById("launch-oneview-btn")?.addEventListener("click", function() {
+      if (actualDob) {
+        navigator.clipboard.writeText(actualDob).catch(function() {});
+      }
+      window.open("https://oneview.aktu.ac.in/WebPages/aktu/OneView.aspx", "_blank");
+    });
+
+    // Copy 1-Click JavaScript to Clipboard
+    document.getElementById("copy-script-btn")?.addEventListener("click", function() {
+      var jsSnippet = "javascript:(function(){var r='" + roll + "',d='" + actualDob + "';var ro=document.getElementById('txtRollNo');var b=document.getElementById('btnProceed');if(ro&&b){ro.value=r;b.click();}var c=setInterval(function(){var di=document.getElementById('txtDOB');if(di&&di.offsetParent!==null){di.value=d;di.type='password';di.style.filter='blur(5px)';clearInterval(c);}},200);})();";
+      
+      navigator.clipboard.writeText(jsSnippet).then(function() {
+        var btn = document.getElementById("copy-script-btn");
+        if (btn) btn.innerHTML = "<span>✓ Script Copied! Paste in OneView address bar</span>";
+        setTimeout(function() {
+          if (btn) btn.innerHTML = "<span>⚡ Copy 1-Click Auto-Fill JavaScript</span>";
+        }, 3000);
+      });
+    });
+
+    // In-Page Academic Result Fetcher
+    document.getElementById("fetch-result-btn")?.addEventListener("click", async function() {
+      var btn = document.getElementById("fetch-result-btn");
+      var container = document.getElementById("result-container");
+      var content = document.getElementById("result-content");
+      if (!btn || !container || !content) return;
+
+      btn.disabled = true;
+      btn.innerHTML = `<span>⏳ Loading result records...</span>`;
+
+      try {
+        var res = await fetch("/api/search", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ rollNumber: roll })
+        });
+        var data = await res.json();
+
+        container.classList.remove("hidden");
+        if (data.success && data.student) {
+          var s = data.student;
+          var semList = (s.semesters || []).map(function(sem) {
+            return "<div class='flex justify-between py-1 border-b border-white/5 text-xs'><span>" + (sem.sem || "Semester") + "</span><span class='font-bold text-emerald-400'>SGPA: " + (sem.sgpa || "--") + "</span></div>";
+          }).join("");
+
+          content.innerHTML = `
+            <div class="space-y-3">
+              <div class="border-b border-white/10 pb-2">
+                <h3 class="font-bold text-white text-sm">` + (s.name || "Student Result") + `</h3>
+                <p class="text-[11px] text-gray-400">` + (s.course || "") + `</p>
+                <p class="text-[11px] text-gray-500">` + (s.institute || "") + `</p>
+              </div>
+              <div class="space-y-1">` + (semList || "<p class='text-xs text-gray-400'>No semester records cached yet.</p>") + `</div>
+            </div>
+          `;
+          btn.innerHTML = "<span>✓ Result Loaded Below</span>";
+        } else {
+          content.innerHTML = `<p class="text-xs text-amber-400">Full transcript not cached yet. Please open OneView above with your prefilled DOB.</p>`;
+          btn.innerHTML = "<span>📊 View Semester Result Right Here</span>";
+          btn.disabled = false;
+        }
+      } catch (err) {
+        container.classList.remove("hidden");
+        content.innerHTML = `<p class="text-xs text-rose-400">Network error fetching result record.</p>`;
+        btn.innerHTML = "<span>📊 View Semester Result Right Here</span>";
+        btn.disabled = false;
+      }
+    });
+  </script>
+</Layout>

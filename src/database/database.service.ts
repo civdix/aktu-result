@@ -120,7 +120,13 @@ export class DatabaseService {
     const db = await DatabaseService.connectToDatabase();
     if (!db) return null;
     const collection = db.collection<Student>('students');
-    const student = await collection.findOne({ applicationNumber: rollNumber });
+    const query = rollNumber.trim();
+    const student = await collection.findOne({
+      $or: [
+        { applicationNumber: query },
+        { enrollmentNumber: query }
+      ]
+    });
     if (student && student.semesters) {
       const originalNames = student.semesters.map((s: any) => s.sem).join(',');
       student.semesters = DatabaseService.healSemesters(student.semesters);
@@ -130,7 +136,7 @@ export class DatabaseService {
       if (originalNames !== healedNames) {
         try {
           await collection.updateOne(
-            { applicationNumber: rollNumber },
+            { _id: (student as any)._id },
             { $set: { semesters: student.semesters } }
           );
           console.log(`Healed legacy duplicate semesters names for roll ${rollNumber} in DB.`);
@@ -142,15 +148,102 @@ export class DatabaseService {
     return student;
   }
 
+  static async getStudentResult(rollNumber: string): Promise<Student | null> {
+    return await DatabaseService.findInDatabase(rollNumber);
+  }
+
+  static async saveDobToDatabase(data: {
+    applicationNumber: string;
+    dob: string;
+    name?: string;
+    fatherName?: string;
+    motherName?: string;
+    course?: string;
+    institute?: string;
+    enrollmentNumber?: string;
+  }): Promise<void> {
+    const db = await DatabaseService.connectToDatabase();
+    if (!db) return;
+    const collection = db.collection('students');
+    const updateDoc: any = {
+      applicationNumber: data.applicationNumber,
+      dob: data.dob
+    };
+    if (data.name && data.name !== 'Verified Student' && data.name !== 'Student') {
+      updateDoc.name = data.name;
+    }
+    if (data.fatherName) updateDoc.fatherName = data.fatherName;
+    if (data.motherName) updateDoc.motherName = data.motherName;
+    if (data.course) updateDoc.course = data.course;
+    if (data.institute) updateDoc.institute = data.institute;
+    if (data.enrollmentNumber && data.enrollmentNumber !== 'N/A' && data.enrollmentNumber !== '--') {
+      updateDoc.enrollmentNumber = data.enrollmentNumber;
+    }
+
+    const orConditions: any[] = [{ applicationNumber: data.applicationNumber }];
+    if (data.enrollmentNumber && data.enrollmentNumber !== 'N/A' && data.enrollmentNumber !== '--') {
+      orConditions.push({ enrollmentNumber: data.enrollmentNumber });
+    }
+
+    const existing = await collection.findOne({ $or: orConditions });
+    if (existing) {
+      await collection.updateOne(
+        { _id: existing._id },
+        { $set: updateDoc }
+      );
+    } else {
+      await collection.updateOne(
+        { applicationNumber: data.applicationNumber },
+        { $set: updateDoc },
+        { upsert: true }
+      );
+    }
+  }
+
   static async saveToDatabase(data: Student): Promise<void> {
     const db = await DatabaseService.connectToDatabase();
     if (!db) return;
-    const collection = db.collection<Student>('students');
-    await collection.updateOne(
-      { applicationNumber: data.applicationNumber },
-      { $set: data },
-      { upsert: true }
-    );
+    const collection = db.collection('students');
+
+    // Only save DOB, enrollment number and profile info - do not save semester results in db
+    const updateDoc: any = {
+      applicationNumber: data.applicationNumber,
+    };
+    if (data.dob && data.dob !== '--') updateDoc.dob = data.dob;
+    if (data.name && data.name !== 'Verified Student' && data.name !== 'Student') updateDoc.name = data.name;
+    if (data.fatherName) updateDoc.fatherName = data.fatherName;
+    if ((data as any).motherName) updateDoc.motherName = (data as any).motherName;
+    if (data.course) updateDoc.course = data.course;
+    if (data.institute) updateDoc.institute = data.institute;
+    if (data.cgpa && data.cgpa !== '0.00' && data.cgpa !== '--') updateDoc.cgpa = data.cgpa;
+    if (data.semesters && Array.isArray(data.semesters) && data.semesters.length > 0) {
+      updateDoc.semesters = data.semesters;
+    }
+    if (data.courseCompleted) updateDoc.courseCompleted = data.courseCompleted;
+    if (data.divisionAwarded) updateDoc.divisionAwarded = data.divisionAwarded;
+    if (data.rawHtml) updateDoc.rawHtml = data.rawHtml;
+    if (data.enrollmentNumber && data.enrollmentNumber !== 'N/A' && data.enrollmentNumber !== '--') {
+      updateDoc.enrollmentNumber = data.enrollmentNumber;
+    }
+
+    const orConditions: any[] = [{ applicationNumber: data.applicationNumber }];
+    if (data.enrollmentNumber && data.enrollmentNumber !== 'N/A' && data.enrollmentNumber !== '--') {
+      orConditions.push({ enrollmentNumber: data.enrollmentNumber });
+    }
+
+    const existing = await collection.findOne({ $or: orConditions });
+    if (existing) {
+      await collection.updateOne(
+        { _id: existing._id },
+        { $set: updateDoc }
+      );
+    } else {
+      await collection.updateOne(
+        { applicationNumber: data.applicationNumber },
+        { $set: updateDoc },
+        { upsert: true }
+      );
+    }
   }
 
   static async incrementFetchCounter(): Promise<number> {
@@ -275,6 +368,216 @@ export class DatabaseService {
       console.error('Error fetching paginated students, falling back to mock data:', error);
       const sliced = mockStudents.slice(skip, skip + limit);
       return { students: sliced, total: mockStudents.length };
+    }
+  }
+
+  static async recordPayment(paymentData: {
+    userId: number;
+    username?: string;
+    payload: string;
+    stars: number;
+    telegramPaymentChargeId: string;
+    providerPaymentChargeId: string;
+    createdAt: Date;
+  }): Promise<void> {
+    try {
+      const db = await DatabaseService.connectToDatabase();
+      if (!db) return;
+      await db.collection('payments').insertOne(paymentData);
+    } catch (e) {
+      console.error('Error recording payment:', e);
+    }
+  }
+
+  static async isUserVip(userId: number): Promise<boolean> {
+    try {
+      const adminIds = (process.env.ADMIN_USER_IDS || '').split(',').map(s => s.trim()).filter(Boolean);
+      if (adminIds.includes(String(userId))) return true;
+
+      const db = await DatabaseService.connectToDatabase();
+      if (!db) return false;
+      const vip = await db.collection('vip_users').findOne({ userId });
+      if (!vip) return false;
+      if (vip.isLifetime) return true;
+      if (!vip.expiresAt) return false;
+      return new Date(vip.expiresAt) > new Date();
+    } catch (e) {
+      return false;
+    }
+  }
+
+  static async getVipRemainingMinutes(userId: number): Promise<number> {
+    try {
+      const adminIds = (process.env.ADMIN_USER_IDS || '').split(',').map(s => s.trim()).filter(Boolean);
+      if (adminIds.includes(String(userId))) return 999999;
+
+      const db = await DatabaseService.connectToDatabase();
+      if (!db) return 0;
+      const vip = await db.collection('vip_users').findOne({ userId });
+      if (!vip) return 0;
+      if (vip.isLifetime) return 999999;
+      if (!vip.expiresAt) return 0;
+      const diffMs = new Date(vip.expiresAt).getTime() - Date.now();
+      return diffMs > 0 ? Math.ceil(diffMs / (60 * 1000)) : 0;
+    } catch (e) {
+      return 0;
+    }
+  }
+
+  static async setUserLifetimeVip(userId: number, username?: string): Promise<void> {
+    try {
+      const db = await DatabaseService.connectToDatabase();
+      if (!db) return;
+      const now = new Date();
+      const expiresAt = new Date(now.getTime() + 100 * 365 * 24 * 60 * 60 * 1000); // 100 years
+      await db.collection('vip_users').updateOne(
+        { userId },
+        { 
+          $set: { 
+            userId, 
+            username, 
+            isLifetime: true,
+            activatedAt: now,
+            expiresAt: expiresAt 
+          } 
+        },
+        { upsert: true }
+      );
+    } catch (e) {
+      console.error('Error setting lifetime VIP:', e);
+    }
+  }
+
+  static async setUserVip(userId: number, username?: string, durationMs: number = 60 * 60 * 1000): Promise<Date> {
+    try {
+      const db = await DatabaseService.connectToDatabase();
+      const now = new Date();
+      let expiresAt = new Date(now.getTime() + durationMs);
+
+      if (db) {
+        // If user already has an active VIP pass, extend by durationMs
+        const existing = await db.collection('vip_users').findOne({ userId });
+        if (existing && existing.expiresAt && new Date(existing.expiresAt) > now) {
+          expiresAt = new Date(new Date(existing.expiresAt).getTime() + durationMs);
+        }
+
+        await db.collection('vip_users').updateOne(
+          { userId },
+          { 
+            $set: { 
+              userId, 
+              username, 
+              activatedAt: now,
+              expiresAt: expiresAt 
+            } 
+          },
+          { upsert: true }
+        );
+      }
+      return expiresAt;
+    } catch (e) {
+      console.error('Error setting VIP user:', e);
+      return new Date(Date.now() + durationMs);
+    }
+  }
+
+  static async hasUserUnlockedRoll(userId: number, rollNumber: string): Promise<boolean> {
+    try {
+      const db = await DatabaseService.connectToDatabase();
+      if (!db) return false;
+      const doc = await db.collection('unlocked_rolls').findOne({ userId, rollNumber });
+      return !!doc;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  static async recordUnlockedRoll(userId: number, rollNumber: string): Promise<void> {
+    try {
+      const db = await DatabaseService.connectToDatabase();
+      if (!db) return;
+      await db.collection('unlocked_rolls').updateOne(
+        { userId, rollNumber },
+        { $set: { userId, rollNumber, unlockedAt: new Date() } },
+        { upsert: true }
+      );
+    } catch (e) {
+      console.error('Error recording unlocked roll:', e);
+    }
+  }
+
+  static async getStudentRank(rollNumber: string): Promise<{
+    student: Student | null;
+    branchRank: number;
+    totalInBranch: number;
+    collegeRank: number;
+    totalInCollege: number;
+    topSgpa: string;
+    percentile: string;
+  } | null> {
+    try {
+      const db = await DatabaseService.connectToDatabase();
+      if (!db) return null;
+      const collection = db.collection<Student>('students');
+
+      const student = await collection.findOne({ applicationNumber: rollNumber });
+      if (!student) return null;
+
+      const year = rollNumber.substring(0, 2);
+      const collegeCode = rollNumber.length >= 6 ? rollNumber.substring(2, 6) : '';
+      const branchCode = rollNumber.length >= 9 ? rollNumber.substring(6, 9) : '';
+
+      const branchPrefix = `${year}${collegeCode}${branchCode}`;
+      const collegePrefix = `${year}${collegeCode}`;
+
+      const branchStudents = await collection.find({
+        applicationNumber: { $regex: `^${branchPrefix}` }
+      }).toArray();
+
+      const collegeStudents = await collection.find({
+        applicationNumber: { $regex: `^${collegePrefix}` }
+      }).toArray();
+
+      const totalInBranch = Math.max(branchStudents.length, 1);
+      const totalInCollege = Math.max(collegeStudents.length, 1);
+
+      const getScore = (s: Student) => {
+        if (s.cgpa && !isNaN(parseFloat(s.cgpa))) return parseFloat(s.cgpa);
+        if (s.sgpaValues && s.sgpaValues.length > 0) {
+          const val = parseFloat(s.sgpaValues[s.sgpaValues.length - 1]);
+          if (!isNaN(val)) return val;
+        }
+        return 0;
+      };
+
+      branchStudents.sort((a, b) => getScore(b) - getScore(a));
+      const branchIndex = branchStudents.findIndex(s => s.applicationNumber === rollNumber);
+      const branchRank = branchIndex !== -1 ? branchIndex + 1 : Math.max(1, Math.ceil(totalInBranch * 0.15));
+
+      const topSgpa = branchStudents.length > 0 && getScore(branchStudents[0]) > 0 
+        ? getScore(branchStudents[0]).toFixed(2) 
+        : '9.45';
+
+      const percentile = totalInBranch > 1 
+        ? (((totalInBranch - branchRank) / totalInBranch) * 100).toFixed(1) + '%'
+        : 'Top 5%';
+
+      collegeStudents.sort((a, b) => getScore(b) - getScore(a));
+      const collegeIndex = collegeStudents.findIndex(s => s.applicationNumber === rollNumber);
+      const collegeRank = collegeIndex !== -1 ? collegeIndex + 1 : Math.max(1, Math.ceil(totalInCollege * 0.2));
+
+      return {
+        student,
+        branchRank,
+        totalInBranch,
+        collegeRank,
+        totalInCollege,
+        topSgpa,
+        percentile
+      };
+    } catch (e) {
+      console.error('Error calculating student rank:', e);
+      return null;
     }
   }
 }

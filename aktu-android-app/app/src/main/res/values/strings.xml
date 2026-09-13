@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">AKTU Result Finder</string>
+    <string name="title_oneview">AKTU OneView Official</string>
+    <string name="enter_roll">Enter University Roll Number</string>
+    <string name="get_result">⚡ Get Full Marksheet</string>
+    <string name="hint_roll">e.g. 2100650100103</string>
+    <string name="autofill_notice">Roll number &amp; Date of Birth will be autofilled automatically.</string>
+</resources>

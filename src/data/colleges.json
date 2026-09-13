@@ -1,2606 +1,5192 @@
 [
   {
     "code": "001",
-    "name": "Anand Engineering College, Agra"
+    "name": "Anand Engineering College, Agra",
+    "CGId": 10619,
+    "CGCode": "AK1"
   },
   {
     "code": "002",
-    "name": "Faculty of Engineering, Agra College, Agra"
+    "name": "Faculty of Engineering, Agra College, Agra",
+    "CGId": 11108,
+    "CGCode": "AK2"
   },
   {
     "code": "004",
-    "name": "Raja Balwant Singh Engineering Technical Campus, Agra"
+    "name": "Raja Balwant Singh Engineering Technical Campus, Agra",
+    "CGId": 11160,
+    "CGCode": "AK4"
   },
   {
     "code": "005",
-    "name": "Raja Balwant Singh Management Technical Campus, Agra"
+    "name": "Raja Balwant Singh Management Technical Campus, Agra",
+    "CGId": 11055,
+    "CGCode": "AK5"
   },
   {
     "code": "006",
-    "name": "Agra Public Institute of Technology & Computer Education, Agra"
+    "name": "Agra Public Institute of Technology & Computer Education, Agra",
+    "CGId": 11303,
+    "CGCode": "AK6"
   },
   {
     "code": "007",
-    "name": "Shivdan Singh Institute of Technology & Management, Aligarh"
+    "name": "Shivdan Singh Institute of Technology & Management, Aligarh",
+    "CGId": 10845,
+    "CGCode": "AK7"
   },
   {
     "code": "010",
-    "name": "United College of Engineering & Research, Allahabad"
+    "name": "United College of Engineering & Research, Allahabad",
+    "CGId": 10909,
+    "CGCode": "AK10"
   },
   {
     "code": "011",
-    "name": "United Institute of Management, Allahabad"
+    "name": "United Institute of Management, Allahabad",
+    "CGId": 11275,
+    "CGCode": "AK11"
   },
   {
     "code": "012",
-    "name": "Pharmacy College, Azamgarh"
+    "name": "Pharmacy College, Azamgarh",
+    "CGId": 11292,
+    "CGCode": "AK12"
   },
   {
     "code": "013",
-    "name": "Shri Gopichand College of Pharmacy, Bagpat"
+    "name": "Shri Gopichand College of Pharmacy, Bagpat",
+    "CGId": 10612,
+    "CGCode": "AK13"
   },
   {
     "code": "014",
-    "name": "Shri Rammurti Smarak College of Engineering and Technology, Bareilly"
+    "name": "Shri Rammurti Smarak College of Engineering and Technology, Bareilly",
+    "CGId": 11063,
+    "CGCode": "AK14"
   },
   {
     "code": "016",
-    "name": "Rakshpal Bahadur Management Institute, Bareilly"
+    "name": "Rakshpal Bahadur Management Institute, Bareilly",
+    "CGId": 10781,
+    "CGCode": "AK16"
   },
   {
     "code": "017",
-    "name": "Kunwar Satya Veera College of Engineering & Management, Bijnaur"
+    "name": "Kunwar Satya Veera College of Engineering & Management, Bijnaur",
+    "CGId": 10860,
+    "CGCode": "AK17"
   },
   {
     "code": "018",
-    "name": "Babu Banarsi Das Institute of Engineering Technology & Research Centre, Bulandshahar"
+    "name": "Babu Banarsi Das Institute of Engineering Technology & Research Centre, Bulandshahar",
+    "CGId": null,
+    "CGCode": null
   },
   {
     "code": "019",
-    "name": "Marathwada Institute of Technology, Bulandshahar"
+    "name": "Marathwada Institute of Technology, Bulandshahar",
+    "CGId": 10958,
+    "CGCode": "AK19"
   },
   {
     "code": "026",
-    "name": "Faculty of Management, Jhunjhunwaladegree College, Faizabad"
+    "name": "Faculty of Management, Jhunjhunwaladegree College, Faizabad",
+    "CGId": null,
+    "CGCode": null
   },
   {
     "code": "027",
-    "name": "Ajay Kumar Garg Engineering College, Ghaziabad"
+    "name": "Ajay Kumar Garg Engineering College, Ghaziabad",
+    "CGId": 10709,
+    "CGCode": "AK27"
   },
   {
     "code": "028",
-    "name": "Ideal Institute of Technology, Ghaziabad"
+    "name": "Ideal Institute of Technology, Ghaziabad",
+    "CGId": 10922,
+    "CGCode": "AK28"
   },
   {
     "code": "029",
-    "name": "KIET Group of Institutions(krishna Institute of Engineering & Technology), Ghaziabad"
+    "name": "KIET Group of Institutions(krishna Institute of Engineering & Technology), Ghaziabad",
+    "CGId": 11230,
+    "CGCode": "AK29"
   },
   {
     "code": "030",
-    "name": "Inderprastha Engineering College, Ghaziabad"
+    "name": "Inderprastha Engineering College, Ghaziabad",
+    "CGId": 10663,
+    "CGCode": "AK30"
   },
   {
     "code": "032",
-    "name": "ABES Engineering College, Ghaziabad"
+    "name": "ABES Engineering College, Ghaziabad",
+    "CGId": 11169,
+    "CGCode": "AK32"
   },
   {
     "code": "033",
-    "name": "Raj Kumar Goel Institute of Technology, Ghaziabad"
+    "name": "Raj Kumar Goel Institute of Technology, Ghaziabad",
+    "CGId": 10808,
+    "CGCode": "AK33"
   },
   {
     "code": "035",
-    "name": "Babu Banarsi Das Institute of Technology, Ghaziabad"
+    "name": "Babu Banarsi Das Institute of Technology, Ghaziabad",
+    "CGId": 10769,
+    "CGCode": "AK35"
   },
   {
     "code": "036",
-    "name": "Institute of Management Studies, Ghaziabad"
+    "name": "Institute of Management Studies, Ghaziabad",
+    "CGId": 11077,
+    "CGCode": "AK36"
   },
   {
     "code": "037",
-    "name": "Institute of Management Education, Ghaziabad"
+    "name": "Institute of Management Education, Ghaziabad",
+    "CGId": 11146,
+    "CGCode": "AK37"
   },
   {
     "code": "038",
-    "name": "Institute of Technology & Sciences, Ghaziabad"
+    "name": "Institute of Technology & Sciences, Ghaziabad",
+    "CGId": 10664,
+    "CGCode": "AK38"
   },
   {
     "code": "039",
-    "name": "Institute of Management Research, Ghaziabad"
+    "name": "Institute of Management Research, Ghaziabad",
+    "CGId": 10799,
+    "CGCode": "AK39"
   },
   {
     "code": "040",
-    "name": "Technical Education & Research Institute, Gazipur"
+    "name": "Technical Education & Research Institute, Gazipur",
+    "CGId": 11097,
+    "CGCode": "AK40"
   },
   {
     "code": "041",
-    "name": "Acharya Narendra Dev College of Pharmacy, Gonda"
+    "name": "Acharya Narendra Dev College of Pharmacy, Gonda",
+    "CGId": 10910,
+    "CGCode": "AK41"
   },
   {
     "code": "043",
-    "name": "Bundelkhand Institute of Engineering & Technology, Jhansi"
+    "name": "Bundelkhand Institute of Engineering & Technology, Jhansi",
+    "CGId": 19596,
+    "CGCode": "043"
   },
   {
     "code": "044",
-    "name": "Uttar Pradesh Textile Technology Institute, Kanpur"
+    "name": "Uttar Pradesh Textile Technology Institute, Kanpur",
+    "CGId": 12486,
+    "CGCode": "AK44"
   },
   {
     "code": "046",
-    "name": "Maharana Pratap Engineering College, Kanpur"
+    "name": "Maharana Pratap Engineering College, Kanpur",
+    "CGId": 11288,
+    "CGCode": "AK46"
   },
   {
     "code": "047",
-    "name": "Dr Virendra Swaroop Institute of Computer Studies, Kanpur"
+    "name": "Dr Virendra Swaroop Institute of Computer Studies, Kanpur",
+    "CGId": 11178,
+    "CGCode": "AK47"
   },
   {
     "code": "048",
-    "name": "Dayanand Academy of Management Studies, Kanpur"
+    "name": "Dayanand Academy of Management Studies, Kanpur",
+    "CGId": 11136,
+    "CGCode": "AK48"
   },
   {
     "code": "050",
-    "name": "College of Management Studies, Kanpur"
+    "name": "College of Management Studies, Kanpur",
+    "CGId": 11072,
+    "CGCode": "AK50"
   },
   {
     "code": "051",
-    "name": "Faculty of Architecture, Aktu, Lucknow"
+    "name": "Faculty of Architecture, Aktu, Lucknow",
+    "CGId": 12487,
+    "CGCode": "AK51"
   },
   {
     "code": "052",
-    "name": "Institute of Engineering & Technology, Lucknow"
+    "name": "Institute of Engineering & Technology, Lucknow",
+    "CGId": 12488,
+    "CGCode": "AK52"
   },
   {
     "code": "053",
-    "name": "Azad Institute of Engineering & Technology, Lucknow"
+    "name": "Azad Institute of Engineering & Technology, Lucknow",
+    "CGId": 10881,
+    "CGCode": "AK53"
   },
   {
     "code": "054",
-    "name": "B B D National Institute of Technology & Management, Lucknow"
+    "name": "B B D National Institute of Technology & Management, Lucknow",
+    "CGId": 11041,
+    "CGCode": "AK54"
   },
   {
     "code": "056",
-    "name": "Babu Banarasi Das Northern India Institute of Technology, Lucknow"
+    "name": "Babu Banarasi Das Northern India Institute of Technology, Lucknow",
+    "CGId": 11173,
+    "CGCode": "AK56"
   },
   {
     "code": "057",
-    "name": "International Institute for Special Education, Lucknow"
+    "name": "International Institute for Special Education, Lucknow",
+    "CGId": 10954,
+    "CGCode": "AK57"
   },
   {
     "code": "058",
-    "name": "Institute of Environment & Management, Lucknow"
+    "name": "Institute of Environment & Management, Lucknow",
+    "CGId": 10749,
+    "CGCode": "AK58"
   },
   {
     "code": "059",
-    "name": "Lal Bahadur Shastri Institute of Management & Development Studies, Lucknow"
+    "name": "Lal Bahadur Shastri Institute of Management & Development Studies, Lucknow",
+    "CGId": 11231,
+    "CGCode": "AK59"
   },
   {
     "code": "061",
-    "name": "Sherwood College of Management, Lucknow"
+    "name": "Sherwood College of Management, Lucknow",
+    "CGId": 11328,
+    "CGCode": "AK61"
   },
   {
     "code": "062",
-    "name": "Motilal Rastogi School of Management, Lucknow"
+    "name": "Motilal Rastogi School of Management, Lucknow",
+    "CGId": null,
+    "CGCode": null
   },
   {
     "code": "064",
-    "name": "Hindustan College of Sciences & Technology, Mathura"
+    "name": "Hindustan College of Sciences & Technology, Mathura",
+    "CGId": 10798,
+    "CGCode": "AK64"
   },
   {
     "code": "065",
-    "name": "B S A College of Engineering & Technology, Mathura"
+    "name": "B S A College of Engineering & Technology, Mathura",
+    "CGId": 10992,
+    "CGCode": "AK65"
   },
   {
     "code": "066",
-    "name": "Rajeev Academy for Pharmacy, Mathura"
+    "name": "Rajeev Academy for Pharmacy, Mathura",
+    "CGId": 10673,
+    "CGCode": "AK66"
   },
   {
     "code": "067",
-    "name": "Hindustan Institute of Management & Computer Studies, Mathura"
+    "name": "Hindustan Institute of Management & Computer Studies, Mathura",
+    "CGId": 10855,
+    "CGCode": "AK67"
   },
   {
     "code": "068",
-    "name": "Meerut Institute of Engineering & Technology, Meerut"
+    "name": "Meerut Institute of Engineering & Technology, Meerut",
+    "CGId": 11085,
+    "CGCode": "AK68"
   },
   {
     "code": "069",
-    "name": "Radha Govind Group of Institutions, Meerut"
+    "name": "Radha Govind Group of Institutions, Meerut",
+    "CGId": 11293,
+    "CGCode": "AK69"
   },
   {
     "code": "070",
-    "name": "College of Engineering & Rural Technology, Meerut"
+    "name": "College of Engineering & Rural Technology, Meerut",
+    "CGId": 11071,
+    "CGCode": "AK70"
   },
   {
     "code": "074",
-    "name": "Dewan Institute of Management Studies, Meerut"
+    "name": "Dewan Institute of Management Studies, Meerut",
+    "CGId": 11139,
+    "CGCode": "AK74"
   },
   {
     "code": "076",
-    "name": "Ghanshyam Binani Academy of Management Sciences, Mirzapur"
+    "name": "Ghanshyam Binani Academy of Management Sciences, Mirzapur",
+    "CGId": 10659,
+    "CGCode": "AK76"
   },
   {
     "code": "077",
-    "name": "Dr K N Modi Institute of Engineering & Technology, Ghaziabad"
+    "name": "Dr K N Modi Institute of Engineering & Technology, Ghaziabad",
+    "CGId": 10592,
+    "CGCode": "AK77"
   },
   {
     "code": "078",
-    "name": "Dr K N Modi Institute of Pharmaceutical Sciences & Research, Ghaziabad"
+    "name": "Dr K N Modi Institute of Pharmaceutical Sciences & Research, Ghaziabad",
+    "CGId": 11043,
+    "CGCode": "AK78"
   },
   {
     "code": "079",
-    "name": "Unique Institute of Management and Technalogy, , Ghaziabad"
+    "name": "Unique Institute of Management and Technalogy, , Ghaziabad",
+    "CGId": 11167,
+    "CGCode": "AK79"
   },
   {
     "code": "082",
-    "name": "Moradabad Institute of Technology, Moradabad"
+    "name": "Moradabad Institute of Technology, Moradabad",
+    "CGId": 11321,
+    "CGCode": "AK82"
   },
   {
     "code": "083",
-    "name": "S D College of Engineering & Technology, Muzaffarnagar"
+    "name": "S D College of Engineering & Technology, Muzaffarnagar",
+    "CGId": 10758,
+    "CGCode": "AK83"
   },
   {
     "code": "084",
-    "name": "Bhagwant Institute of Technology, Muzaffarnagar"
+    "name": "Bhagwant Institute of Technology, Muzaffarnagar",
+    "CGId": 10587,
+    "CGCode": "AK84"
   },
   {
     "code": "085",
-    "name": "S D College of Management Studies, Muzaffarnagar"
+    "name": "S D College of Management Studies, Muzaffarnagar",
+    "CGId": 11009,
+    "CGCode": "AK85"
   },
   {
     "code": "088",
-    "name": "Apeejay Institute of Technology School of Architecture and Planning, Gautam Buddh Nagar"
+    "name": "Apeejay Institute of Technology School of Architecture and Planning, Gautam Buddh Nagar",
+    "CGId": 11276,
+    "CGCode": "AK88"
   },
   {
     "code": "090",
-    "name": "I E C College of Engineering & Technology, Gautam Buddh Nagar"
+    "name": "I E C College of Engineering & Technology, Gautam Buddh Nagar",
+    "CGId": 11143,
+    "CGCode": "AK90"
   },
   {
     "code": "091",
-    "name": "J S S Academy of Technical Education, Gautam Buddh Nagar"
+    "name": "J S S Academy of Technical Education, Gautam Buddh Nagar",
+    "CGId": 11078,
+    "CGCode": "AK91"
   },
   {
     "code": "093",
-    "name": "Ram Eesh Institute of Vocational and Technical Education, Gautam Buddh Nagar"
+    "name": "Ram Eesh Institute of Vocational and Technical Education, Gautam Buddh Nagar",
+    "CGId": 10641,
+    "CGCode": "AK93"
   },
   {
     "code": "094",
-    "name": "Galgotias Institute of Management & Technology, Gautam Buddh Nagar"
+    "name": "Galgotias Institute of Management & Technology, Gautam Buddh Nagar",
+    "CGId": 10950,
+    "CGCode": "AK94"
   },
   {
     "code": "095",
-    "name": "Mahatama Gandhi Mission College of Engineering & Technology, Gautam Buddh Nagar"
+    "name": "Mahatama Gandhi Mission College of Engineering & Technology, Gautam Buddh Nagar",
+    "CGId": 11083,
+    "CGCode": "AK95"
   },
   {
     "code": "096",
-    "name": "Vishveshwarya Group of Institutions, Gautam Buddh Nagar"
+    "name": "Vishveshwarya Group of Institutions, Gautam Buddh Nagar",
+    "CGId": 11021,
+    "CGCode": "AK96"
   },
   {
     "code": "097",
-    "name": "Galgotia's College of Engineering & Technology, Gautam Buddh Nagar"
+    "name": "Galgotia's College of Engineering & Technology, Gautam Buddh Nagar",
+    "CGId": 10726,
+    "CGCode": "AK97"
   },
   {
     "code": "098",
-    "name": "Institute of Management Studies, Gautam Buddh Nagar"
+    "name": "Institute of Management Studies, Gautam Buddh Nagar",
+    "CGId": 10595,
+    "CGCode": "AK98"
   },
   {
     "code": "099",
-    "name": "Harlal Institute of Management & Technology, Gautam Buddh Nagar"
+    "name": "Harlal Institute of Management & Technology, Gautam Buddh Nagar",
+    "CGId": 10728,
+    "CGCode": "AK99"
   },
   {
     "code": "104",
-    "name": "Kamla Nehru Institute of Technology, Sultanpur"
+    "name": "Kamla Nehru Institute of Technology, Sultanpur",
+    "CGId": 12463,
+    "CGCode": "AK104"
   },
   {
     "code": "106",
-    "name": "School of Management Sciences, Varanasi"
+    "name": "School of Management Sciences, Varanasi",
+    "CGId": 10703,
+    "CGCode": "AK106"
   },
   {
     "code": "107",
-    "name": "Institute of Computer Sciences & Technology, Varanasi"
+    "name": "Institute of Computer Sciences & Technology, Varanasi",
+    "CGId": 11311,
+    "CGCode": "AK107"
   },
   {
     "code": "108",
-    "name": "R S M T College, Varanasi"
+    "name": "R S M T College, Varanasi",
+    "CGId": 10869,
+    "CGCode": "AK108"
   },
   {
     "code": "109",
-    "name": "Aligarh College of Engineering & Technology, Aligarh"
+    "name": "Aligarh College of Engineering & Technology, Aligarh",
+    "CGId": 11248,
+    "CGCode": "AK109"
   },
   {
     "code": "110",
-    "name": "Institute of Engineering & Rural Technology, Allahabad"
+    "name": "Institute of Engineering & Rural Technology, Allahabad",
+    "CGId": 11258,
+    "CGCode": "AK110"
   },
   {
     "code": "112",
-    "name": "Indian Institute of Carpet Technology, Bhadohi"
+    "name": "Indian Institute of Carpet Technology, Bhadohi",
+    "CGId": 10629,
+    "CGCode": "AK112"
   },
   {
     "code": "113",
-    "name": "Integrated Academy of Management & Technology, Ghaziabad"
+    "name": "Integrated Academy of Management & Technology, Ghaziabad",
+    "CGId": 10691,
+    "CGCode": "AK113"
   },
   {
     "code": "114",
-    "name": "Institute of Professional Excellence & Management, Ghaziabad"
+    "name": "Institute of Professional Excellence & Management, Ghaziabad",
+    "CGId": 10731,
+    "CGCode": "AK114"
   },
   {
     "code": "116",
-    "name": "Jaipuria Institute of Management, Ghaziabad"
+    "name": "Jaipuria Institute of Management, Ghaziabad",
+    "CGId": 10632,
+    "CGCode": "AK116"
   },
   {
     "code": "117",
-    "name": "Ram Chameli Chaddha Vishwash Girl College, Ghaziabad"
+    "name": "Ram Chameli Chaddha Vishwash Girl College, Ghaziabad",
+    "CGId": 11240,
+    "CGCode": "AK117"
   },
   {
     "code": "118",
-    "name": "Nandini Nagar Mahavidayala, Gonda"
+    "name": "Nandini Nagar Mahavidayala, Gonda",
+    "CGId": 10605,
+    "CGCode": "AK118"
   },
   {
     "code": "120",
-    "name": "Institute of Technology & Management, Gorakhpur"
+    "name": "Institute of Technology & Management, Gorakhpur",
+    "CGId": 10630,
+    "CGCode": "AK120"
   },
   {
     "code": "122",
-    "name": "Shri Ram Swaroop Memorial College of Engineering & Management, Lucknow"
+    "name": "Shri Ram Swaroop Memorial College of Engineering & Management, Lucknow",
+    "CGId": 11271,
+    "CGCode": "AK122"
   },
   {
     "code": "123",
-    "name": "Saroj Institute of Technology & Management, Lucknow"
+    "name": "Saroj Institute of Technology & Management, Lucknow",
+    "CGId": 10810,
+    "CGCode": "AK123"
   },
   {
     "code": "124",
-    "name": "Institute of Cooperative & Corporate Research & Training, Lucknow"
+    "name": "Institute of Cooperative & Corporate Research & Training, Lucknow",
+    "CGId": 10748,
+    "CGCode": "AK124"
   },
   {
     "code": "126",
-    "name": "Sachdeva Institute of Technology, Mathura"
+    "name": "Sachdeva Institute of Technology, Mathura",
+    "CGId": 10786,
+    "CGCode": "AK126"
   },
   {
     "code": "127",
-    "name": "I I M T Engineering College, Meerut"
+    "name": "I I M T Engineering College, Meerut",
+    "CGId": 10661,
+    "CGCode": "AK127"
   },
   {
     "code": "128",
-    "name": "Bharat Institute of Technology, Meerut"
+    "name": "Bharat Institute of Technology, Meerut",
+    "CGId": 10621,
+    "CGCode": "AK128"
   },
   {
     "code": "129",
-    "name": "Fort Institute of Technology, Meerut"
+    "name": "Fort Institute of Technology, Meerut",
+    "CGId": 11141,
+    "CGCode": "AK129"
   },
   {
     "code": "132",
-    "name": "Greater Noida Institute of Technology, Gautam Buddh Nagar"
+    "name": "Greater Noida Institute of Technology, Gautam Buddh Nagar",
+    "CGId": 10823,
+    "CGCode": "AK132"
   },
   {
     "code": "133",
-    "name": "Noida Institute of Engineering & Technology, Gautam Buddh Nagar"
+    "name": "Noida Institute of Engineering & Technology, Gautam Buddh Nagar",
+    "CGId": 11087,
+    "CGCode": "AK133"
   },
   {
     "code": "134",
-    "name": "Sacred Heart Institute of Managament & Technology, Sitapur"
+    "name": "Sacred Heart Institute of Managament & Technology, Sitapur",
+    "CGId": 10875,
+    "CGCode": "AK134"
   },
   {
     "code": "135",
-    "name": "Kamla Nehru Institute of Physical & Social Sciences, Management Institute, Sultanpur"
+    "name": "Kamla Nehru Institute of Physical & Social Sciences, Management Institute, Sultanpur",
+    "CGId": 11079,
+    "CGCode": "AK135"
   },
   {
     "code": "136",
-    "name": "S D College of Pharmacy and Vocational Studies, Muzaffarnagar"
+    "name": "S D College of Pharmacy and Vocational Studies, Muzaffarnagar",
+    "CGId": 11197,
+    "CGCode": "AK136"
   },
   {
     "code": "138",
-    "name": "B B S College of Engginering and Technology, Allahabad"
+    "name": "B B S College of Engginering and Technology, Allahabad",
+    "CGId": 11278,
+    "CGCode": "AK138"
   },
   {
     "code": "139",
-    "name": "Kalicharan Nigam Institute of Technology, Banda"
+    "name": "Kalicharan Nigam Institute of Technology, Banda",
+    "CGId": 11185,
+    "CGCode": "AK139"
   },
   {
     "code": "141",
-    "name": "Sagar Institute of Technology & Management, Barabanki"
+    "name": "Sagar Institute of Technology & Management, Barabanki",
+    "CGId": 11010,
+    "CGCode": "AK141"
   },
   {
     "code": "142",
-    "name": "Khandelwal College of Management Sciences and Technology, Bareilly"
+    "name": "Khandelwal College of Management Sciences and Technology, Bareilly",
+    "CGId": 11261,
+    "CGCode": "AK142"
   },
   {
     "code": "143",
-    "name": "I M S Engineering College, Ghaziabad"
+    "name": "I M S Engineering College, Ghaziabad",
+    "CGId": 10857,
+    "CGCode": "AK143"
   },
   {
     "code": "144",
-    "name": "Prasad Institute of Technology, Jaunpur"
+    "name": "Prasad Institute of Technology, Jaunpur",
+    "CGId": 10755,
+    "CGCode": "AK144"
   },
   {
     "code": "145",
-    "name": "S R Group of Institutions (College of Sciences and Engineering), Jhansi"
+    "name": "S R Group of Institutions (College of Sciences and Engineering), Jhansi",
+    "CGId": 11056,
+    "CGCode": "AK145"
   },
   {
     "code": "150",
-    "name": "Iilm Academy of Higher Learning, College of Engineering & Technology, Gautam Buddh Nagar"
+    "name": "Iilm Academy of Higher Learning, College of Engineering & Technology, Gautam Buddh Nagar",
+    "CGId": 11030,
+    "CGCode": "AK150"
   },
   {
     "code": "151",
-    "name": "Global Institute of Information Technology, Gautam Buddh Nagar"
+    "name": "Global Institute of Information Technology, Gautam Buddh Nagar",
+    "CGId": 11112,
+    "CGCode": "AK151"
   },
   {
     "code": "152",
-    "name": "Mangalmay Institute of Management and Technology, Gautam Buddh Nagar"
+    "name": "Mangalmay Institute of Management and Technology, Gautam Buddh Nagar",
+    "CGId": 11124,
+    "CGCode": "AK152"
   },
   {
     "code": "153",
-    "name": "Sky Line Institute of Engineering & Technology, Gautam Buddh Nagar"
+    "name": "Sky Line Institute of Engineering & Technology, Gautam Buddh Nagar",
+    "CGId": 11287,
+    "CGCode": "AK153"
   },
   {
     "code": "154",
-    "name": "Faculty of Management and Technology, Varanasi"
+    "name": "Faculty of Management and Technology, Varanasi",
+    "CGId": 10657,
+    "CGCode": "AK154"
   },
   {
     "code": "157",
-    "name": "Institute of Hotel Management Catering Technology & Applied Nutrition, Meerut"
+    "name": "Institute of Hotel Management Catering Technology & Applied Nutrition, Meerut",
+    "CGId": 11223,
+    "CGCode": "AK157"
   },
   {
     "code": "159",
-    "name": "J P Institute of Hotel Management & Catering Technology, Meerut"
+    "name": "J P Institute of Hotel Management & Catering Technology, Meerut",
+    "CGId": 10776,
+    "CGCode": "AK159"
   },
   {
     "code": "161",
-    "name": "Krishna Engineering College, Ghaziabad"
+    "name": "Krishna Engineering College, Ghaziabad",
+    "CGId": 11051,
+    "CGCode": "AK161"
   },
   {
     "code": "162",
-    "name": "Shambhu Nath Institute of Engineering & Technolgy, Allahabad"
+    "name": "Shambhu Nath Institute of Engineering & Technolgy, Allahabad",
+    "CGId": 11092,
+    "CGCode": "AK162"
   },
   {
     "code": "163",
-    "name": "Dr M C Saxena College of Engineering & Technology, Lucknow"
+    "name": "Dr M C Saxena College of Engineering & Technology, Lucknow",
+    "CGId": 10746,
+    "CGCode": "AK163"
   },
   {
     "code": "164",
-    "name": "Pranveer Singh Institute of Technology, Kanpur"
+    "name": "Pranveer Singh Institute of Technology, Kanpur",
+    "CGId": 10607,
+    "CGCode": "AK164"
   },
   {
     "code": "165",
-    "name": "Kanpur Institute of Technology, Kanpur"
+    "name": "Kanpur Institute of Technology, Kanpur",
+    "CGId": 10925,
+    "CGCode": "AK165"
   },
   {
     "code": "166",
-    "name": "Dr Ambedkar Institute of Technology for Handicappeds, Kanpur"
+    "name": "Dr Ambedkar Institute of Technology for Handicappeds, Kanpur",
+    "CGId": 10724,
+    "CGCode": "AK166"
   },
   {
     "code": "167",
-    "name": "Rajarshi Rananjay Singh College of Pharmacy, Sultanpur"
+    "name": "Rajarshi Rananjay Singh College of Pharmacy, Sultanpur",
+    "CGId": 10809,
+    "CGCode": "AK167"
   },
   {
     "code": "168",
-    "name": "Smt Vidyawati Colelge of Pharmacy, Jhansi"
+    "name": "Smt Vidyawati Colelge of Pharmacy, Jhansi",
+    "CGId": 11299,
+    "CGCode": "AK168"
   },
   {
     "code": "169",
-    "name": "Rakshapal Bahadur College of Pharmacy, Bareilly"
+    "name": "Rakshapal Bahadur College of Pharmacy, Bareilly",
+    "CGId": 10639,
+    "CGCode": "AK169"
   },
   {
     "code": "170",
-    "name": "I T S College of Pharmacy, Ghaziabad"
+    "name": "I T S College of Pharmacy, Ghaziabad",
+    "CGId": 10662,
+    "CGCode": "AK170"
   },
   {
     "code": "171",
-    "name": "Sri R L T Institute of Pharmecutical Sciences & Technology, Etawah"
+    "name": "Sri R L T Institute of Pharmecutical Sciences & Technology, Etawah",
+    "CGId": 11096,
+    "CGCode": "AK171"
   },
   {
     "code": "172",
-    "name": "LLOYD Institute of Management & Technology, Gautam Buddh Nagar"
+    "name": "LLOYD Institute of Management & Technology, Gautam Buddh Nagar",
+    "CGId": 10861,
+    "CGCode": "AK172"
   },
   {
     "code": "173",
-    "name": "Rajeev Academy for Technology & Management, Mathura"
+    "name": "Rajeev Academy for Technology & Management, Mathura",
+    "CGId": 11007,
+    "CGCode": "AK173"
   },
   {
     "code": "174",
-    "name": "Kishan Institute of Information Technology, Meerut"
+    "name": "Kishan Institute of Information Technology, Meerut",
+    "CGId": 11120,
+    "CGCode": "AK174"
   },
   {
     "code": "175",
-    "name": "Al Barkat Institute of Management Studies, Aligarh"
+    "name": "Al Barkat Institute of Management Studies, Aligarh",
+    "CGId": 10939,
+    "CGCode": "AK175"
   },
   {
     "code": "177",
-    "name": "Indira Gandhi Sahkari Prabandh Sansthan, Lucknow"
+    "name": "Indira Gandhi Sahkari Prabandh Sansthan, Lucknow",
+    "CGId": 11182,
+    "CGCode": "AK177"
   },
   {
     "code": "179",
-    "name": "Jeevan Deep Institute of Management & Technology, Varanasi"
+    "name": "Jeevan Deep Institute of Management & Technology, Varanasi",
+    "CGId": 11228,
+    "CGCode": "AK179"
   },
   {
     "code": "181",
-    "name": "Step H B T I, Kanpur"
+    "name": "Step H B T I, Kanpur",
+    "CGId": 11015,
+    "CGCode": "AK181"
   },
   {
     "code": "182",
-    "name": "Kalka Institute for Research & Advanced Studies, Meerut"
+    "name": "Kalka Institute for Research & Advanced Studies, Meerut",
+    "CGId": 11149,
+    "CGCode": "AK182"
   },
   {
     "code": "186",
-    "name": "Kamla Nehru Institute of Management & Technology, Sultanpur"
+    "name": "Kamla Nehru Institute of Management & Technology, Sultanpur",
+    "CGId": 11186,
+    "CGCode": "AK186"
   },
   {
     "code": "187",
-    "name": "Feroz Gandhi Institute of Engineering &technology, Raibareilly"
+    "name": "Feroz Gandhi Institute of Engineering &technology, Raibareilly",
+    "CGId": 10594,
+    "CGCode": "AK187"
   },
   {
     "code": "188",
-    "name": "Advanced Institute of Bio Technology & Paramedical Sciences, Kanpur"
+    "name": "Advanced Institute of Bio Technology & Paramedical Sciences, Kanpur",
+    "CGId": 11099,
+    "CGCode": "AK188"
   },
   {
     "code": "189",
-    "name": "Central Institute of Plastic Engineering & Technology, Lucknow"
+    "name": "Central Institute of Plastic Engineering & Technology, Lucknow",
+    "CGId": 10718,
+    "CGCode": "AK189"
   },
   {
     "code": "190",
-    "name": "National Institute of Electronics & Information Technology, Gorakhpur"
+    "name": "National Institute of Electronics & Information Technology, Gorakhpur",
+    "CGId": 12484,
+    "CGCode": "AK190"
   },
   {
     "code": "192",
-    "name": "G L Bajaj Institute of Technology & Management, Gautam Buddh Nagar"
+    "name": "G L Bajaj Institute of Technology & Management, Gautam Buddh Nagar",
+    "CGId": 11109,
+    "CGCode": "AK192"
   },
   {
     "code": "193",
-    "name": "United College of Engiineering & Research, Greater Noida, Gautam Buddh Nagar"
+    "name": "United College of Engiineering & Research, Greater Noida, Gautam Buddh Nagar",
+    "CGId": 11065,
+    "CGCode": "AK193"
   },
   {
     "code": "194",
-    "name": "H R Institute of Technology, Ghaziabad"
+    "name": "H R Institute of Technology, Ghaziabad",
+    "CGId": 11113,
+    "CGCode": "AK194"
   },
   {
     "code": "195",
-    "name": "Kngd Modi Engineering College, Ghaziabad"
+    "name": "Kngd Modi Engineering College, Ghaziabad",
+    "CGId": 11313,
+    "CGCode": "AK195"
   },
   {
     "code": "196",
-    "name": "College of Engineering Sciences & Technology, Lucknow"
+    "name": "College of Engineering Sciences & Technology, Lucknow",
+    "CGId": 10886,
+    "CGCode": "AK196"
   },
   {
     "code": "197",
-    "name": "Azad Institute of Pharmacy & Research, Lucknow"
+    "name": "Azad Institute of Pharmacy & Research, Lucknow",
+    "CGId": 10795,
+    "CGCode": "AK197"
   },
   {
     "code": "199",
-    "name": "KIET Group of Institutions(kiet School of Pharmacy), Ghaziabad"
+    "name": "KIET Group of Institutions(kiet School of Pharmacy), Ghaziabad",
+    "CGId": 11003,
+    "CGCode": "AK199"
   },
   {
     "code": "200",
-    "name": "Maharana Pratap College of Pharmacy, Kanpur"
+    "name": "Maharana Pratap College of Pharmacy, Kanpur",
+    "CGId": 11190,
+    "CGCode": "AK200"
   },
   {
     "code": "201",
-    "name": "Nkbr College of Pharmacy & Research Centre, Meerut"
+    "name": "Nkbr College of Pharmacy & Research Centre, Meerut",
+    "CGId": 10668,
+    "CGCode": "AK201"
   },
   {
     "code": "202",
-    "name": "Hygia Institute of Pharmaceutical Education and Research, Lucknow, Lucknow"
+    "name": "Hygia Institute of Pharmaceutical Education and Research, Lucknow, Lucknow",
+    "CGId": 10894,
+    "CGCode": "AK202"
   },
   {
     "code": "203",
-    "name": "Rameshwaram Institute of Technology & Management, Lucknow"
+    "name": "Rameshwaram Institute of Technology & Management, Lucknow",
+    "CGId": 11032,
+    "CGCode": "AK203"
   },
   {
     "code": "204",
-    "name": "R V Northland Institute, Gautam Buddh Nagar"
+    "name": "R V Northland Institute, Gautam Buddh Nagar",
+    "CGId": 10970,
+    "CGCode": "AK204"
   },
   {
     "code": "205",
-    "name": "Shri Harish Chandra Post Graduate College, Institute of Pharmacy, Varanasi"
+    "name": "Shri Harish Chandra Post Graduate College, Institute of Pharmacy, Varanasi",
+    "CGId": 10811,
+    "CGCode": "AK205"
   },
   {
     "code": "206",
-    "name": "Translam Institute of Pharmaceutical Education & Research, Meerut"
+    "name": "Translam Institute of Pharmaceutical Education & Research, Meerut",
+    "CGId": 11018,
+    "CGCode": "AK206"
   },
   {
     "code": "210",
-    "name": "Vivek College of Technical Education, Bijnaur"
+    "name": "Vivek College of Technical Education, Bijnaur",
+    "CGId": 10708,
+    "CGCode": "AK210"
   },
   {
     "code": "211",
-    "name": "Rakshapal Bahadur Management Institute, Gautam Buddh Nagar"
+    "name": "Rakshapal Bahadur Management Institute, Gautam Buddh Nagar",
+    "CGId": 10871,
+    "CGCode": "AK211"
   },
   {
     "code": "212",
-    "name": "United Institute of Management, Gautam Buddh Nagar"
+    "name": "United Institute of Management, Gautam Buddh Nagar",
+    "CGId": 10680,
+    "CGCode": "AK212"
   },
   {
     "code": "214",
-    "name": "Himt College of Pharmacy, Gautam Buddh Nagar"
+    "name": "Himt College of Pharmacy, Gautam Buddh Nagar",
+    "CGId": 10824,
+    "CGCode": "AK214"
   },
   {
     "code": "215",
-    "name": "Sanskar College of Engineering & Technology, Ghaziabad"
+    "name": "Sanskar College of Engineering & Technology, Ghaziabad",
+    "CGId": 11059,
+    "CGCode": "AK215"
   },
   {
     "code": "216",
-    "name": "Iimt College of Engineering, Gautam Buddh Nagar"
+    "name": "Iimt College of Engineering, Gautam Buddh Nagar",
+    "CGId": 11310,
+    "CGCode": "AK216"
   },
   {
     "code": "219",
-    "name": "Bhagawant Institute of Pharmacy, Muzaffarnagar"
+    "name": "Bhagawant Institute of Pharmacy, Muzaffarnagar",
+    "CGId": 10715,
+    "CGCode": "AK219"
   },
   {
     "code": "220",
-    "name": "Hi Technology Institute of Engineering &technology, Ghaziabad"
+    "name": "Hi Technology Institute of Engineering &technology, Ghaziabad",
+    "CGId": 10893,
+    "CGCode": "AK220"
   },
   {
     "code": "221",
-    "name": "Institute of Engineering & Technology, Sitapur"
+    "name": "Institute of Engineering & Technology, Sitapur",
+    "CGId": 10896,
+    "CGCode": "AK221"
   },
   {
     "code": "222",
-    "name": "I T S Engineering College, Gautam Buddh Nagar"
+    "name": "I T S Engineering College, Gautam Buddh Nagar",
+    "CGId": 10999,
+    "CGCode": "AK222"
   },
   {
     "code": "223",
-    "name": "Vivekanand Institute of Technology & Sciences, Ghaziabad"
+    "name": "Vivekanand Institute of Technology & Sciences, Ghaziabad",
+    "CGId": 12485,
+    "CGCode": "AK223"
   },
   {
     "code": "225",
-    "name": "Accurate Institute of Management & Technology, Gautam Buddh Nagar"
+    "name": "Accurate Institute of Management & Technology, Gautam Buddh Nagar",
+    "CGId": 11036,
+    "CGCode": "AK225"
   },
   {
     "code": "227",
-    "name": "Innovative College of Pharmacy, Gautam Buddh Nagar"
+    "name": "Innovative College of Pharmacy, Gautam Buddh Nagar",
+    "CGId": 11000,
+    "CGCode": "AK227"
   },
   {
     "code": "229",
-    "name": "Vidya College of Engineering, Meerut"
+    "name": "Vidya College of Engineering, Meerut",
+    "CGId": 10682,
+    "CGCode": "AK229"
   },
   {
     "code": "230",
-    "name": "Dronacharya Group of Institutions, Gautam Buddh Nagar"
+    "name": "Dronacharya Group of Institutions, Gautam Buddh Nagar",
+    "CGId": 11074,
+    "CGCode": "AK230"
   },
   {
     "code": "231",
-    "name": "R D Engineering College, Ghaziabad"
+    "name": "R D Engineering College, Ghaziabad",
+    "CGId": 11090,
+    "CGCode": "AK231"
   },
   {
     "code": "233",
-    "name": "R K Pharmacy College, Azamgarh"
+    "name": "R K Pharmacy College, Azamgarh",
+    "CGId": 11194,
+    "CGCode": "AK233"
   },
   {
     "code": "234",
-    "name": "Aligarh College of Pharmacy, Aligarh"
+    "name": "Aligarh College of Pharmacy, Aligarh",
+    "CGId": 11038,
+    "CGCode": "AK234"
   },
   {
     "code": "235",
-    "name": "Rajeev Gandhi College of Pharmacy, Maharajganj"
+    "name": "Rajeev Gandhi College of Pharmacy, Maharajganj",
+    "CGId": 10674,
+    "CGCode": "AK235"
   },
   {
     "code": "236",
-    "name": "Sri Madan Lal Institute of Pharmacy, Etawah"
+    "name": "Sri Madan Lal Institute of Pharmacy, Etawah",
+    "CGId": 10813,
+    "CGCode": "AK236"
   },
   {
     "code": "237",
-    "name": "H R Institute of Hotel Management, Ghaziabad"
+    "name": "H R Institute of Hotel Management, Ghaziabad",
+    "CGId": 10952,
+    "CGCode": "AK237"
   },
   {
     "code": "239",
-    "name": "Ishwarchand Vidyasagar Institute of Technology, Mathura"
+    "name": "Ishwarchand Vidyasagar Institute of Technology, Mathura",
+    "CGId": 10955,
+    "CGCode": "AK239"
   },
   {
     "code": "240",
-    "name": "Sunderdeep Engineering College, Ghaziabad"
+    "name": "Sunderdeep Engineering College, Ghaziabad",
+    "CGId": 10791,
+    "CGCode": "AK240"
   },
   {
     "code": "241",
-    "name": "Shambhu Nath Institute of Pharmacy, Allahabad"
+    "name": "Shambhu Nath Institute of Pharmacy, Allahabad",
+    "CGId": 10976,
+    "CGCode": "AK241"
   },
   {
     "code": "243",
-    "name": "College of Pharmacy, Agra"
+    "name": "College of Pharmacy, Agra",
+    "CGId": 11105,
+    "CGCode": "AK243"
   },
   {
     "code": "244",
-    "name": "Anand College of Pharmacy, Agra"
+    "name": "Anand College of Pharmacy, Agra",
+    "CGId": 11249,
+    "CGCode": "AK244"
   },
   {
     "code": "245",
-    "name": "Hr Institute of Pharmacy, Ghaziabad"
+    "name": "Hr Institute of Pharmacy, Ghaziabad",
+    "CGId": 10998,
+    "CGCode": "AK245"
   },
   {
     "code": "246",
-    "name": "Dayanand Deenanath College, Institute of Pharmacy, Kanpur"
+    "name": "Dayanand Deenanath College, Institute of Pharmacy, Kanpur",
+    "CGId": 10853,
+    "CGCode": "AK246"
   },
   {
     "code": "247",
-    "name": "Iimt College of Pharmacy, Gautam Buddh Nagar"
+    "name": "Iimt College of Pharmacy, Gautam Buddh Nagar",
+    "CGId": 10628,
+    "CGCode": "AK247"
   },
   {
     "code": "248",
-    "name": "Sams Institute of Hotel Management, Varanasi"
+    "name": "Sams Institute of Hotel Management, Varanasi",
+    "CGId": 10609,
+    "CGCode": "AK248"
   },
   {
     "code": "249",
-    "name": "Sri Ram College of Management, Muzaffarnagar"
+    "name": "Sri Ram College of Management, Muzaffarnagar",
+    "CGId": 10935,
+    "CGCode": "AK249"
   },
   {
     "code": "254",
-    "name": "Bhabha Institute of Technology, Kanpur Dehat"
+    "name": "Bhabha Institute of Technology, Kanpur Dehat",
+    "CGId": 10586,
+    "CGCode": "AK254"
   },
   {
     "code": "256",
-    "name": "Dns College of Engineering & Technology, J P Nagar"
+    "name": "Dns College of Engineering & Technology, J P Nagar",
+    "CGId": 10918,
+    "CGCode": "AK256"
   },
   {
     "code": "258",
-    "name": "Institute of Pharmacy, Sitapur"
+    "name": "Institute of Pharmacy, Sitapur",
+    "CGId": 10826,
+    "CGCode": "AK258"
   },
   {
     "code": "259",
-    "name": "Sunderdeep Pharmacy College, Ghaziabad"
+    "name": "Sunderdeep Pharmacy College, Ghaziabad",
+    "CGId": 11244,
+    "CGCode": "AK259"
   },
   {
     "code": "260",
-    "name": "Ibne Seena Pharmacy College, Hardoi"
+    "name": "Ibne Seena Pharmacy College, Hardoi",
+    "CGId": 11029,
+    "CGCode": "AK260"
   },
   {
     "code": "261",
-    "name": "Shakti College of Pharmacy, Balrampur"
+    "name": "Shakti College of Pharmacy, Balrampur",
+    "CGId": 11242,
+    "CGCode": "AK261"
   },
   {
     "code": "262",
-    "name": "Institute of Pharmaceutical Sciences & Research, Unnao"
+    "name": "Institute of Pharmaceutical Sciences & Research, Unnao",
+    "CGId": 10750,
+    "CGCode": "AK262"
   },
   {
     "code": "263",
-    "name": "Vidya School of Business, Meerut"
+    "name": "Vidya School of Business, Meerut",
+    "CGId": 11020,
+    "CGCode": "AK263"
   },
   {
     "code": "265",
-    "name": "Sir Madan Lal Institute of Management, Etawah"
+    "name": "Sir Madan Lal Institute of Management, Etawah",
+    "CGId": 10789,
+    "CGCode": "AK265"
   },
   {
     "code": "266",
-    "name": "Ltr Institute of Technology, Meerut, Meerut"
+    "name": "Ltr Institute of Technology, Meerut, Meerut",
+    "CGId": 11052,
+    "CGCode": "AK266"
   },
   {
     "code": "267",
-    "name": "Sanjay College of Pharmacy, Mathura"
+    "name": "Sanjay College of Pharmacy, Mathura",
+    "CGId": 11270,
+    "CGCode": "AK267"
   },
   {
     "code": "269",
-    "name": "Sherwood College of Pharmacy, Barabanki"
+    "name": "Sherwood College of Pharmacy, Barabanki",
+    "CGId": 10977,
+    "CGCode": "AK269"
   },
   {
     "code": "271",
-    "name": "Bharat Institute of Technology(mba Institute), Meerut"
+    "name": "Bharat Institute of Technology(mba Institute), Meerut",
+    "CGId": 10914,
+    "CGCode": "AK271"
   },
   {
     "code": "272",
-    "name": "Greater Noida Institute of Technology(mba Institute), Gautam Buddh Nagar"
+    "name": "Greater Noida Institute of Technology(mba Institute), Gautam Buddh Nagar",
+    "CGId": 10660,
+    "CGCode": "AK272"
   },
   {
     "code": "273",
-    "name": "Noida Institute of Engineering & Technology, (MCA Institute), Gautam Buddh Nagar"
+    "name": "Noida Institute of Engineering & Technology, (MCA Institute), Gautam Buddh Nagar",
+    "CGId": 10779,
+    "CGCode": "AK273"
   },
   {
     "code": "274",
-    "name": "Narmadeshwar Management College, Lucknow, Lucknow"
+    "name": "Narmadeshwar Management College, Lucknow, Lucknow",
+    "CGId": 11266,
+    "CGCode": "AK274"
   },
   {
     "code": "277",
-    "name": "Petronage Institute of Management Studies, Greater Noida, Gautam Buddh Nagar"
+    "name": "Petronage Institute of Management Studies, Greater Noida, Gautam Buddh Nagar",
+    "CGId": 10865,
+    "CGCode": "AK277"
   },
   {
     "code": "280",
-    "name": "Apex Institute of Technology, Rampur"
+    "name": "Apex Institute of Technology, Rampur",
+    "CGId": 10684,
+    "CGCode": "AK280"
   },
   {
     "code": "282",
-    "name": "J P Institute of Engineering & Technology, Meerut"
+    "name": "J P Institute of Engineering & Technology, Meerut",
+    "CGId": 11227,
+    "CGCode": "AK282"
   },
   {
     "code": "283",
-    "name": "LDC Institute of Technical Studies, Allahabad"
+    "name": "LDC Institute of Technical Studies, Allahabad",
+    "CGId": 10929,
+    "CGCode": "AK283"
   },
   {
     "code": "284",
-    "name": "United Institute of Technology, Allahabad"
+    "name": "United Institute of Technology, Allahabad",
+    "CGId": 10839,
+    "CGCode": "AK284"
   },
   {
     "code": "285",
-    "name": "Institute of Technology & Management, Meerut"
+    "name": "Institute of Technology & Management, Meerut",
+    "CGId": 11224,
+    "CGCode": "AK285"
   },
   {
     "code": "286",
-    "name": "Vishveshwarya Institute of Technology, Gautam Buddh Nagar"
+    "name": "Vishveshwarya Institute of Technology, Gautam Buddh Nagar",
+    "CGId": 10793,
+    "CGCode": "AK286"
   },
   {
     "code": "287",
-    "name": "Naraina College of Engineering & Technology, Kanpur"
+    "name": "Naraina College of Engineering & Technology, Kanpur",
+    "CGId": 11192,
+    "CGCode": "AK287"
   },
   {
     "code": "290",
-    "name": "ABES Institute of Technology, Ghaziabad"
+    "name": "ABES Institute of Technology, Ghaziabad",
+    "CGId": 10617,
+    "CGCode": "AK290"
   },
   {
     "code": "292",
-    "name": "Meerut Institute of Technology, Meerut"
+    "name": "Meerut Institute of Technology, Meerut",
+    "CGId": 11086,
+    "CGCode": "AK292"
   },
   {
     "code": "295",
-    "name": "B B S Institute of Pharmecutical & Allied Sciences, , Gautam Buddh Nagar"
+    "name": "B B S Institute of Pharmecutical & Allied Sciences, , Gautam Buddh Nagar",
+    "CGId": 10883,
+    "CGCode": "AK295"
   },
   {
     "code": "299",
-    "name": "Doon College of Education, , Saharanpur"
+    "name": "Doon College of Education, , Saharanpur",
+    "CGId": 10743,
+    "CGCode": "AK299"
   },
   {
     "code": "300",
-    "name": "Sarswati Highier Education & Technical College of Pharmacy, , Varanasi"
+    "name": "Sarswati Highier Education & Technical College of Pharmacy, , Varanasi",
+    "CGId": 10702,
+    "CGCode": "AK300"
   },
   {
     "code": "301",
-    "name": "Sagar Institute of Technology & Management, Deptt of Pharmacy, , Barabanki"
+    "name": "Sagar Institute of Technology & Management, Deptt of Pharmacy, , Barabanki",
+    "CGId": 11057,
+    "CGCode": "AK301"
   },
   {
     "code": "303",
-    "name": "Dr M C Saxena College of Pharmacy, , Lucknow"
+    "name": "Dr M C Saxena College of Pharmacy, , Lucknow",
+    "CGId": 10655,
+    "CGCode": "AK303"
   },
   {
     "code": "306",
-    "name": "Disha Institute of Sciences and Technology, , Bijnaur"
+    "name": "Disha Institute of Sciences and Technology, , Bijnaur",
+    "CGId": 10723,
+    "CGCode": "AK306"
   },
   {
     "code": "307",
-    "name": "Dayanand Deena Nath College of Management, , Kanpur"
+    "name": "Dayanand Deena Nath College of Management, , Kanpur",
+    "CGId": 10689,
+    "CGCode": "AK307"
   },
   {
     "code": "310",
-    "name": "Dr Rizvi College of Engineering, , Kaushambi"
+    "name": "Dr Rizvi College of Engineering, , Kaushambi",
+    "CGId": 11254,
+    "CGCode": "AK310"
   },
   {
     "code": "311",
-    "name": "Deewan V S Institute of Engineering & Technology, Meerut, Meerut"
+    "name": "Deewan V S Institute of Engineering & Technology, Meerut, Meerut",
+    "CGId": 11073,
+    "CGCode": "AK311"
   },
   {
     "code": "312",
-    "name": "Abss Institute of Technology, Meerut, Meerut"
+    "name": "Abss Institute of Technology, Meerut, Meerut",
+    "CGId": 11170,
+    "CGCode": "AK312"
   },
   {
     "code": "315",
-    "name": "United Institute of Pharmacy, United College of Engineering & Research, , Allahabad"
+    "name": "United Institute of Pharmacy, United College of Engineering & Research, , Allahabad",
+    "CGId": 11211,
+    "CGCode": "AK315"
   },
   {
     "code": "316",
-    "name": "Aryakul College of Pharmacy & Research, , Lucknow"
+    "name": "Aryakul College of Pharmacy & Research, , Lucknow",
+    "CGId": 11039,
+    "CGCode": "AK316"
   },
   {
     "code": "318",
-    "name": "Vidya Institute of Fashion Technology, Meerut"
+    "name": "Vidya Institute of Fashion Technology, Meerut",
+    "CGId": 10648,
+    "CGCode": "AK318"
   },
   {
     "code": "319",
-    "name": "Rakshpal Bahadur College of Engineering & Technology, Bareilly"
+    "name": "Rakshpal Bahadur College of Engineering & Technology, Bareilly",
+    "CGId": 10640,
+    "CGCode": "AK319"
   },
   {
     "code": "321",
-    "name": "Translam Institute of Technology & Management, Meerut"
+    "name": "Translam Institute of Technology & Management, Meerut",
+    "CGId": 11130,
+    "CGCode": "AK321"
   },
   {
     "code": "323",
-    "name": "Spectrum Institute of Pharmaceutical Sciences & Research, Gautam Buddh Nagar"
+    "name": "Spectrum Institute of Pharmaceutical Sciences & Research, Gautam Buddh Nagar",
+    "CGId": 11273,
+    "CGCode": "AK323"
   },
   {
     "code": "324",
-    "name": "Anjali College of Pharmacy & Sciences, Agra"
+    "name": "Anjali College of Pharmacy & Sciences, Agra",
+    "CGId": 10740,
+    "CGCode": "AK324"
   },
   {
     "code": "326",
-    "name": "Sunder Deep College of Hotel Management, Ghaziabad"
+    "name": "Sunder Deep College of Hotel Management, Ghaziabad",
+    "CGId": 10987,
+    "CGCode": "AK326"
   },
   {
     "code": "327",
-    "name": "Sunder Deep College of Architecture, Ghaziabad"
+    "name": "Sunder Deep College of Architecture, Ghaziabad",
+    "CGId": 11330,
+    "CGCode": "AK327"
   },
   {
     "code": "330",
-    "name": "Sarswati Institute of Engineering & Technology, Ghaziabad"
+    "name": "Sarswati Institute of Engineering & Technology, Ghaziabad",
+    "CGId": 11201,
+    "CGCode": "AK330"
   },
   {
     "code": "331",
-    "name": "Devender Singh Institute of Technology & Management, Ghaziabad"
+    "name": "Devender Singh Institute of Technology & Management, Ghaziabad",
+    "CGId": 10916,
+    "CGCode": "AK331"
   },
   {
     "code": "333",
-    "name": "Raj Kumar Goel Institute of Technology & Management, Ghaziabad"
+    "name": "Raj Kumar Goel Institute of Technology & Management, Ghaziabad",
+    "CGId": 10700,
+    "CGCode": "AK333"
   },
   {
     "code": "334",
-    "name": "Rishi Chadha Viswas Girls Institute of Technology for Women, Ghaziabad"
+    "name": "Rishi Chadha Viswas Girls Institute of Technology for Women, Ghaziabad",
+    "CGId": null,
+    "CGCode": null
   },
   {
     "code": "338",
-    "name": "Kp Engineering College, Agra"
+    "name": "Kp Engineering College, Agra",
+    "CGId": 10733,
+    "CGCode": "AK338"
   },
   {
     "code": "339",
-    "name": "Acn College of Engineering & Management Studies, Aligarh"
+    "name": "Acn College of Engineering & Management Studies, Aligarh",
+    "CGId": 10850,
+    "CGCode": "AK339"
   },
   {
     "code": "340",
-    "name": "Vivekananda College of Technology & Management, Aligarh"
+    "name": "Vivekananda College of Technology & Management, Aligarh",
+    "CGId": 11131,
+    "CGCode": "AK340"
   },
   {
     "code": "341",
-    "name": "Institute of Technology & Management, Aligarh"
+    "name": "Institute of Technology & Management, Aligarh",
+    "CGId": 10800,
+    "CGCode": "AK341"
   },
   {
     "code": "342",
-    "name": "United College of Engineering & Management, Allahabad"
+    "name": "United College of Engineering & Management, Allahabad",
+    "CGId": 11210,
+    "CGCode": "AK342"
   },
   {
     "code": "345",
-    "name": "SETH Vishambhar Nath Institute of Engineering & Technology, Barabanki"
+    "name": "SETH Vishambhar Nath Institute of Engineering & Technology, Barabanki",
+    "CGId": 10610,
+    "CGCode": "AK345"
   },
   {
     "code": "348",
-    "name": "PSIT College of Engineering, Kanpur"
+    "name": "PSIT College of Engineering, Kanpur",
+    "CGId": 10867,
+    "CGCode": "AK348"
   },
   {
     "code": "349",
-    "name": "Maharana Institute of Professional Studies, Kanpur"
+    "name": "Maharana Institute of Professional Studies, Kanpur",
+    "CGId": 11155,
+    "CGCode": "AK349"
   },
   {
     "code": "350",
-    "name": "Indus Institute of Technology & Management, Kanpur"
+    "name": "Indus Institute of Technology & Management, Kanpur",
+    "CGId": 11116,
+    "CGCode": "AK350"
   },
   {
     "code": "351",
-    "name": "Krishna Institute of Technology, Kanpur"
+    "name": "Krishna Institute of Technology, Kanpur",
+    "CGId": 10859,
+    "CGCode": "AK351"
   },
   {
     "code": "353",
-    "name": "Apollo Institute of Technology, Kanpur"
+    "name": "Apollo Institute of Technology, Kanpur",
+    "CGId": 11213,
+    "CGCode": "AK353"
   },
   {
     "code": "355",
-    "name": "Bhabha College of Engineering, Kanpur Dehat"
+    "name": "Bhabha College of Engineering, Kanpur Dehat",
+    "CGId": null,
+    "CGCode": null
   },
   {
     "code": "358",
-    "name": "Rameshwaram Institute of Technology & Management, Lucknow"
+    "name": "Rameshwaram Institute of Technology & Management, Lucknow",
+    "CGId": 10835,
+    "CGCode": "AK358"
   },
   {
     "code": "360",
-    "name": "Goel Institute of Technology & Management, Lucknow"
+    "name": "Goel Institute of Technology & Management, Lucknow",
+    "CGId": 10627,
+    "CGCode": "AK360"
   },
   {
     "code": "361",
-    "name": "R R Institute of Modern Technology, Lucknow"
+    "name": "R R Institute of Modern Technology, Lucknow",
+    "CGId": 10969,
+    "CGCode": "AK361"
   },
   {
     "code": "362",
-    "name": "Lucknow Institute of Technology, Lucknow"
+    "name": "Lucknow Institute of Technology, Lucknow",
+    "CGId": 11152,
+    "CGCode": "AK362"
   },
   {
     "code": "363",
-    "name": "Ambalika Institute of Management & Technology, Lucknow"
+    "name": "Ambalika Institute of Management & Technology, Lucknow",
+    "CGId": 10819,
+    "CGCode": "AK363"
   },
   {
     "code": "364",
-    "name": "S P Memorial Institute of Technology, Kaushambi"
+    "name": "S P Memorial Institute of Technology, Kaushambi",
+    "CGId": 10759,
+    "CGCode": "AK364"
   },
   {
     "code": "366",
-    "name": "Nikhil Institute of Engineering & Management, Mathura"
+    "name": "Nikhil Institute of Engineering & Management, Mathura",
+    "CGId": null,
+    "CGCode": null
   },
   {
     "code": "370",
-    "name": "Shanti Institute of Technology, Meerut"
+    "name": "Shanti Institute of Technology, Meerut",
+    "CGId": 10844,
+    "CGCode": "AK370"
   },
   {
     "code": "373",
-    "name": "Neelkanth Institute of Technology, Meerut"
+    "name": "Neelkanth Institute of Technology, Meerut",
+    "CGId": 10864,
+    "CGCode": "AK373"
   },
   {
     "code": "374",
-    "name": "Rishi Institute of Engineering & Technology, Meerut"
+    "name": "Rishi Institute of Engineering & Technology, Meerut",
+    "CGId": 10965,
+    "CGCode": "AK374"
   },
   {
     "code": "377",
-    "name": "Gyan Bharti Institute of Technology, Meerut"
+    "name": "Gyan Bharti Institute of Technology, Meerut",
+    "CGId": 11221,
+    "CGCode": "AK377"
   },
   {
     "code": "380",
-    "name": "Modinagar Institute of Technology, Ghaziabad"
+    "name": "Modinagar Institute of Technology, Ghaziabad",
+    "CGId": 10633,
+    "CGCode": "AK380"
   },
   {
     "code": "382",
-    "name": "Kamla Nehru Institute of Physical & Social Sciences, Sultanpur"
+    "name": "Kamla Nehru Institute of Physical & Social Sciences, Sultanpur",
+    "CGId": 10924,
+    "CGCode": "AK382"
   },
   {
     "code": "383",
-    "name": "Rajarshi Rananjay Singh Institute of Management & Technology, Sultanpur"
+    "name": "Rajarshi Rananjay Singh Institute of Management & Technology, Sultanpur",
+    "CGId": 10608,
+    "CGCode": "AK383"
   },
   {
     "code": "384",
-    "name": "Saraswati Higher Education & Technical College of Engineering, Varanasi"
+    "name": "Saraswati Higher Education & Technical College of Engineering, Varanasi",
+    "CGId": 10876,
+    "CGCode": "AK384"
   },
   {
     "code": "387",
-    "name": "Sr Group of Institutions (College of Pharmacy), Jhansi"
+    "name": "Sr Group of Institutions (College of Pharmacy), Jhansi",
+    "CGId": 10679,
+    "CGCode": "AK387"
   },
   {
     "code": "389",
-    "name": "Oxford College of Pharmacy, Ghaziabad"
+    "name": "Oxford College of Pharmacy, Ghaziabad",
+    "CGId": 10606,
+    "CGCode": "AK389"
   },
   {
     "code": "390",
-    "name": "K R S College of Pharmacy, Gonda"
+    "name": "K R S College of Pharmacy, Gonda",
+    "CGId": 11285,
+    "CGCode": "AK390"
   },
   {
     "code": "391",
-    "name": "Mahatma Gandhi Institute of Pharmacy, Lucknow"
+    "name": "Mahatma Gandhi Institute of Pharmacy, Lucknow",
+    "CGId": 10803,
+    "CGCode": "AK391"
   },
   {
     "code": "392",
-    "name": "Goel Institute of Pharmacy & Sciences, Lucknow"
+    "name": "Goel Institute of Pharmacy & Sciences, Lucknow",
+    "CGId": 11220,
+    "CGCode": "AK392"
   },
   {
     "code": "393",
-    "name": "Varanasi College of Pharmacy, Varanasi"
+    "name": "Varanasi College of Pharmacy, Varanasi",
+    "CGId": 11168,
+    "CGCode": "AK393"
   },
   {
     "code": "394",
-    "name": "College of Business Studies, Agra"
+    "name": "College of Business Studies, Agra",
+    "CGId": 10652,
+    "CGCode": "AK394"
   },
   {
     "code": "395",
-    "name": "Vtech Institue of Integrated Technology, Bulandshahar"
+    "name": "Vtech Institue of Integrated Technology, Bulandshahar",
+    "CGId": null,
+    "CGCode": null
   },
   {
     "code": "396",
-    "name": "Aryakul Colege of Management, Lucknow"
+    "name": "Aryakul Colege of Management, Lucknow",
+    "CGId": 11133,
+    "CGCode": "AK396"
   },
   {
     "code": "397",
-    "name": "Tdl College of Technology & Management, Lucknow"
+    "name": "Tdl College of Technology & Management, Lucknow",
+    "CGId": null,
+    "CGCode": null
   },
   {
     "code": "398",
-    "name": "Bhalchndra Institute of Education & Management, Lucknow"
+    "name": "Bhalchndra Institute of Education & Management, Lucknow",
+    "CGId": 11135,
+    "CGCode": "AK398"
   },
   {
     "code": "403",
-    "name": "K R S College of Management, Gonda"
+    "name": "K R S College of Management, Gonda",
+    "CGId": null,
+    "CGCode": null
   },
   {
     "code": "408",
-    "name": "Chandramauli Institute of Management Sciences & Technology, Gorakhpur"
+    "name": "Chandramauli Institute of Management Sciences & Technology, Gorakhpur",
+    "CGId": null,
+    "CGCode": null
   },
   {
     "code": "410",
-    "name": "RSD Academy, College of Management & Technology, Moradabad"
+    "name": "RSD Academy, College of Management & Technology, Moradabad",
+    "CGId": 11296,
+    "CGCode": "AK410"
   },
   {
     "code": "411",
-    "name": "HMFA Memorial Institute of Engineering & Technology, Allahabad"
+    "name": "HMFA Memorial Institute of Engineering & Technology, Allahabad",
+    "CGId": 10730,
+    "CGCode": "AK411"
   },
   {
     "code": "412",
-    "name": "Aryan Institute of Technology, Ghaziabad"
+    "name": "Aryan Institute of Technology, Ghaziabad",
+    "CGId": 10941,
+    "CGCode": "AK412"
   },
   {
     "code": "414",
-    "name": "Bhagwati Institute of Technology & Sciences, Ghaziabad"
+    "name": "Bhagwati Institute of Technology & Sciences, Ghaziabad",
+    "CGId": 10885,
+    "CGCode": "AK414"
   },
   {
     "code": "419",
-    "name": "Prabhat Engineering College, Kanpur Dehat"
+    "name": "Prabhat Engineering College, Kanpur Dehat",
+    "CGId": 11267,
+    "CGCode": "AK419"
   },
   {
     "code": "422",
-    "name": "Bansal Institute of Engineering & Technology, Lucknow"
+    "name": "Bansal Institute of Engineering & Technology, Lucknow",
+    "CGId": 11175,
+    "CGCode": "AK422"
   },
   {
     "code": "423",
-    "name": "School of Management Sciences (SMS Institute of Technology), Lucknow"
+    "name": "School of Management Sciences (SMS Institute of Technology), Lucknow",
+    "CGId": 10676,
+    "CGCode": "AK423"
   },
   {
     "code": "425",
-    "name": "Meerut International Institute of Technology, Meerut"
+    "name": "Meerut International Institute of Technology, Meerut",
+    "CGId": 11289,
+    "CGCode": "AK425"
   },
   {
     "code": "427",
-    "name": "Mahatma Gandhi Universe Institute(mgui), Unnao"
+    "name": "Mahatma Gandhi Universe Institute(mgui), Unnao",
+    "CGId": 11233,
+    "CGCode": "AK427"
   },
   {
     "code": "428",
-    "name": "Kashi Institute of Technology, Varanasi"
+    "name": "Kashi Institute of Technology, Varanasi",
+    "CGId": 10927,
+    "CGCode": "AK428"
   },
   {
     "code": "429",
-    "name": "Naraina Vidya Peeth Engineering & Management Institute, Kanpur"
+    "name": "Naraina Vidya Peeth Engineering & Management Institute, Kanpur",
+    "CGId": 10907,
+    "CGCode": "AK429"
   },
   {
     "code": "430",
-    "name": "Maharana Institute of Technology & Sciences, Lucknow"
+    "name": "Maharana Institute of Technology & Sciences, Lucknow",
+    "CGId": 10695,
+    "CGCode": "AK430"
   },
   {
     "code": "431",
-    "name": "B N College of Engineering & Technology(bncet), Lucknow"
+    "name": "B N College of Engineering & Technology(bncet), Lucknow",
+    "CGId": 10991,
+    "CGCode": "AK431"
   },
   {
     "code": "434",
-    "name": "Jagaran Institute of Management, Kanpur"
+    "name": "Jagaran Institute of Management, Kanpur",
+    "CGId": 10692,
+    "CGCode": "AK434"
   },
   {
     "code": "438",
-    "name": "Vivek College of Management & Technology, Bijnaur"
+    "name": "Vivek College of Management & Technology, Bijnaur",
+    "CGId": 11302,
+    "CGCode": "AK438"
   },
   {
     "code": "440",
-    "name": "Narayan Vidya Peeth Management Institute, Kanpur"
+    "name": "Narayan Vidya Peeth Management Institute, Kanpur",
+    "CGId": 11265,
+    "CGCode": "AK440"
   },
   {
     "code": "441",
-    "name": "Central Institute of Management & Technology, Lucknow"
+    "name": "Central Institute of Management & Technology, Lucknow",
+    "CGId": 10651,
+    "CGCode": "AK441"
   },
   {
     "code": "442",
-    "name": "Sardar Bhagat Singh College of Technology & Management, Lucknow"
+    "name": "Sardar Bhagat Singh College of Technology & Management, Lucknow",
+    "CGId": 11060,
+    "CGCode": "AK442"
   },
   {
     "code": "444",
-    "name": "Mahavir Institute of Technology, Meerut"
+    "name": "Mahavir Institute of Technology, Meerut",
+    "CGId": null,
+    "CGCode": null
   },
   {
     "code": "445",
-    "name": "Dr Ram Manohar Lohia Institute, Ghaziabad"
+    "name": "Dr Ram Manohar Lohia Institute, Ghaziabad",
+    "CGId": 10593,
+    "CGCode": "AK445"
   },
   {
     "code": "446",
-    "name": "Institute of Professional Studies & Research, Unnao"
+    "name": "Institute of Professional Studies & Research, Unnao",
+    "CGId": null,
+    "CGCode": null
   },
   {
     "code": "447",
-    "name": "Gokaran Narvadeshwar Institute of Technology & Management, Barabanki"
+    "name": "Gokaran Narvadeshwar Institute of Technology & Management, Barabanki",
+    "CGId": 10996,
+    "CGCode": "AK447"
   },
   {
     "code": "448",
-    "name": "Neelam College of Engineering & Technology, Agra"
+    "name": "Neelam College of Engineering & Technology, Agra",
+    "CGId": 10832,
+    "CGCode": "AK448"
   },
   {
     "code": "450",
-    "name": "Sri Rammurti Smarak College of Engineering Technology & Research, Bareilly"
+    "name": "Sri Rammurti Smarak College of Engineering Technology & Research, Bareilly",
+    "CGId": 11095,
+    "CGCode": "AK450"
   },
   {
     "code": "453",
-    "name": "Kunwar Haribansh Singh College of Pharmacy, Jaunpur"
+    "name": "Kunwar Haribansh Singh College of Pharmacy, Jaunpur",
+    "CGId": 10601,
+    "CGCode": "AK453"
   },
   {
     "code": "455",
-    "name": "Navneet College of Technology & Management, Azamgarh"
+    "name": "Navneet College of Technology & Management, Azamgarh",
+    "CGId": null,
+    "CGCode": null
   },
   {
     "code": "456",
-    "name": "Pratap College of Management, Fatehpur"
+    "name": "Pratap College of Management, Fatehpur",
+    "CGId": 10671,
+    "CGCode": "AK456"
   },
   {
     "code": "465",
-    "name": "Himalayan Institute of Technology & Management, Lucknow"
+    "name": "Himalayan Institute of Technology & Management, Lucknow",
+    "CGId": 10775,
+    "CGCode": "AK465"
   },
   {
     "code": "467",
-    "name": "Madhu Vachaspati Institute of Engineering & Technology, Kaushambi"
+    "name": "Madhu Vachaspati Institute of Engineering & Technology, Kaushambi",
+    "CGId": 10778,
+    "CGCode": "AK467"
   },
   {
     "code": "471",
-    "name": "Eshan College of Engineering, Mathura"
+    "name": "Eshan College of Engineering, Mathura",
+    "CGId": 11026,
+    "CGCode": "AK471"
   },
   {
     "code": "472",
-    "name": "Institute of Technology & Management, Maharajganj"
+    "name": "Institute of Technology & Management, Maharajganj",
+    "CGId": 10898,
+    "CGCode": "AK472"
   },
   {
     "code": "473",
-    "name": "G C R G Memorial Trust's Group of Institutions, Faculty of Engineering, Lucknow"
+    "name": "G C R G Memorial Trust's Group of Institutions, Faculty of Engineering, Lucknow",
+    "CGId": 10725,
+    "CGCode": "AK473"
   },
   {
     "code": "474",
-    "name": "Shri Sidhi Vinayak Institute of Technology, Bareilly"
+    "name": "Shri Sidhi Vinayak Institute of Technology, Bareilly",
+    "CGId": 10704,
+    "CGCode": "AK474"
   },
   {
     "code": "475",
-    "name": "Shri Jeet Ram Smarak Institute of Engineering & Technology, Bareilly"
+    "name": "Shri Jeet Ram Smarak Institute of Engineering & Technology, Bareilly",
+    "CGId": 10644,
+    "CGCode": "AK475"
   },
   {
     "code": "476",
-    "name": "Future Institute of Engineering & Technology, Bareilly"
+    "name": "Future Institute of Engineering & Technology, Bareilly",
+    "CGId": 11027,
+    "CGCode": "AK476"
   },
   {
     "code": "479",
-    "name": "Rajshree Institute of Management & Technology, Bareilly"
+    "name": "Rajshree Institute of Management & Technology, Bareilly",
+    "CGId": 10638,
+    "CGCode": "AK479"
   },
   {
     "code": "480",
-    "name": "North India Institute of Technology, Bijnaur"
+    "name": "North India Institute of Technology, Bijnaur",
+    "CGId": 10908,
+    "CGCode": "AK480"
   },
   {
     "code": "483",
-    "name": "Institute of Technology & Management, Lucknow"
+    "name": "Institute of Technology & Management, Lucknow",
+    "CGId": 10897,
+    "CGCode": "AK483"
   },
   {
     "code": "484",
-    "name": "Lucknow Model Institute of Technology & Management, Lucknow"
+    "name": "Lucknow Model Institute of Technology & Management, Lucknow",
+    "CGId": 10862,
+    "CGCode": "AK484"
   },
   {
     "code": "485",
-    "name": "S R Institute of Management & Technology, Lucknow"
+    "name": "S R Institute of Management & Technology, Lucknow",
+    "CGId": 11199,
+    "CGCode": "AK485"
   },
   {
     "code": "486",
-    "name": "A N A College of Engineering & Management, Bareilly"
+    "name": "A N A College of Engineering & Management, Bareilly",
+    "CGId": 11212,
+    "CGCode": "AK486"
   },
   {
     "code": "487",
-    "name": "Panchwati Institute of Engineering & Technology, Meerut"
+    "name": "Panchwati Institute of Engineering & Technology, Meerut",
+    "CGId": 10930,
+    "CGCode": "AK487"
   },
   {
     "code": "488",
-    "name": "Shri Nath Ji Institute for Technical Education, Meerut"
+    "name": "Shri Nath Ji Institute for Technical Education, Meerut",
+    "CGId": 11061,
+    "CGCode": "AK488"
   },
   {
     "code": "490",
-    "name": "Suyash Institute of Information Technology, Gorakhpur"
+    "name": "Suyash Institute of Information Technology, Gorakhpur",
+    "CGId": 10613,
+    "CGCode": "AK490"
   },
   {
     "code": "492",
-    "name": "KCC Institute of Technology & Management, Gautam Buddh Nagar"
+    "name": "KCC Institute of Technology & Management, Gautam Buddh Nagar",
+    "CGId": 10802,
+    "CGCode": "AK492"
   },
   {
     "code": "493",
-    "name": "Maharaja Agrasen College of Engineering & Technology, J P Nagar"
+    "name": "Maharaja Agrasen College of Engineering & Technology, J P Nagar",
+    "CGId": 10904,
+    "CGCode": "AK493"
   },
   {
     "code": "496",
-    "name": "FIT Engineering College, Meerut"
+    "name": "FIT Engineering College, Meerut",
+    "CGId": 11219,
+    "CGCode": "AK496"
   },
   {
     "code": "498",
-    "name": "Delhi Institute of Engineering & Technology, Meerut"
+    "name": "Delhi Institute of Engineering & Technology, Meerut",
+    "CGId": 10653,
+    "CGCode": "AK498"
   },
   {
     "code": "499",
-    "name": "Veer Kunwar Institute of Technology, Bijnaur"
+    "name": "Veer Kunwar Institute of Technology, Bijnaur",
+    "CGId": 10989,
+    "CGCode": "AK499"
   },
   {
     "code": "501",
-    "name": "R V Institute of Technology, Bijnaur"
+    "name": "R V Institute of Technology, Bijnaur",
+    "CGId": 11195,
+    "CGCode": "AK501"
   },
   {
     "code": "502",
-    "name": "Dev Bhoomi Group of Institutions, Saharanpur"
+    "name": "Dev Bhoomi Group of Institutions, Saharanpur",
+    "CGId": 10742,
+    "CGCode": "AK502"
   },
   {
     "code": "505",
-    "name": "Allenhouse Institute of Technology, Kanpur"
+    "name": "Allenhouse Institute of Technology, Kanpur",
+    "CGId": 10818,
+    "CGCode": "AK505"
   },
   {
     "code": "508",
-    "name": "Babu Banarasi Das Engineering, College, Lucknow"
+    "name": "Babu Banarasi Das Engineering, College, Lucknow",
+    "CGId": 10820,
+    "CGCode": "AK508"
   },
   {
     "code": "511",
-    "name": "G L Bajaj Group of Institutions, Mathura"
+    "name": "G L Bajaj Group of Institutions, Mathura",
+    "CGId": 11142,
+    "CGCode": "AK511"
   },
   {
     "code": "514",
-    "name": "Faculty of Engineering Shanti Niketan Trust's Group of Institutions, Meerut"
+    "name": "Faculty of Engineering Shanti Niketan Trust's Group of Institutions, Meerut",
+    "CGId": 10772,
+    "CGCode": "AK514"
   },
   {
     "code": "516",
-    "name": "Kailash Institute of Pharmacy & Management, Gorakhpur"
+    "name": "Kailash Institute of Pharmacy & Management, Gorakhpur",
+    "CGId": 10900,
+    "CGCode": "AK516"
   },
   {
     "code": "517",
-    "name": "Kipm College of Management, Gorakhpur"
+    "name": "Kipm College of Management, Gorakhpur",
+    "CGId": 10598,
+    "CGCode": "AK517"
   },
   {
     "code": "518",
-    "name": "Ssld Varshney Engineering College, Aligarh"
+    "name": "Ssld Varshney Engineering College, Aligarh",
+    "CGId": 10848,
+    "CGCode": "AK518"
   },
   {
     "code": "520",
-    "name": "Indraprastha Institute of Management & Technology, Saharanpur"
+    "name": "Indraprastha Institute of Management & Technology, Saharanpur",
+    "CGId": 11282,
+    "CGCode": "AK520"
   },
   {
     "code": "521",
-    "name": "Kothiwal Institute of Technology & Professional Studies, Moradabad"
+    "name": "Kothiwal Institute of Technology & Professional Studies, Moradabad",
+    "CGId": 11121,
+    "CGCode": "AK521"
   },
   {
     "code": "522",
-    "name": "Maharana Prataap College of Engineering, Kanpur"
+    "name": "Maharana Prataap College of Engineering, Kanpur",
+    "CGId": 10696,
+    "CGCode": "AK522"
   },
   {
     "code": "523",
-    "name": "Vision Institute of Technology, Kanpur"
+    "name": "Vision Institute of Technology, Kanpur",
+    "CGId": 10985,
+    "CGCode": "AK523"
   },
   {
     "code": "524",
-    "name": "Vision Institute of Technology, Aligarh"
+    "name": "Vision Institute of Technology, Aligarh",
+    "CGId": 10937,
+    "CGCode": "AK524"
   },
   {
     "code": "525",
-    "name": "Buddha Institute of Technology, Gorakhpur"
+    "name": "Buddha Institute of Technology, Gorakhpur",
+    "CGId": 10770,
+    "CGCode": "AK525"
   },
   {
     "code": "527",
-    "name": "Sunrise Institute of Engineering Technical & Management, Unnao"
+    "name": "Sunrise Institute of Engineering Technical & Management, Unnao",
+    "CGId": 11208,
+    "CGCode": "AK527"
   },
   {
     "code": "529",
-    "name": "Saroj Institute of Management & Technology, Lucknow"
+    "name": "Saroj Institute of Management & Technology, Lucknow",
+    "CGId": 10701,
+    "CGCode": "AK529"
   },
   {
     "code": "533",
-    "name": "RV Northland Institue of Management, Gautam Buddh Nagar"
+    "name": "RV Northland Institue of Management, Gautam Buddh Nagar",
+    "CGId": 11325,
+    "CGCode": "AK533"
   },
   {
     "code": "534",
-    "name": "Mahaveer Institute of Technology & Management, Raibareilly"
+    "name": "Mahaveer Institute of Technology & Management, Raibareilly",
+    "CGId": null,
+    "CGCode": null
   },
   {
     "code": "535",
-    "name": "Rajendra Prasad College of Management, Azamgarh"
+    "name": "Rajendra Prasad College of Management, Azamgarh",
+    "CGId": 11269,
+    "CGCode": "AK535"
   },
   {
     "code": "536",
-    "name": "Shree Ji Baba Institue of Professional Studies, Mathura"
+    "name": "Shree Ji Baba Institue of Professional Studies, Mathura",
+    "CGId": 11205,
+    "CGCode": "AK536"
   },
   {
     "code": "538",
-    "name": "AKS Management College, Lucknow"
+    "name": "AKS Management College, Lucknow",
+    "CGId": null,
+    "CGCode": null
   },
   {
     "code": "540",
-    "name": "Krishna Institute of Management, Meerut"
+    "name": "Krishna Institute of Management, Meerut",
+    "CGId": 10600,
+    "CGCode": "AK540"
   },
   {
     "code": "541",
-    "name": "Amardeep College of Engineering & Management, Firozabad"
+    "name": "Amardeep College of Engineering & Management, Firozabad",
+    "CGId": 11022,
+    "CGCode": "AK541"
   },
   {
     "code": "544",
-    "name": "Kalka Engineering College, Meerut"
+    "name": "Kalka Engineering College, Meerut",
+    "CGId": null,
+    "CGCode": null
   },
   {
     "code": "545",
-    "name": "Jahangirabad Educational Trust's Group of Institutions, Faculty of Engineering, Barabanki"
+    "name": "Jahangirabad Educational Trust's Group of Institutions, Faculty of Engineering, Barabanki",
+    "CGId": 11147,
+    "CGCode": "AK545"
   },
   {
     "code": "547",
-    "name": "Chaudhary Beeri Singh College of Engineering & Management, Agra"
+    "name": "Chaudhary Beeri Singh College of Engineering & Management, Agra",
+    "CGId": 10944,
+    "CGCode": "AK547"
   },
   {
     "code": "548",
-    "name": "Dewan V S Institute of Hotel Management & Technology, Meerut"
+    "name": "Dewan V S Institute of Hotel Management & Technology, Meerut",
+    "CGId": 10625,
+    "CGCode": "AK548"
   },
   {
     "code": "549",
-    "name": "Radha Govind Institute of Pharmacy, Moradabad"
+    "name": "Radha Govind Institute of Pharmacy, Moradabad",
+    "CGId": 11268,
+    "CGCode": "AK549"
   },
   {
     "code": "550",
-    "name": "Kanpur Institute of Technology & Pharmacy, Kanpur"
+    "name": "Kanpur Institute of Technology & Pharmacy, Kanpur",
+    "CGId": 11080,
+    "CGCode": "AK550"
   },
   {
     "code": "551",
-    "name": "Kashi Institute of Pharmacy, Varanasi"
+    "name": "Kashi Institute of Pharmacy, Varanasi",
+    "CGId": 10926,
+    "CGCode": "AK551"
   },
   {
     "code": "552",
-    "name": "Chandra Shekhar Singh College of Pharmacy, Kaushambi"
+    "name": "Chandra Shekhar Singh College of Pharmacy, Kaushambi",
+    "CGId": 11042,
+    "CGCode": "AK552"
   },
   {
     "code": "554",
-    "name": "Naraina Vidya Peeth \" Group of Institutions\" Faculty of Pharmacy, Kanpur"
+    "name": "Naraina Vidya Peeth \" Group of Institutions\" Faculty of Pharmacy, Kanpur",
+    "CGId": 11290,
+    "CGCode": "AK554"
   },
   {
     "code": "557",
-    "name": "Shanti Niketan Trust's Group of Institutiona, Faculty of Management, Meerut"
+    "name": "Shanti Niketan Trust's Group of Institutiona, Faculty of Management, Meerut",
+    "CGId": 10762,
+    "CGCode": "AK557"
   },
   {
     "code": "561",
-    "name": "Hari College of Management, Saharanpur"
+    "name": "Hari College of Management, Saharanpur",
+    "CGId": 10921,
+    "CGCode": "AK561"
   },
   {
     "code": "566",
-    "name": "Future Institute of Management & Technology, Bareilly"
+    "name": "Future Institute of Management & Technology, Bareilly",
+    "CGId": 10690,
+    "CGCode": "AK566"
   },
   {
     "code": "567",
-    "name": "Bora Institute of Management Sciences, Lucknow"
+    "name": "Bora Institute of Management Sciences, Lucknow",
+    "CGId": 11215,
+    "CGCode": "AK567"
   },
   {
     "code": "568",
-    "name": "SETH Sri Nivas Agrawal Institute of Management, Kanpur"
+    "name": "SETH Sri Nivas Agrawal Institute of Management, Kanpur",
+    "CGId": null,
+    "CGCode": null
   },
   {
     "code": "571",
-    "name": "Dr B R Ambedkar Pooja College of Pharmacy, Gorakhpur"
+    "name": "Dr B R Ambedkar Pooja College of Pharmacy, Gorakhpur",
+    "CGId": 11217,
+    "CGCode": "AK571"
   },
   {
     "code": "572",
-    "name": "Lucknow Institute of Pharmacy, Lucknow"
+    "name": "Lucknow Institute of Pharmacy, Lucknow",
+    "CGId": 11151,
+    "CGCode": "AK572"
   },
   {
     "code": "575",
-    "name": "Malti Memorial Trusts CSM \"group of Institutions\" Faculty of B Pharmacy, Allahabad"
+    "name": "Malti Memorial Trusts CSM \"group of Institutions\" Faculty of B Pharmacy, Allahabad",
+    "CGId": 11319,
+    "CGCode": "AK575"
   },
   {
     "code": "576",
-    "name": "CSM Group of Institutions, Faculty of Management, Allahabad"
+    "name": "CSM Group of Institutions, Faculty of Management, Allahabad",
+    "CGId": 10887,
+    "CGCode": "AK576"
   },
   {
     "code": "579",
-    "name": "HLM College, Ghaziabad"
+    "name": "HLM College, Ghaziabad",
+    "CGId": 10825,
+    "CGCode": "AK579"
   },
   {
     "code": "581",
-    "name": "Shri Girairaj Maharaj Institute of Management, Mathura"
+    "name": "Shri Girairaj Maharaj Institute of Management, Mathura",
+    "CGId": 12489,
+    "CGCode": "AK581"
   },
   {
     "code": "582",
-    "name": "Sun Institute of Management & Technology, Shahjahanpur"
+    "name": "Sun Institute of Management & Technology, Shahjahanpur",
+    "CGId": 10763,
+    "CGCode": "AK582"
   },
   {
     "code": "583",
-    "name": "Lakshya Institute of Management & Information Technology, Shahjahanpur"
+    "name": "Lakshya Institute of Management & Information Technology, Shahjahanpur",
+    "CGId": null,
+    "CGCode": null
   },
   {
     "code": "584",
-    "name": "Banshi College of Management & Technology, Kanpur"
+    "name": "Banshi College of Management & Technology, Kanpur",
+    "CGId": 11279,
+    "CGCode": "AK584"
   },
   {
     "code": "586",
-    "name": "Dev Bhoomi Group of Institutions, Faculty of Computer Application, Saharanpur"
+    "name": "Dev Bhoomi Group of Institutions, Faculty of Computer Application, Saharanpur",
+    "CGId": 10946,
+    "CGCode": "AK586"
   },
   {
     "code": "588",
-    "name": "Prince Institute of Innovative Technology, Gautam Buddh Nagar"
+    "name": "Prince Institute of Innovative Technology, Gautam Buddh Nagar",
+    "CGId": 10961,
+    "CGCode": "AK588"
   },
   {
     "code": "593",
-    "name": "Vinayak Vidyapeeth, Meerut"
+    "name": "Vinayak Vidyapeeth, Meerut",
+    "CGId": 10841,
+    "CGCode": "AK593"
   },
   {
     "code": "595",
-    "name": "Srajan Institute of Management & Technology, Bareilly"
+    "name": "Srajan Institute of Management & Technology, Bareilly",
+    "CGId": 19430,
+    "CGCode": "595"
   },
   {
     "code": "597",
-    "name": "Khandelwal College of Architecture & Design, Bareilly"
+    "name": "Khandelwal College of Architecture & Design, Bareilly",
+    "CGId": 11002,
+    "CGCode": "AK597"
   },
   {
     "code": "598",
-    "name": "Moradabd Educational Trust(met) \"group of Institutions\" Faculty of Pharmacy, Moradabad"
+    "name": "Moradabd Educational Trust(met) \"group of Institutions\" Faculty of Pharmacy, Moradabad",
+    "CGId": 11322,
+    "CGCode": "AK598"
   },
   {
     "code": "599",
-    "name": "Jahangirabad Educational Trust's Group of Institutions, Faculty of Management, Barabanki"
+    "name": "Jahangirabad Educational Trust's Group of Institutions, Faculty of Management, Barabanki",
+    "CGId": 36700,
+    "CGCode": "AK599"
   },
   {
     "code": "602",
-    "name": "Aashlar Business School, Mathura"
+    "name": "Aashlar Business School, Mathura",
+    "CGId": 10794,
+    "CGCode": "AK602"
   },
   {
     "code": "603",
-    "name": "Sri Rlt Institute of Management, Etawah"
+    "name": "Sri Rlt Institute of Management, Etawah",
+    "CGId": null,
+    "CGCode": null
   },
   {
     "code": "604",
-    "name": "Prem Prakash Gupta Institute of Management, Bareilly"
+    "name": "Prem Prakash Gupta Institute of Management, Bareilly",
+    "CGId": 10732,
+    "CGCode": "AK604"
   },
   {
     "code": "605",
-    "name": "Unnati Management College, Mathura"
+    "name": "Unnati Management College, Mathura",
+    "CGId": 10615,
+    "CGCode": "AK605"
   },
   {
     "code": "607",
-    "name": "Dr Virendra Swaroop Institute of Professional Studies, Kanpur"
+    "name": "Dr Virendra Swaroop Institute of Professional Studies, Kanpur",
+    "CGId": 10654,
+    "CGCode": "AK607"
   },
   {
     "code": "609",
-    "name": "J P School of Business, Meerut"
+    "name": "J P School of Business, Meerut",
+    "CGId": 11118,
+    "CGCode": "AK609"
   },
   {
     "code": "614",
-    "name": "Shree Satya Institute of Management, Moradabad"
+    "name": "Shree Satya Institute of Management, Moradabad",
+    "CGId": 11093,
+    "CGCode": "AK614"
   },
   {
     "code": "617",
-    "name": "Uttam Institute of Management Studies, Agra"
+    "name": "Uttam Institute of Management Studies, Agra",
+    "CGId": 10707,
+    "CGCode": "AK617"
   },
   {
     "code": "620",
-    "name": "GCRG Memorial Trust's Group of Institutions, Faculty of Management, Lucknow"
+    "name": "GCRG Memorial Trust's Group of Institutions, Faculty of Management, Lucknow",
+    "CGId": 10891,
+    "CGCode": "AK620"
   },
   {
     "code": "621",
-    "name": "Dev Bhoomi Group of Institutions Faculty of Management, Saharanpur"
+    "name": "Dev Bhoomi Group of Institutions Faculty of Management, Saharanpur",
+    "CGId": 10993,
+    "CGCode": "AK621"
   },
   {
     "code": "622",
-    "name": "Modern Institute of Technology & Management, Ghaziabad"
+    "name": "Modern Institute of Technology & Management, Ghaziabad",
+    "CGId": 11264,
+    "CGCode": "AK622"
   },
   {
     "code": "623",
-    "name": "Bharti Institute of Management & Technology, Meerut"
+    "name": "Bharti Institute of Management & Technology, Meerut",
+    "CGId": null,
+    "CGCode": null
   },
   {
     "code": "625",
-    "name": "Sanskar College of Management & Computer Application, Allahabad"
+    "name": "Sanskar College of Management & Computer Application, Allahabad",
+    "CGId": 10843,
+    "CGCode": "AK625"
   },
   {
     "code": "631",
-    "name": "Moradabad Educational Trust(met) \"group of Institutions\" Faculty of B Architecture, Moradabad"
+    "name": "Moradabad Educational Trust(met) \"group of Institutions\" Faculty of B Architecture, Moradabad",
+    "CGId": 10604,
+    "CGCode": "AK631"
   },
   {
     "code": "636",
-    "name": "Saharanpur Institute of Advance Studies, Saharanpur"
+    "name": "Saharanpur Institute of Advance Studies, Saharanpur",
+    "CGId": 11011,
+    "CGCode": "AK636"
   },
   {
     "code": "640",
-    "name": "Dr Virendra Swarup Memorial Trust Group of Institutions, Unnao"
+    "name": "Dr Virendra Swarup Memorial Trust Group of Institutions, Unnao",
+    "CGId": 11025,
+    "CGCode": "AK640"
   },
   {
     "code": "641",
-    "name": "Ashoka Institute of Technology & Management, Varanasi"
+    "name": "Ashoka Institute of Technology & Management, Varanasi",
+    "CGId": 10711,
+    "CGCode": "AK641"
   },
   {
     "code": "643",
-    "name": "Abhay Memorial Trust Group of Institutions, Allahabad"
+    "name": "Abhay Memorial Trust Group of Institutions, Allahabad",
+    "CGId": 10584,
+    "CGCode": "AK643"
   },
   {
     "code": "644",
-    "name": "Svs Group of Institutions, Meerut"
+    "name": "Svs Group of Institutions, Meerut",
+    "CGId": 11017,
+    "CGCode": "AK644"
   },
   {
     "code": "645",
-    "name": "Ideal Institute of Management & Technology, Ghaziabad"
+    "name": "Ideal Institute of Management & Technology, Ghaziabad",
+    "CGId": null,
+    "CGCode": null
   },
   {
     "code": "647",
-    "name": "Indraprasrh Institute of Technology, J P Nagar"
+    "name": "Indraprasrh Institute of Technology, J P Nagar",
+    "CGId": 11183,
+    "CGCode": "AK647"
   },
   {
     "code": "648",
-    "name": "Babu Sunder Singh Institute of Technology & Management, Lucknow"
+    "name": "Babu Sunder Singh Institute of Technology & Management, Lucknow",
+    "CGId": 10913,
+    "CGCode": "AK648"
   },
   {
     "code": "649",
-    "name": "MG Institute of Management & Technology, Lucknow"
+    "name": "MG Institute of Management & Technology, Lucknow",
+    "CGId": 11320,
+    "CGCode": "AK649"
   },
   {
     "code": "653",
-    "name": "Prem Prakash Gupta Institute of Engineering, Bareilly"
+    "name": "Prem Prakash Gupta Institute of Engineering, Bareilly",
+    "CGId": 10901,
+    "CGCode": "AK653"
   },
   {
     "code": "657",
-    "name": "Krishnapit Institute of Pharmacy, Allahabad"
+    "name": "Krishnapit Institute of Pharmacy, Allahabad",
+    "CGId": 10829,
+    "CGCode": "AK657"
   },
   {
     "code": "659",
-    "name": "Heritage Instiute of Hotel & Tourism, Agra"
+    "name": "Heritage Instiute of Hotel & Tourism, Agra",
+    "CGId": 11076,
+    "CGCode": "AK659"
   },
   {
     "code": "660",
-    "name": "Goel Institute of Higher Studies, Lucknow"
+    "name": "Goel Institute of Higher Studies, Lucknow",
+    "CGId": 10626,
+    "CGCode": "AK660"
   },
   {
     "code": "661",
-    "name": "Krishnarpit Institute of Management & Technology, Allahabad"
+    "name": "Krishnarpit Institute of Management & Technology, Allahabad",
+    "CGId": 11187,
+    "CGCode": "AK661"
   },
   {
     "code": "662",
-    "name": "Ss Institute of Management, Lucknow"
+    "name": "Ss Institute of Management, Lucknow",
+    "CGId": 11300,
+    "CGCode": "AK662"
   },
   {
     "code": "666",
-    "name": "SRM Business School, Lucknow"
+    "name": "SRM Business School, Lucknow",
+    "CGId": 11207,
+    "CGCode": "AK666"
   },
   {
     "code": "670",
-    "name": "Lucknow Model Institute of Management, Lucknow"
+    "name": "Lucknow Model Institute of Management, Lucknow",
+    "CGId": 12490,
+    "CGCode": "AK670"
   },
   {
     "code": "671",
-    "name": "Brahmanand Group of Institutions, Bulandshahar"
+    "name": "Brahmanand Group of Institutions, Bulandshahar",
+    "CGId": 10942,
+    "CGCode": "AK671"
   },
   {
     "code": "672",
-    "name": "ITM School of Architecture & Town Planning, Lucknow"
+    "name": "ITM School of Architecture & Town Planning, Lucknow",
+    "CGId": 10596,
+    "CGCode": "AK672"
   },
   {
     "code": "673",
-    "name": "ITM School of Management, Lucknow"
+    "name": "ITM School of Management, Lucknow",
+    "CGId": 11312,
+    "CGCode": "AK673"
   },
   {
     "code": "679",
-    "name": "Iterc College of Management, Ghaziabad"
+    "name": "Iterc College of Management, Ghaziabad",
+    "CGId": 11225,
+    "CGCode": "AK679"
   },
   {
     "code": "680",
-    "name": "City College of Management & Technology, Lucknow"
+    "name": "City College of Management & Technology, Lucknow",
+    "CGId": 10796,
+    "CGCode": "AK680"
   },
   {
     "code": "681",
-    "name": "Lioyd Business School, Gautam Buddh Nagar"
+    "name": "Lioyd Business School, Gautam Buddh Nagar",
+    "CGId": null,
+    "CGCode": null
   },
   {
     "code": "682",
-    "name": "Bimt College, Meerut"
+    "name": "Bimt College, Meerut",
+    "CGId": 11102,
+    "CGCode": "AK682"
   },
   {
     "code": "686",
-    "name": "Accurate Institute of Advance Management, Gautam Buddh Nagar"
+    "name": "Accurate Institute of Advance Management, Gautam Buddh Nagar",
+    "CGId": 11035,
+    "CGCode": "AK686"
   },
   {
     "code": "687",
-    "name": "ANA College of Management Studies, Bareilly"
+    "name": "ANA College of Management Studies, Bareilly",
+    "CGId": 11101,
+    "CGCode": "AK687"
   },
   {
     "code": "688",
-    "name": "Dev Prayag Institute of Management, Allahabad"
+    "name": "Dev Prayag Institute of Management, Allahabad",
+    "CGId": 10589,
+    "CGCode": "AK688"
   },
   {
     "code": "689",
-    "name": "Institute of Information Management & Technology, Aligarh"
+    "name": "Institute of Information Management & Technology, Aligarh",
+    "CGId": 11145,
+    "CGCode": "AK689"
   },
   {
     "code": "692",
-    "name": "Sky Line Institute of Managemnt & Technology, Gautam Buddh Nagar"
+    "name": "Sky Line Institute of Managemnt & Technology, Gautam Buddh Nagar",
+    "CGId": 10830,
+    "CGCode": "AK692"
   },
   {
     "code": "695",
-    "name": "Sri Ram Group of Colleges, Muzaffarnagar"
+    "name": "Sri Ram Group of Colleges, Muzaffarnagar",
+    "CGId": 11013,
+    "CGCode": "AK695"
   },
   {
     "code": "697",
-    "name": "Agra Public College of Technology & Management, Agra"
+    "name": "Agra Public College of Technology & Management, Agra",
+    "CGId": 12491,
+    "CGCode": "AK697"
   },
   {
     "code": "698",
-    "name": "Dwarikadheesh Research Education & Management School, Saharanpur"
+    "name": "Dwarikadheesh Research Education & Management School, Saharanpur",
+    "CGId": 11045,
+    "CGCode": "AK698"
   },
   {
     "code": "702",
-    "name": "MIT College of Management, Moradabad"
+    "name": "MIT College of Management, Moradabad",
+    "CGId": 10698,
+    "CGCode": "AK702"
   },
   {
     "code": "703",
-    "name": "Shri Siddhi Vinayak Institute of Management, Bareilly"
+    "name": "Shri Siddhi Vinayak Institute of Management, Bareilly",
+    "CGId": 11064,
+    "CGCode": "AK703"
   },
   {
     "code": "705",
-    "name": "JMS Group of Institutions, Ghaziabad"
+    "name": "JMS Group of Institutions, Ghaziabad",
+    "CGId": 11148,
+    "CGCode": "AK705"
   },
   {
     "code": "708",
-    "name": "Ssld Varshney Institute of Management & Engineering, Aligarh"
+    "name": "Ssld Varshney Institute of Management & Engineering, Aligarh",
+    "CGId": 10837,
+    "CGCode": "AK708"
   },
   {
     "code": "710",
-    "name": "Ch Harchand Singh College of Management, Bulandshahar"
+    "name": "Ch Harchand Singh College of Management, Bulandshahar",
+    "CGId": 10943,
+    "CGCode": "AK710"
   },
   {
     "code": "711",
-    "name": "Vishveshwarya College of Education, Meerut"
+    "name": "Vishveshwarya College of Education, Meerut",
+    "CGId": null,
+    "CGCode": null
   },
   {
     "code": "714",
-    "name": "Kanpur Institute of Management Studies, Unnao"
+    "name": "Kanpur Institute of Management Studies, Unnao",
+    "CGId": 11286,
+    "CGCode": "AK714"
   },
   {
     "code": "715",
-    "name": "Sr Group of Institutions(College of Engineering Management & Technology), Jhansi"
+    "name": "Sr Group of Institutions(College of Engineering Management & Technology), Jhansi",
+    "CGId": 10790,
+    "CGCode": "AK715"
   },
   {
     "code": "717",
-    "name": "FMG Academy Group of Institutions, Gautam Buddh Nagar"
+    "name": "FMG Academy Group of Institutions, Gautam Buddh Nagar",
+    "CGId": null,
+    "CGCode": null
   },
   {
     "code": "719",
-    "name": "Axis Institute of Technology & Management, Kanpur"
+    "name": "Axis Institute of Technology & Management, Kanpur",
+    "CGId": 11040,
+    "CGCode": "AK719"
   },
   {
     "code": "720",
-    "name": "Axis Institute of Fashion Technology, Kanpur"
+    "name": "Axis Institute of Fashion Technology, Kanpur",
+    "CGId": 10712,
+    "CGCode": "AK720"
   },
   {
     "code": "721",
-    "name": "Axis Institute of Architecture, Kanpur"
+    "name": "Axis Institute of Architecture, Kanpur",
+    "CGId": 11214,
+    "CGCode": "AK721"
   },
   {
     "code": "722",
-    "name": "Axis Busines School, Kanpur"
+    "name": "Axis Busines School, Kanpur",
+    "CGId": 10880,
+    "CGCode": "AK722"
   },
   {
     "code": "723",
-    "name": "Axis Institute of Planning & Management, Kanpur"
+    "name": "Axis Institute of Planning & Management, Kanpur",
+    "CGId": 11070,
+    "CGCode": "AK723"
   },
   {
     "code": "726",
-    "name": "Institute of Management & Sciences, J P Nagar"
+    "name": "Institute of Management & Sciences, J P Nagar",
+    "CGId": 11047,
+    "CGCode": "AK726"
   },
   {
     "code": "727",
-    "name": "Shambhunath Institute of Management, Allahabad"
+    "name": "Shambhunath Institute of Management, Allahabad",
+    "CGId": 11034,
+    "CGCode": "AK727"
   },
   {
     "code": "732",
-    "name": "Rudra Group of Institutions, Meerut"
+    "name": "Rudra Group of Institutions, Meerut",
+    "CGId": 10872,
+    "CGCode": "AK732"
   },
   {
     "code": "733",
-    "name": "High Rank Business School, Gautam Buddh Nagar"
+    "name": "High Rank Business School, Gautam Buddh Nagar",
+    "CGId": 10729,
+    "CGCode": "AK733"
   },
   {
     "code": "734",
-    "name": "Rajkiya Engineering College, Banda"
+    "name": "Rajkiya Engineering College, Banda",
+    "CGId": 10842,
+    "CGCode": "AK734"
   },
   {
     "code": "735",
-    "name": "Rajkiya Engineering College, Bijnaur"
+    "name": "Rajkiya Engineering College, Bijnaur",
+    "CGId": 11008,
+    "CGCode": "AK735"
   },
   {
     "code": "736",
-    "name": "Rajkiya Engineering College, Azamgarh"
+    "name": "Rajkiya Engineering College, Azamgarh",
+    "CGId": 11239,
+    "CGCode": "AK736"
   },
   {
     "code": "737",
-    "name": "Rajkiya Engineering College, Ambedkar Nagar"
+    "name": "Rajkiya Engineering College, Ambedkar Nagar",
+    "CGId": 11238,
+    "CGCode": "AK737"
   },
   {
     "code": "740",
-    "name": "Prayag Institute of Technology & Management, Allahabad"
+    "name": "Prayag Institute of Technology & Management, Allahabad",
+    "CGId": 10833,
+    "CGCode": "AK740"
   },
   {
     "code": "741",
-    "name": "J K Institute of Pharmacy & Management, Bulandshahar"
+    "name": "J K Institute of Pharmacy & Management, Bulandshahar",
+    "CGId": 11050,
+    "CGCode": "AK741"
   },
   {
     "code": "743",
-    "name": "Bhavdiya Institute of Business Management, Faizabad"
+    "name": "Bhavdiya Institute of Business Management, Faizabad",
+    "CGId": 10717,
+    "CGCode": "AK743"
   },
   {
     "code": "745",
-    "name": "Sri Rammurti Smarak College of Engineering & Technology, Unnao"
+    "name": "Sri Rammurti Smarak College of Engineering & Technology, Unnao",
+    "CGId": 10980,
+    "CGCode": "AK745"
   },
   {
     "code": "746",
-    "name": "Kunwar Haribansh Singh Institute of Management, Jaunpur"
+    "name": "Kunwar Haribansh Singh Institute of Management, Jaunpur",
+    "CGId": null,
+    "CGCode": null
   },
   {
     "code": "747",
-    "name": "Raj School of Management & Sciences, Varanasi"
+    "name": "Raj School of Management & Sciences, Varanasi",
+    "CGId": 11324,
+    "CGCode": "AK747"
   },
   {
     "code": "749",
-    "name": "Madhu Vachaspati School of Management, Kaushambi"
+    "name": "Madhu Vachaspati School of Management, Kaushambi",
+    "CGId": 11154,
+    "CGCode": "AK749"
   },
   {
     "code": "751",
-    "name": "Kipm College of Engineering & Technology, Gorakhpur"
+    "name": "Kipm College of Engineering & Technology, Gorakhpur",
+    "CGId": 11150,
+    "CGCode": "AK751"
   },
   {
     "code": "752",
-    "name": "Nandini Nagar Technical Campus, Gonda"
+    "name": "Nandini Nagar Technical Campus, Gonda",
+    "CGId": null,
+    "CGCode": null
   },
   {
     "code": "753",
-    "name": "Lakshya Technical Campus, Shahjahanpur"
+    "name": "Lakshya Technical Campus, Shahjahanpur",
+    "CGId": 11188,
+    "CGCode": "AK753"
   },
   {
     "code": "754",
-    "name": "Dnm Institute of Engineering & Technology, Lucknow"
+    "name": "Dnm Institute of Engineering & Technology, Lucknow",
+    "CGId": 10854,
+    "CGCode": "AK754"
   },
   {
     "code": "756",
-    "name": "Institute of Management Research & Technology, Lucknow"
+    "name": "Institute of Management Research & Technology, Lucknow",
+    "CGId": 11117,
+    "CGCode": "AK756"
   },
   {
     "code": "757",
-    "name": "Utkarsh College of Management Education, Bareilly"
+    "name": "Utkarsh College of Management Education, Bareilly",
+    "CGId": 11019,
+    "CGCode": "AK757"
   },
   {
     "code": "759",
-    "name": "Dr Om Prakash Institute of Management & Technology, Farrukhabad"
+    "name": "Dr Om Prakash Institute of Management & Technology, Farrukhabad",
+    "CGId": 11024,
+    "CGCode": "AK759"
   },
   {
     "code": "760",
-    "name": "Lotus Institute of Management, Bareilly"
+    "name": "Lotus Institute of Management, Bareilly",
+    "CGId": 10751,
+    "CGCode": "AK760"
   },
   {
     "code": "761",
-    "name": "Maa Vaishno Devi Educational & Law College, Lucknow"
+    "name": "Maa Vaishno Devi Educational & Law College, Lucknow",
+    "CGId": 11189,
+    "CGCode": "AK761"
   },
   {
     "code": "762",
-    "name": "Noble Institute of Management & Technology, Lucknow"
+    "name": "Noble Institute of Management & Technology, Lucknow",
+    "CGId": null,
+    "CGCode": null
   },
   {
     "code": "763",
-    "name": "Maa Bhagwata Kunwar Institute of Management, Mau"
+    "name": "Maa Bhagwata Kunwar Institute of Management, Mau",
+    "CGId": 10903,
+    "CGCode": "AK763"
   },
   {
     "code": "764",
-    "name": "Smt Fulehra Smarak College of Pharmacy, Ballia"
+    "name": "Smt Fulehra Smarak College of Pharmacy, Ballia",
+    "CGId": 10812,
+    "CGCode": "AK764"
   },
   {
     "code": "765",
-    "name": "Remote Sensing Application Centre, Lucknow"
+    "name": "Remote Sensing Application Centre, Lucknow",
+    "CGId": 12492,
+    "CGCode": "AK765"
   },
   {
     "code": "766",
-    "name": "Purvanchal Institute of Architecture & Design, Gorakhpur"
+    "name": "Purvanchal Institute of Architecture & Design, Gorakhpur",
+    "CGId": 10635,
+    "CGCode": "AK766"
   },
   {
     "code": "780",
-    "name": "Landmark Technical Campus, J P Nagar"
+    "name": "Landmark Technical Campus, J P Nagar",
+    "CGId": 10734,
+    "CGCode": "AK780"
   },
   {
     "code": "781",
-    "name": "Hardayal Technical Campus, Mathura"
+    "name": "Hardayal Technical Campus, Mathura",
+    "CGId": 11281,
+    "CGCode": "AK781"
   },
   {
     "code": "783",
-    "name": "R D Engineering College Research Centre, Ghaziabad"
+    "name": "R D Engineering College Research Centre, Ghaziabad",
+    "CGId": 10834,
+    "CGCode": "AK783"
   },
   {
     "code": "785",
-    "name": "G & R Institute of Management & Technology, Bulandshahar"
+    "name": "G & R Institute of Management & Technology, Bulandshahar",
+    "CGId": 10949,
+    "CGCode": "AK785"
   },
   {
     "code": "786",
-    "name": "Mangalmay Institute of Technology, Gautam Buddh Nagar"
+    "name": "Mangalmay Institute of Technology, Gautam Buddh Nagar",
+    "CGId": 11054,
+    "CGCode": "AK786"
   },
   {
     "code": "789",
-    "name": "Dayannad Vidyapeeth Education, Meerut"
+    "name": "Dayannad Vidyapeeth Education, Meerut",
+    "CGId": 11137,
+    "CGCode": "AK789"
   },
   {
     "code": "790",
-    "name": "School of Business Management & Technology, Bulandshahar"
+    "name": "School of Business Management & Technology, Bulandshahar",
+    "CGId": 11012,
+    "CGCode": "AK790"
   },
   {
     "code": "791",
-    "name": "Disha Bharti College of Management & Education, Saharanpur"
+    "name": "Disha Bharti College of Management & Education, Saharanpur",
+    "CGId": 10890,
+    "CGCode": "AK791"
   },
   {
     "code": "792",
-    "name": "Institute of Advanced Management & Research, Ghaziabad"
+    "name": "Institute of Advanced Management & Research, Ghaziabad",
+    "CGId": 11001,
+    "CGCode": "AK792"
   },
   {
     "code": "796",
-    "name": "Adhunik College of Engineering, Ghaziabad"
+    "name": "Adhunik College of Engineering, Ghaziabad",
+    "CGId": 11247,
+    "CGCode": "AK796"
   },
   {
     "code": "797",
-    "name": "Adhunik Institute of Productivity Management & Research, Ghaziabad"
+    "name": "Adhunik Institute of Productivity Management & Research, Ghaziabad",
+    "CGId": 11037,
+    "CGCode": "AK797"
   },
   {
     "code": "798",
-    "name": "Anand College of Architecture, Agra"
+    "name": "Anand College of Architecture, Agra",
+    "CGId": 10649,
+    "CGCode": "AK798"
   },
   {
     "code": "799",
-    "name": "Ace College of Engineering & Management, Agra"
+    "name": "Ace College of Engineering & Management, Agra",
+    "CGId": 11171,
+    "CGCode": "AK799"
   },
   {
     "code": "800",
-    "name": "Jagmohan Institute of Management & Technology, Bagpat"
+    "name": "Jagmohan Institute of Management & Technology, Bagpat",
+    "CGId": null,
+    "CGCode": null
   },
   {
     "code": "801",
-    "name": "G L Bajaj Institute of Management & Research, Gautam Buddh Nagar"
+    "name": "G L Bajaj Institute of Management & Research, Gautam Buddh Nagar",
+    "CGId": 11110,
+    "CGCode": "AK801"
   },
   {
     "code": "802",
-    "name": "Nitra Technical Campus, Ghaziabad"
+    "name": "Nitra Technical Campus, Ghaziabad",
+    "CGId": 10634,
+    "CGCode": "AK802"
   },
   {
     "code": "803",
-    "name": "Greater Noida Institute of Business Maagement, Gautam Buddh Nagar"
+    "name": "Greater Noida Institute of Business Maagement, Gautam Buddh Nagar",
+    "CGId": 11256,
+    "CGCode": "AK803"
   },
   {
     "code": "804",
-    "name": "Aps College of Education & Technology, Meerut"
+    "name": "Aps College of Education & Technology, Meerut",
+    "CGId": null,
+    "CGCode": null
   },
   {
     "code": "805",
-    "name": "Accurate Institute of Architecture & Planning, Gautam Buddh Nagar"
+    "name": "Accurate Institute of Architecture & Planning, Gautam Buddh Nagar",
+    "CGId": 10849,
+    "CGCode": "AK805"
   },
   {
     "code": "810",
-    "name": "Greater Noida College of Technology, Gautam Buddh Nagar"
+    "name": "Greater Noida College of Technology, Gautam Buddh Nagar",
+    "CGId": 10892,
+    "CGCode": "AK810"
   },
   {
     "code": "811",
-    "name": "Forth Dimention College of Architecture, Saharanpur"
+    "name": "Forth Dimention College of Architecture, Saharanpur",
+    "CGId": 10995,
+    "CGCode": "AK811"
   },
   {
     "code": "812",
-    "name": "Cbs College of Management, Agra"
+    "name": "Cbs College of Management, Agra",
+    "CGId": 11104,
+    "CGCode": "AK812"
   },
   {
     "code": "815",
-    "name": "Amani Group of Institutions, Amroha"
+    "name": "Amani Group of Institutions, Amroha",
+    "CGId": 10710,
+    "CGCode": "AK815"
   },
   {
     "code": "817",
-    "name": "Ar Institute of Management & Technology, Meerut"
+    "name": "Ar Institute of Management & Technology, Meerut",
+    "CGId": 11277,
+    "CGCode": "AK817"
   },
   {
     "code": "820",
-    "name": "Ajay Kumar Garg Institute of Management, Ghaziabad"
+    "name": "Ajay Kumar Garg Institute of Management, Ghaziabad",
+    "CGId": 11100,
+    "CGCode": "AK820"
   },
   {
     "code": "821",
-    "name": "Mahaveer College of Pharmacy, Meerut"
+    "name": "Mahaveer College of Pharmacy, Meerut",
+    "CGId": 11191,
+    "CGCode": "AK821"
   },
   {
     "code": "822",
-    "name": "Eshan College of Management, Mathura"
+    "name": "Eshan College of Management, Mathura",
+    "CGId": 11046,
+    "CGCode": "AK822"
   },
   {
     "code": "825",
-    "name": "IMS, J P Nagar"
+    "name": "IMS, J P Nagar",
+    "CGId": 10895,
+    "CGCode": "AK825"
   },
   {
     "code": "826",
-    "name": "Sanskar College of Architecture & Planning, Ghaziabad"
+    "name": "Sanskar College of Architecture & Planning, Ghaziabad",
+    "CGId": 10760,
+    "CGCode": "AK826"
   },
   {
     "code": "827",
-    "name": "Mascot Institute of Management, Bareilly"
+    "name": "Mascot Institute of Management, Bareilly",
+    "CGId": 10906,
+    "CGCode": "AK827"
   },
   {
     "code": "828",
-    "name": "Dayal Group of Institutions, Lucknow"
+    "name": "Dayal Group of Institutions, Lucknow",
+    "CGId": 11216,
+    "CGCode": "AK828"
   },
   {
     "code": "829",
-    "name": "Iilm Academy of Highier Learning, Lucknow"
+    "name": "Iilm Academy of Highier Learning, Lucknow",
+    "CGId": null,
+    "CGCode": null
   },
   {
     "code": "830",
-    "name": "Devidayal Memorial Institutions, Kanpur Dehat"
+    "name": "Devidayal Memorial Institutions, Kanpur Dehat",
+    "CGId": null,
+    "CGCode": null
   },
   {
     "code": "834",
-    "name": "Integrated Academy of Management & Technology(inmantec), Ghaziabad"
+    "name": "Integrated Academy of Management & Technology(inmantec), Ghaziabad",
+    "CGId": 11048,
+    "CGCode": "AK834"
   },
   {
     "code": "835",
-    "name": "Ltr Institute of Management, Meerut"
+    "name": "Ltr Institute of Management, Meerut",
+    "CGId": 11081,
+    "CGCode": "AK835"
   },
   {
     "code": "836",
-    "name": "Bhagwant Institute of Technology, Ghaziabad"
+    "name": "Bhagwant Institute of Technology, Ghaziabad",
+    "CGId": 10687,
+    "CGCode": "AK836"
   },
   {
     "code": "839",
-    "name": "Rajkiya Engineering College, Kannauj"
+    "name": "Rajkiya Engineering College, Kannauj",
+    "CGId": 10756,
+    "CGCode": "AK839"
   },
   {
     "code": "840",
-    "name": "Rajkiya Engineering College, Mainpuri"
+    "name": "Rajkiya Engineering College, Mainpuri",
+    "CGId": 10637,
+    "CGCode": "AK840"
   },
   {
     "code": "841",
-    "name": "Rajkiya Engineering College, Sonebhadra"
+    "name": "Rajkiya Engineering College, Sonebhadra",
+    "CGId": 11294,
+    "CGCode": "AK841"
   },
   {
     "code": "842",
-    "name": "Devrishi Institute of Management & Technology, Saharanpur"
+    "name": "Devrishi Institute of Management & Technology, Saharanpur",
+    "CGId": 10917,
+    "CGCode": "AK842"
   },
   {
     "code": "844",
-    "name": "Janta College of Pharmacy, Bijnor"
+    "name": "Janta College of Pharmacy, Bijnor",
+    "CGId": 11283,
+    "CGCode": "AK844"
   },
   {
     "code": "845",
-    "name": "Krishna Pharmacy College, Bijnor"
+    "name": "Krishna Pharmacy College, Bijnor",
+    "CGId": 11316,
+    "CGCode": "AK845"
   },
   {
     "code": "846",
-    "name": "Sanskar College of Pharmacy & Research, Ghaziabad"
+    "name": "Sanskar College of Pharmacy & Research, Ghaziabad",
+    "CGId": 11297,
+    "CGCode": "AK846"
   },
   {
     "code": "848",
-    "name": "PSIT College of Management, Kanpur"
+    "name": "PSIT College of Management, Kanpur",
+    "CGId": 10780,
+    "CGCode": "AK848"
   },
   {
     "code": "849",
-    "name": "Isabella Thoburn College (Professional Studies), Lucknow"
+    "name": "Isabella Thoburn College (Professional Studies), Lucknow",
+    "CGId": 11031,
+    "CGCode": "AK849"
   },
   {
     "code": "850",
-    "name": "Future Institute of Pharmacy, Bareilly"
+    "name": "Future Institute of Pharmacy, Bareilly",
+    "CGId": 11028,
+    "CGCode": "AK850"
   },
   {
     "code": "851",
-    "name": "Bhavdiya Institute of Pharmaceutical Sciences and Research, Faizabad"
+    "name": "Bhavdiya Institute of Pharmaceutical Sciences and Research, Faizabad",
+    "CGId": 10623,
+    "CGCode": "AK851"
   },
   {
     "code": "852",
-    "name": "Metro College of Health Sciences & Research, Gautam Buddh Nagar"
+    "name": "Metro College of Health Sciences & Research, Gautam Buddh Nagar",
+    "CGId": 10804,
+    "CGCode": "AK852"
   },
   {
     "code": "853",
-    "name": "Naraina School of Planning & Architecture, Kanpur"
+    "name": "Naraina School of Planning & Architecture, Kanpur",
+    "CGId": 11235,
+    "CGCode": "AK853"
   },
   {
     "code": "854",
-    "name": "Saharanpur Pharmacy College, Saharanpur"
+    "name": "Saharanpur Pharmacy College, Saharanpur",
+    "CGId": 10973,
+    "CGCode": "AK854"
   },
   {
     "code": "855",
-    "name": "Shri Rawatpura Sarkar Institute of Pharmacy, Jhansi"
+    "name": "Shri Rawatpura Sarkar Institute of Pharmacy, Jhansi",
+    "CGId": 10968,
+    "CGCode": "AK855"
   },
   {
     "code": "856",
-    "name": "Veer Vijay Pharmacy College, Saharanpur"
+    "name": "Veer Vijay Pharmacy College, Saharanpur",
+    "CGId": 10681,
+    "CGCode": "AK856"
   },
   {
     "code": "857",
-    "name": "U P Institute of Design, Noida"
+    "name": "U P Institute of Design, Noida",
+    "CGId": 12493,
+    "CGCode": "AK857"
   },
   {
     "code": "858",
-    "name": "Centre for Advance Studies, Lucknow"
+    "name": "Centre for Advance Studies, Lucknow",
+    "CGId": 12494,
+    "CGCode": "AK858"
   },
   {
     "code": "859",
-    "name": "Mesco Institute of Pharmacy, Moradabad"
+    "name": "Mesco Institute of Pharmacy, Moradabad",
+    "CGId": 10753,
+    "CGCode": "AK859"
   },
   {
     "code": "860",
-    "name": "Rahul Sankrityayan College of Pharmacy, Azamgarh"
+    "name": "Rahul Sankrityayan College of Pharmacy, Azamgarh",
+    "CGId": 11323,
+    "CGCode": "AK860"
   },
   {
     "code": "861",
-    "name": "Saras College of Pharmacy, Baghpat"
+    "name": "Saras College of Pharmacy, Baghpat",
+    "CGId": 10933,
+    "CGCode": "AK861"
   },
   {
     "code": "862",
-    "name": "SETH Vishambhar Nath Institute of Pharmaceutical Sciences, Barabanki"
+    "name": "SETH Vishambhar Nath Institute of Pharmaceutical Sciences, Barabanki",
+    "CGId": 11204,
+    "CGCode": "AK862"
   },
   {
     "code": "863",
-    "name": "SETH Vishambhar Nath Institute of Pharmacy, Barabanki"
+    "name": "SETH Vishambhar Nath Institute of Pharmacy, Barabanki",
+    "CGId": 11127,
+    "CGCode": "AK863"
   },
   {
     "code": "864",
-    "name": "TRC Mahavidyalaya, Department of Pharmacy, Barabanki"
+    "name": "TRC Mahavidyalaya, Department of Pharmacy, Barabanki",
+    "CGId": 11209,
+    "CGCode": "AK864"
   },
   {
     "code": "865",
-    "name": "Aurous Institute of Management, Barabanki"
+    "name": "Aurous Institute of Management, Barabanki",
+    "CGId": 11134,
+    "CGCode": "AK865"
   },
   {
     "code": "866",
-    "name": "A N A Institute of Pharmaceutical Sciences & Research, Bareilly"
+    "name": "A N A Institute of Pharmaceutical Sciences & Research, Bareilly",
+    "CGId": 10990,
+    "CGCode": "AK866"
   },
   {
     "code": "867",
-    "name": "S R Institute of Pharmacy, Bareilly"
+    "name": "S R Institute of Pharmacy, Bareilly",
+    "CGId": 10785,
+    "CGCode": "AK867"
   },
   {
     "code": "868",
-    "name": "Steller Institute of Pharmacy, Bareilly"
+    "name": "Steller Institute of Pharmacy, Bareilly",
+    "CGId": 10986,
+    "CGCode": "AK868"
   },
   {
     "code": "869",
-    "name": "Krishna Institute, Bijnor"
+    "name": "Krishna Institute, Bijnor",
+    "CGId": 11314,
+    "CGCode": "AK869"
   },
   {
     "code": "870",
-    "name": "D N College, Bulandshahr"
+    "name": "D N College, Bulandshahr",
+    "CGId": null,
+    "CGCode": null
   },
   {
     "code": "871",
-    "name": "Hillwood Medical School, Bulandshahr"
+    "name": "Hillwood Medical School, Bulandshahr",
+    "CGId": 11222,
+    "CGCode": "AK871"
   },
   {
     "code": "872",
-    "name": "Dr Om Prakash School of Pharmacy, Farrukhabad"
+    "name": "Dr Om Prakash School of Pharmacy, Farrukhabad",
+    "CGId": 11044,
+    "CGCode": "AK872"
   },
   {
     "code": "873",
-    "name": "Shiv Bali Singh Group of Educational and Training Institute College of Pharmacy, Fatehpur"
+    "name": "Shiv Bali Singh Group of Educational and Training Institute College of Pharmacy, Fatehpur",
+    "CGId": 10978,
+    "CGCode": "AK873"
   },
   {
     "code": "874",
-    "name": "Ch Charan Singh College of Pharmacy, Gautam Buddha Nagar"
+    "name": "Ch Charan Singh College of Pharmacy, Gautam Buddha Nagar",
+    "CGId": 10719,
+    "CGCode": "AK874"
   },
   {
     "code": "875",
-    "name": "Skyline Institute of Pharmacy, Gautam Buddha Nagar"
+    "name": "Skyline Institute of Pharmacy, Gautam Buddha Nagar",
+    "CGId": 10735,
+    "CGCode": "AK875"
   },
   {
     "code": "876",
-    "name": "Maharishi Institute of Management, Gautam Buddha Nagar"
+    "name": "Maharishi Institute of Management, Gautam Buddha Nagar",
+    "CGId": null,
+    "CGCode": null
   },
   {
     "code": "877",
-    "name": "BBDIT College of Pharmacy, Ghaziabad"
+    "name": "BBDIT College of Pharmacy, Ghaziabad",
+    "CGId": 10714,
+    "CGCode": "AK877"
   },
   {
     "code": "878",
-    "name": "D J College of Pharmacy, Ghaziabad"
+    "name": "D J College of Pharmacy, Ghaziabad",
+    "CGId": 11106,
+    "CGCode": "AK878"
   },
   {
     "code": "879",
-    "name": "Dr Ram Manohar Lohia College of Pharmacy, Ghaziabad"
+    "name": "Dr Ram Manohar Lohia College of Pharmacy, Ghaziabad",
+    "CGId": 10745,
+    "CGCode": "AK879"
   },
   {
     "code": "880",
-    "name": "Lutawan Institute of Pharmacy, Ghazipur"
+    "name": "Lutawan Institute of Pharmacy, Ghazipur",
+    "CGId": 11153,
+    "CGCode": "AK880"
   },
   {
     "code": "881",
-    "name": "Satyadeo College of Pharmacy, Ghazipur"
+    "name": "Satyadeo College of Pharmacy, Ghazipur",
+    "CGId": 11203,
+    "CGCode": "AK881"
   },
   {
     "code": "882",
-    "name": "Tahira Institute of Medical Sciences, Gorakhpur"
+    "name": "Tahira Institute of Medical Sciences, Gorakhpur",
+    "CGId": 10879,
+    "CGCode": "AK882"
   },
   {
     "code": "883",
-    "name": "R D S College of Pharmacy, Jaunpur"
+    "name": "R D S College of Pharmacy, Jaunpur",
+    "CGId": 10963,
+    "CGCode": "AK883"
   },
   {
     "code": "886",
-    "name": "Yogendra Nath Saxena College of Pharmacy & Research, Jyotiba Phule Nagar"
+    "name": "Yogendra Nath Saxena College of Pharmacy & Research, Jyotiba Phule Nagar",
+    "CGId": 11068,
+    "CGCode": "AK886"
   },
   {
     "code": "887",
-    "name": "Vision Institute of Management, Kanpur Nagar"
+    "name": "Vision Institute of Management, Kanpur Nagar",
+    "CGId": null,
+    "CGCode": null
   },
   {
     "code": "888",
-    "name": "Sanskriti College of Higher Education and Studies, Kanpur Dehat"
+    "name": "Sanskriti College of Higher Education and Studies, Kanpur Dehat",
+    "CGId": 10967,
+    "CGCode": "AK888"
   },
   {
     "code": "889",
-    "name": "Maharana Pratap College of Pharmaceutical Sciences, Kanpur Nagar"
+    "name": "Maharana Pratap College of Pharmaceutical Sciences, Kanpur Nagar",
+    "CGId": 10905,
+    "CGCode": "AK889"
   },
   {
     "code": "890",
-    "name": "Late Ravindranand Baronia College of Pharmacy Mahroni, Lalitpur"
+    "name": "Late Ravindranand Baronia College of Pharmacy Mahroni, Lalitpur",
+    "CGId": 10902,
+    "CGCode": "AK890"
   },
   {
     "code": "892",
-    "name": "F I Pharmacy College, Lucknow"
+    "name": "F I Pharmacy College, Lucknow",
+    "CGId": 11107,
+    "CGCode": "AK892"
   },
   {
     "code": "893",
-    "name": "GCRG College of Pharmacy, Lucknow"
+    "name": "GCRG College of Pharmacy, Lucknow",
+    "CGId": 10658,
+    "CGCode": "AK893"
   },
   {
     "code": "894",
-    "name": "Gsrm Memorial College of Pharmacy, Lucknow"
+    "name": "Gsrm Memorial College of Pharmacy, Lucknow",
+    "CGId": 11308,
+    "CGCode": "AK894"
   },
   {
     "code": "895",
-    "name": "Hygia Institute of Pharmacy, Lucknow"
+    "name": "Hygia Institute of Pharmacy, Lucknow",
+    "CGId": 10747,
+    "CGCode": "AK895"
   },
   {
     "code": "896",
-    "name": "J P College of Pharmacy, Lucknow"
+    "name": "J P College of Pharmacy, Lucknow",
+    "CGId": 11119,
+    "CGCode": "AK896"
   },
   {
     "code": "897",
-    "name": "Jan Kalyan Institute of Technical Excellence, Lucknow"
+    "name": "Jan Kalyan Institute of Technical Excellence, Lucknow",
+    "CGId": 10827,
+    "CGCode": "AK897"
   },
   {
     "code": "898",
-    "name": "Yash Raj Institute of Pharmacy, Lucknow"
+    "name": "Yash Raj Institute of Pharmacy, Lucknow",
+    "CGId": 11067,
+    "CGCode": "AK898"
   },
   {
     "code": "899",
-    "name": "Sri Sharda Institute of Management and Technology, Lucknow"
+    "name": "Sri Sharda Institute of Management and Technology, Lucknow",
+    "CGId": 11129,
+    "CGCode": "AK899"
   },
   {
     "code": "900",
-    "name": "ITM College of Pharmacy, Maharajganj"
+    "name": "ITM College of Pharmacy, Maharajganj",
+    "CGId": 11049,
+    "CGCode": "AK900"
   },
   {
     "code": "901",
-    "name": "Divya College of Pharmacy, Mathura"
+    "name": "Divya College of Pharmacy, Mathura",
+    "CGId": 10948,
+    "CGCode": "AK901"
   },
   {
     "code": "902",
-    "name": "Nss College of Management, Mathura"
+    "name": "Nss College of Management, Mathura",
+    "CGId": null,
+    "CGCode": null
   },
   {
     "code": "903",
-    "name": "Aps College of Education, Meerut"
+    "name": "Aps College of Education, Meerut",
+    "CGId": 10912,
+    "CGCode": "AK903"
   },
   {
     "code": "904",
-    "name": "Apex Institute of Pharmacy, Mirzapur"
+    "name": "Apex Institute of Pharmacy, Mirzapur",
+    "CGId": 10911,
+    "CGCode": "AK904"
   },
   {
     "code": "905",
-    "name": "Vindhya Gurukul College of Pharmacy, Mirzapur"
+    "name": "Vindhya Gurukul College of Pharmacy, Mirzapur",
+    "CGId": 11245,
+    "CGCode": "AK905"
   },
   {
     "code": "906",
-    "name": "R K College of Pharmacy, Moradabad"
+    "name": "R K College of Pharmacy, Moradabad",
+    "CGId": 11126,
+    "CGCode": "AK906"
   },
   {
     "code": "907",
-    "name": "Suyash Institute of Pharmacy, Gorakhpur"
+    "name": "Suyash Institute of Pharmacy, Gorakhpur",
+    "CGId": 11016,
+    "CGCode": "AK907"
   },
   {
     "code": "908",
-    "name": "Noida Institute of Engineering & Technology(Pharmacy Institute), Gautam Buddh Nagar"
+    "name": "Noida Institute of Engineering & Technology(Pharmacy Institute), Gautam Buddh Nagar",
+    "CGId": 10669,
+    "CGCode": "AK908"
   },
   {
     "code": "909",
-    "name": "Maa Bhagwati College of Pharmacy, Lucknow"
+    "name": "Maa Bhagwati College of Pharmacy, Lucknow",
+    "CGId": 10603,
+    "CGCode": "AK909"
   },
   {
     "code": "910",
-    "name": "Sai Meer College of Pharmacy, Kannauj"
+    "name": "Sai Meer College of Pharmacy, Kannauj",
+    "CGId": 10974,
+    "CGCode": "AK910"
   },
   {
     "code": "911",
-    "name": "Sarvodhya Adarsh Pharmacy College, Agra"
+    "name": "Sarvodhya Adarsh Pharmacy College, Agra",
+    "CGId": 11202,
+    "CGCode": "AK911"
   },
   {
     "code": "912",
-    "name": "Shri Siddhi Vinayak College of Pharmacy, Agra"
+    "name": "Shri Siddhi Vinayak College of Pharmacy, Agra",
+    "CGId": 11094,
+    "CGCode": "AK912"
   },
   {
     "code": "913",
-    "name": "ABESIT College of Pharmacy, Ghaziabad"
+    "name": "ABESIT College of Pharmacy, Ghaziabad",
+    "CGId": 10738,
+    "CGCode": "AK913"
   },
   {
     "code": "914",
-    "name": "Rj College of Pharmacy, Aligarh"
+    "name": "Rj College of Pharmacy, Aligarh",
+    "CGId": 10757,
+    "CGCode": "AK914"
   },
   {
     "code": "915",
-    "name": "Maa Gayatri College of Pharmacy, Allahabad"
+    "name": "Maa Gayatri College of Pharmacy, Allahabad",
+    "CGId": 11317,
+    "CGCode": "AK915"
   },
   {
     "code": "916",
-    "name": "Maya Institute of Pharmacy, Hathras"
+    "name": "Maya Institute of Pharmacy, Hathras",
+    "CGId": 10667,
+    "CGCode": "AK916"
   },
   {
     "code": "917",
-    "name": "R K College of Pharmacy, Allahabad"
+    "name": "R K College of Pharmacy, Allahabad",
+    "CGId": 10964,
+    "CGCode": "AK917"
   },
   {
     "code": "918",
-    "name": "M G B Rajat College of Pharmacy and Management, Ambedkar Nagar"
+    "name": "M G B Rajat College of Pharmacy and Management, Ambedkar Nagar",
+    "CGId": 11082,
+    "CGCode": "AK918"
   },
   {
     "code": "919",
-    "name": "B N College of Pharmacy, Lucknow"
+    "name": "B N College of Pharmacy, Lucknow",
+    "CGId": 10882,
+    "CGCode": "AK919"
   },
   {
     "code": "920",
-    "name": "Ramdeni Singh Jagdish Singh Memorial Samiti, Azamgarh"
+    "name": "Ramdeni Singh Jagdish Singh Memorial Samiti, Azamgarh",
+    "CGId": 10782,
+    "CGCode": "AK920"
   },
   {
     "code": "921",
-    "name": "Swami Sahajanand College of Pharmacy, Azamgarh"
+    "name": "Swami Sahajanand College of Pharmacy, Azamgarh",
+    "CGId": 10646,
+    "CGCode": "AK921"
   },
   {
     "code": "922",
-    "name": "S S S College of Pharmacy, Azamgarh"
+    "name": "S S S College of Pharmacy, Azamgarh",
+    "CGId": 11091,
+    "CGCode": "AK922"
   },
   {
     "code": "923",
-    "name": "S K Mishra College of Pharmacy, Azamgarh"
+    "name": "S K Mishra College of Pharmacy, Azamgarh",
+    "CGId": 10972,
+    "CGCode": "AK923"
   },
   {
     "code": "924",
-    "name": "Bhagwan Adarsh Pharmacy College, Azamgarh"
+    "name": "Bhagwan Adarsh Pharmacy College, Azamgarh",
+    "CGId": 12495,
+    "CGCode": "AK924"
   },
   {
     "code": "925",
-    "name": "Babu Satiram Jaikaran Smarak Pharmacy College, Azamgarh"
+    "name": "Babu Satiram Jaikaran Smarak Pharmacy College, Azamgarh",
+    "CGId": 11174,
+    "CGCode": "AK925"
   },
   {
     "code": "926",
-    "name": "Mata Dulari Devi Pharmacy College, Azamgarh"
+    "name": "Mata Dulari Devi Pharmacy College, Azamgarh",
+    "CGId": 10863,
+    "CGCode": "AK926"
   },
   {
     "code": "927",
-    "name": "B N Pharmacy College, Azamgarh"
+    "name": "B N Pharmacy College, Azamgarh",
+    "CGId": 10585,
+    "CGCode": "AK927"
   },
   {
     "code": "928",
-    "name": "J D College of Pharmacy, Azamgarh"
+    "name": "J D College of Pharmacy, Azamgarh",
+    "CGId": 11226,
+    "CGCode": "AK928"
   },
   {
     "code": "929",
-    "name": "Shri Kashi Chandradev Yadav Pharmacy College, Azamgarh"
+    "name": "Shri Kashi Chandradev Yadav Pharmacy College, Azamgarh",
+    "CGId": 10645,
+    "CGCode": "AK929"
   },
   {
     "code": "930",
-    "name": "Jainath Memorial Pharmacy College, Azamgarh"
+    "name": "Jainath Memorial Pharmacy College, Azamgarh",
+    "CGId": 10956,
+    "CGCode": "AK930"
   },
   {
     "code": "931",
-    "name": "Vinayak Pharmacy College, Azamgarh"
+    "name": "Vinayak Pharmacy College, Azamgarh",
+    "CGId": 10936,
+    "CGCode": "AK931"
   },
   {
     "code": "932",
-    "name": "Buddha Institute of Pharmacy, Gorakhpur"
+    "name": "Buddha Institute of Pharmacy, Gorakhpur",
+    "CGId": 10688,
+    "CGCode": "AK932"
   },
   {
     "code": "933",
-    "name": "Prabhakar College of Pharmacy, Azamgarh"
+    "name": "Prabhakar College of Pharmacy, Azamgarh",
+    "CGId": 10866,
+    "CGCode": "AK933"
   },
   {
     "code": "934",
-    "name": "Pt Nagina College of Pharmacy, Azamgarh"
+    "name": "Pt Nagina College of Pharmacy, Azamgarh",
+    "CGId": 10672,
+    "CGCode": "AK934"
   },
   {
     "code": "935",
-    "name": "Krishna Pharmacy College, Agra"
+    "name": "Krishna Pharmacy College, Agra",
+    "CGId": 11315,
+    "CGCode": "AK935"
   },
   {
     "code": "936",
-    "name": "Bhagwati College of Pharmacy, Baghpat"
+    "name": "Bhagwati College of Pharmacy, Baghpat",
+    "CGId": 10716,
+    "CGCode": "AK936"
   },
   {
     "code": "937",
-    "name": "Government Pharmacy College, BRD Medical College Campus, Gorakhpur, Gorakhpur"
+    "name": "Government Pharmacy College, BRD Medical College Campus, Gorakhpur, Gorakhpur",
+    "CGId": 11255,
+    "CGCode": "AK937"
   },
   {
     "code": "938",
-    "name": "Maa Maturni Devi Mahavidyalay, Ballia"
+    "name": "Maa Maturni Devi Mahavidyalay, Ballia",
+    "CGId": 11318,
+    "CGCode": "AK938"
   },
   {
     "code": "939",
-    "name": "City College of Pharmacy, Barabanki"
+    "name": "City College of Pharmacy, Barabanki",
+    "CGId": 10852,
+    "CGCode": "AK939"
   },
   {
     "code": "940",
-    "name": "Ram Nagina Pharmacy College, Sonbhadra"
+    "name": "Ram Nagina Pharmacy College, Sonbhadra",
+    "CGId": 11196,
+    "CGCode": "AK940"
   },
   {
     "code": "941",
-    "name": "Sagar College of Pharmacy, Barabanki"
+    "name": "Sagar College of Pharmacy, Barabanki",
+    "CGId": 11162,
+    "CGCode": "AK941"
   },
   {
     "code": "942",
-    "name": "City School of Pharmacy, Barabanki"
+    "name": "City School of Pharmacy, Barabanki",
+    "CGId": 23632,
+    "CGCode": "942"
   },
   {
     "code": "943",
-    "name": "Bhagwan Singh Institute of Pharmacy, Jalaun"
+    "name": "Bhagwan Singh Institute of Pharmacy, Jalaun",
+    "CGId": 11304,
+    "CGCode": "AK943"
   },
   {
     "code": "944",
-    "name": "Nandlal Prabhu Devi Professional Institute, Barabanki"
+    "name": "Nandlal Prabhu Devi Professional Institute, Barabanki",
+    "CGId": 10959,
+    "CGCode": "AK944"
   },
   {
     "code": "945",
-    "name": "S N A Institute of Pharmacy, Barabanki"
+    "name": "S N A Institute of Pharmacy, Barabanki",
+    "CGId": 11198,
+    "CGCode": "AK945"
   },
   {
     "code": "946",
-    "name": "Jagmeet Memorial College of Pharmacy, Bijnor"
+    "name": "Jagmeet Memorial College of Pharmacy, Bijnor",
+    "CGId": 10597,
+    "CGCode": "AK946"
   },
   {
     "code": "947",
-    "name": "Dr Rajendra Prasad Sikshan Sansthan Gangchauli, Barabanki"
+    "name": "Dr Rajendra Prasad Sikshan Sansthan Gangchauli, Barabanki",
+    "CGId": 10744,
+    "CGCode": "AK947"
   },
   {
     "code": "948",
-    "name": "Poineer Institute of Pharmacy, Bareilly"
+    "name": "Poineer Institute of Pharmacy, Bareilly",
+    "CGId": 11158,
+    "CGCode": "AK948"
   },
   {
     "code": "949",
-    "name": "Universal Institute of Pharmacy, Bareilly"
+    "name": "Universal Institute of Pharmacy, Bareilly",
+    "CGId": 10765,
+    "CGCode": "AK949"
   },
   {
     "code": "950",
-    "name": "Iif Business School, Gautam Buddha Nagar"
+    "name": "Iif Business School, Gautam Buddha Nagar",
+    "CGId": null,
+    "CGCode": null
   },
   {
     "code": "951",
-    "name": "Indu Prakash Pharmacy College, Mau"
+    "name": "Indu Prakash Pharmacy College, Mau",
+    "CGId": 10953,
+    "CGCode": "AK951"
   },
   {
     "code": "952",
-    "name": "Acme Institute of Pharmacy, Bareilly"
+    "name": "Acme Institute of Pharmacy, Bareilly",
+    "CGId": 11098,
+    "CGCode": "AK952"
   },
   {
     "code": "953",
-    "name": "Pt Rajendra Prasad Smarak College of Pharmacy, Bareilly"
+    "name": "Pt Rajendra Prasad Smarak College of Pharmacy, Bareilly",
+    "CGId": 10962,
+    "CGCode": "AK953"
   },
   {
     "code": "954",
-    "name": "Samahi College of Pharmacy, Auraiya"
+    "name": "Samahi College of Pharmacy, Auraiya",
+    "CGId": 11326,
+    "CGCode": "AK954"
   },
   {
     "code": "955",
-    "name": "Kritika Pharmacy College, Bareilly"
+    "name": "Kritika Pharmacy College, Bareilly",
+    "CGId": 11262,
+    "CGCode": "AK955"
   },
   {
     "code": "956",
-    "name": "Arya College of Pharmacy, Bareilly"
+    "name": "Arya College of Pharmacy, Bareilly",
+    "CGId": 10940,
+    "CGCode": "AK956"
   },
   {
     "code": "957",
-    "name": "Lotus Institute of Pharmacy, Bareilly"
+    "name": "Lotus Institute of Pharmacy, Bareilly",
+    "CGId": 11122,
+    "CGCode": "AK957"
   },
   {
     "code": "958",
-    "name": "R C C College of Pharmacy, Basti"
+    "name": "R C C College of Pharmacy, Basti",
+    "CGId": 10636,
+    "CGCode": "AK958"
   },
   {
     "code": "959",
-    "name": "Praduman Singh Shikshan Prashikshan Sansthan Pharmacy College, Basti"
+    "name": "Praduman Singh Shikshan Prashikshan Sansthan Pharmacy College, Basti",
+    "CGId": 11004,
+    "CGCode": "AK959"
   },
   {
     "code": "960",
-    "name": "Goel Institute of Pharmaceutical Sciences, Lucknow"
+    "name": "Goel Institute of Pharmaceutical Sciences, Lucknow",
+    "CGId": 10920,
+    "CGCode": "AK960"
   },
   {
     "code": "961",
-    "name": "Lakshya College of Management and Technology, Bijnor"
+    "name": "Lakshya College of Management and Technology, Bijnor",
+    "CGId": 10777,
+    "CGCode": "AK961"
   },
   {
     "code": "962",
-    "name": "Veer Kunwar College of Pharmacy, Bijnor"
+    "name": "Veer Kunwar College of Pharmacy, Bijnor",
+    "CGId": 10983,
+    "CGCode": "AK962"
   },
   {
     "code": "963",
-    "name": "R K Institute of Pharmacy, Bareilly"
+    "name": "R K Institute of Pharmacy, Bareilly",
+    "CGId": 11237,
+    "CGCode": "AK963"
   },
   {
     "code": "964",
-    "name": "Prathviraj Chauhan Institute of Medical Sciences, Bijnor"
+    "name": "Prathviraj Chauhan Institute of Medical Sciences, Bijnor",
+    "CGId": 11005,
+    "CGCode": "AK964"
   },
   {
     "code": "965",
-    "name": "Lbss Degree College, Bijnor"
+    "name": "Lbss Degree College, Bijnor",
+    "CGId": 10666,
+    "CGCode": "AK965"
   },
   {
     "code": "966",
-    "name": "S P College of Pharmaceutical Sciences & Research, Bijnor"
+    "name": "S P College of Pharmaceutical Sciences & Research, Bijnor",
+    "CGId": 10966,
+    "CGCode": "AK966"
   },
   {
     "code": "967",
-    "name": "Roots Institute of Professional Education, Bijnor"
+    "name": "Roots Institute of Professional Education, Bijnor",
+    "CGId": 28287,
+    "CGCode": "AK967"
   },
   {
     "code": "968",
-    "name": "A R Institute of Pharmacy, Bijnor"
+    "name": "A R Institute of Pharmacy, Bijnor",
+    "CGId": null,
+    "CGCode": null
   },
   {
     "code": "969",
-    "name": "Shikhar Institute of Pharmacy, Budaun"
+    "name": "Shikhar Institute of Pharmacy, Budaun",
+    "CGId": 10878,
+    "CGCode": "AK969"
   },
   {
     "code": "970",
-    "name": "L N Pharmacy College, Deoria"
+    "name": "L N Pharmacy College, Deoria",
+    "CGId": 11263,
+    "CGCode": "AK970"
   },
   {
     "code": "971",
-    "name": "Lpm College of Pharmacy, Deoria"
+    "name": "Lpm College of Pharmacy, Deoria",
+    "CGId": 11123,
+    "CGCode": "AK971"
   },
   {
     "code": "972",
-    "name": "Bps Educational Institution of Pharmacy, Etah"
+    "name": "Bps Educational Institution of Pharmacy, Etah",
+    "CGId": 11305,
+    "CGCode": "AK972"
   },
   {
     "code": "973",
-    "name": "Faculty of Pharmacy Future Institute of Medical Sciences, Bareilly"
+    "name": "Faculty of Pharmacy Future Institute of Medical Sciences, Bareilly",
+    "CGId": 11218,
+    "CGCode": "AK973"
   },
   {
     "code": "974",
-    "name": "Ch Sughar Singh Pharmacy College, Etawah"
+    "name": "Ch Sughar Singh Pharmacy College, Etawah",
+    "CGId": 10588,
+    "CGCode": "AK974"
   },
   {
     "code": "975",
-    "name": "Urmila College of Pharmacy, Faizabad"
+    "name": "Urmila College of Pharmacy, Faizabad",
+    "CGId": 10616,
+    "CGCode": "AK975"
   },
   {
     "code": "976",
-    "name": "Maa Sharda Pharmacy College, Faizabad"
+    "name": "Maa Sharda Pharmacy College, Faizabad",
+    "CGId": 11232,
+    "CGCode": "AK976"
   },
   {
     "code": "977",
-    "name": "Shakuntala Devi College of Pharmacy, Farrukhabad"
+    "name": "Shakuntala Devi College of Pharmacy, Farrukhabad",
+    "CGId": 10934,
+    "CGCode": "AK977"
   },
   {
     "code": "978",
-    "name": "Dr Pushpendra Singh College of Pharmacy, Farrukhabad"
+    "name": "Dr Pushpendra Singh College of Pharmacy, Farrukhabad",
+    "CGId": 10591,
+    "CGCode": "AK978"
   },
   {
     "code": "979",
-    "name": "Th Yugraj Singh Pharmacy College, Fatehpur"
+    "name": "Th Yugraj Singh Pharmacy College, Fatehpur",
+    "CGId": 10764,
+    "CGCode": "AK979"
   },
   {
     "code": "980",
-    "name": "Parmarth College of Pharmacy, Ghaziabad"
+    "name": "Parmarth College of Pharmacy, Ghaziabad",
+    "CGId": 11236,
+    "CGCode": "AK980"
   },
   {
     "code": "981",
-    "name": "Amardeep College of Pharmacy, Firozabad"
+    "name": "Amardeep College of Pharmacy, Firozabad",
+    "CGId": 11132,
+    "CGCode": "AK981"
   },
   {
     "code": "982",
-    "name": "Mahalaxmi Institute of Management & Technology, Meerut"
+    "name": "Mahalaxmi Institute of Management & Technology, Meerut",
+    "CGId": 27754,
+    "CGCode": "AK982"
   },
   {
     "code": "983",
-    "name": "Asha Pharmacy College, Varanasi"
+    "name": "Asha Pharmacy College, Varanasi",
+    "CGId": 11172,
+    "CGCode": "AK983"
   },
   {
     "code": "984",
-    "name": "Orlean College of Pharmacy, Gautam Buddha Nagar"
+    "name": "Orlean College of Pharmacy, Gautam Buddha Nagar",
+    "CGId": 11193,
+    "CGCode": "AK984"
   },
   {
     "code": "985",
-    "name": "GNIT College of Pharmacy, Gautam Buddha Nagar"
+    "name": "GNIT College of Pharmacy, Gautam Buddha Nagar",
+    "CGId": 10774,
+    "CGCode": "AK985"
   },
   {
     "code": "986",
-    "name": "Accurate College of Pharmacy, Gautam Buddha Nagar"
+    "name": "Accurate College of Pharmacy, Gautam Buddha Nagar",
+    "CGId": 10816,
+    "CGCode": "AK986"
   },
   {
     "code": "987",
-    "name": "Vishveshwarya College of Pharmacy, Gautam Buddha Nagar"
+    "name": "Vishveshwarya College of Pharmacy, Gautam Buddha Nagar",
+    "CGId": 11066,
+    "CGCode": "AK987"
   },
   {
     "code": "988",
-    "name": "College of Pharmacy Jss Academy of Technical Education, Gautam Buddha Nagar"
+    "name": "College of Pharmacy Jss Academy of Technical Education, Gautam Buddha Nagar",
+    "CGId": 11176,
+    "CGCode": "AK988"
   },
   {
     "code": "989",
-    "name": "United College of Engineering and Research(Pharmacy), Greater Noida, Gautam Buddha Nagar"
+    "name": "United College of Engineering and Research(Pharmacy), Greater Noida, Gautam Buddha Nagar",
+    "CGId": 10706,
+    "CGCode": "AK989"
   },
   {
     "code": "990",
-    "name": "Dr Virendra Swarup Memorial Trust Group of Instituions, Kanpur Nagar"
+    "name": "Dr Virendra Swarup Memorial Trust Group of Instituions, Kanpur Nagar",
+    "CGId": 10994,
+    "CGCode": "AK990"
   },
   {
     "code": "991",
-    "name": "Maa Saraswati Paramedical Institute, Ghazipur"
+    "name": "Maa Saraswati Paramedical Institute, Ghazipur",
+    "CGId": 10694,
+    "CGCode": "AK991"
   },
   {
     "code": "992",
-    "name": "Vishwanath Institute of Pharmacy, Ghazipur"
+    "name": "Vishwanath Institute of Pharmacy, Ghazipur",
+    "CGId": 10767,
+    "CGCode": "AK992"
   },
   {
     "code": "993",
-    "name": "S G M Institute of Pharmacy, Ghazipur"
+    "name": "S G M Institute of Pharmacy, Ghazipur",
+    "CGId": 10874,
+    "CGCode": "AK993"
   },
   {
     "code": "994",
-    "name": "Shri Rajendar Singh College of Pharmacy, Hardoi"
+    "name": "Shri Rajendar Singh College of Pharmacy, Hardoi",
+    "CGId": 11062,
+    "CGCode": "AK994"
   },
   {
     "code": "995",
-    "name": "I D Memorial College of Pharmacy, Ghazipur"
+    "name": "I D Memorial College of Pharmacy, Ghazipur",
+    "CGId": 11115,
+    "CGCode": "AK995"
   },
   {
     "code": "996",
-    "name": "Techno Institute of Management Sciences, Lucknow"
+    "name": "Techno Institute of Management Sciences, Lucknow",
+    "CGId": 10982,
+    "CGCode": "AK996"
   },
   {
     "code": "997",
-    "name": "Hakikullah Chaudary College of Pharmacy, Gonda"
+    "name": "Hakikullah Chaudary College of Pharmacy, Gonda",
+    "CGId": 11257,
+    "CGCode": "AK997"
   },
   {
     "code": "998",
-    "name": "Cross Belly College of Pharmacy, Azamgarh"
+    "name": "Cross Belly College of Pharmacy, Azamgarh",
+    "CGId": 10624,
+    "CGCode": "AK998"
+  },
+  {
+    "code": "1193",
+    "name": "ABES BUSINESS SCHOOL",
+    "CGId": 12483,
+    "CGCode": "AK1193"
+  },
+  {
+    "code": "1126",
+    "name": "ABHISHEK PHARMACY COLLEGE,CHANDAULI",
+    "CGId": 12468,
+    "CGCode": "AK1126"
+  },
+  {
+    "code": "1036",
+    "name": "ABSS INSTITUTE OF TECHNOLOGY , MEERUT",
+    "CGId": 10618,
+    "CGCode": "AK1036"
+  },
+  {
+    "code": "1052",
+    "name": "ADESH COLLEGE OF PHARMACY , PILIBHIT",
+    "CGId": 10739,
+    "CGCode": "AK1052"
+  },
+  {
+    "code": "1015",
+    "name": "ADVANCE COLLEGE OF EDUCATION , KANPUR NAGAR",
+    "CGId": 10938,
+    "CGCode": "AK1015"
+  },
+  {
+    "code": "1131",
+    "name": "ALLENHOUSE INSTITUTE OF MANAGEMENT,KANPUR NAGAR",
+    "CGId": 10817,
+    "CGCode": "AK1131"
+  },
+  {
+    "code": "1018",
+    "name": "AMBEKESHWAR INSTITUTE OF PHARMACEUTICAL SCIENCES , LUCKNOW",
+    "CGId": 10851,
+    "CGCode": "AK1018"
+  },
+  {
+    "code": "1129",
+    "name": "ANJUMAN A ASHRAF PHARMACY COLLEGE,JYOTIBA PHULE NAGAR",
+    "CGId": 10741,
+    "CGCode": "AK1129"
+  },
+  {
+    "code": "1022",
+    "name": "ANKERITE COLLEGE OF PHARMACY , LUCKNOW",
+    "CGId": 10683,
+    "CGCode": "AK1022"
+  },
+  {
+    "code": "748",
+    "name": "ANSAL TECHNICAL CAMPUS,LUCKNOW",
+    "CGId": 11250,
+    "CGCode": "AK748"
+  },
+  {
+    "code": "1091",
+    "name": "ARK COLLEGE OF PHARMACY,KAUSHAMBI",
+    "CGId": 10685,
+    "CGCode": "AK1091"
+  },
+  {
+    "code": "1084",
+    "name": "ARYAKUL COLLEGE OF PHARMACY & RESEARCH RAEBARELI , RAE BARELI",
+    "CGId": 12466,
+    "CGCode": "AK1084"
+  },
+  {
+    "code": "1085",
+    "name": "ARYAKUL COLLEGE OF PHARMACY & RESEARCH SITAPUR , SITAPUR",
+    "CGId": 12467,
+    "CGCode": "AK1085"
+  },
+  {
+    "code": "1143",
+    "name": "ASHOK SINGH PHARMACY COLLEGE,JAUNPUR",
+    "CGId": 11023,
+    "CGCode": "AK1143"
+  },
+  {
+    "code": "1086",
+    "name": "AVADH COLLEGE OF PHARMACY , BARABANKI",
+    "CGId": 11069,
+    "CGCode": "AK1086"
+  },
+  {
+    "code": "1137",
+    "name": "AXIS INSTITUTE OF PHARMACY,KANPUR NAGAR",
+    "CGId": 10768,
+    "CGCode": "AK1137"
+  },
+  {
+    "code": "1116",
+    "name": "B. M. S. COLLEGE OF PHARMACY,AMETHI",
+    "CGId": 10650,
+    "CGCode": "AK1116"
+  },
+  {
+    "code": "1093",
+    "name": "BABA INSTITUTE OF PHARMACY,MUZAFFARNAGAR",
+    "CGId": 10884,
+    "CGCode": "AK1093"
+  },
+  {
+    "code": "1001",
+    "name": "BABA RAMDAL SURAJDEV PHARMACY COLLEGE , BALLIA",
+    "CGId": 10713,
+    "CGCode": "AK1001"
+  },
+  {
+    "code": "1179",
+    "name": "BABA VISHWANATH COLLEGE OF PHARMACY",
+    "CGId": 12475,
+    "CGCode": "AK1179"
+  },
+  {
+    "code": "1203",
+    "name": "BABU RAM CHANDRA SINGH COLLEGE OF PHARMACY, Ayodhya",
+    "CGId": 42994,
+    "CGCode": "AK1203"
+  },
+  {
+    "code": "1111",
+    "name": "BABU SUNDER SINGH COLLEGE OF PHARMACY,LUCKNOW",
+    "CGId": 10620,
+    "CGCode": "AK1111"
+  },
+  {
+    "code": "1025",
+    "name": "BABU YUGRAJ SINGH PHARMACY COLLEGE , LUCKNOW",
+    "CGId": 10821,
+    "CGCode": "AK1025"
+  },
+  {
+    "code": "1017",
+    "name": "BHAGWAN AADINATH COLLEGE OF PHARMACY  , LALITPUR",
+    "CGId": 10686,
+    "CGCode": "AK1017"
+  },
+  {
+    "code": "1011",
+    "name": "BHARTIYA PHARMACY COLLEGE , JYOTIBA PHULE NAGAR",
+    "CGId": 10622,
+    "CGCode": "AK1011"
+  },
+  {
+    "code": "806",
+    "name": "BRAHMANAND INSTITUTE OF RESEARCH  TECHNOLOGY & MANAGEMENT,BULANDSHAHAR",
+    "CGId": 11103,
+    "CGCode": "AK806"
+  },
+  {
+    "code": "1182",
+    "name": "BSA COLLEGE OF ENGINEERING & TECHNOLOGY",
+    "CGId": 12477,
+    "CGCode": "AK1182"
+  },
+  {
+    "code": "1212",
+    "name": "BUDDHA INSTITUTE OF MANAGEMENT",
+    "CGId": 28567,
+    "CGCode": "ak1212"
+  },
+  {
+    "code": "1189",
+    "name": "CENTRE FOR MANAGEMENT DEVELOPMENT",
+    "CGId": 12480,
+    "CGCode": "AK1189"
+  },
+  {
+    "code": "1119",
+    "name": "CHAUDHARY COLLEGE OF PHARMACY,AMBEDKAR NAGAR",
+    "CGId": 10720,
+    "CGCode": "AK1119"
+  },
+  {
+    "code": "1136",
+    "name": "CHAUDHARY INSTITUTE OF PHARMACEUTICAL SCIENCE,KHERI",
+    "CGId": 10915,
+    "CGCode": "AK1136"
+  },
+  {
+    "code": "1003",
+    "name": "D. R. COLLEGE OF PHARMACY , HAPUR",
+    "CGId": 10888,
+    "CGCode": "AK1003"
+  },
+  {
+    "code": "1109",
+    "name": "DDM COLLEGE OF PHARMACY,KAUSHAMBI",
+    "CGId": 10945,
+    "CGCode": "AK1109"
+  },
+  {
+    "code": "1034",
+    "name": "DEPARTMENT OF PHARMACY MEERUT INSTITUTE OF TECHNOLOGY , MEERUT",
+    "CGId": 10889,
+    "CGCode": "AK1034"
+  },
+  {
+    "code": "1054",
+    "name": "DEV BHOOMI COLLEGE OF PHARMACY , SAHARANPUR",
+    "CGId": 11307,
+    "CGCode": "AK1054"
+  },
+  {
+    "code": "1105",
+    "name": "DEV INDRAWATI COLLEGE OF PHARMACY,AMBEDKAR NAGAR",
+    "CGId": 10721,
+    "CGCode": "AK1105"
+  },
+  {
+    "code": "1070",
+    "name": "DEV KUMAR RAJARAM PHARMACY SHIKSHAN SANSTHAN , SITAPUR",
+    "CGId": 11138,
+    "CGCode": "AK1070"
+  },
+  {
+    "code": "470",
+    "name": "DEV PRAYAG INSTITUTE OF TECHNICAL STUDIES,ALLAHABAD",
+    "CGId": 10771,
+    "CGCode": "AK470"
+  },
+  {
+    "code": "1125",
+    "name": "DHARAM SAMAJ COLLEGE OF PHARMACY,ALIGARH",
+    "CGId": 10947,
+    "CGCode": "AK1125"
+  },
+  {
+    "code": "1184",
+    "name": "DILIP KISHORE MEHROTRA INSTITUTE OF PHARMACY",
+    "CGId": 12478,
+    "CGCode": "AK1184"
+  },
+  {
+    "code": "1073",
+    "name": "DISHA INSTITUTE OF PHARMACY , BIJNOR",
+    "CGId": 10722,
+    "CGCode": "AK1073"
+  },
+  {
+    "code": "1158",
+    "name": "DIXIT COLLEGE OF PHARMACY AND RESEARCH,RAMPUR",
+    "CGId": 11251,
+    "CGCode": "AK1158"
+  },
+  {
+    "code": "1149",
+    "name": "DOODHNATH COLLEGE OF PHARMACY SAKRAR JHANSI,JHANSI",
+    "CGId": 10590,
+    "CGCode": "AK1149"
+  },
+  {
+    "code": "1066",
+    "name": "DR H R BACHHAN COLLEGE OF PHARMACY , UNNAO",
+    "CGId": 11177,
+    "CGCode": "AK1066"
+  },
+  {
+    "code": "1124",
+    "name": "DR MAHENDRA KUMAR CHHOTELAL BIND COLLEGE OF PHARMACY,PRAYAGRAJ",
+    "CGId": 11252,
+    "CGCode": "AK1124"
+  },
+  {
+    "code": "1057",
+    "name": "DR R M L INSTITUTE OF PHARMACY , SHAHJAHANPUR",
+    "CGId": 10822,
+    "CGCode": "AK1057"
+  },
+  {
+    "code": "1150",
+    "name": "DR SARVESH SHUKLA INSTITUTE OF PHARMACY,BAHRAICH",
+    "CGId": 11253,
+    "CGCode": "AK1150"
+  },
+  {
+    "code": "1114",
+    "name": "DR. MITHILESH MANI TRIPATHI COLLEGE OF PHARMACY,SIDDHARTHNAGAR",
+    "CGId": 11140,
+    "CGCode": "AK1114"
+  },
+  {
+    "code": "204102",
+    "name": "DR. V. P. MADNAWAT COLLEGE OF EDUCATIONAL AND PROFESSIONAL COURSES,HATHRAS",
+    "CGId": 22748,
+    "CGCode": "204102"
+  },
+  {
+    "code": "1040",
+    "name": "DRON COLLEGE OF EDUCATION , MEERUT",
+    "CGId": 10656,
+    "CGCode": "AK1040"
+  },
+  {
+    "code": "1075",
+    "name": "DSSOP PHARMACY COLLEGE  , SIDDHARTHNAGAR",
+    "CGId": 11179,
+    "CGCode": "AK1075"
+  },
+  {
+    "code": "1209",
+    "name": "Faculty of Management",
+    "CGId": 24221,
+    "CGCode": "1209"
+  },
+  {
+    "code": "1201",
+    "name": "Faculty of Pharmacy",
+    "CGId": 24062,
+    "CGCode": "1201"
+  },
+  {
+    "code": "1200",
+    "name": "G.L. Bajaj College of Technology & Management",
+    "CGId": 27898,
+    "CGCode": "1200"
+  },
+  {
+    "code": "1097",
+    "name": "GAJRAJ SINGH YADAV KARANPAL SINGH YADAV COLLEGE OF PHARMACY,KHERI",
+    "CGId": 11180,
+    "CGCode": "AK1097"
+  },
+  {
+    "code": "1092",
+    "name": "GALGOTIAS COLLEGE OF PHARMACY,GAUTAM BUDDHA NAGAR",
+    "CGId": 11280,
+    "CGCode": "AK1092"
+  },
+  {
+    "code": "1107",
+    "name": "GAUTAM BUDDHA COLLEGE OF PHARMACY,LUCKNOW",
+    "CGId": 10951,
+    "CGCode": "AK1107"
+  },
+  {
+    "code": "1024",
+    "name": "GEETA PHARMACY COLLEGE , LUCKNOW",
+    "CGId": 10773,
+    "CGCode": "AK1024"
+  },
+  {
+    "code": "1254",
+    "name": "GHANSHYAM COLLEGE OF PHARMACY, JAUNPUR",
+    "CGId": 37073,
+    "CGCode": "AK1254"
+  },
+  {
+    "code": "1010",
+    "name": "GHAUSIA COLLEGE OF PHARMACY , FATEHPUR",
+    "CGId": 11111,
+    "CGCode": "AK1010"
+  },
+  {
+    "code": "1121",
+    "name": "GMS COLLEGE OF PHARMCY,JYOTIBA PHULE NAGAR",
+    "CGId": 10727,
+    "CGCode": "AK1121"
+  },
+  {
+    "code": "1134",
+    "name": "GNIT COLLEGE OF MANAGEMENT,GAUTAM BUDDHA NAGAR",
+    "CGId": 10919,
+    "CGCode": "AK1134"
+  },
+  {
+    "code": "1068",
+    "name": "GURU TEG BAHADUR PARA MEDICAL INSTITUTE  , SHAHJAHANPUR",
+    "CGId": 11181,
+    "CGCode": "AK1068"
+  },
+  {
+    "code": "1225",
+    "name": "GURUDEV INNOVATIVE COLLEGE OF PHARMACY, AURAIYA",
+    "CGId": 36976,
+    "CGCode": "AK1225"
+  },
+  {
+    "code": "1055",
+    "name": "HARI COLLEGE OF PHARMACY , SAHARANPUR",
+    "CGId": 10797,
+    "CGCode": "AK1055"
+  },
+  {
+    "code": "1141",
+    "name": "HARISH CHAND PHARMACY COLLEGE,JAUNPUR",
+    "CGId": 11075,
+    "CGCode": "AK1141"
+  },
+  {
+    "code": "1027",
+    "name": "HARSHA INSTITUTE OF PHARMACY , LUCKNOW",
+    "CGId": 10997,
+    "CGCode": "AK1027"
+  },
+  {
+    "code": "1089",
+    "name": "HIMALAYAN INSTITUTE OF PHARMACY AND RESEARCH ,LUCKNOW",
+    "CGId": 11114,
+    "CGCode": "AK1089"
+  },
+  {
+    "code": "1000",
+    "name": "HYGIA COLLEGE OF PHARMACY,LUCKNOW",
+    "CGId": 10856,
+    "CGCode": "AK1000"
+  },
+  {
+    "code": "1148",
+    "name": "I. E. T. COLLEGE OF PHARMACY,JAUNPUR",
+    "CGId": 11309,
+    "CGCode": "AK1148"
+  },
+  {
+    "code": "270",
+    "name": "IEC INSTITUTE OF HOTEL MANAGEMENT,,GAUTAM BUDDH NAGAR",
+    "CGId": 11144,
+    "CGCode": "AK270"
+  },
+  {
+    "code": "tu1177",
+    "name": "IED HOTEL MANAGEMENT",
+    "CGId": 28538,
+    "CGCode": "aktu1177"
+  },
+  {
+    "code": "198",
+    "name": "IIMT COLLEGE OF MEDICAL SCIENCES,MEERUT",
+    "CGId": 10858,
+    "CGCode": "AK198"
+  },
+  {
+    "code": "1155",
+    "name": "INDIAN INSTITUTE OF HANDLOOM TECHNOLOGY,VARANASI",
+    "CGId": 19404,
+    "CGCode": "1155"
+  },
+  {
+    "code": "1192",
+    "name": "INTERNATIONAL INSTITUTE FOR SPECIAL EDUCATION (IISE)",
+    "CGId": 12482,
+    "CGCode": "AK1192"
+  },
+  {
+    "code": "1162",
+    "name": "J B S INSTITUTE OF PHARMACY MALINPUR",
+    "CGId": 12470,
+    "CGCode": "AK1162"
+  },
+  {
+    "code": "1058",
+    "name": "J D S R INSTITUTE OF PHARMACY , SHAHJAHANPUR",
+    "CGId": 10899,
+    "CGCode": "AK1058"
+  },
+  {
+    "code": "1166",
+    "name": "J P PHARMACY COLLEGE",
+    "CGId": 12471,
+    "CGCode": "AK1166"
+  },
+  {
+    "code": "1063",
+    "name": "J.S.SINGH INSTITUTE OF PHARMACY  , SITAPUR",
+    "CGId": 10631,
+    "CGCode": "AK1063"
+  },
+  {
+    "code": "1183",
+    "name": "Jagannath College of Pharmacy",
+    "CGId": 28234,
+    "CGCode": "AK1183"
+  },
+  {
+    "code": "1064",
+    "name": "JAHANGIRABAD INSTITUTE OF TECHNOLOGY FACULTY OF PHARMACY  , BARABANKI",
+    "CGId": 11259,
+    "CGCode": "AK1064"
+  },
+  {
+    "code": "1099",
+    "name": "JAI MAA VAISHNO PHARMACY COLLEGE,PRATAPGARH",
+    "CGId": 11260,
+    "CGCode": "AK1099"
+  },
+  {
+    "code": "1004",
+    "name": "JIVIKA COLLEGE OF PHARMACY , HARDOI",
+    "CGId": 10801,
+    "CGCode": "AK1004"
+  },
+  {
+    "code": "1053",
+    "name": "JYOTIRADITYA INSTITUTE OF PHARMACY , PRATAPGARH",
+    "CGId": 10828,
+    "CGCode": "AK1053"
+  },
+  {
+    "code": "1029",
+    "name": "K D C COLLEGE OF PHARMACY , MATHURA",
+    "CGId": 10923,
+    "CGCode": "AK1029"
+  },
+  {
+    "code": "1020",
+    "name": "K. J. COLLEGE OF PHARMACY , VARANASI",
+    "CGId": 11284,
+    "CGCode": "AK1020"
+  },
+  {
+    "code": "1062",
+    "name": "K. P. SINGH MEMORIAL INSTITUTE OF PHARMACY , SITAPUR",
+    "CGId": 11229,
+    "CGCode": "AK1062"
+  },
+  {
+    "code": "1120",
+    "name": "K.P.SINGH COLLEGE OF PHARMACY,PRATAPGARH",
+    "CGId": 11184,
+    "CGCode": "AK1120"
+  },
+  {
+    "code": "1248",
+    "name": "KAILASH INSTITUTE OF PHARMACY & MEDICAL SCIENCES",
+    "CGId": 37079,
+    "CGCode": "AK1248"
+  },
+  {
+    "code": "1043",
+    "name": "KATYAYANI COLLEGE OF EDUCATION , MEERUT",
+    "CGId": 10957,
+    "CGCode": "AK1043"
+  },
+  {
+    "code": "1056",
+    "name": "KINETIC INSTITUTE, DEPARTMENT OF PHARMACY , SHAHJAHANPUR",
+    "CGId": 10693,
+    "CGCode": "AK1056"
+  },
+  {
+    "code": "1045",
+    "name": "KRISHAK COLLEGE OF PHARMACY , MIRZAPUR",
+    "CGId": 10599,
+    "CGCode": "AK1045"
+  },
+  {
+    "code": "1012",
+    "name": "KRISHNA INSTITUTE OF PHARMACY AND SCIENCES , KANPUR NAGAR",
+    "CGId": 10928,
+    "CGCode": "AK1012"
+  },
+  {
+    "code": "1144",
+    "name": "KUNWAR AJEET COLLEGE OF PHARMACY,JAUNPUR",
+    "CGId": 10665,
+    "CGCode": "AK1144"
+  },
+  {
+    "code": "1077",
+    "name": "LAKHMI CHAND PATWARI COLLEGE OF PHARMACY , BAGHPAT",
+    "CGId": 10602,
+    "CGCode": "AK1077"
+  },
+  {
+    "code": "1023",
+    "name": "LUCKNOW MODEL COLLEGE OF PHARMACY , LUCKNOW",
+    "CGId": 11053,
+    "CGCode": "AK1023"
+  },
+  {
+    "code": "1032",
+    "name": "MAA LILAWATI SUDESHWARI INSTITUTE OF PHARMACY , MAU",
+    "CGId": 10831,
+    "CGCode": "AK1032"
+  },
+  {
+    "code": "1262",
+    "name": "MADHU VACHASPATI INSTITUTE OF PHARMACY, KAUSHAMBI",
+    "CGId": 38378,
+    "CGCode": "AK1262"
+  },
+  {
+    "code": "1217",
+    "name": "MAHARANA PRATAP INSTITUTE OF TECHNOLOGY, GORAKHPUR",
+    "CGId": 35633,
+    "CGCode": "ak1217"
+  },
+  {
+    "code": "1112",
+    "name": "MAHARANA PRATAP SCHOOL OF PHARMACY,LUCKNOW",
+    "CGId": 10752,
+    "CGCode": "AK1112"
+  },
+  {
+    "code": "1263",
+    "name": "MAHRISHI COLLEGE OF PHARMACY",
+    "CGId": 38421,
+    "CGCode": "AK1263"
+  },
+  {
+    "code": "1072",
+    "name": "MASCOT COLLEGE OF PHARMACY , BAREILLY",
+    "CGId": 10697,
+    "CGCode": "AK1072"
+  },
+  {
+    "code": "1188",
+    "name": "MASTER SCHOOL OF MANAGEMENT STUDIES",
+    "CGId": 28466,
+    "CGCode": "AK1188"
+  },
+  {
+    "code": "1186",
+    "name": "MAYA INSTITUTE OF PHARMACY",
+    "CGId": 12479,
+    "CGCode": "AK1186"
+  },
+  {
+    "code": "1106",
+    "name": "MDALSHA COLLEGE OF PHARMACY,PRATAPGARH",
+    "CGId": 11084,
+    "CGCode": "AK1106"
+  },
+  {
+    "code": "1190",
+    "name": "MICROTEK COLLEGE OF MANAGEMENT & TECHNOLOGY",
+    "CGId": 12481,
+    "CGCode": "AK1190"
+  },
+  {
+    "code": "1067",
+    "name": "MISSION COLLEGE OF PHARMACY , VARANASI",
+    "CGId": 10736,
+    "CGCode": "AK1067"
+  },
+  {
+    "code": "1046",
+    "name": "MIT COLLEGE OF PHARMACY , MORADABAD",
+    "CGId": 11234,
+    "CGCode": "AK1046"
+  },
+  {
+    "code": "1156",
+    "name": "MODERN COLLEGE JHANSI",
+    "CGId": 27009,
+    "CGCode": "1156"
+  },
+  {
+    "code": "1152",
+    "name": "MODERN COLLEGE OF PHARMACY,JHANSI",
+    "CGId": 11157,
+    "CGCode": "AK1152"
+  },
+  {
+    "code": "1127",
+    "name": "NAND KISHORE COLLEGE OF PHARMACY,PRAYAGRAJ",
+    "CGId": 10699,
+    "CGCode": "AK1127"
+  },
+  {
+    "code": "1042",
+    "name": "NGI COLLEGE OF PHARMACY , MEERUT",
+    "CGId": 11291,
+    "CGCode": "AK1042"
+  },
+  {
+    "code": "1146",
+    "name": "NIRMALA DEVI PHARMACY COLLEGE,JAUNPUR",
+    "CGId": 11125,
+    "CGCode": "AK1146"
+  },
+  {
+    "code": "1175",
+    "name": "NK College, Mainpuri",
+    "CGId": 28242,
+    "CGCode": "AK1175"
+  },
+  {
+    "code": "1151",
+    "name": "NOVA COLLEGE OF PHARMACY,LUCKNOW",
+    "CGId": 11088,
+    "CGCode": "AK1151"
+  },
+  {
+    "code": "1044",
+    "name": "OM SAI VINDHYA COLLEGE OF PHARMACY , MIRZAPUR",
+    "CGId": 10960,
+    "CGCode": "AK1044"
+  },
+  {
+    "code": "1173",
+    "name": "ONE BEAT COLLEGE OF MEDICAL SCIENCES",
+    "CGId": 28371,
+    "CGCode": "AK1173"
+  },
+  {
+    "code": "1157",
+    "name": "PAHALWAN GURUDEEN COLLEGE OF SCIENCE AND TECHNOLOGY,LALITPUR",
+    "CGId": 10670,
+    "CGCode": "AK1157"
+  },
+  {
+    "code": "1221",
+    "name": "PATHFINDER RESEARCH AND TRAINING FOUNDATION (PRTF)",
+    "CGId": 35618,
+    "CGCode": "AK1221"
+  },
+  {
+    "code": "1065",
+    "name": "PHARMA DEPT SR FOUNDATION JEE COLLEGE OF EDUCATION AND TRAINING , UNNAO",
+    "CGId": 10754,
+    "CGCode": "AK1065"
+  },
+  {
+    "code": "1178",
+    "name": "PMT COLLEGE OF PHARMCY",
+    "CGId": 27963,
+    "CGCode": "1178"
+  },
+  {
+    "code": "1210",
+    "name": "Pranveer Singh Institute of Technology (Pharmacy)",
+    "CGId": 27453,
+    "CGCode": "1210"
+  },
+  {
+    "code": "1060",
+    "name": "R A INSTITUTE OF PHARMACY , SIDDHARTHNAGAR",
+    "CGId": 10868,
+    "CGCode": "AK1060"
+  },
+  {
+    "code": "1007",
+    "name": "R B GAUTAM COLLEGE OF PHARMACY , HATHRAS",
+    "CGId": 10931,
+    "CGCode": "AK1007"
+  },
+  {
+    "code": "1169",
+    "name": "R V INSTITUTE OF PHARMACY",
+    "CGId": 12473,
+    "CGCode": "AK1169"
+  },
+  {
+    "code": "1108",
+    "name": "R. G. S. COLLEGE OF PHARMACY,LUCKNOW",
+    "CGId": 10932,
+    "CGCode": "AK1108"
+  },
+  {
+    "code": "1009",
+    "name": "R. P. S. COLLEGE OF PHARMACY , BARABANKI",
+    "CGId": 11089,
+    "CGCode": "AK1009"
+  },
+  {
+    "code": "1033",
+    "name": "R.A.S. INSTITUTE OF PHARMACY , MAU",
+    "CGId": 10805,
+    "CGCode": "AK1033"
+  },
+  {
+    "code": "1008",
+    "name": "R.G. COLLEGE OF PHARMACY , HATHRAS",
+    "CGId": 11006,
+    "CGCode": "AK1008"
+  },
+  {
+    "code": "1047",
+    "name": "R.N.COLLEGE OF PHARMACY , MORADABAD",
+    "CGId": 11159,
+    "CGCode": "AK1047"
+  },
+  {
+    "code": "1206",
+    "name": "R.P Mishra College of Pharmacy, Fatehpur",
+    "CGId": 42987,
+    "CGCode": "AK1206"
+  },
+  {
+    "code": "1264",
+    "name": "R.S. PHARMACY COLLEGE, VARANASI",
+    "CGId": 38168,
+    "CGCode": "AK1264"
+  },
+  {
+    "code": "1270",
+    "name": "R.S. PHARMACY COLLEGE, VARANASI",
+    "CGId": 38166,
+    "CGCode": "AK1270"
+  },
+  {
+    "code": "1050",
+    "name": "R.S.D. ACADEMY (COLLEGE OF PHARMACY) , MORADABAD",
+    "CGId": 10737,
+    "CGCode": "AK1050"
+  },
+  {
+    "code": "1049",
+    "name": "RADHA GOVIND COLLEGE OF PHARMACY , MORADABAD",
+    "CGId": 10806,
+    "CGCode": "AK1049"
+  },
+  {
+    "code": "1014",
+    "name": "RADHA KRISHNA COLLEGE OF PHARMACY , KANPUR NAGAR",
+    "CGId": 10807,
+    "CGCode": "AK1014"
+  },
+  {
+    "code": "1264 AKTU",
+    "name": "RAJ KALI DEVI PHARMACY COLLEGE, RAEBARELI",
+    "CGId": 38177,
+    "CGCode": "1264 AKTU"
+  },
+  {
+    "code": "309",
+    "name": "RAJ KUMAR GOEL ENGINEERING COLLEGE,GHAZIABAD",
+    "CGId": 10870,
+    "CGCode": "AK309"
+  },
+  {
+    "code": "1213",
+    "name": "Rajkiya Engineering college ,Basti",
+    "CGId": 35530,
+    "CGCode": "ak1213"
+  },
+  {
+    "code": "1216",
+    "name": "RAJKIYA ENGINEERING COLLEGE PRATAPGARH",
+    "CGId": 36819,
+    "CGCode": "AK1216"
+  },
+  {
+    "code": "1214",
+    "name": "Rajkiya Engineering college, Gonda",
+    "CGId": 35550,
+    "CGCode": "AK1214"
+  },
+  {
+    "code": "1215",
+    "name": "Rajkiya Engineering college, Mirzapur",
+    "CGId": 35515,
+    "CGCode": "AK1215"
+  },
+  {
+    "code": "1006",
+    "name": "RAM SINGH COLLEGE OF PHARMACY   , FIROZABAD",
+    "CGId": 10642,
+    "CGCode": "AK1006"
+  },
+  {
+    "code": "1069",
+    "name": "RAMA INSTITUTE OF HIGHER EDUCATION , Bijnor",
+    "CGId": 10643,
+    "CGCode": "AK1069"
+  },
+  {
+    "code": "1185",
+    "name": "RBS MAHAVIDYALAYA",
+    "CGId": 19412,
+    "CGCode": "1185"
+  },
+  {
+    "code": "1244",
+    "name": "REMESHWARAM PHARMACY COLLEGE, Sitapur",
+    "CGId": 43093,
+    "CGCode": "AK1244"
+  },
+  {
+    "code": "1051",
+    "name": "RIDDHI SIDDHI INSTITUTE OF PHARMACY , LUCKNOW",
+    "CGId": 12464,
+    "CGCode": "AK1051"
+  },
+  {
+    "code": "1088",
+    "name": "RISHI RAM NARESH COLLEGE OF PHARMACY,MAU",
+    "CGId": 11295,
+    "CGCode": "AK1088"
+  },
+  {
+    "code": "1094",
+    "name": "RIYA INTERNATIONAL COLLEGE KALIYANPUR G T ROAD ALIGARH ,ALIGARH",
+    "CGId": 11161,
+    "CGCode": "AK1094"
+  },
+  {
+    "code": "1195",
+    "name": "ROOTS INSTITUTE OF PROFESSIONAL EDUCATION",
+    "CGId": 28288,
+    "CGCode": "AK1195"
+  },
+  {
+    "code": "1039",
+    "name": "RUDRA COLLEGE OF PHARMACY , MEERUT",
+    "CGId": 10783,
+    "CGCode": "AK1039"
+  },
+  {
+    "code": "1241",
+    "name": "RUMA INSTITUTE OF PHARMACY, Pratapgarh",
+    "CGId": 38433,
+    "CGCode": "AK1241"
+  },
+  {
+    "code": "1078",
+    "name": "S B S L D COLLEGE OF PHARMACY , ETAH",
+    "CGId": 12465,
+    "CGCode": "AK1078"
+  },
+  {
+    "code": "1194",
+    "name": "S R M S INTERNATIONAL BUSINESS SCHOOL, Unnao",
+    "CGId": 38430,
+    "CGCode": "AK1194"
+  },
+  {
+    "code": "1160",
+    "name": "S. B. S. DADDU JI COLLEGE OF PHARMACY",
+    "CGId": 10873,
+    "CGCode": "AK1160"
+  },
+  {
+    "code": "1135",
+    "name": "S. J. INSTITUTE OF PHARMACY,KANPUR NAGAR",
+    "CGId": 10971,
+    "CGCode": "AK1135"
+  },
+  {
+    "code": "1019",
+    "name": "S. N. COLLEGE OF PHARMACY , JAUNPUR",
+    "CGId": 10784,
+    "CGCode": "AK1019"
+  },
+  {
+    "code": "1132",
+    "name": "SAINATH COLLEGE OF PHARMACY,SONBHADRA",
+    "CGId": 11200,
+    "CGCode": "AK1132"
+  },
+  {
+    "code": "1117",
+    "name": "SAINIK PHARMACY COLLEGE,PRAYAGRAJ",
+    "CGId": 10675,
+    "CGCode": "AK1117"
+  },
+  {
+    "code": "1110",
+    "name": "SAKSHI COLLEGE OF PHARMACY,KANPUR NAGAR",
+    "CGId": 11241,
+    "CGCode": "AK1110"
+  },
+  {
+    "code": "1122",
+    "name": "SAMARPAN COLLEGE OF PHARMACY,LUCKNOW",
+    "CGId": 11058,
+    "CGCode": "AK1122"
+  },
+  {
+    "code": "1041",
+    "name": "SAMARTH INSTITUTE FOR EDUCATION AND TECHNOLOGY  , MEERUT",
+    "CGId": 11327,
+    "CGCode": "AK1041"
+  },
+  {
+    "code": "1167",
+    "name": "SANT BHEEKHADAS NAKCHHED TIWARI PHARMACY COLLEGE",
+    "CGId": 12472,
+    "CGCode": "AK1167"
+  },
+  {
+    "code": "1080",
+    "name": "SARASWATHI COLLEGE OF PHARMACY , GHAZIABAD",
+    "CGId": 11033,
+    "CGCode": "AK1080"
+  },
+  {
+    "code": "1071",
+    "name": "SARDAR PATEL COLLEGE OF PHARMACY , GORAKHPUR",
+    "CGId": 10761,
+    "CGCode": "AK1071"
+  },
+  {
+    "code": "1090",
+    "name": "SCPM COLLEGE OF PHARMACY,GONDA",
+    "CGId": 11163,
+    "CGCode": "AK1090"
+  },
+  {
+    "code": "1170",
+    "name": "SD COLLEGE OF SDCIENCE (PHARMACY)",
+    "CGId": 12474,
+    "CGCode": "AK1170"
+  },
+  {
+    "code": "1021",
+    "name": "SEIKO COLLEGE OF PHARMACY , LUCKNOW",
+    "CGId": 10975,
+    "CGCode": "AK1021"
+  },
+  {
+    "code": "1074",
+    "name": "SETH BADRI PRASAD SMARITI MAHAVIDHALAYA DEPARTMENT OF PHARMACY , JALAUN",
+    "CGId": 10877,
+    "CGCode": "AK1074"
+  },
+  {
+    "code": "1037",
+    "name": "SHARDA COLLEGE OF PHARMACY , MEERUT",
+    "CGId": 11164,
+    "CGCode": "AK1037"
+  },
+  {
+    "code": "281",
+    "name": "SHERWOOD COLLEGE OF ENG. RESEARCH & TECH. BARABANKI",
+    "CGId": 19569,
+    "CGCode": "281"
+  },
+  {
+    "code": "1048",
+    "name": "SHREE JI INSTITUTE OF PHARMACEUTICAL EDUCATION AND RESEARCH , MORADABAD",
+    "CGId": 11243,
+    "CGCode": "AK1048"
+  },
+  {
+    "code": "1061",
+    "name": "SHREE KRISHNA COLLEGE OF PHARMACY , SITAPUR",
+    "CGId": 11206,
+    "CGCode": "AK1061"
+  },
+  {
+    "code": "1083",
+    "name": "SHREE SATYA COLLEGE OF HIGHER EDUCATION , MORADABAD",
+    "CGId": 10677,
+    "CGCode": "AK1083"
+  },
+  {
+    "code": "1031",
+    "name": "SHRI BABULAL COLLEGE OF PHARMACY , MATHURA",
+    "CGId": 11128,
+    "CGCode": "AK1031"
+  },
+  {
+    "code": "1026",
+    "name": "SHRI RAM COLLEGE OF PHARMACY , MUZAFFARNAGAR",
+    "CGId": 10979,
+    "CGCode": "AK1026"
+  },
+  {
+    "code": "1128",
+    "name": "SHRI RAM LAKHAN SINGH SHIKSHAN SANSTHAN,JAUNPUR",
+    "CGId": 10846,
+    "CGCode": "AK1128"
+  },
+  {
+    "code": "1002",
+    "name": "SHRI RAMESHWAR COLLEGE OF PHARMACY , HAPUR",
+    "CGId": 10787,
+    "CGCode": "AK1002"
+  },
+  {
+    "code": "1154",
+    "name": "SHRI RATAN SINGH COLLEGE OF PHARMACY,SHAHJAHANPUR",
+    "CGId": 11165,
+    "CGCode": "AK1154"
+  },
+  {
+    "code": "1123",
+    "name": "SHRI SAI COLLEGE OF PHARMACY,PRAYAGRAJ",
+    "CGId": 11298,
+    "CGCode": "AK1123"
+  },
+  {
+    "code": "1059",
+    "name": "SHRI SANTAN PAL SINGH PHARMACY COLLEGE , SHAHJAHANPUR",
+    "CGId": 10678,
+    "CGCode": "AK1059"
+  },
+  {
+    "code": "1016",
+    "name": "SHRI VISHNU BHAGWAN COLLEGE OF PHARMACY , KASGANJ",
+    "CGId": 11166,
+    "CGCode": "AK1016"
+  },
+  {
+    "code": "1138",
+    "name": "SHRI VISHWANATH COLLEGE OF PHARMACY,SULTANPUR",
+    "CGId": 10788,
+    "CGCode": "AK1138"
+  },
+  {
+    "code": "1013",
+    "name": "SIGNA COLLEGE OF PHARMACY , KANPUR NAGAR",
+    "CGId": 11272,
+    "CGCode": "AK1013"
+  },
+  {
+    "code": "1100",
+    "name": "SPECTRUM HI PHARMACY COLLEGE,SULTANPUR",
+    "CGId": 11329,
+    "CGCode": "AK1100"
+  },
+  {
+    "code": "1145",
+    "name": "SRAJAN INSTITUTE OF PHARMACY,KHERI",
+    "CGId": 10705,
+    "CGCode": "AK1145"
+  },
+  {
+    "code": "1079",
+    "name": "SRAM COLLEGE OF PHARMACY , FIROZABAD",
+    "CGId": 10836,
+    "CGCode": "AK1079"
+  },
+  {
+    "code": "1028",
+    "name": "SRC PHARMACY COLLEGE , MATHURA",
+    "CGId": 12462,
+    "CGCode": "AK1028"
+  },
+  {
+    "code": "1076",
+    "name": "SRI RAM GOPAL COLLEGE OF PHARMACY , AGRA",
+    "CGId": 10847,
+    "CGCode": "AK1076"
+  },
+  {
+    "code": "1171",
+    "name": "SRI SAI RR INSTITUTE OF PHARMACY",
+    "CGId": 28277,
+    "CGCode": "AK1171"
+  },
+  {
+    "code": "1113",
+    "name": "SRI SURESH CHANDRA EDUCATIONAL INSTITUTE, BHITI, HANDIA, ALLAHABAD,PRAYAGRAJ",
+    "CGId": 10981,
+    "CGCode": "AK1113"
+  },
+  {
+    "code": "1245",
+    "name": "SRI VIMAL NATH PHARMACY INSTITUTE",
+    "CGId": 42426,
+    "CGCode": "AK1245"
+  },
+  {
+    "code": "1104",
+    "name": "SS COLLEGE OF PHARMACY,MAINPURI",
+    "CGId": 11014,
+    "CGCode": "AK1104"
+  },
+  {
+    "code": "1174",
+    "name": "SUN PHARMACY COLLEGE, JAUNPUR",
+    "CGId": 35446,
+    "CGCode": "AK1174"
+  },
+  {
+    "code": "1133",
+    "name": "SWAMI VIVEKANAND COLLEGE OF PHARMACY,BASTI",
+    "CGId": 10838,
+    "CGCode": "AK1133"
+  },
+  {
+    "code": "1219",
+    "name": "TH. HAR NARAYAN SINGH MAHAVIDYALAYA, KARAILABAGH, PRAYAGRAJ",
+    "CGId": 36902,
+    "CGCode": "ak1219"
+  },
+  {
+    "code": "590",
+    "name": "TRIVEDI INSTITUTE OF MANAGEMENT & TECHNOLOGY,FATEHPUR",
+    "CGId": 11274,
+    "CGCode": "AK590"
+  },
+  {
+    "code": "1180",
+    "name": "TULSA DEVI INSTITUTE OF PHARMACY AND SCIENCES",
+    "CGId": 12476,
+    "CGCode": "AK1180"
+  },
+  {
+    "code": "1211",
+    "name": "U.P Institute of Design & Research, Lucknow",
+    "CGId": 28539,
+    "CGCode": "ak1211"
+  },
+  {
+    "code": "1035",
+    "name": "UMALOK COLLEGE OF PHARMACY , MEERUT",
+    "CGId": 10614,
+    "CGCode": "AK1035"
+  },
+  {
+    "code": "1030",
+    "name": "UNNATI PHARMACY COLLEGE , MATHURA",
+    "CGId": 11301,
+    "CGCode": "AK1030"
+  },
+  {
+    "code": "1115",
+    "name": "USHA COLLEGE OF PHARMACY AND MEDICAL SCIENCES,AMBEDKAR NAGAR",
+    "CGId": 10988,
+    "CGCode": "AK1115"
+  },
+  {
+    "code": "1177",
+    "name": "UTTAR PRADESH INSTITUTE OF DESIGN & RESEARCH",
+    "CGId": 28536,
+    "CGCode": "AK1177"
+  },
+  {
+    "code": "1118",
+    "name": "VANDANA INSTITUTE OF PHARMACY,GHAZIPUR",
+    "CGId": 10766,
+    "CGCode": "AK1118"
+  },
+  {
+    "code": "1142",
+    "name": "VANSHA DEVI MAHAVIDYALAYA,JAUNPUR",
+    "CGId": 10814,
+    "CGCode": "AK1142"
+  },
+  {
+    "code": "1082",
+    "name": "VENKATESHWARA COLLEGE OF PHARMACY , MEERUT",
+    "CGId": 10647,
+    "CGCode": "AK1082"
+  },
+  {
+    "code": "1130",
+    "name": "VIDUSHI COLLEGE OF PHARMACY,AMBEDKAR NAGAR",
+    "CGId": 10792,
+    "CGCode": "AK1130"
+  },
+  {
+    "code": "1139",
+    "name": "VIDYA BHAVAN COLLEGE OF PHARMACY,KANPUR NAGAR",
+    "CGId": 12469,
+    "CGCode": "AK1139"
+  },
+  {
+    "code": "1202",
+    "name": "Vidyawati Devi College of Pharmacy",
+    "CGId": 35447,
+    "CGCode": "ak1202"
+  },
+  {
+    "code": "1228",
+    "name": "VIDYAWATI NIGAM MEMORIAL COLLEGE OF PHARMACY, BANDA",
+    "CGId": 36903,
+    "CGCode": "AK1228"
+  },
+  {
+    "code": "1168",
+    "name": "VIIT PHARMACY COLLEGE",
+    "CGId": 10984,
+    "CGCode": "AK1168"
+  },
+  {
+    "code": "1147",
+    "name": "VIJAY PHARMACY COLLEGE,JAUNPUR",
+    "CGId": 10840,
+    "CGCode": "AK1147"
+  },
+  {
+    "code": "1140",
+    "name": "YASHRAJ COLLEGE OF PROFESSIONAL STUDIES,KANPUR NAGAR",
+    "CGId": 11246,
+    "CGCode": "AK1140"
+  },
+  {
+    "code": "1159",
+    "name": "ZEE COLLEGE OF PHARMACY",
+    "CGId": 10815,
+    "CGCode": "AK1159"
   }
 ]

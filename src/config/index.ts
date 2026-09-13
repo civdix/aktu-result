@@ -1,3 +1,6 @@
+import dotenv from 'dotenv';
+dotenv.config();
+
 export const getMongoUri = () => {
   if (typeof process !== 'undefined' && process.env?.MONGO_DB_URI) {
     return process.env.MONGO_DB_URI;

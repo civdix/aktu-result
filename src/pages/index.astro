@@ -27,8 +27,8 @@ const homeKeywords = "aktu result without dob, aktu one view, aktu result direct
 ---
 
 <Layout 
-  title="Find AKTU Roll Number by Name & College | Class Roster Finder"
-  description="Easily find Dr. A.P.J. Abdul Kalam Technical University (AKTU) roll numbers by student name, college, and branch. Check class rosters and student lists instantly."
+  title="AKTU Result Without DOB | View Full One View Results Online"
+  description="Forget your Date of Birth? Retrieve your full AKTU One View results sheet instantly using your Roll Number. Secure, fast, and student-focused query tool."
   keywords={homeKeywords}
   jsonLd={jsonLd}
 >
@@ -51,12 +51,12 @@ const homeKeywords = "aktu result without dob, aktu one view, aktu result direct
 
           <!-- Main Headline -->
           <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.1] bg-gradient-to-b from-white to-gray-400 dark:from-white dark:to-gray-400 light:from-ink light:to-gray-800 bg-clip-text text-transparent">
-            Find AKTU Roll Number <br class="hidden lg:inline" />
-            <span class="bg-gradient-to-r from-brand-blue via-brand-blue-light to-purple-500 bg-clip-text text-transparent">By Name & College</span>
+            Find your AKTU Result <br class="hidden lg:inline" />
+            <span class="bg-gradient-to-r from-brand-blue via-brand-blue-light to-purple-500 bg-clip-text text-transparent">Without Date of Birth</span>
           </h1>
 
           <p class="text-sm sm:text-base md:text-lg text-gray-400 light:text-gray-600 leading-relaxed max-w-xl mx-auto md:mx-0">
-            Forgot your roll number or date of birth? Search students by name, select your college and branch, and instantly find valid AKTU roll numbers and class rosters.
+            Forget your credentials? Simply enter your university Roll Number to authenticate and display your complete academic grades card instantly without needing your Date of Birth.
           </p>
 
           <!-- Live Search Metrics -->
@@ -78,32 +78,29 @@ const homeKeywords = "aktu result without dob, aktu one view, aktu result direct
             <div class="flex bg-black/40 light:bg-gray-100 p-1 rounded-xl mb-6 border border-white/5 light:border-black/5 text-[10px] sm:text-xs font-bold gap-x-2">
               <button 
                 type="button"
-                id="home-tab-roll-finder" 
+                id="home-tab-check-result" 
                 class="flex-1 py-2 text-center rounded-lg bg-brand-blue text-white focus:outline-none transition-all flex items-center justify-center gap-1.5 cursor-pointer select-none"
               >
-                <span>🔍 Roll Finder</span>
-                <span class="px-1.5 py-0.5 text-[8px] bg-emerald-500/20 text-emerald-400 rounded-md font-extrabold uppercase tracking-wide">Active</span>
+                <span>⚡ Check Result</span>
               </button>
               <button 
                 type="button"
-                id="home-tab-check-result" 
+                id="home-tab-roll-finder" 
                 class="flex-1 py-2 text-center rounded-lg text-gray-400 hover:text-white light:text-gray-600 light:hover:text-ink focus:outline-none transition-all flex items-center justify-center gap-1.5 cursor-pointer select-none"
               >
-                <span>⚡ Result</span>
-                <span class="px-1.5 py-0.5 text-[8px] bg-amber-500/20 text-amber-500 rounded-md font-extrabold uppercase tracking-wide">Offline</span>
+                <span>🔍 Roll Finder</span>
               </button>
               <button 
                 type="button"
                 id="home-tab-dob-finder" 
                 class="flex-1 py-2 text-center rounded-lg text-gray-400 hover:text-white light:text-gray-600 light:hover:text-ink focus:outline-none transition-all flex items-center justify-center gap-1.5 cursor-pointer select-none"
               >
-                <span>🔑 DOB Finder</span>
-                <span class="px-1.5 py-0.5 text-[8px] bg-amber-500/20 text-amber-500 rounded-md font-extrabold uppercase tracking-wide">Offline</span>
+                <span>🤖 Telegram Bot</span>
               </button>
             </div>
 
-            <!-- TAB 1: Roll Finder Content -->
-            <div id="home-view-roll-finder" class="space-y-6">
+            <!-- TAB 2: Roll Finder Content -->
+            <div id="home-view-roll-finder" class="hidden space-y-6">
               <form id="home-finder-form" class="space-y-5">
                 <!-- Admission Year -->
                 <div class="relative" id="home-year-combobox">
@@ -143,7 +140,6 @@ const homeKeywords = "aktu result without dob, aktu one view, aktu result direct
                     </div>
                   </div>
                 </div>
-
                 <!-- College -->
                 <div class="relative" id="home-college-combobox">
                   <label class="block text-xs font-semibold text-gray-400 light:text-gray-500 uppercase tracking-wider mb-2">
@@ -291,93 +287,98 @@ const homeKeywords = "aktu result without dob, aktu one view, aktu result direct
               </div>
             </div>
 
-            <!-- TAB 2: Check Result Content (Maintenance state) -->
-            <div id="home-view-check-result" class="hidden space-y-6">
-              <!-- Maintenance Overlay Panel -->
-              <div class="p-4 rounded-xl border border-amber-500/20 bg-amber-500/5 text-amber-500 text-xs leading-relaxed space-y-3">
-                <div class="flex items-center gap-2 font-bold text-sm">
-                  <span>🛠️</span>
-                  <span>System Maintenance in Progress</span>
-                </div>
-                <p>
-                  The AKTU One View results parser is currently undergoing critical updates. Due to recent security upgrades on the official university portal, result queries via roll number bypass are temporarily offline.
-                </p>
-                <div class="text-[10px] text-gray-400">
-                  Status: <strong class="text-amber-400 font-bold uppercase tracking-wider">Awaiting Engine Patch</strong>
-                </div>
-              </div>
-
-              <!-- Grayed-out/Disabled Form Preview for Premium Feel -->
-              <div class="opacity-30 pointer-events-none select-none relative">
-                <form id="search-form" class="space-y-6">
-                  <div>
-                    <label class="block text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">
+            <!-- TAB 1: Check Result Content -->
+            <div id="home-view-check-result" class="space-y-6">
+              <form id="search-form" class="space-y-6">
+                <div>
+                  <div class="flex justify-between items-center mb-2">
+                    <label for="roll-number" class="block text-xs font-semibold text-gray-400 light:text-gray-500 uppercase tracking-wider">
                       University Roll Number
                     </label>
-                    <input 
-                      type="text" 
-                      id="roll-number" 
-                      placeholder="e.g. 2200650100100" 
-                      disabled
-                      class="w-full px-4 py-3 bg-white/[0.03] border border-white/[0.08] rounded-xl text-white placeholder-gray-600"
-                    />
+                    <button 
+                      type="button" 
+                      id="home-switch-to-roll-finder" 
+                      class="text-[10px] text-brand-blue font-bold hover:underline cursor-pointer bg-transparent border-none p-0 focus:outline-none"
+                    >
+                      Forgot Roll Number?
+                    </button>
                   </div>
+                  <input 
+                    type="text" 
+                    id="roll-number" 
+                    name="rollNumber"
+                    placeholder="e.g. 2200650100100" 
+                    required
+                    pattern="^[0-9]{10,15}$"
+                    class="w-full px-4 py-3 bg-white/[0.03] light:bg-black/[0.02] border border-white/[0.08] light:border-black/[0.08] rounded-xl text-white light:text-ink placeholder-gray-600 focus:outline-none focus:border-brand-blue focus:ring-1 focus:ring-brand-blue transition-all"
+                  />
+                  <span class="text-[10px] text-gray-500 light:text-gray-400 mt-1 block">Enter your 10 to 14 digit AKTU university roll number. No Date of Birth or token required.</span>
+                </div>
 
-                  <div class="p-4 rounded-xl bg-white/[0.02] border border-white/[0.06]">
-                    <label class="block text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">
-                      Verification Captcha
-                    </label>
-                    <div class="flex items-center gap-3">
-                      <div class="px-3.5 py-1.5 bg-brand-blue/10 border border-brand-blue/20 rounded-lg font-mono text-brand-blue text-sm font-bold">
-                        <span id="captcha-num1">8</span> + <span id="captcha-num2">4</span> = ?
-                      </div>
-                      <input 
-                        type="number" 
-                        id="captcha-answer" 
-                        placeholder="Result" 
-                        disabled
-                        class="flex-1 px-3 py-1.5 bg-white/[0.03] border border-white/[0.08] rounded-lg"
-                      />
-                    </div>
-                  </div>
+                <button 
+                  type="submit" 
+                  id="search-btn"
+                  class="w-full py-3.5 bg-gradient-to-r from-brand-blue to-purple-600 hover:from-brand-blue-hover hover:to-purple-700 text-white text-sm font-semibold rounded-xl premium-shadow-dark hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer"
+                >
+                  <span>⚡ Check Result</span>
+                  <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                  </svg>
+                </button>
+              </form>
 
-                  <button 
-                    type="button" 
-                    disabled
-                    class="w-full py-3.5 bg-gray-700 text-gray-400 text-sm font-semibold rounded-xl"
-                  >
-                    Unavailable (Under Maintenance)
-                  </button>
-                </form>
-              </div>
+              <!-- Search Manual Security Code Modal Container -->
+              <div id="search-manual-captcha-container" class="hidden space-y-4"></div>
+
+              <!-- Search Verified Profile & Direct Launcher Container -->
+              <div id="search-verified-profile-container" class="hidden space-y-4"></div>
             </div>
 
-            <!-- TAB 3: DOB Finder Content (Maintenance state) -->
-            <div id="home-view-dob-finder" class="hidden space-y-6 py-4 text-center">
-              <div class="w-14 h-14 bg-amber-500/10 text-amber-500 rounded-full flex items-center justify-center text-xl mx-auto border border-amber-500/20 premium-shadow-dark">
-                🔒
-              </div>
-              <div class="space-y-2">
-                <h3 class="text-sm font-bold text-white light:text-ink">Automated Scanner Offline</h3>
-                <p class="text-xs text-gray-450 light:text-gray-500 leading-relaxed max-w-sm mx-auto">
-                  The automated student Date of Birth range scanner is currently offline. Host whitelists are active but session validation is paused due to portal security patches.
+            <!-- TAB 3: Telegram Bot Content -->
+            <div id="home-view-dob-finder" class="hidden space-y-5 text-left">
+              <div class="p-4 rounded-xl border border-blue-500/30 bg-blue-500/10 text-xs text-gray-300 light:text-gray-600 leading-relaxed space-y-2">
+                <div class="flex items-center gap-2">
+                  <span class="text-base leading-none">🤖</span>
+                  <span class="font-bold text-white text-sm">AKTU Official Marksheet Telegram Bot</span>
+                </div>
+                <p>
+                  Retrieve your complete semester results, download official PDF marksheets, and view all SGPA/CGPA breakdowns directly on Telegram with zero Date of Birth needed!
                 </p>
               </div>
 
-              <div class="grid grid-cols-3 gap-2 text-[9px] font-bold border-t border-b border-white/[0.06] py-3 text-gray-400">
-                <div>
-                  <div>IP Nodes</div>
-                  <span class="text-amber-500 mt-1 block">⚠️ Blocked</span>
-                </div>
-                <div>
-                  <div>Scanner</div>
-                  <span class="text-gray-500 mt-1 block">💤 Paused</span>
-                </div>
-                <div>
-                  <div>Database API</div>
-                  <span class="text-emerald-500 mt-1 block">🟢 Live</span>
-                </div>
+              <div class="p-4 rounded-xl bg-black/40 light:bg-black/5 border border-white/10 space-y-3 font-sans text-xs">
+                <div class="font-bold text-white light:text-ink text-xs uppercase tracking-wider">Features on Telegram Bot:</div>
+                <ul class="space-y-2.5 text-gray-300 light:text-gray-700">
+                  <li class="flex items-center gap-2">
+                    <span class="text-emerald-400 font-bold">✓</span>
+                    <span><b>Zero Date of Birth Required:</b> Direct verified lookup</span>
+                  </li>
+                  <li class="flex items-center gap-2">
+                    <span class="text-emerald-400 font-bold">✓</span>
+                    <span><b>Official PDF Marksheet:</b> High-resolution transcript document</span>
+                  </li>
+                  <li class="flex items-center gap-2">
+                    <span class="text-emerald-400 font-bold">✓</span>
+                    <span><b>Pre-Expanded HTML:</b> View all semester tables in one page</span>
+                  </li>
+                  <li class="flex items-center gap-2">
+                    <span class="text-emerald-400 font-bold">✓</span>
+                    <span><b>24/7 Available:</b> Instant automated results</span>
+                  </li>
+                </ul>
               </div>
+
+              <a 
+                href="https://t.me/akturesultwithoutdobbot" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                class="w-full py-4 bg-gradient-to-r from-brand-blue via-blue-500 to-purple-600 hover:from-brand-blue-hover hover:to-purple-700 text-white text-sm font-bold rounded-xl shadow-lg transition-all hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2 text-center cursor-pointer"
+              >
+                <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
+                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.75-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z"/>
+                </svg>
+                <span>👉 Open @akturesultwithoutdobbot</span>
+              </a>
             </div>
 
 
@@ -746,18 +747,6 @@ const homeKeywords = "aktu result without dob, aktu one view, aktu result direct
         pageRollInput.classList.add("ring-2", "ring-brand-blue/50");
       }, 150);
     }
-
-    // Create random Captcha
-    const generateCaptcha = () => {
-      const num1 = Math.floor(Math.random() * 9) + 1;
-      const num2 = Math.floor(Math.random() * 9) + 1;
-      document.getElementById("captcha-num1").textContent = num1;
-      document.getElementById("captcha-num2").textContent = num2;
-      return num1 + num2;
-    };
-
-    let expectedCaptchaSum = generateCaptcha();
-
     // DOM Elements
     const heroGrid = document.getElementById("hero-grid");
     const heroCopy = document.getElementById("hero-copy");
@@ -769,7 +758,6 @@ const homeKeywords = "aktu result without dob, aktu one view, aktu result direct
     const errorState = document.getElementById("error-state");
 
     const rollInput = document.getElementById("roll-number");
-    const captchaInput = document.getElementById("captcha-answer");
 
     const resultName = document.getElementById("result-name");
     const resultFather = document.getElementById("result-father");
@@ -1122,9 +1110,17 @@ const homeKeywords = "aktu result without dob, aktu one view, aktu result direct
       loaderState.classList.add("hidden");
       resultState.classList.add("hidden");
       errorState.classList.add("hidden");
+      const verifiedProfileContainer = document.getElementById("search-verified-profile-container");
+      if (verifiedProfileContainer) {
+        verifiedProfileContainer.classList.add("hidden");
+        verifiedProfileContainer.innerHTML = "";
+      }
+      const manualCaptchaContainer = document.getElementById("search-manual-captcha-container");
+      if (manualCaptchaContainer) {
+        manualCaptchaContainer.classList.add("hidden");
+        manualCaptchaContainer.innerHTML = "";
+      }
       rollInput.value = "";
-      captchaInput.value = "";
-      expectedCaptchaSum = generateCaptcha();
       
       // Revert layout back to initial columns
       if (heroGrid && heroCopy && heroCardWrapper) {
@@ -1465,6 +1461,10 @@ const homeKeywords = "aktu result without dob, aktu one view, aktu result direct
     tabCheckResult?.addEventListener("click", () => switchTab(tabCheckResult, viewCheckResult));
     tabDobFinder?.addEventListener("click", () => switchTab(tabDobFinder, viewDobFinder));
 
+    document.getElementById("home-switch-to-roll-finder")?.addEventListener("click", () => {
+      switchTab(tabRollFinder, viewRollFinder);
+    });
+
     // Home Roll Finder Captcha Generator
     const generateHomeFinderCaptcha = () => {
       const num1 = Math.floor(Math.random() * 9) + 1;
@@ -1626,7 +1626,16 @@ const homeKeywords = "aktu result without dob, aktu one view, aktu result direct
         // Bind Select buttons
         homeFinderOutput.querySelectorAll(".home-select-student-btn").forEach(btn => {
           btn.addEventListener("click", () => {
-            alert("AKTU One View Result Retrieval is currently under maintenance. We are patching the scraper to bypass the new CAPTCHA updates. Please try again later.");
+            const roll = btn.getAttribute("data-roll");
+            if (roll) {
+              switchTab(tabCheckResult, viewCheckResult);
+              const rollInp = document.getElementById("roll-number");
+              if (rollInp) {
+                rollInp.value = roll;
+                rollInp.focus();
+                rollInp.scrollIntoView({ behavior: 'smooth', block: 'center' });
+              }
+            }
           });
         });
 
@@ -1657,23 +1666,275 @@ const homeKeywords = "aktu result without dob, aktu one view, aktu result direct
       }
     });
 
-    searchForm.addEventListener("submit", (e) => {
-      e.preventDefault();
-      
-      const enteredRoll = rollInput.value.trim();
-      const enteredAnswer = parseInt(captchaInput.value.trim(), 10);
+    // Home DOB Finder Form Handler
+    const homeDobForm = document.getElementById("home-dob-form");
+    const homeDobLoader = document.getElementById("home-dob-loader");
+    const homeDobOutput = document.getElementById("home-dob-output");
 
-      // Validate Captcha
-      if (enteredAnswer !== expectedCaptchaSum) {
-        alert("Incorrect Captcha Answer. Please try again.");
-        expectedCaptchaSum = generateCaptcha();
-        captchaInput.value = "";
-        return;
+    homeDobForm?.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const rollInputEl = document.getElementById("home-dob-roll");
+      const roll = rollInputEl?.value.trim();
+
+      if (!roll) return;
+
+      homeDobForm.classList.add("hidden");
+      homeDobLoader.classList.remove("hidden");
+      homeDobOutput.classList.add("hidden");
+
+      try {
+        const res = await fetch("/api/dob", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ rollNumber: roll })
+        });
+
+        homeDobLoader.classList.add("hidden");
+        homeDobOutput.classList.remove("hidden");
+
+        const data = await res.json();
+      function renderDobSuccessCard(data) {
+        const studentName = data.student?.name || data.name || "Verified Student";
+        const enrollmentNo = data.student?.enrollmentNo || data.enrollmentNumber;
+        const enrollmentHtml = (enrollmentNo && enrollmentNo !== '--') ? `<div class="text-xs font-mono text-gray-400">Enrollment No: <span class="font-bold text-white">${enrollmentNo}</span></div>` : '';
+        const fatherName = data.student?.fatherName ? `<div class="text-xs text-gray-400">Father's Name: <span class="text-gray-200">${data.student.fatherName}</span></div>` : '';
+        const course = data.student?.course ? `<div class="text-xs text-gray-400">Course: <span class="text-gray-200">${data.student.course}</span></div>` : '';
+        const college = data.student?.college ? `<div class="text-[11px] text-gray-400">College: <span class="text-gray-200">${data.student.college}</span></div>` : '';
+
+        homeDobOutput.innerHTML = `
+          <div class="p-4 rounded-xl border border-emerald-500/30 bg-emerald-500/10 space-y-3 text-left">
+            <div class="flex items-center justify-between">
+              <span class="text-[10px] uppercase font-bold text-emerald-400 tracking-wider">DOB Located Successfully</span>
+              <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/20 text-emerald-300">Verified</span>
+            </div>
+            <div>
+              <div class="text-sm font-bold text-white">${studentName}</div>
+              <div class="text-xs font-mono text-gray-400">Roll: <span class="font-bold text-white">${data.rollNumber}</span></div>
+              ${enrollmentHtml}
+              ${fatherName}
+              ${course}
+              ${college}
+            </div>
+            <div class="p-3 bg-black/40 rounded-xl border border-emerald-500/20 flex items-center justify-between">
+              <div>
+                <span class="text-[10px] uppercase font-bold text-gray-400">Registered Date of Birth:</span>
+                <div class="text-base font-mono font-extrabold text-emerald-400 tracking-wide">${data.dob}</div>
+              </div>
+              <button 
+                type="button" 
+                id="dob-copy-val-btn" 
+                class="px-2.5 py-1.5 bg-white/10 hover:bg-white/20 text-white rounded-lg text-xs font-semibold transition-all flex items-center gap-1 cursor-pointer"
+              >
+                <span>📋 Copy</span>
+              </button>
+            </div>
+            <button 
+              type="button" 
+              id="dob-use-result-btn" 
+              class="w-full py-3 bg-gradient-to-r from-brand-blue to-purple-600 hover:from-brand-blue-hover hover:to-purple-700 text-white text-xs font-bold rounded-xl transition-all cursor-pointer shadow-lg flex items-center justify-center gap-1.5"
+            >
+              <span>🚀 Open AKTU OneView (DOB Copied)</span>
+              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
+            </button>
+          </div>
+          <button type="button" id="dob-reset-btn" class="w-full py-2 bg-white/[0.05] hover:bg-white/[0.1] text-white text-xs font-semibold rounded-lg mt-1 cursor-pointer transition-all">Scan Another Roll</button>
+        `;
+
+        document.getElementById("dob-copy-val-btn")?.addEventListener("click", () => {
+          if (data.dob) {
+            navigator.clipboard.writeText(data.dob).then(() => {
+              const btn = document.getElementById("dob-copy-val-btn");
+              if (btn) btn.innerHTML = `<span>✓ Copied!</span>`;
+              setTimeout(() => {
+                const b = document.getElementById("dob-copy-val-btn");
+                if (b) b.innerHTML = `<span>📋 Copy</span>`;
+              }, 2000);
+            });
+          }
+        });
+
+        document.getElementById("dob-use-result-btn")?.addEventListener("click", () => {
+          if (data.dob) {
+            navigator.clipboard.writeText(data.dob).catch(() => {});
+          }
+          window.open('https://oneview.aktu.ac.in/WebPages/aktu/OneView.aspx', '_blank');
+        });
+
+        document.getElementById("dob-reset-btn")?.addEventListener("click", () => {
+          homeDobOutput.classList.add("hidden");
+          homeDobForm.classList.remove("hidden");
+        });
       }
 
-      // Hide Form & Show Loader
+      function renderManualCaptchaModal(initialData, roll) {
+        let currentSession = initialData.session;
+
+        function updateModal(imgSrc, errorMsg) {
+          homeDobOutput.innerHTML = `
+            <div class="p-4 rounded-xl border border-brand-blue/30 bg-black/60 space-y-3 text-left">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-bold text-brand-blue">Security Verification</span>
+                <span class="text-[10px] text-gray-400">Step 2 of 2</span>
+              </div>
+              <p class="text-xs text-gray-400">Enter the 5 characters shown below to reveal date of birth:</p>
+              
+              <div class="flex items-center justify-center gap-3 p-3 bg-white/5 rounded-xl border border-white/10">
+                <img id="manual-captcha-img" src="${imgSrc}" alt="Security Captcha" class="h-10 rounded shadow bg-white" />
+                <button 
+                  type="button" 
+                  id="refresh-captcha-btn" 
+                  title="Load new code"
+                  class="px-2.5 py-2 bg-white/10 hover:bg-white/20 text-gray-300 hover:text-white rounded-lg transition-all text-xs flex items-center gap-1 cursor-pointer"
+                >
+                  <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" /></svg>
+                  <span>New Code</span>
+                </button>
+              </div>
+
+              ${errorMsg ? `<div class="p-2 rounded-lg bg-rose-500/10 border border-rose-500/20 text-rose-400 text-xs text-center font-medium">${errorMsg}</div>` : ''}
+
+              <input 
+                type="text" 
+                id="manual-security-code-input" 
+                placeholder="Enter 5 characters" 
+                maxlength="6"
+                autocomplete="off"
+                autocapitalize="characters"
+                class="w-full px-3.5 py-2.5 bg-white/5 border border-white/10 rounded-xl text-white text-center font-mono text-sm uppercase tracking-widest focus:outline-none focus:border-brand-blue" 
+              />
+              <button 
+                type="button" 
+                id="submit-security-code-btn" 
+                class="w-full py-3 bg-brand-blue hover:bg-brand-blue-hover text-white text-xs font-bold rounded-xl transition-all cursor-pointer shadow-md flex items-center justify-center gap-1.5"
+              >
+                <span>Verify & Reveal DOB</span>
+                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+              </button>
+            </div>
+            <button type="button" id="dob-cancel-code-btn" class="w-full py-2 bg-white/[0.05] hover:bg-white/[0.1] text-white text-xs font-semibold rounded-lg mt-1 cursor-pointer transition-all">Cancel</button>
+          `;
+
+          const codeInput = document.getElementById("manual-security-code-input");
+          if (codeInput) {
+            codeInput.focus();
+            codeInput.addEventListener("keypress", (e) => {
+              if (e.key === "Enter") {
+                e.preventDefault();
+                submitCode();
+              }
+            });
+            codeInput.addEventListener("input", () => {
+              codeInput.value = codeInput.value.toUpperCase().replace(/[^A-Z0-9]/g, '');
+            });
+          }
+
+          document.getElementById("refresh-captcha-btn")?.addEventListener("click", async () => {
+            const btn = document.getElementById("refresh-captcha-btn");
+            if (btn) btn.innerHTML = `<span class="text-xs">Loading...</span>`;
+            try {
+              const rRes = await fetch("/api/dob", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ rollNumber: roll, action: 'refreshCaptcha' })
+              });
+              const rData = await rRes.json();
+              if (rData && rData.captchaImage) {
+                currentSession = rData.session;
+                updateModal(rData.captchaImage);
+              }
+            } catch (err) {
+              if (btn) btn.innerHTML = `<span>New Code</span>`;
+            }
+          });
+
+          document.getElementById("submit-security-code-btn")?.addEventListener("click", submitCode);
+
+          document.getElementById("dob-cancel-code-btn")?.addEventListener("click", () => {
+            homeDobOutput.classList.add("hidden");
+            homeDobForm.classList.remove("hidden");
+          });
+        }
+
+        async function submitCode() {
+          const codeInput = document.getElementById("manual-security-code-input");
+          const code = codeInput ? codeInput.value.trim().toUpperCase() : "";
+          if (!code || code.length < 4) {
+            if (codeInput) codeInput.focus();
+            return;
+          }
+
+          const submitBtn = document.getElementById("submit-security-code-btn");
+          if (submitBtn) {
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = `
+              <div class="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+              <span>Verifying...</span>
+            `;
+          }
+
+          try {
+            const vRes = await fetch("/api/dob", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ rollNumber: roll, manualCaptcha: code, session: currentSession })
+            });
+            const vData = await vRes.json();
+            if (vData && vData.success && vData.dob) {
+              renderDobSuccessCard(vData);
+            } else if (vData && vData.needsManualCaptcha && vData.captchaImage) {
+              currentSession = vData.session || currentSession;
+              updateModal(vData.captchaImage, vData.error || "Incorrect code. Please enter the new characters shown.");
+            } else {
+              updateModal(initialData.captchaImage, vData?.error || "Verification failed. Please try again.");
+            }
+          } catch (e) {
+            updateModal(initialData.captchaImage, "Network error during verification. Please try again.");
+          }
+        }
+
+        updateModal(initialData.captchaImage);
+      }
+
+      if (data && data.success && data.dob) {
+        renderDobSuccessCard(data);
+      } else if (data && data.needsManualCaptcha && data.captchaImage) {
+        renderManualCaptchaModal(data, roll);
+      } else {
+        homeDobOutput.innerHTML = `
+          <div class="p-4 rounded-xl border border-rose-500/20 bg-rose-500/10 text-rose-400 text-xs text-center space-y-1">
+            <div class="font-bold">Date of Birth Not Found</div>
+            <div class="text-gray-400 text-[11px]">${data?.error || "Could not find registered DOB for this roll number."}</div>
+          </div>
+          <button type="button" id="dob-retry-btn" class="w-full py-2.5 bg-white/[0.05] hover:bg-white/[0.1] text-white text-xs font-semibold rounded-lg mt-2 cursor-pointer transition-all">Try Again</button>
+        `;
+        document.getElementById("dob-retry-btn")?.addEventListener("click", () => {
+          homeDobOutput.classList.add("hidden");
+          homeDobForm.classList.remove("hidden");
+        });
+      }
+      } catch (err) {
+        homeDobLoader.classList.add("hidden");
+        homeDobOutput.classList.remove("hidden");
+        homeDobOutput.innerHTML = `
+          <div class="p-4 rounded-xl border border-rose-500/20 bg-rose-500/10 text-rose-400 text-xs text-center">
+            Failed to connect to DOB scanning service. Please try again.
+          </div>
+          <button type="button" id="dob-retry-btn" class="w-full py-2.5 bg-white/[0.05] hover:bg-white/[0.1] text-white text-xs font-semibold rounded-lg mt-2 cursor-pointer transition-all">Try Again</button>
+        `;
+        document.getElementById("dob-retry-btn")?.addEventListener("click", () => {
+          homeDobOutput.classList.add("hidden");
+          homeDobForm.classList.remove("hidden");
+        });
+      }
+    });
+
+    function displayFullResult(data) {
+      loaderState.classList.add("hidden");
       searchForm.classList.add("hidden");
-      loaderState.classList.remove("hidden");
+      const vpc = document.getElementById("search-verified-profile-container");
+      if (vpc) vpc.classList.add("hidden");
+      const mcc = document.getElementById("search-manual-captcha-container");
+      if (mcc) mcc.classList.add("hidden");
 
       // Shift layout to wide and push headline down
       if (heroGrid && heroCopy && heroCardWrapper) {
@@ -1687,45 +1948,391 @@ const homeKeywords = "aktu result without dob, aktu one view, aktu result direct
         heroCardWrapper.classList.add("w-full", "max-w-[90vw]", "md:max-w-[90vw]", "order-1");
       }
 
+      if (data.totalSearches) {
+        updateCounterUI(data.totalSearches);
+      }
+      resultName.textContent = data.name;
+      resultFather.textContent = data.fatherName || "--";
+      resultRoll.textContent = data.rollNumber;
+      resultEnrollment.textContent = data.enrollmentNumber || "--";
+      resultCourse.textContent = data.course || "--";
+      resultInstitute.textContent = data.institute || "--";
+      resultCgpa.textContent = data.cgpa;
+      
+      const overall = calculateOverallStatusAndDivision(data.semesters, data.cgpa);
+      
+      if (data.courseCompleted) {
+        if (resultDivisionContainer) resultDivisionContainer.classList.remove("hidden");
+        if (resultIndicatorsGrid) {
+          resultIndicatorsGrid.classList.remove("grid-cols-2");
+          resultIndicatorsGrid.classList.add("grid-cols-3");
+        }
+        
+        const divisionText = data.divisionAwarded || "Awarded";
+        resultDivision.textContent = divisionText;
+        if (divisionText === "Clear Backlog") {
+          resultDivision.className = "text-red-400 font-bold text-[10px] sm:text-xs";
+        } else {
+          resultDivision.className = "text-white light:text-ink font-bold text-[10px] sm:text-xs";
+        }
+
+        if (finalResultSummaryContainer && finalResultSummaryContent && data.finalResultHtml) {
+          finalResultSummaryContent.innerHTML = data.finalResultHtml;
+          finalResultSummaryContainer.classList.remove("hidden");
+        }
+      } else {
+        if (resultDivisionContainer) resultDivisionContainer.classList.add("hidden");
+        if (resultIndicatorsGrid) {
+          resultIndicatorsGrid.classList.remove("grid-cols-3");
+          resultIndicatorsGrid.classList.add("grid-cols-2");
+        }
+        if (finalResultSummaryContainer) {
+          finalResultSummaryContainer.classList.add("hidden");
+        }
+      }
+      
+      resultStatusBadge.textContent = overall.status;
+      resultStatusBadge.className = overall.badgeClass;
+      
+      renderSemesters(data.semesters);
+      resultState.classList.remove("hidden");
+    }
+
+    function renderSearchVerifiedProfile(data) {
+      loaderState.classList.add("hidden");
+      searchForm.classList.add("hidden");
+      resultState.classList.add("hidden");
+      errorState.classList.add("hidden");
+
+      const mcc = document.getElementById("search-manual-captcha-container");
+      if (mcc) {
+        mcc.classList.add("hidden");
+        mcc.innerHTML = "";
+      }
+
+      const container = document.getElementById("search-verified-profile-container");
+      if (!container) return;
+      container.classList.remove("hidden");
+
+      const studentName = data.name || data.student?.name || "Verified Student";
+      const rollNumber = data.rollNumber || "";
+      const enrollmentNo = data.enrollmentNumber || data.student?.enrollmentNo;
+      const enrollmentHtml = (enrollmentNo && enrollmentNo !== '--') 
+        ? `<div class="text-xs text-gray-400">Enrollment: <span class="font-bold text-white">${enrollmentNo}</span></div>` 
+        : '';
+      const fatherName = data.fatherName || data.student?.fatherName;
+      const fatherHtml = (fatherName && fatherName !== '--') 
+        ? `<div class="text-xs text-gray-400">Father's Name: <span class="text-gray-200">${fatherName}</span></div>` 
+        : '';
+      const course = data.course || data.student?.course;
+      const courseHtml = (course && course !== '--') 
+        ? `<div class="text-xs text-gray-400">Course: <span class="text-gray-200">${course}</span></div>` 
+        : '';
+      const institute = data.institute || data.student?.college;
+      const instituteHtml = (institute && institute !== '--') 
+        ? `<div class="text-xs text-gray-400">Institute: <span class="text-gray-200">${institute}</span></div>` 
+        : '';
+
+      const botUrl = data.telegramBotUrl || `https://t.me/akturesultwithoutdobbot?start=${encodeURIComponent(rollNumber)}`;
+
+      container.innerHTML = `
+        <div class="p-5 sm:p-6 rounded-2xl border border-emerald-500/30 bg-gradient-to-b from-emerald-500/10 via-black/60 to-black/80 space-y-5 text-left shadow-2xl backdrop-blur-xl">
+          <!-- Status Banner -->
+          <div class="flex items-center justify-between pb-3 border-b border-emerald-500/20">
+            <div class="flex items-center gap-2">
+              <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
+              <span class="text-xs font-bold text-emerald-400 uppercase tracking-wider">Academic Record Verified ✅</span>
+            </div>
+            <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+              AKTU Database
+            </span>
+          </div>
+
+          <!-- Student Profile Details -->
+          <div class="space-y-2">
+            <div class="text-[11px] text-gray-400 uppercase font-medium">Student Name:</div>
+            <div class="text-lg sm:text-xl font-black text-white tracking-tight">${studentName}</div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-2 border-t border-white/5 font-mono text-xs">
+              <div class="text-gray-400">Roll No: <span class="font-bold text-white">${rollNumber}</span></div>
+              ${enrollmentHtml}
+              ${fatherHtml}
+              ${courseHtml}
+              ${instituteHtml}
+            </div>
+          </div>
+
+          <!-- Telegram Bot Promotion Box -->
+          <div class="p-4 rounded-xl bg-gradient-to-r from-blue-600/20 to-purple-600/20 border border-blue-500/30 space-y-3">
+            <div class="flex items-center gap-2">
+              <span class="text-lg">🤖</span>
+              <span class="text-xs font-bold text-white uppercase tracking-wider">Access Your Result On Telegram</span>
+            </div>
+            <p class="text-xs text-gray-300 leading-relaxed">
+              Your academic file has been successfully verified! You can access your <b>complete semester marksheet</b>, <b>all subject grades & SGPA</b>, and download your <b>official PDF marksheet</b> without needing your Date of Birth on our Telegram Bot.
+            </p>
+
+            <div class="grid grid-cols-2 gap-2 text-[11px] text-gray-300 pt-1">
+              <div class="flex items-center gap-1.5">
+                <span class="text-emerald-400 font-bold">✓</span> No DOB Required
+              </div>
+              <div class="flex items-center gap-1.5">
+                <span class="text-emerald-400 font-bold">✓</span> Official PDF Marksheet
+              </div>
+              <div class="flex items-center gap-1.5">
+                <span class="text-emerald-400 font-bold">✓</span> Full Web Page View
+              </div>
+              <div class="flex items-center gap-1.5">
+                <span class="text-emerald-400 font-bold">✓</span> Instant Delivery
+              </div>
+            </div>
+          </div>
+
+          <!-- Primary Telegram Bot Button -->
+          <div class="space-y-2 pt-1">
+            <a 
+              href="${botUrl}" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              class="w-full py-4 bg-gradient-to-r from-brand-blue via-blue-500 to-purple-600 hover:from-brand-blue-hover hover:to-purple-700 text-white text-sm font-bold rounded-xl transition-all shadow-xl hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2 text-center cursor-pointer"
+            >
+              <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.75-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z"/>
+              </svg>
+              <span>Access Marksheet on Telegram (@akturesultwithoutdobbot)</span>
+            </a>
+            <p class="text-[11px] text-gray-400 text-center">
+              Direct Telegram Bot: <a href="https://t.me/akturesultwithoutdobbot" target="_blank" class="text-brand-blue underline font-mono">@akturesultwithoutdobbot</a>
+            </p>
+          </div>
+        </div>
+
+        <button 
+          type="button" 
+          id="search-check-another-btn" 
+          class="w-full py-2.5 bg-white/[0.05] hover:bg-white/[0.1] text-white text-xs font-semibold rounded-xl border border-white/10 cursor-pointer transition-all text-center"
+        >
+          ← Check Another Roll Number
+        </button>
+      `;
+
+      document.getElementById("search-check-another-btn")?.addEventListener("click", resetUI);
+    }
+
+    function renderSearchManualCaptcha(initialData, roll) {
+      let currentSession = initialData.session;
+      const container = document.getElementById("search-manual-captcha-container");
+      if (!container) return;
+
+      loaderState.classList.add("hidden");
+      searchForm.classList.add("hidden");
+      resultState.classList.add("hidden");
+      errorState.classList.add("hidden");
+      container.classList.remove("hidden");
+
+      function updateModal(imgSrc, errorMsg) {
+        container.innerHTML = `
+          <div class="p-4 rounded-xl border border-brand-blue/30 bg-black/60 space-y-3 text-left">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold text-brand-blue">Security Verification</span>
+              <span class="text-[10px] text-gray-400">Step 2 of 2</span>
+            </div>
+            <p class="text-xs text-gray-400">Enter the 5 characters shown below to access student result:</p>
+            
+            <div class="flex items-center justify-center gap-3 p-3 bg-white/5 rounded-xl border border-white/10">
+              <img id="search-manual-captcha-img" src="${imgSrc}" alt="Security Captcha" class="h-10 rounded shadow bg-white" />
+              <button 
+                type="button" 
+                id="search-refresh-captcha-btn" 
+                title="Load new code"
+                class="px-2.5 py-2 bg-white/10 hover:bg-white/20 text-gray-300 hover:text-white rounded-lg transition-all text-xs flex items-center gap-1 cursor-pointer"
+              >
+                <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" /></svg>
+                <span>New Code</span>
+              </button>
+            </div>
+
+            ${errorMsg ? `<div class="p-2 rounded-lg bg-rose-500/10 border border-rose-500/20 text-rose-400 text-xs text-center font-medium">${errorMsg}</div>` : ''}
+
+            <input 
+              type="text" 
+              id="search-security-code-input" 
+              maxlength="6"
+              placeholder="Enter 5 characters"
+              autocomplete="off"
+              class="w-full px-3 py-2.5 bg-white/5 border border-white/20 rounded-lg text-white font-mono text-center tracking-widest text-base uppercase placeholder-gray-500 focus:outline-none focus:border-brand-blue"
+            />
+
+            <div class="flex gap-2 pt-1">
+              <button 
+                type="button" 
+                id="search-cancel-code-btn" 
+                class="flex-1 py-2.5 bg-white/10 hover:bg-white/15 text-gray-300 rounded-lg text-xs font-semibold transition-all cursor-pointer"
+              >
+                Cancel
+              </button>
+              <button 
+                type="button" 
+                id="search-submit-code-btn" 
+                class="flex-1 py-2.5 bg-brand-blue hover:bg-brand-blue-hover text-white rounded-lg text-xs font-semibold transition-all cursor-pointer flex items-center justify-center gap-1"
+              >
+                <span>Verify & Proceed</span>
+              </button>
+            </div>
+          </div>
+        `;
+
+        const codeInput = document.getElementById("search-security-code-input");
+        if (codeInput) {
+          codeInput.focus();
+          codeInput.addEventListener("keydown", (e) => {
+            if (e.key === "Enter") {
+              e.preventDefault();
+              submitCode();
+            }
+          });
+        }
+
+        document.getElementById("search-refresh-captcha-btn")?.addEventListener("click", async () => {
+          const btn = document.getElementById("search-refresh-captcha-btn");
+          if (btn) btn.innerHTML = `<span>Loading...</span>`;
+          try {
+            const rRes = await fetch("/api/search", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ rollNumber: roll, action: "refreshCaptcha", session: currentSession })
+            });
+            const rData = await rRes.json();
+            if (rData && rData.captchaImage) {
+              currentSession = rData.session || currentSession;
+              updateModal(rData.captchaImage);
+            } else {
+              updateModal(imgSrc, "Could not refresh captcha. Try again.");
+            }
+          } catch (e) {
+            updateModal(imgSrc, "Network error refreshing captcha.");
+          }
+        });
+
+        document.getElementById("search-submit-code-btn")?.addEventListener("click", submitCode);
+        document.getElementById("search-cancel-code-btn")?.addEventListener("click", resetUI);
+      }
+
+      async function submitCode() {
+        const codeInput = document.getElementById("search-security-code-input");
+        const code = codeInput ? codeInput.value.trim().toUpperCase() : "";
+        if (!code || code.length < 4) {
+          if (codeInput) codeInput.focus();
+          return;
+        }
+
+        const submitBtn = document.getElementById("search-submit-code-btn");
+        if (submitBtn) {
+          submitBtn.disabled = true;
+          submitBtn.innerHTML = `
+            <div class="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+            <span>Verifying...</span>
+          `;
+        }
+
+        try {
+          const vRes = await fetch("/api/search", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ rollNumber: roll, manualCaptcha: code, session: currentSession })
+          });
+          const vData = await vRes.json();
+          if (vData && vData.success) {
+            renderSearchVerifiedProfile(vData);
+          } else if (vData && vData.needsManualCaptcha && vData.captchaImage) {
+            currentSession = vData.session || currentSession;
+            updateModal(vData.captchaImage, vData.error || "Incorrect code. Please enter the new characters shown.");
+          } else {
+            updateModal(initialData.captchaImage, vData?.error || "Verification failed. Please try again.");
+          }
+        } catch (e) {
+          updateModal(initialData.captchaImage, "Network error during verification. Please try again.");
+        }
+      }
+
+      updateModal(initialData.captchaImage);
+    }
+
+    searchForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      
+      const enteredRoll = rollInput.value.trim();
+      if (!enteredRoll) return;
+
+      // Hide Form & Show Loader
+      searchForm.classList.add("hidden");
+      const vpc = document.getElementById("search-verified-profile-container");
+      if (vpc) {
+        vpc.classList.add("hidden");
+        vpc.innerHTML = "";
+      }
+      const mcc = document.getElementById("search-manual-captcha-container");
+      if (mcc) {
+        mcc.classList.add("hidden");
+        mcc.innerHTML = "";
+      }
+      resultState.classList.add("hidden");
+      errorState.classList.add("hidden");
+      loaderState.classList.remove("hidden");
+
+      // Reset logs
+      log1.classList.add("hidden");
+      log2.classList.add("hidden");
+      log3.classList.add("hidden");
+      log4.classList.add("hidden");
+
+      loadingStatus.textContent = "Connecting to AKTU Database...";
+      loadingSubstatus.textContent = "Querying student records and verifying credentials...";
+
       // Stage-based Loader Updates
       setTimeout(() => {
-        loadingStatus.textContent = "Negotiating Handshake...";
-        loadingSubstatus.textContent = "Parsing cookies...";
+        loadingStatus.textContent = "Checking Academic Archives...";
+        loadingSubstatus.textContent = "Searching local marksheet repository...";
         log1.classList.remove("hidden");
-      }, 700);
+      }, 400);
 
       setTimeout(() => {
-        loadingStatus.textContent = "Extracting ViewState...";
-        loadingSubstatus.textContent = "Scraping event target variables...";
+        loadingStatus.textContent = "Querying University Portal...";
+        loadingSubstatus.textContent = "Authenticating student profile...";
         log2.classList.remove("hidden");
+      }, 900);
+
+      setTimeout(() => {
+        loadingStatus.textContent = "Resolving Student Record...";
+        loadingSubstatus.textContent = "Verifying enrollment & academic credentials...";
+        log3.classList.remove("hidden");
       }, 1500);
 
-      setTimeout(() => {
-        loadingStatus.textContent = "Bypassing DOB Verification...";
-        loadingSubstatus.textContent = "Injecting reference session credentials...";
-        log3.classList.remove("hidden");
-      }, 2300);
+      // Start network request immediately
+      const fetchPromise = fetch('/api/search', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ 
+          rollNumber: enteredRoll
+        })
+      });
 
-      setTimeout(() => {
-        loadingStatus.textContent = "Retrieving Academic Records...";
-        loadingSubstatus.textContent = "Compiling detailed semester grids...";
-        log4.classList.remove("hidden");
-      }, 3100);
+      // Await both minimum animation delay and fetch result
+      const delayPromise = new Promise(resolve => setTimeout(resolve, 1800));
 
-      // Final response display
-      setTimeout(async () => {
-        try {
-          const res = await fetch('/api/search', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ rollNumber: enteredRoll })
-          });
-
+      Promise.all([fetchPromise, delayPromise])
+        .then(async ([res]) => {
           loaderState.classList.add("hidden");
 
           if (!res.ok) {
+            let errorText = "Could not fetch result now. Please try again.";
+            try {
+              const errData = await res.json();
+              if (errData?.error) errorText = errData.error;
+            } catch (e) {}
+            document.getElementById("error-title").textContent = "Search Failed";
+            document.getElementById("error-desc").textContent = errorText;
             errorState.classList.remove("hidden");
             return;
           }
@@ -1735,65 +2342,22 @@ const homeKeywords = "aktu result without dob, aktu one view, aktu result direct
             if (data.totalSearches) {
               updateCounterUI(data.totalSearches);
             }
-            resultName.textContent = data.name;
-            resultFather.textContent = data.fatherName || "--";
-            resultRoll.textContent = data.rollNumber;
-            resultEnrollment.textContent = data.enrollmentNumber || "--";
-            resultCourse.textContent = data.course || "--";
-            resultInstitute.textContent = data.institute || "--";
-            resultCgpa.textContent = data.cgpa;
-            
-            const overall = calculateOverallStatusAndDivision(data.semesters, data.cgpa);
-            
-            if (data.courseCompleted) {
-              if (resultDivisionContainer) resultDivisionContainer.classList.remove("hidden");
-              if (resultIndicatorsGrid) {
-                resultIndicatorsGrid.classList.remove("grid-cols-2");
-                resultIndicatorsGrid.classList.add("grid-cols-3");
-              }
-              
-              const divisionText = data.divisionAwarded || "Awarded";
-              resultDivision.textContent = divisionText;
-              if (divisionText === "Clear Backlog") {
-                resultDivision.className = "text-red-400 font-bold text-[10px] sm:text-xs";
-              } else {
-                resultDivision.className = "text-white light:text-ink font-bold text-[10px] sm:text-xs";
-              }
-
-              if (finalResultSummaryContainer && finalResultSummaryContent && data.finalResultHtml) {
-                finalResultSummaryContent.innerHTML = data.finalResultHtml;
-                finalResultSummaryContainer.classList.remove("hidden");
-              }
-            } else {
-              if (resultDivisionContainer) resultDivisionContainer.classList.add("hidden");
-              if (resultIndicatorsGrid) {
-                resultIndicatorsGrid.classList.remove("grid-cols-3");
-                resultIndicatorsGrid.classList.add("grid-cols-2");
-              }
-              if (finalResultSummaryContainer) {
-                finalResultSummaryContainer.classList.add("hidden");
-              }
-            }
-            
-            resultStatusBadge.textContent = overall.status;
-            resultStatusBadge.className = overall.badgeClass;
-            
-            renderSemesters(data.semesters);
-            resultState.classList.remove("hidden");
+            renderSearchVerifiedProfile(data);
+          } else if (data.needsManualCaptcha && data.captchaImage) {
+            renderSearchManualCaptcha(data, enteredRoll);
           } else {
             document.getElementById("error-title").textContent = "Search Failed";
-            document.getElementById("error-desc").textContent = data.error || "Could not able to fetch now try later";
+            document.getElementById("error-desc").textContent = data.error || "Could not fetch result now. Please try again.";
             errorState.classList.remove("hidden");
           }
-        } catch (error) {
+        })
+        .catch(error => {
           console.error("API Error:", error);
           loaderState.classList.add("hidden");
           document.getElementById("error-title").textContent = "Fetch Failed";
-          document.getElementById("error-desc").textContent = "Could not able to fetch now try later";
+          document.getElementById("error-desc").textContent = "Connection error. Please check your connection and try again.";
           errorState.classList.remove("hidden");
-        }
-      }, 4300);
-
+        });
     });
     });
   </script>
