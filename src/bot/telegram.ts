@@ -1033,24 +1033,26 @@ bot.on('message:text', async (ctx) => {
   );
 });
 
-// 🌐 Lightweight HTTP Health-Check Server (Required by Render Free Web Service)
-const PORT = process.env.PORT ? parseInt(process.env.PORT, 10) : 10000;
-const server = http.createServer((req, res) => {
-  res.writeHead(200, { 'Content-Type': 'application/json' });
-  res.end(
-    JSON.stringify({
-      status: 'online',
-      service: 'AKTU Telegram Bot',
-      bot: '@akturesultwithoutdobbot',
-      uptimeSeconds: Math.floor(process.uptime()),
-      timestamp: new Date().toISOString()
-    })
-  );
-});
+// 🌐 Lightweight HTTP Health-Check Server (Only when bot runs standalone without Astro)
+if (process.env.EMBEDDED_MODE !== 'true') {
+  const PORT = process.env.PORT ? parseInt(process.env.PORT, 10) : 10000;
+  const server = http.createServer((req, res) => {
+    res.writeHead(200, { 'Content-Type': 'application/json' });
+    res.end(
+      JSON.stringify({
+        status: 'online',
+        service: 'AKTU Telegram Bot',
+        bot: '@akturesultwithoutdobbot',
+        uptimeSeconds: Math.floor(process.uptime()),
+        timestamp: new Date().toISOString()
+      })
+    );
+  });
 
-server.listen(PORT, '0.0.0.0', () => {
-  console.log(`🌐 [Render/Web] Health-check HTTP server listening on 0.0.0.0:${PORT}`);
-});
+  server.listen(PORT, '0.0.0.0', () => {
+    console.log(`🌐 [Render/Web] Standalone bot health-check HTTP server listening on 0.0.0.0:${PORT}`);
+  });
+}
 
 // Launch Bot
 console.log('🚀 [TelegramBot] Starting Telegram bot listener...');

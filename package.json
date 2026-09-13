@@ -8,6 +8,7 @@
     "preview": "astro preview",
     "astro": "astro",
     "build:scraper": "tsc",
+    "start": "npx tsx src/server.ts",
     "start:scraper": "node dist/main.js",
     "start:bot": "npx tsx src/bot/telegram.ts",
     "clean": "rm -rf dist/ && find src/ -type f -name '*.js' -delete",
