@@ -2,11 +2,13 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 export const getMongoUri = () => {
-  if (typeof process !== 'undefined' && process.env?.MONGO_DB_URI) {
-    return process.env.MONGO_DB_URI;
+  if (typeof process !== 'undefined') {
+    if (process.env?.MONGO_DB_URI) return process.env.MONGO_DB_URI;
+    if (process.env?.MONGODB_URI) return process.env.MONGODB_URI;
   }
-  if (typeof import.meta !== 'undefined' && (import.meta as any).env?.MONGO_DB_URI) {
-    return (import.meta as any).env.MONGO_DB_URI;
+  if (typeof import.meta !== 'undefined') {
+    if ((import.meta as any).env?.MONGO_DB_URI) return (import.meta as any).env.MONGO_DB_URI;
+    if ((import.meta as any).env?.MONGODB_URI) return (import.meta as any).env.MONGODB_URI;
   }
   return 'mongodb://localhost:27017';
 };

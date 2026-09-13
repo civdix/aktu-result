@@ -42,8 +42,9 @@ export class DatabaseService {
     lastConnectAttempt = now;
 
     try {
-      const uri = (typeof process !== 'undefined' && process.env?.MONGO_DB_URI) 
+      const uri = (typeof process !== 'undefined' && (process.env?.MONGO_DB_URI || process.env?.MONGODB_URI)) 
         || (import.meta as any).env?.MONGO_DB_URI 
+        || (import.meta as any).env?.MONGODB_URI 
         || MONGO_DB_URI;
 
       const dbName = (typeof process !== 'undefined' && process.env?.DATABASE_NAME) 

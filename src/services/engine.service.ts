@@ -121,6 +121,10 @@ export function resolveCollegeFromRoll(rollNumber: string): { id: number; name: 
   return null;
 }
 
+if (typeof process !== 'undefined') {
+  process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
+}
+
 function parseCookies(response: Response, cookieMap = new Map<string, string>()): Map<string, string> {
   let setCookies: string[] = [];
   if (typeof (response.headers as any).getSetCookie === 'function') {
@@ -139,6 +143,55 @@ function parseCookies(response: Response, cookieMap = new Map<string, string>())
 
 function getCookieHeader(cookieMap: Map<string, string>): string {
   return Array.from(cookieMap.entries()).map(([k, v]) => `${k}=${v}`).join('; ');
+}
+
+async function fetchWithCookies(
+  url: string,
+  options: RequestInit = {},
+  cookieMap: Map<string, string>,
+  maxRedirects = 10
+): Promise<{ res: Response; finalUrl: string }> {
+  let currentUrl = url;
+  let currentOptions = { ...options };
+
+  for (let i = 0; i < maxRedirects; i++) {
+    const headers: Record<string, string> = {};
+    if (currentOptions.headers) {
+      if (currentOptions.headers instanceof Headers) {
+        currentOptions.headers.forEach((v, k) => { headers[k] = v; });
+      } else if (Array.isArray(currentOptions.headers)) {
+        for (const [k, v] of currentOptions.headers) headers[k] = v;
+      } else {
+        Object.assign(headers, currentOptions.headers);
+      }
+    }
+
+    if (cookieMap.size > 0) {
+      headers['Cookie'] = getCookieHeader(cookieMap);
+    }
+    if (!headers['User-Agent']) {
+      headers['User-Agent'] = USER_AGENT;
+    }
+
+    const res = await fetch(currentUrl, {
+      ...currentOptions,
+      headers,
+      redirect: 'manual'
+    });
+
+    parseCookies(res, cookieMap);
+
+    if (res.status >= 300 && res.status < 400) {
+      const loc = res.headers.get('location');
+      if (!loc) return { res, finalUrl: currentUrl };
+      currentUrl = loc.startsWith('http') ? loc : new URL(loc, currentUrl).toString();
+      currentOptions = { method: 'GET' };
+      continue;
+    }
+
+    return { res, finalUrl: currentUrl };
+  }
+  throw new Error('Too many redirects while communicating with university gateway');
 }
 
 export class AktuEngineService {
@@ -210,40 +263,28 @@ export class AktuEngineService {
 
       const cookieMap = new Map<string, string>();
 
-      const res1 = await fetch(`${DIGISHAKTI_BASE_URL}/`, {
-        headers: { 'User-Agent': USER_AGENT },
-        redirect: 'manual'
-      });
-      parseCookies(res1, cookieMap);
+      const { res: resPage, finalUrl: redirectUrl } = await fetchWithCookies(
+        `${DIGISHAKTI_BASE_URL}/`,
+        { method: 'GET' },
+        cookieMap
+      );
 
-      const loc = res1.headers.get('location');
-      if (!loc) {
-        return { cached: false, error: 'Could not connect to university verification gateway' };
-      }
-
-      const redirectUrl = loc.startsWith('http') ? loc : `${DIGISHAKTI_BASE_URL}${loc}`;
-      const res2 = await fetch(redirectUrl, {
-        headers: {
-          'User-Agent': USER_AGENT,
-          'Cookie': getCookieHeader(cookieMap)
-        }
-      });
-      parseCookies(res2, cookieMap);
-      const html2 = await res2.text();
-
+      const html2 = await resPage.text();
       const tokenMatch = html2.match(/name="__RequestVerificationToken"[^>]*value="([^"]+)"/i)
         || html2.match(/value="([^"]+)"[^>]*name="__RequestVerificationToken"/i);
       const token = tokenMatch ? tokenMatch[1] : '';
 
       // Download captcha image
-      const resCap = await fetch(`${DIGISHAKTI_BASE_URL}/EPramaan/GetCaptchaimage?query=${Math.random()}`, {
-        headers: {
-          'User-Agent': USER_AGENT,
-          'Cookie': getCookieHeader(cookieMap),
-          'Referer': redirectUrl
-        }
-      });
-      parseCookies(resCap, cookieMap);
+      const { res: resCap } = await fetchWithCookies(
+        `${DIGISHAKTI_BASE_URL}/EPramaan/GetCaptchaimage?query=${Math.random()}`,
+        {
+          headers: {
+            'Referer': redirectUrl
+          }
+        },
+        cookieMap
+      );
+
       const arrayBuffer = await resCap.arrayBuffer();
       const imageBuffer = Buffer.from(arrayBuffer);
       const cleanImageBuffer = await this.preprocessCaptcha(imageBuffer);
@@ -266,8 +307,9 @@ export class AktuEngineService {
         captchaImageBase64
       };
     } catch (err: any) {
-      console.error('[EngineService] Error starting DigiShakti session:', err.message);
-      return { cached: false, error: err.message };
+      const detailed = err.cause?.message ? `${err.message} (${err.cause.message})` : err.message;
+      console.error('[EngineService] Error starting DigiShakti session:', detailed);
+      return { cached: false, error: detailed };
     }
   }
 
@@ -299,17 +341,22 @@ export class AktuEngineService {
   ): Promise<Buffer | null> {
     try {
       const fullUrl = captchaUrl.startsWith('http') ? captchaUrl : `${DIGISHAKTI_BASE_URL}${captchaUrl}`;
-      const headers: Record<string, string> = {
-        'User-Agent': USER_AGENT
-      };
+      const cookieMap = new Map<string, string>();
       if (sessionCookies) {
-        headers['Cookie'] = sessionCookies;
-      }
-      if (redirectUrl) {
-        headers['Referer'] = redirectUrl;
+        for (const part of sessionCookies.split(';')) {
+          const eq = part.indexOf('=');
+          if (eq > 0) cookieMap.set(part.slice(0, eq).trim(), part.slice(eq + 1).trim());
+        }
       }
 
-      const response = await fetch(fullUrl, { headers });
+      const { res: response } = await fetchWithCookies(
+        fullUrl,
+        {
+          headers: redirectUrl ? { 'Referer': redirectUrl } : {}
+        },
+        cookieMap
+      );
+
       if (!response.ok) {
         console.error('[EngineService] Failed downloading captcha image:', response.status);
         return null;
@@ -394,20 +441,20 @@ export class AktuEngineService {
         }
       }
 
-      const response = await fetch(`${DIGISHAKTI_BASE_URL}/EPramaan/SendServiceToEpramaan`, {
-        method: 'POST',
-        headers: {
-          'User-Agent': USER_AGENT,
-          'Content-Type': 'application/x-www-form-urlencoded',
-          'Cookie': session.cookies,
-          'Origin': DIGISHAKTI_BASE_URL,
-          'Referer': session.redirectUrl || `${DIGISHAKTI_BASE_URL}/`
+      const { res: response } = await fetchWithCookies(
+        `${DIGISHAKTI_BASE_URL}/EPramaan/SendServiceToEpramaan`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'Origin': DIGISHAKTI_BASE_URL,
+            'Referer': session.redirectUrl || `${DIGISHAKTI_BASE_URL}/`
+          },
+          body: postBody.toString()
         },
-        body: postBody.toString(),
-        redirect: 'manual'
-      });
+        cookieMap
+      );
 
-      parseCookies(response, cookieMap);
       const updatedCookies = getCookieHeader(cookieMap);
       const html = await response.text();
 
@@ -526,8 +573,9 @@ export class AktuEngineService {
         error: 'Student record could not be extracted from university portal records.'
       };
     } catch (err: any) {
-      console.error('[EngineService] Error verifying session:', err.message);
-      return { success: false, error: err.message };
+      const detailed = err.cause?.message ? `${err.message} (${err.cause.message})` : err.message;
+      console.error('[EngineService] Error verifying session:', detailed);
+      return { success: false, error: detailed };
     }
   }
 
