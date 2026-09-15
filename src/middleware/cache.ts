@@ -4,6 +4,12 @@ export const cacheControlMiddleware = defineMiddleware(async (context, next) => 
   const response = await next();
   const pathname = context.url.pathname;
 
+  // Ensure Content-Type has charset=utf-8 for SEO audit compliance
+  const contentType = response.headers.get('content-type');
+  if (contentType && contentType.includes('text/html') && !contentType.includes('charset=')) {
+    response.headers.set('content-type', `${contentType}; charset=utf-8`);
+  }
+
   if (response.headers.has('Cache-Control')) {
     return response;
   }

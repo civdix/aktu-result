@@ -1,11 +1,5 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import colleges from "../data/colleges.json";
-import branches from "../data/branches.json";
-
-const sortedColleges = [...colleges].sort((a, b) => a.name.localeCompare(b.name));
-const sortedBranches = [...branches].sort((a, b) => a.name.localeCompare(b.name));
-
 
 // JSON-LD Structured Data for index page
 const jsonLd = {
@@ -51,12 +45,12 @@ const homeKeywords = "aktu result without dob, aktu one view, aktu result direct
 
           <!-- Main Headline -->
           <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.1] bg-gradient-to-b from-white to-gray-400 dark:from-white dark:to-gray-400 light:from-ink light:to-gray-800 bg-clip-text text-transparent">
-            Find your AKTU Result <br class="hidden lg:inline" />
-            <span class="bg-gradient-to-r from-brand-blue via-brand-blue-light to-purple-500 bg-clip-text text-transparent">Without Date of Birth</span>
+            AKTU Result Without DOB <br class="hidden lg:inline" />
+            <span class="bg-gradient-to-r from-brand-blue via-brand-blue-light to-purple-500 bg-clip-text text-transparent">View Full One View Results Online</span>
           </h1>
 
           <p class="text-sm sm:text-base md:text-lg text-gray-400 light:text-gray-600 leading-relaxed max-w-xl mx-auto md:mx-0">
-            Forget your credentials? Simply enter your university Roll Number to authenticate and display your complete academic grades card instantly without needing your Date of Birth.
+            Check your <strong class="text-gray-200 light:text-gray-900 font-semibold">AKTU result without DOB</strong> instantly. View your full <strong class="text-gray-200 light:text-gray-900 font-semibold">AKTU One View results online</strong> using your University Roll Number. Fast, secure, and accurate academic marksheet and score card retrieval for all semesters.
           </p>
 
           <!-- Live Search Metrics -->
@@ -167,17 +161,9 @@ const homeKeywords = "aktu result without dob, aktu one view, aktu result direct
                     class="hidden absolute z-50 w-full mt-1 bg-[#121212]/95 light:bg-white/95 backdrop-blur-md border border-white/[0.1] light:border-black/[0.1] rounded-xl shadow-2xl max-h-60 overflow-y-auto"
                   >
                     <div class="p-1 space-y-0.5" id="home-college-list">
-                      {sortedColleges.map((c) => (
-                        <button
-                          type="button"
-                          data-code={c.code}
-                          data-name={c.name}
-                          class="w-full text-left px-3 py-2.5 rounded-lg text-xs text-gray-300 light:text-gray-700 hover:bg-brand-blue hover:text-white light:hover:bg-brand-blue light:hover:text-white transition-all flex justify-between items-center gap-2 cursor-pointer"
-                        >
-                          <span class="font-medium truncate">{c.name}</span>
-                          <span class="font-mono text-[9px] opacity-60 bg-white/10 px-1.5 py-0.5 rounded">{c.code}</span>
-                        </button>
-                      ))}
+                      <div class="p-3 text-center text-xs text-gray-500 light:text-gray-400">
+                        Type college name or code to search...
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -209,17 +195,9 @@ const homeKeywords = "aktu result without dob, aktu one view, aktu result direct
                     class="hidden absolute z-50 w-full mt-1 bg-[#121212]/95 light:bg-white/95 backdrop-blur-md border border-white/[0.1] light:border-black/[0.1] rounded-xl shadow-2xl max-h-60 overflow-y-auto"
                   >
                     <div class="p-1 space-y-0.5" id="home-branch-list">
-                      {sortedBranches.map((b) => (
-                        <button
-                          type="button"
-                          data-code={b.code}
-                          data-name={b.name}
-                          class="w-full text-left px-3 py-2.5 rounded-lg text-xs text-gray-300 light:text-gray-700 hover:bg-brand-blue hover:text-white light:hover:bg-brand-blue light:hover:text-white transition-all flex justify-between items-center gap-2 cursor-pointer"
-                        >
-                          <span class="font-medium truncate">{b.name}</span>
-                          <span class="font-mono text-[9px] opacity-60 bg-white/10 px-1.5 py-0.5 rounded">{b.code}</span>
-                        </button>
-                      ))}
+                      <div class="p-3 text-center text-xs text-gray-500 light:text-gray-400">
+                        Type branch name or code to search...
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -516,6 +494,77 @@ const homeKeywords = "aktu result without dob, aktu one view, aktu result direct
               </button>
             </div>
 
+          </div>
+        </div>
+      </div>
+
+      <!-- Social Share Section -->
+      <div class="mt-12 pt-8 border-t border-white/[0.08] light:border-black/[0.08]">
+        <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+          <div class="text-center md:text-left">
+            <p class="text-sm font-semibold text-gray-300 light:text-gray-800 flex items-center justify-center md:justify-start gap-2">
+              <span class="text-brand-blue">📢</span>
+              Share with AKTU Classmates & Batch Groups
+            </p>
+            <p class="text-xs text-gray-500 light:text-gray-500 mt-0.5">Help fellow students view their full One View results online without Date of Birth</p>
+          </div>
+          <div class="flex items-center gap-2 flex-wrap justify-center">
+            <!-- WhatsApp -->
+            <a 
+              href="https://api.whatsapp.com/send?text=Check%20your%20AKTU%20One%20View%20Result%20Without%20DOB%20instantly%20online%3A%20https%3A%2F%2Fakturesultwithoutdob.com" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              aria-label="Share AKTU result tool on WhatsApp" 
+              class="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-[#25D366]/10 hover:bg-[#25D366]/20 text-[#25D366] text-xs font-semibold border border-[#25D366]/20 transition-all hover:scale-105"
+            >
+              <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+              <span>WhatsApp</span>
+            </a>
+            <!-- Telegram -->
+            <a 
+              href="https://t.me/share/url?url=https%3A%2F%2Fakturesultwithoutdob.com&text=Check%20your%20AKTU%20One%20View%20Result%20Without%20DOB%20instantly%20online!" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              aria-label="Share AKTU result tool on Telegram" 
+              class="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-[#0088cc]/10 hover:bg-[#0088cc]/20 text-[#0088cc] text-xs font-semibold border border-[#0088cc]/20 transition-all hover:scale-105"
+            >
+              <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm5.894 8.221l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.446 1.394c-.14.18-.357.295-.6.295-.002 0-.003 0-.005 0l.213-3.054 5.56-5.022c.24-.213-.054-.334-.373-.121l-6.869 4.326-2.96-.924c-.643-.204-.657-.643.136-.953l11.57-4.461c.537-.194 1.006.131.868.916z"/></svg>
+              <span>Telegram</span>
+            </a>
+            <!-- Twitter / X -->
+            <a 
+              href="https://twitter.com/intent/tweet?text=Check%20your%20AKTU%20Result%20Without%20DOB%20instantly%20at%20https%3A%2F%2Fakturesultwithoutdob.com%20%23AKTU%20%23OneView" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              aria-label="Share AKTU result tool on Twitter X" 
+              class="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white light:text-ink light:bg-black/5 light:hover:bg-black/10 text-xs font-semibold border border-white/10 light:border-black/10 transition-all hover:scale-105"
+            >
+              <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+              <span>Twitter</span>
+            </a>
+            <!-- LinkedIn -->
+            <a 
+              href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fakturesultwithoutdob.com" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              aria-label="Share AKTU result tool on LinkedIn" 
+              class="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-[#0A66C2]/10 hover:bg-[#0A66C2]/20 text-[#0A66C2] text-xs font-semibold border border-[#0A66C2]/20 transition-all hover:scale-105"
+            >
+              <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+              <span>LinkedIn</span>
+            </a>
+            <!-- Copy Link Button -->
+            <button 
+              type="button" 
+              id="btn-copy-share-link" 
+              aria-label="Copy tool URL to clipboard" 
+              class="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-brand-blue/10 hover:bg-brand-blue/20 text-brand-blue text-xs font-semibold border border-brand-blue/20 transition-all hover:scale-105 cursor-pointer"
+            >
+              <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+              </svg>
+              <span id="copy-share-text">Copy Link</span>
+            </button>
           </div>
         </div>
       </div>
@@ -1424,10 +1473,146 @@ const homeKeywords = "aktu result without dob, aktu one view, aktu result direct
       });
     };
 
+    // In-memory caches for fast, zero-delay combobox interactions
+    let cachedCollegesData = null;
+    let cachedBranchesData = null;
+
+    const fetchColleges = async () => {
+      if (cachedCollegesData) return cachedCollegesData;
+      try {
+        const res = await fetch('/api/colleges');
+        const json = await res.json();
+        if (json.success && json.colleges) {
+          cachedCollegesData = json.colleges.sort((a, b) => a.name.localeCompare(b.name));
+          return cachedCollegesData;
+        }
+      } catch (err) {
+        console.error('Error fetching colleges:', err);
+      }
+      return [];
+    };
+
+    const fetchBranches = async () => {
+      if (cachedBranchesData) return cachedBranchesData;
+      try {
+        const res = await fetch('/api/branches');
+        const json = await res.json();
+        if (json.success && json.branches) {
+          cachedBranchesData = json.branches.sort((a, b) => a.name.localeCompare(b.name));
+          return cachedBranchesData;
+        }
+      } catch (err) {
+        console.error('Error fetching branches:', err);
+      }
+      return [];
+    };
+
+    const setupDynamicCombobox = (comboboxId, searchInputId, hiddenInputId, dropdownId, listId, fetchDataFn) => {
+      const combobox = document.getElementById(comboboxId);
+      const searchInput = document.getElementById(searchInputId);
+      const hiddenInput = document.getElementById(hiddenInputId);
+      const dropdown = document.getElementById(dropdownId);
+      const list = document.getElementById(listId);
+      if (!combobox || !searchInput || !hiddenInput || !dropdown || !list) return;
+
+      let allItems = [];
+      let isLoading = false;
+
+      const renderItems = (itemsToRender) => {
+        if (!itemsToRender.length) {
+          list.innerHTML = `<div class="p-3 text-center text-xs text-gray-500 light:text-gray-400">No matching results found</div>`;
+          return;
+        }
+        const visible = itemsToRender.slice(0, 50);
+        list.innerHTML = visible.map(item => `
+          <button
+            type="button"
+            data-code="${item.code}"
+            data-name="${item.name.replace(/"/g, '&quot;')}"
+            class="w-full text-left px-3 py-2.5 rounded-lg text-xs text-gray-300 light:text-gray-700 hover:bg-brand-blue hover:text-white light:hover:bg-brand-blue light:hover:text-white transition-all flex justify-between items-center gap-2 cursor-pointer"
+          >
+            <span class="font-medium truncate">${item.name}</span>
+            <span class="font-mono text-[9px] opacity-60 bg-white/10 px-1.5 py-0.5 rounded">${item.code}</span>
+          </button>
+        `).join('');
+      };
+
+      const ensureData = async () => {
+        if (allItems.length > 0) return allItems;
+        if (isLoading) return [];
+        isLoading = true;
+        list.innerHTML = `<div class="p-3 text-center text-xs text-gray-400"><span class="animate-pulse inline-block mr-1">⏳</span> Loading options...</div>`;
+        allItems = await fetchDataFn();
+        isLoading = false;
+        return allItems;
+      };
+
+      const openAndFilter = async (query = '') => {
+        dropdown.classList.remove("hidden");
+        const data = await ensureData();
+        const cleanQ = query.trim().toLowerCase();
+        if (!cleanQ) {
+          renderItems(data);
+        } else {
+          const filtered = data.filter(item => 
+            (item.name && item.name.toLowerCase().includes(cleanQ)) || 
+            (item.code && item.code.toLowerCase().includes(cleanQ))
+          );
+          renderItems(filtered);
+        }
+      };
+
+      searchInput.addEventListener("focus", () => {
+        openAndFilter(searchInput.value);
+      });
+
+      searchInput.addEventListener("input", () => {
+        openAndFilter(searchInput.value);
+      });
+
+      list.addEventListener("click", (e) => {
+        const itemBtn = e.target.closest("button");
+        if (!itemBtn) return;
+
+        const code = itemBtn.getAttribute("data-code") || "";
+        const name = itemBtn.getAttribute("data-name") || "";
+        hiddenInput.value = code;
+        searchInput.value = name;
+        hiddenInput.dispatchEvent(new Event("change"));
+        dropdown.classList.add("hidden");
+      });
+
+      document.addEventListener("click", (e) => {
+        if (!combobox.contains(e.target)) {
+          dropdown.classList.add("hidden");
+          if (!hiddenInput.value) {
+            searchInput.value = "";
+          } else {
+            const match = allItems.find(i => i.code === hiddenInput.value);
+            if (match) {
+              searchInput.value = match.name;
+            }
+          }
+        }
+      });
+    };
+
     // Initialize custom comboboxes
     setupCombobox("home-year-combobox", "home-year-search", "home-finder-year", "home-year-dropdown", "home-year-list", false);
-    setupCombobox("home-college-combobox", "home-college-search", "home-finder-college", "home-college-dropdown", "home-college-list", true);
-    setupCombobox("home-branch-combobox", "home-branch-search", "home-finder-branch", "home-branch-dropdown", "home-branch-list", true);
+    setupDynamicCombobox("home-college-combobox", "home-college-search", "home-finder-college", "home-college-dropdown", "home-college-list", fetchColleges);
+    setupDynamicCombobox("home-branch-combobox", "home-branch-search", "home-finder-branch", "home-branch-dropdown", "home-branch-list", fetchBranches);
+
+    // Social share copy link
+    const copyShareBtn = document.getElementById("btn-copy-share-link");
+    const copyShareText = document.getElementById("copy-share-text");
+    copyShareBtn?.addEventListener("click", () => {
+      navigator.clipboard.writeText("https://akturesultwithoutdob.com").then(() => {
+        if (copyShareText) {
+          copyShareText.textContent = "Copied!";
+          setTimeout(() => { copyShareText.textContent = "Copy Link"; }, 2000);
+        }
+      });
+    });
 
     // Tab switching logic
     const tabRollFinder = document.getElementById("home-tab-roll-finder");
@@ -1460,11 +1645,17 @@ const homeKeywords = "aktu result without dob, aktu one view, aktu result direct
       }
     };
 
-    tabRollFinder?.addEventListener("click", () => switchTab(tabRollFinder, viewRollFinder));
+    tabRollFinder?.addEventListener("click", () => {
+      fetchColleges();
+      fetchBranches();
+      switchTab(tabRollFinder, viewRollFinder);
+    });
     tabCheckResult?.addEventListener("click", () => switchTab(tabCheckResult, viewCheckResult));
     tabDobFinder?.addEventListener("click", () => switchTab(tabDobFinder, viewDobFinder));
 
     document.getElementById("home-switch-to-roll-finder")?.addEventListener("click", () => {
+      fetchColleges();
+      fetchBranches();
       switchTab(tabRollFinder, viewRollFinder);
     });
 

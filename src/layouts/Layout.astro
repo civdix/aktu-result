@@ -1,8 +1,5 @@
 ---
 import "../styles/global.css";
-import colleges from "../data/colleges.json";
-import branches from "../data/branches.json";
-
 interface Props {
   title: string;
   description: string;
@@ -20,9 +17,6 @@ const {
   ogType = "website",
   jsonLd
 } = Astro.props;
-
-const sortedColleges = [...colleges].sort((a, b) => a.name.localeCompare(b.name));
-const sortedBranches = [...branches].sort((a, b) => a.name.localeCompare(b.name));
 
 const brandUrl = "https://akturesultwithoutdob.com";
 const authorName = "AKTU Student Portal";
@@ -397,8 +391,55 @@ const isActive = (path: string) => {
       const manualCollegeContainer = document.getElementById("manual-college-container");
       const manualCollegeInput = document.getElementById("assistant-manual-college") as HTMLInputElement;
 
+      let assistantDataLoaded = false;
+      const loadAssistantOptions = async () => {
+        if (assistantDataLoaded) return;
+        assistantDataLoaded = true;
+        try {
+          const [collegesRes, branchesRes] = await Promise.all([
+            fetch('/api/colleges'),
+            fetch('/api/branches')
+          ]);
+          const collegesData = await collegesRes.json();
+          const branchesData = await branchesRes.json();
+
+          if (collegesData.success && collegesData.colleges && assistantCollege) {
+            const otherOpt = assistantCollege.querySelector('option[value="other"]');
+            collegesData.colleges.sort((a: any, b: any) => a.name.localeCompare(b.name)).forEach((c: any) => {
+              const opt = document.createElement('option');
+              opt.value = c.code;
+              opt.textContent = `${c.name} (${c.code})`;
+              if (otherOpt) {
+                assistantCollege.insertBefore(opt, otherOpt);
+              } else {
+                assistantCollege.appendChild(opt);
+              }
+            });
+          }
+
+          const assistantBranch = document.getElementById("assistant-branch") as HTMLSelectElement;
+          if (branchesData.success && branchesData.branches && assistantBranch) {
+            branchesData.branches.sort((a: any, b: any) => a.name.localeCompare(b.name)).forEach((b: any) => {
+              const opt = document.createElement('option');
+              opt.value = b.code;
+              opt.textContent = `${b.name} (${b.code})`;
+              assistantBranch.appendChild(opt);
+            });
+          }
+        } catch (err) {
+          console.error('Failed to load modal options:', err);
+        }
+      };
+
+      if ('requestIdleCallback' in window) {
+        (window as any).requestIdleCallback(loadAssistantOptions);
+      } else {
+        setTimeout(loadAssistantOptions, 3000);
+      }
+
       const openRollModal = () => {
         if (!rollModal || !rollModalContent) return;
+        loadAssistantOptions();
         rollModal.classList.remove("hidden");
         document.body.classList.add("overflow-hidden");
         setTimeout(() => {
@@ -623,9 +664,6 @@ const isActive = (path: string) => {
                 class="w-full px-3 py-2 bg-black/50 light:bg-gray-50 border border-canvas-dark-border light:border-canvas-light-border rounded-lg text-white light:text-ink text-xs focus:outline-none focus:border-brand-blue"
               >
                 <option value="">Select College</option>
-                {sortedColleges.map((c) => (
-                  <option value={c.code}>{c.name} ({c.code})</option>
-                ))}
                 <option value="other">-- My College is Not Listed --</option>
               </select>
             </div>
@@ -655,9 +693,6 @@ const isActive = (path: string) => {
                 class="w-full px-3 py-2 bg-black/50 light:bg-gray-50 border border-canvas-dark-border light:border-canvas-light-border rounded-lg text-white light:text-ink text-xs focus:outline-none focus:border-brand-blue"
               >
                 <option value="">Select Branch</option>
-                {sortedBranches.map((b) => (
-                  <option value={b.code}>{b.name} ({b.code})</option>
-                ))}
               </select>
             </div>
 
