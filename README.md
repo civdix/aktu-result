@@ -17,7 +17,6 @@ Retrieve complete semester marksheets and One View scorecards without needing a 
 ## 🚀 Live Demo & Production
 
 * **Official Portal**: [https://akturesult.bond](https://akturesult.bond)
-* **Alternative Domain**: [https://akturesultwithoutdob.com](https://akturesultwithoutdob.com)
 * **Telegram Bot**: [@akturesultwithoutdobbot](https://t.me/akturesultwithoutdobbot)
 
 ---
