@@ -2,3 +2,4 @@ User-agent: *
 Allow: /
 
 Sitemap: https://akturesult.bond/sitemap.xml
+Sitemap: https://akturesult.bond/sitemap-colleges.xml

@@ -4,6 +4,7 @@ export const prerender = false;
 import Layout from "../../layouts/Layout.astro";
 import colleges from "../../data/colleges.json";
 import branches from "../../data/branches.json";
+import aktuColleges from "../../data/AKTUCollege.json";
 import { slugifyCollege, findCollegeBySlug } from "../../utils/slugify";
 
 const { slug } = Astro.params;
@@ -15,6 +16,16 @@ if (!rawCollege) {
 
 const college = rawCollege;
 const canonicalSlug = slugifyCollege(college.name, college.code);
+
+// Match with detailed metadata from AKTUCollege.json
+const detail = aktuColleges.find((a: any) => 
+  (college.CGId && a.CGId === college.CGId) || 
+  (college.CGCode && a.CGCode && a.CGCode.toUpperCase() === college.CGCode.toUpperCase()) ||
+  (a.CGCode && a.CGCode.replace(/^AK/i, '').replace(/^0+/, '') === college.code.replace(/^0+/, ''))
+);
+
+const collegeAddress = detail?.CGAddress || `${college.name}, Uttar Pradesh`;
+const collegePincode = detail?.CGPincode || "";
 
 // If client requests JSON or ?format=json, return college details as JSON API response
 const acceptHeader = Astro.request.headers.get("accept") || "";
@@ -28,7 +39,9 @@ if (acceptHeader.includes("application/json") || requestUrl.searchParams.get("fo
         name: college.name,
         CGId: college.CGId,
         CGCode: college.CGCode,
-        slug: canonicalSlug
+        slug: canonicalSlug,
+        address: collegeAddress,
+        pincode: collegePincode
       }
     }),
     {
@@ -40,20 +53,102 @@ if (acceptHeader.includes("application/json") || requestUrl.searchParams.get("fo
 
 const sortedBranches = [...branches].sort((a, b) => a.name.localeCompare(b.name));
 
+const siteUrl = "https://akturesult.bond";
+const pageUrl = `${siteUrl}/college/${canonicalSlug}`;
+
 const jsonLd = {
   "@context": "https://schema.org",
-  "@type": "WebPage",
-  "name": `Find AKTU Roll Number of ${college.name} by Name`,
-  "url": `https://akturesult.bond/college/${canonicalSlug}`,
-  "description": `Search and find roll numbers of students at ${college.name} (${college.code}) by name. Complete class roster finder tool for AKTU.`,
-  "isPartOf": {
-    "@type": "WebSite",
-    "name": "AKTU Assistant",
-    "url": "https://akturesult.bond"
-  }
+  "@graph": [
+    {
+      "@type": "CollegeOrUniversity",
+      "@id": `${pageUrl}#college`,
+      "name": college.name,
+      "alternateName": [`AKTU Code ${college.code}`, college.CGCode || `AK${college.code}`],
+      "identifier": college.code,
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": collegeAddress,
+        ...(collegePincode ? { "postalCode": collegePincode } : {}),
+        "addressRegion": "Uttar Pradesh",
+        "addressCountry": "IN"
+      },
+      "parentOrganization": {
+        "@type": "EducationalOrganization",
+        "name": "Dr. A.P.J. Abdul Kalam Technical University",
+        "alternateName": "AKTU Lucknow",
+        "url": "https://aktu.ac.in"
+      }
+    },
+    {
+      "@type": "WebPage",
+      "@id": pageUrl,
+      "url": pageUrl,
+      "name": `Find AKTU Roll Number of ${college.name} (${college.code})`,
+      "description": `Search student roll numbers and class rosters for ${college.name} (Code: ${college.code}) by name, branch, and admission year.`,
+      "isPartOf": {
+        "@type": "WebSite",
+        "@id": `${siteUrl}#website`,
+        "name": "AKTU Result Without DOB",
+        "url": siteUrl
+      },
+      "breadcrumb": {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": siteUrl
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Colleges",
+            "item": `${siteUrl}/colleges`
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": college.name,
+            "item": pageUrl
+          }
+        ]
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": `${pageUrl}#faq`,
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": `What is the AKTU college code for ${college.name}?`,
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": `The official AKTU college code for ${college.name} is ${college.code} (ERP Code: ${college.CGCode || `AK${college.code}`}).`
+          }
+        },
+        {
+          "@type": "Question",
+          "name": `How to find student roll numbers of ${college.name} by name?`,
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": `To find student roll numbers at ${college.name}, select the admission year and branch, enter the student's name, solve the security captcha, and click 'Search Class Roster'.`
+          }
+        },
+        {
+          "@type": "Question",
+          "name": `How can ${college.name} students check their AKTU results without Date of Birth?`,
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": `Students of ${college.name} can retrieve their university roll number on this page, then use the AKTU Result Without DOB tool to access their complete semester score sheet directly.`
+          }
+        }
+      ]
+    }
+  ]
 };
 
-const collegeKeywords = `find aktu roll number of ${college.name}, ${college.name} roll number by name, ${college.name} college code ${college.code}, aktu roll finder ${college.code}, search aktu class roster, student list ${college.name}`;
+const collegeKeywords = `find aktu roll number of ${college.name}, ${college.name} roll number by name, ${college.name} college code ${college.code}, aktu roll finder ${college.code}, search aktu class roster, student list ${college.name}, ${college.name} result without dob`;
 ---
 
 <Layout 
@@ -259,6 +354,174 @@ const collegeKeywords = `find aktu roll number of ${college.name}, ${college.nam
             </div>
           </div>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Institute Profile & Overview Section -->
+  <section class="py-12 border-b border-canvas-dark-border light:border-canvas-light-border bg-canvas-dark-surface light:bg-canvas-light-surface transition-colors">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
+        
+        <!-- Left 2 cols: College Details -->
+        <div class="md:col-span-2 space-y-6">
+          <div>
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-brand-blue/30 bg-brand-blue/10 text-brand-blue text-xs font-semibold mb-3">
+              🏛️ AKTU Affiliated Institute
+            </div>
+            <h2 class="text-2xl sm:text-3xl font-extrabold text-white light:text-ink tracking-tight">
+              About {college.name}
+            </h2>
+            <p class="text-sm text-gray-400 light:text-gray-600 mt-2 leading-relaxed">
+              {college.name} (AKTU College Code: <strong>{college.code}</strong>) is an affiliated educational institute under Dr. A.P.J. Abdul Kalam Technical University, Lucknow. Students enrolled here pursue undergraduate and postgraduate technical degrees including B.Tech, B.Pharm, MBA, MCA, and M.Tech programs.
+            </p>
+          </div>
+
+          <!-- Quick Stats & Facts Grid -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div class="p-4 rounded-xl border border-white/[0.08] light:border-black/[0.08] bg-black/40 light:bg-white space-y-1">
+              <span class="text-[10px] uppercase font-bold text-gray-400 tracking-wider">Official AKTU Code</span>
+              <div class="text-lg font-mono font-bold text-brand-blue">{college.code}</div>
+              <p class="text-[11px] text-gray-500">ERP Identifier: {college.CGCode || `AK${college.code}`}</p>
+            </div>
+
+            <div class="p-4 rounded-xl border border-white/[0.08] light:border-black/[0.08] bg-black/40 light:bg-white space-y-1">
+              <span class="text-[10px] uppercase font-bold text-gray-400 tracking-wider">Affiliated University</span>
+              <div class="text-xs font-bold text-white light:text-ink">AKTU / UPTU Lucknow</div>
+              <p class="text-[11px] text-gray-500">State Technical University (Govt. of UP)</p>
+            </div>
+
+            <div class="sm:col-span-2 p-4 rounded-xl border border-white/[0.08] light:border-black/[0.08] bg-black/40 light:bg-white space-y-1">
+              <span class="text-[10px] uppercase font-bold text-gray-400 tracking-wider">Campus Location & Address</span>
+              <div class="text-xs text-gray-300 light:text-gray-700 leading-relaxed font-medium">
+                📍 {collegeAddress} {collegePincode ? ` - ${collegePincode}` : ''}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right 1 col: Direct Result CTA Card -->
+        <div class="p-6 rounded-2xl border border-brand-blue/30 bg-gradient-to-br from-brand-blue/10 via-black/40 to-purple-900/10 light:bg-white premium-shadow-dark space-y-4">
+          <div class="w-10 h-10 rounded-xl bg-brand-blue text-white flex items-center justify-center font-bold text-lg">
+            ⚡
+          </div>
+          <div>
+            <h3 class="text-base font-bold text-white light:text-ink">
+              Check Result Without DOB
+            </h3>
+            <p class="text-xs text-gray-400 light:text-gray-600 mt-1 leading-relaxed">
+              Already have your university roll number? Check your full One View semester marksheet instantly without entering your Date of Birth.
+            </p>
+          </div>
+
+          <a 
+            href="/" 
+            class="w-full inline-flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-brand-blue hover:bg-brand-blue-hover text-white text-xs font-bold transition-all shadow-lg hover:shadow-brand-blue/30 cursor-pointer"
+          >
+            <span>View Result Online Now</span>
+            <span>&rarr;</span>
+          </a>
+
+          <div class="text-[10px] text-gray-500 text-center flex items-center justify-center gap-2">
+            <span>🔒 Secure Portal</span>
+            <span>•</span>
+            <span>⚡ Instant Marks</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- How It Works Section -->
+  <section class="py-12 border-b border-canvas-dark-border light:border-canvas-light-border bg-black light:bg-white transition-colors">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-2xl mx-auto mb-10">
+        <h2 class="text-xl sm:text-2xl font-bold text-white light:text-ink">
+          How to Find {college.name} Student Rolls
+        </h2>
+        <p class="text-xs text-gray-400 light:text-gray-600 mt-1">
+          Follow these 3 quick steps to locate any student roll number or class roster.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="p-5 rounded-xl border border-white/[0.08] light:border-black/[0.08] bg-white/[0.02] light:bg-gray-50 space-y-2">
+          <div class="w-7 h-7 rounded-lg bg-brand-blue/20 text-brand-blue font-bold text-xs flex items-center justify-center font-mono">1</div>
+          <h3 class="text-sm font-bold text-white light:text-ink">Select Year & Branch</h3>
+          <p class="text-xs text-gray-400 light:text-gray-600 leading-relaxed">
+            Pick the student's admission year (e.g. 2021, 2022, 2023) and their enrolled engineering or management branch.
+          </p>
+        </div>
+
+        <div class="p-5 rounded-xl border border-white/[0.08] light:border-black/[0.08] bg-white/[0.02] light:bg-gray-50 space-y-2">
+          <div class="w-7 h-7 rounded-lg bg-purple-500/20 text-purple-400 font-bold text-xs flex items-center justify-center font-mono">2</div>
+          <h3 class="text-sm font-bold text-white light:text-ink">Enter Student Name</h3>
+          <p class="text-xs text-gray-400 light:text-gray-600 leading-relaxed">
+            Type first or last name to narrow down matches, or leave blank to browse the entire class range for this college.
+          </p>
+        </div>
+
+        <div class="p-5 rounded-xl border border-white/[0.08] light:border-black/[0.08] bg-white/[0.02] light:bg-gray-50 space-y-2">
+          <div class="w-7 h-7 rounded-lg bg-emerald-500/20 text-emerald-400 font-bold text-xs flex items-center justify-center font-mono">3</div>
+          <h3 class="text-sm font-bold text-white light:text-ink">Copy Roll & View Result</h3>
+          <p class="text-xs text-gray-400 light:text-gray-600 leading-relaxed">
+            Click "Copy" beside the matched student and proceed to the Result Checker to view all semester grades without Date of Birth.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section class="py-12 bg-canvas-dark-surface light:bg-canvas-light-surface transition-colors">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-8">
+        <h2 class="text-xl sm:text-2xl font-bold text-white light:text-ink">
+          Frequently Asked Questions ({college.code})
+        </h2>
+        <p class="text-xs text-gray-400 light:text-gray-600 mt-1">
+          Everything you need to know about checking AKTU results and finding roll numbers for {college.name}.
+        </p>
+      </div>
+
+      <div class="space-y-3">
+        <details class="group p-4 rounded-xl border border-white/[0.08] light:border-black/[0.08] bg-black/40 light:bg-white transition-all">
+          <summary class="flex justify-between items-center text-xs sm:text-sm font-bold text-white light:text-ink cursor-pointer list-none select-none">
+            <span>What is the official AKTU college code for {college.name}?</span>
+            <span class="text-xs transform group-open:rotate-180 transition-transform text-gray-400">&darr;</span>
+          </summary>
+          <p class="text-xs text-gray-400 light:text-gray-600 mt-3 leading-relaxed border-t border-white/[0.05] light:border-black/[0.05] pt-3">
+            The official AKTU college code for {college.name} is <strong>{college.code}</strong> (ERP code: {college.CGCode || `AK${college.code}`}). This code forms digits 3 to 5 of every student's official university roll number enrolled in this institution.
+          </p>
+        </details>
+
+        <details class="group p-4 rounded-xl border border-white/[0.08] light:border-black/[0.08] bg-black/40 light:bg-white transition-all">
+          <summary class="flex justify-between items-center text-xs sm:text-sm font-bold text-white light:text-ink cursor-pointer list-none select-none">
+            <span>How can I find my AKTU roll number for {college.name} if I forgot it?</span>
+            <span class="text-xs transform group-open:rotate-180 transition-transform text-gray-400">&darr;</span>
+          </summary>
+          <p class="text-xs text-gray-400 light:text-gray-600 mt-3 leading-relaxed border-t border-white/[0.05] light:border-black/[0.05] pt-3">
+            Use the Class Roster Search tool at the top of this page. Select your admission year and course/branch, enter your name, solve the security math challenge, and click 'Search Class Roster' to retrieve your active university roll number instantly.
+          </p>
+        </details>
+
+        <details class="group p-4 rounded-xl border border-white/[0.08] light:border-black/[0.08] bg-black/40 light:bg-white transition-all">
+          <summary class="flex justify-between items-center text-xs sm:text-sm font-bold text-white light:text-ink cursor-pointer list-none select-none">
+            <span>Can {college.name} students check semester results without Date of Birth?</span>
+            <span class="text-xs transform group-open:rotate-180 transition-transform text-gray-400">&darr;</span>
+          </summary>
+          <p class="text-xs text-gray-400 light:text-gray-600 mt-3 leading-relaxed border-t border-white/[0.05] light:border-black/[0.05] pt-3">
+            Yes! AKTU's official One View portal normally demands a Date of Birth, but our platform lets students of {college.name} retrieve their complete academic result, marksheet, SGPA, and CGPA using just their 10-13 digit University Roll Number.
+          </p>
+        </details>
+      </div>
+
+      <!-- Footer back link -->
+      <div class="mt-8 text-center">
+        <a href="/colleges" class="text-xs font-semibold text-brand-blue hover:underline inline-flex items-center gap-1">
+          &larr; Back to All 865+ AKTU Affiliated Colleges Directory
+        </a>
       </div>
     </div>
   </section>
