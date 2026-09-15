@@ -15,6 +15,7 @@
     "start:scraper": "node dist/main.js",
     "start:bot": "npx tsx src/bot/telegram.ts",
     "clean": "rm -rf dist/ && find src/ -type f -name '*.js' -delete",
+    "purge": "node -r dotenv/config -e \"fetch('https://api.cloudflare.com/client/v4/zones/' + process.env.CLOUDFLARE_ZONE_ID + '/purge_cache', { method: 'POST', headers: { Authorization: 'Bearer ' + process.env.CLOUDFLARE_API_TOKEN, 'Content-Type': 'application/json' }, body: JSON.stringify({ purge_everything: true }) }).then(r=>r.json()).then(d=>console.log(d.success ? '✨ Cloudflare cache purged successfully!' : d))\"",
     "generate-types": "wrangler types"
   },
   "dependencies": {
