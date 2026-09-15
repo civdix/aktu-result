@@ -43,4 +43,13 @@ export interface ViewStateParams {
 export interface ScrapingSession {
   cookieHeader: string;
   viewStateParams: ViewStateParams;
-}
+}
+
+export interface College {
+  code: string;
+  name: string;
+  CGId?: number;
+  CGCode?: string;
+  slug?: string;
+}
+

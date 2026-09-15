@@ -387,8 +387,8 @@ export const POST: APIRoute = async ({ request }) => {
       }
 
       // Roll number validated successfully, let's run the crawler search
-      const session = (typeof validationResult === 'object' && 'cookieHeader' in validationResult) 
-        ? (validationResult as ScrapingSession) 
+      const session = (typeof validationResult === 'object' && 'cookieHeader' in validationResult)
+        ? (validationResult as ScrapingSession)
         : null;
 
       if (session) {

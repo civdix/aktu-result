@@ -1,18 +1,42 @@
 ---
+export const prerender = false;
+
 import Layout from "../../layouts/Layout.astro";
 import colleges from "../../data/colleges.json";
 import branches from "../../data/branches.json";
-import { slugifyCollege } from "../../utils/slugify";
-
-export async function getStaticPaths() {
-  return colleges.map((college) => ({
-    params: { slug: slugifyCollege(college.name, college.code) },
-    props: { college },
-  }));
-}
+import { slugifyCollege, findCollegeBySlug } from "../../utils/slugify";
 
 const { slug } = Astro.params;
-const { college } = Astro.props;
+const rawCollege = Astro.props.college || (slug ? findCollegeBySlug(slug, colleges) : null);
+
+if (!rawCollege) {
+  return Astro.redirect("/colleges", 302);
+}
+
+const college = rawCollege;
+const canonicalSlug = slugifyCollege(college.name, college.code);
+
+// If client requests JSON or ?format=json, return college details as JSON API response
+const acceptHeader = Astro.request.headers.get("accept") || "";
+const requestUrl = new URL(Astro.request.url);
+if (acceptHeader.includes("application/json") || requestUrl.searchParams.get("format") === "json") {
+  return new Response(
+    JSON.stringify({
+      success: true,
+      college: {
+        code: college.code,
+        name: college.name,
+        CGId: college.CGId,
+        CGCode: college.CGCode,
+        slug: canonicalSlug
+      }
+    }),
+    {
+      status: 200,
+      headers: { "Content-Type": "application/json" }
+    }
+  );
+}
 
 const sortedBranches = [...branches].sort((a, b) => a.name.localeCompare(b.name));
 
@@ -20,7 +44,7 @@ const jsonLd = {
   "@context": "https://schema.org",
   "@type": "WebPage",
   "name": `Find AKTU Roll Number of ${college.name} by Name`,
-  "url": `https://akturesultwithoutdob.com/college/${slug}`,
+  "url": `https://akturesultwithoutdob.com/college/${canonicalSlug}`,
   "description": `Search and find roll numbers of students at ${college.name} (${college.code}) by name. Complete class roster finder tool for AKTU.`,
   "isPartOf": {
     "@type": "WebSite",
@@ -254,10 +278,13 @@ const collegeKeywords = `find aktu roll number of ${college.name}, ${college.nam
         const items = Array.from(list.querySelectorAll("button"));
 
         // Click to toggle dropdown
-        searchInput.addEventListener("focus", () => {
+        const openDropdown = () => {
           dropdown.classList.remove("hidden");
           items.forEach(item => item.classList.remove("hidden"));
-        });
+        };
+        searchInput.addEventListener("focus", openDropdown);
+        searchInput.addEventListener("click", openDropdown);
+
 
         // Filter options as user types
         if (isSearchable) {

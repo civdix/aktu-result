@@ -16,7 +16,7 @@ const {
   title,
   description,
   keywords = "aktu result, aktu result without dob, aktu roll number finder, check aktu result, aktu result direct link, aktu result scraper, aktu affiliated colleges, dr apj abdul kalam technical university result",
-  canonicalUrl = Astro.url.href.replace('://www.', '://'),
+  canonicalUrl = Astro.url.href,
   ogType = "website",
   jsonLd
 } = Astro.props;
@@ -116,12 +116,8 @@ const isActive = (path: string) => {
         <div class="flex items-center justify-between h-12">
           <!-- Logo / Brand Title -->
           <div class="flex items-center">
-            <a href="/" class="flex items-center gap-2.5 group">
-              <img 
-                src="/images/gemini-svg.webp" 
-                alt="AKTU Result Logo" 
-                class="w-8 h-8 rounded-full object-cover shadow-sm transition-all duration-300 group-hover:scale-105 border border-white/10"
-              />
+            <a href="/" class="flex items-center gap-2 group">
+              <img src class="w-8 h-8 rounded-lg bg-gradient-to-tr from-brand-blue to-purple-600 flex items-center justify-center text-white font-black text-sm premium-shadow-dark transition-all duration-300 group-hover:scale-105" />
               <span class="font-bold tracking-tight text-sm sm:text-base bg-gradient-to-r from-white to-gray-400 dark:from-white dark:to-gray-400 light:from-ink light:to-gray-700 bg-clip-text text-transparent group-hover:opacity-90">
                 AKTU Result <span class="text-brand-blue font-semibold">Without DOB</span>
               </span>
@@ -243,13 +239,8 @@ const isActive = (path: string) => {
         </div>
 
         <div class="mt-12 pt-8 border-t border-canvas-dark-border light:border-canvas-light-border flex flex-col md:flex-row items-center justify-between gap-6 text-xs text-gray-600">
-          <div class="flex items-center gap-2.5">
-            <img 
-              src="/images/gemini-svg.webp" 
-              alt="AKTU Result Logo" 
-              class="w-6 h-6 rounded-full object-cover border border-white/10"
-            />
-            <span>&copy; {new Date().getFullYear()} AKTU Result Without DOB. All rights reserved.</span>
+          <div>
+            &copy; {new Date().getFullYear()} AKTU Result Without DOB. All rights reserved.
           </div>
           
           <!-- Explicit Third-Party Disclaimer Banner -->

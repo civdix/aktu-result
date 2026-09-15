@@ -2,7 +2,9 @@ import { defineMiddleware } from 'astro:middleware';
 
 /**
  * Canonical SEO Redirect Middleware
- * Automatically performs an HTTP 301 Permanent Redirect from www to non-www (apex) domain
+ * Automatically performs an HTTP 301 Permanent Redirect:
+ * 1. From www.* to apex domain (e.g. www.akturesult.bond -> https://akturesult.bond)
+ * 2. From http:// to https://
  * to prevent duplicate content indexing and consolidate search engine rankings.
  */
 export const canonicalRedirectMiddleware = defineMiddleware(async (context, next) => {
@@ -10,12 +12,24 @@ export const canonicalRedirectMiddleware = defineMiddleware(async (context, next
     || context.request.headers.get('host') 
     || context.url.hostname;
 
-  if (rawHost && rawHost.toLowerCase().startsWith('www.')) {
-    const cleanHost = rawHost.replace(/^www\./i, '');
-    const proto = context.request.headers.get('x-forwarded-proto') || 'https';
-    const targetUrl = `${proto}://${cleanHost}${context.url.pathname}${context.url.search}`;
+  // Skip local development
+  if (!rawHost || rawHost.includes('localhost') || rawHost.includes('127.0.0.1') || rawHost.startsWith('0.0.0.0')) {
+    return next();
+  }
+
+  const hostWithoutPort = rawHost.split(':')[0].toLowerCase();
+  const isWww = hostWithoutPort.startsWith('www.');
+  const proto = (context.request.headers.get('x-forwarded-proto') || context.url.protocol.replace(':', '')).toLowerCase();
+  const isHttp = proto === 'http';
+
+  if (isWww || isHttp) {
+    const cleanHost = hostWithoutPort.replace(/^www\./, '');
+    const targetUrl = `https://${cleanHost}${context.url.pathname}${context.url.search}`;
     
-    return context.redirect(targetUrl, 301);
+    // Avoid self-redirect loops
+    if (context.url.href !== targetUrl) {
+      return context.redirect(targetUrl, 301);
+    }
   }
 
   return next();
