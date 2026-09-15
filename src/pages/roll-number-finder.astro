@@ -4,12 +4,11 @@ export const prerender = false;
 import Layout from "../layouts/Layout.astro";
 import colleges from "../data/colleges.json";
 import branches from "../data/branches.json";
-import { DatabaseService } from "../database/database.service";
 
 const sortedColleges = [...colleges].sort((a, b) => a.name.localeCompare(b.name));
 const sortedBranches = [...branches].sort((a, b) => a.name.localeCompare(b.name));
 
-// Configure Edge CDN Caching Headers for crawler speed optimizations
+// Configure Edge CDN Caching Headers
 Astro.response.headers.set(
   "Cache-Control",
   "public, max-age=60, s-maxage=600, stale-while-revalidate=1200"
@@ -21,33 +20,18 @@ const cleanCollegeCode = queryCollegeCode.trim().padStart(3, "0");
 const selectedCollegeObj = sortedColleges.find((c) => c.code === cleanCollegeCode);
 const isCollegePreselected = !!selectedCollegeObj;
 
-// Fetch Live Analytics counters
-let servicesCount = 142; // default fallback
-let resultChecksCount = 24150; // default fallback
-try {
-  const db = await DatabaseService.connectToDatabase();
-  if (db) {
-    const collection = db.collection("students");
-    const studentsCount = await collection.countDocuments({});
-    servicesCount = studentsCount || 142;
-  }
+// Fast Analytics counters (instant non-blocking rendering)
+const servicesCount = 142;
+const resultChecksCount = 24150;
 
-  const checksCount = await DatabaseService.getFetchCounter();
-  resultChecksCount = checksCount || 24150;
-} catch (err) {
-  console.error("Error reading db for analytics:", err);
-}
-
-// DOB check simulated counter (increases linearly throughout rolling 24 hours by 5 to 10 increments)
+// DOB check simulated counter
 const now = new Date();
 const startOfDay = new Date(now.getFullYear(), now.getMonth(), now.getDate());
 const elapsedMs = now.getTime() - startOfDay.getTime();
 const elapsedHours = elapsedMs / (1000 * 60 * 60);
-// Simulated increment rate: around 8 increments per rolling 24 hours
 const dobScansCount = Math.floor((elapsedHours / 24) * 8);
 
 // Name check simulated counter
-// Base timestamp: July 19, 2026
 const baseTimestamp = new Date("2026-07-19T00:00:00+05:30");
 const daysElapsed = Math.floor((now.getTime() - baseTimestamp.getTime()) / (1000 * 60 * 60 * 24));
 const nameQueriesCount = daysElapsed < 50 ? 34 : daysElapsed;
