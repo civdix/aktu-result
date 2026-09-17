@@ -12,7 +12,7 @@ interface Props {
 const {
   title,
   description,
-  keywords = "aktu result, aktu result without dob, aktu roll number finder, check aktu result, aktu result direct link, aktu result scraper, aktu affiliated colleges, dr apj abdul kalam technical university result",
+  keywords = "aktu result, aktu result 2024, aktu result 2025, oneview aktu, erp aktu result, aktu erp result, aktu oneview, check aktu result, aktu result without dob, aktu roll number finder, aktu marksheet online, oneview.aktu.ac.in, dr apj abdul kalam technical university result",
   canonicalUrl = Astro.url.href,
   ogType = "website",
   jsonLd
@@ -42,7 +42,7 @@ const isActive = (path: string) => {
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="shortcut icon" href="/favicon.ico" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-    <meta name="apple-mobile-web-app-title" content="MyWebSite" />
+    <meta name="apple-mobile-web-app-title" content="AKTU Result" />
     <link rel="manifest" href="/site.webmanifest" />
     
     <!-- Meta SEO Tags -->
@@ -51,7 +51,8 @@ const isActive = (path: string) => {
     <meta name="keywords" content={keywords} />
     <link rel="canonical" href={canonicalUrl} />
     <meta name="generator" content={Astro.generator} />
-    <meta name="robots" content="index, follow" />
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+    <meta name="googlebot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
     <meta name="author" content={authorName} />
 
     <!-- Open Graph (Facebook / LinkedIn) -->
@@ -59,8 +60,9 @@ const isActive = (path: string) => {
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonicalUrl} />
-    <meta property="og:site_name" content="AKTU Result Without DOB" />
+    <meta property="og:site_name" content="AKTU Result & OneView Portal" />
     <meta property="og:image" content={`${brandUrl}/og-image.png`} />
+    <meta property="og:image:alt" content="AKTU Result, OneView AKTU and ERP Result Portal" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
 
@@ -69,6 +71,7 @@ const isActive = (path: string) => {
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={`${brandUrl}/og-image.png`} />
+    <meta name="twitter:image:alt" content="AKTU Result, OneView AKTU and ERP Result Portal" />
     <meta name="twitter:creator" content="@akturesult" />
 
     <!-- JSON-LD Structured Data -->
@@ -120,13 +123,14 @@ const isActive = (path: string) => {
 
           <!-- Desktop Navigation Dock Links -->
           <nav class="hidden md:flex items-center gap-1 bg-black/20 dark:bg-black/25 light:bg-gray-100/50 p-1 rounded-full border border-white/5 light:border-black/5">
-            <a href="/" class={`px-4 py-1.5 rounded-full text-xs font-semibold transition-all duration-200 ${isActive('/') ? 'bg-brand-blue text-white premium-shadow-dark' : 'text-gray-400 hover:text-white light:text-gray-600 light:hover:text-ink'}`}>Home</a>
-            <a href="/roll-number-finder" class={`px-4 py-1.5 rounded-full text-xs font-semibold transition-all duration-200 ${isActive('/roll-number-finder') ? 'bg-brand-blue text-white premium-shadow-dark' : 'text-gray-400 hover:text-white light:text-gray-600 light:hover:text-ink'}`}>Roll Finder</a>
-            <a href="/colleges" class={`px-4 py-1.5 rounded-full text-xs font-semibold transition-all duration-200 ${isActive('/colleges') ? 'bg-brand-blue text-white premium-shadow-dark' : 'text-gray-400 hover:text-white light:text-gray-600 light:hover:text-ink'}`}>Colleges</a>
-            <a href="/faq" class={`px-4 py-1.5 rounded-full text-xs font-semibold transition-all duration-200 ${isActive('/faq') ? 'bg-brand-blue text-white premium-shadow-dark' : 'text-gray-400 hover:text-white light:text-gray-600 light:hover:text-ink'}`}>FAQ</a>
-            <a href="/api" class={`px-4 py-1.5 rounded-full text-xs font-semibold transition-all duration-200 ${isActive('/api') ? 'bg-brand-blue text-white premium-shadow-dark' : 'text-gray-400 hover:text-white light:text-gray-600 light:hover:text-ink'}`}>Developer API</a>
-            <a href="/about" class={`px-4 py-1.5 rounded-full text-xs font-semibold transition-all duration-200 ${isActive('/about') ? 'bg-brand-blue text-white premium-shadow-dark' : 'text-gray-400 hover:text-white light:text-gray-600 light:hover:text-ink'}`}>About</a>
-            <a href="/contact" class={`px-4 py-1.5 rounded-full text-xs font-semibold transition-all duration-200 ${isActive('/contact') ? 'bg-brand-blue text-white premium-shadow-dark' : 'text-gray-400 hover:text-white light:text-gray-600 light:hover:text-ink'}`}>Contact</a>
+            <a href="/" class={`px-3 py-1.5 rounded-full text-xs font-semibold transition-all duration-200 ${isActive('/') ? 'bg-brand-blue text-white premium-shadow-dark' : 'text-gray-400 hover:text-white light:text-gray-600 light:hover:text-ink'}`}>Home</a>
+            <a href="/oneview" class={`px-3 py-1.5 rounded-full text-xs font-semibold transition-all duration-200 ${isActive('/oneview') ? 'bg-brand-blue text-white premium-shadow-dark' : 'text-gray-400 hover:text-white light:text-gray-600 light:hover:text-ink'}`}>OneView</a>
+            <a href="/aktu-erp-result" class={`px-3 py-1.5 rounded-full text-xs font-semibold transition-all duration-200 ${isActive('/aktu-erp-result') ? 'bg-brand-blue text-white premium-shadow-dark' : 'text-gray-400 hover:text-white light:text-gray-600 light:hover:text-ink'}`}>ERP Result</a>
+            <a href="/roll-number-finder" class={`px-3 py-1.5 rounded-full text-xs font-semibold transition-all duration-200 ${isActive('/roll-number-finder') ? 'bg-brand-blue text-white premium-shadow-dark' : 'text-gray-400 hover:text-white light:text-gray-600 light:hover:text-ink'}`}>Roll Finder</a>
+            <a href="/colleges" class={`px-3 py-1.5 rounded-full text-xs font-semibold transition-all duration-200 ${isActive('/colleges') ? 'bg-brand-blue text-white premium-shadow-dark' : 'text-gray-400 hover:text-white light:text-gray-600 light:hover:text-ink'}`}>Colleges</a>
+            <a href="/faq" class={`px-3 py-1.5 rounded-full text-xs font-semibold transition-all duration-200 ${isActive('/faq') ? 'bg-brand-blue text-white premium-shadow-dark' : 'text-gray-400 hover:text-white light:text-gray-600 light:hover:text-ink'}`}>FAQ</a>
+            <a href="/api" class={`px-3 py-1.5 rounded-full text-xs font-semibold transition-all duration-200 ${isActive('/api') ? 'bg-brand-blue text-white premium-shadow-dark' : 'text-gray-400 hover:text-white light:text-gray-600 light:hover:text-ink'}`}>API</a>
+            <a href="/about" class={`px-3 py-1.5 rounded-full text-xs font-semibold transition-all duration-200 ${isActive('/about') ? 'bg-brand-blue text-white premium-shadow-dark' : 'text-gray-400 hover:text-white light:text-gray-600 light:hover:text-ink'}`}>About</a>
           </nav>
 
           <!-- Navigation Right Controls -->
@@ -162,6 +166,8 @@ const isActive = (path: string) => {
         <div id="mobile-menu-tray" class="hidden md:hidden overflow-hidden transition-all duration-300 max-h-0 opacity-0 flex flex-col gap-3">
           <div class="h-px bg-canvas-dark-border/40 light:bg-canvas-light-border/40 my-2"></div>
           <a href="/" class={`text-sm font-semibold py-1.5 px-3 rounded-xl ${isActive('/') ? 'bg-brand-blue/10 text-brand-blue' : 'text-gray-400 light:text-gray-600'}`}>Home</a>
+          <a href="/oneview" class={`text-sm font-semibold py-1.5 px-3 rounded-xl ${isActive('/oneview') ? 'bg-brand-blue/10 text-brand-blue' : 'text-gray-400 light:text-gray-600'}`}>OneView AKTU</a>
+          <a href="/aktu-erp-result" class={`text-sm font-semibold py-1.5 px-3 rounded-xl ${isActive('/aktu-erp-result') ? 'bg-brand-blue/10 text-brand-blue' : 'text-gray-400 light:text-gray-600'}`}>AKTU ERP Result</a>
           <a href="/roll-number-finder" class={`text-sm font-semibold py-1.5 px-3 rounded-xl ${isActive('/roll-number-finder') ? 'bg-brand-blue/10 text-brand-blue' : 'text-gray-400 light:text-gray-600'}`}>Roll Finder</a>
           <a href="/colleges" class={`text-sm font-semibold py-1.5 px-3 rounded-xl ${isActive('/colleges') ? 'bg-brand-blue/10 text-brand-blue' : 'text-gray-400 light:text-gray-600'}`}>Colleges</a>
           <a href="/faq" class={`text-sm font-semibold py-1.5 px-3 rounded-xl ${isActive('/faq') ? 'bg-brand-blue/10 text-brand-blue' : 'text-gray-400 light:text-gray-600'}`}>FAQ</a>
@@ -182,16 +188,18 @@ const isActive = (path: string) => {
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12">
           
-          <!-- Column 1: Application -->
+          <!-- Column 1: Application & Results -->
           <div>
-            <h3 class="text-xs font-semibold text-white light:text-ink tracking-wider uppercase mb-4">Application</h3>
+            <h3 class="text-xs font-semibold text-white light:text-ink tracking-wider uppercase mb-4">Results & Portals</h3>
             <ul class="space-y-3">
-              <li><a href="/" class="text-sm hover:text-white light:hover:text-ink transition-colors">Recover DOB</a></li>
-              <li><a href="/roll-number-finder" class="text-sm hover:text-white light:hover:text-ink transition-colors">Roll Finder</a></li>
+              <li><a href="/" class="text-sm hover:text-white light:hover:text-ink transition-colors">AKTU Result Online</a></li>
+              <li><a href="/oneview" class="text-sm hover:text-white light:hover:text-ink transition-colors">OneView AKTU Portal</a></li>
+              <li><a href="/aktu-erp-result" class="text-sm hover:text-white light:hover:text-ink transition-colors">AKTU ERP Result</a></li>
+              <li><a href="/roll-number-finder" class="text-sm hover:text-white light:hover:text-ink transition-colors">Roll Number Finder</a></li>
               <li><a href="/colleges" class="text-sm hover:text-white light:hover:text-ink transition-colors">Colleges Directory</a></li>
-              <li><a href="/how-it-works" class="text-sm hover:text-white light:hover:text-ink transition-colors">How it Works</a></li>
-              <li><a href="/faq" class="text-sm hover:text-white light:hover:text-ink transition-colors">FAQs</a></li>
-              <li><a href="/api" class="text-sm hover:text-white light:hover:text-ink transition-colors">API Docs</a></li>
+              <li><a href="/how-it-works" class="text-sm hover:text-white light:hover:text-ink transition-colors">How It Works</a></li>
+              <li><a href="/faq" class="text-sm hover:text-white light:hover:text-ink transition-colors">AKTU Result FAQs</a></li>
+              <li><a href="/api" class="text-sm hover:text-white light:hover:text-ink transition-colors">Developer REST API</a></li>
             </ul>
           </div>
 
@@ -720,7 +728,7 @@ const isActive = (path: string) => {
               <input 
                 type="text" 
                 id="assistant-name" 
-                placeholder="e.g. SHIVAM DIXIT" 
+                placeholder="e.g. AMIT KUMAR" 
                 class="w-full px-3 py-2 bg-black/50 light:bg-gray-50 border border-canvas-dark-border light:border-canvas-light-border rounded-lg text-white light:text-ink text-xs focus:outline-none focus:border-brand-blue"
               />
               <p class="text-[9px] text-gray-500 mt-0.5 font-medium">Used to search matching roll numbers in our database.</p>

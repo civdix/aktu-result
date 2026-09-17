@@ -1,4 +1,4 @@
-export const shivamSemesters = [
+export const sampleSemesters = [
   {
     sem: "Semester 1 (First Year)",
     sgpa: "6.22",

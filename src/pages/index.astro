@@ -1,28 +1,116 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import { getAcademicYearInfo } from "../utils/academicYear";
 
-// JSON-LD Structured Data for index page
+const yearInfo = getAcademicYearInfo();
+
+// JSON-LD Structured Data for index page with comprehensive @graph
+const siteUrl = "https://akturesult.bond";
 const jsonLd = {
   "@context": "https://schema.org",
-  "@type": "WebApplication",
-  "name": "AKTU Result Without DOB Query Tool",
-  "url": "https://akturesult.bond",
-  "description": "Helper tool for Dr. A.P.J. Abdul Kalam Technical University (AKTU) students to retrieve their detailed academic result sheets using their Roll Number.",
-  "applicationCategory": "EducationalApplication",
-  "operatingSystem": "All",
-  "browserRequirements": "Requires JavaScript. Requires HTML5.",
-  "creator": {
-    "@type": "Organization",
-    "name": "AKTU Student Portal",
-    "url": "https://akturesult.bond"
-  }
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": `${siteUrl}/#website`,
+      "url": siteUrl,
+      "name": "AKTU Result & OneView Portal",
+      "description": `Check AKTU Result ${yearInfo.sessionFormatted}, OneView AKTU marksheet, and AKTU ERP result online using your University Roll Number without Date of Birth.`,
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": {
+          "@type": "EntryPoint",
+          "urlTemplate": `${siteUrl}/?roll={search_term_string}`
+        },
+        "query-input": "required name=search_term_string"
+      }
+    },
+    {
+      "@type": "WebApplication",
+      "@id": `${siteUrl}/#app`,
+      "name": `AKTU Result ${yearInfo.sessionFormatted}, OneView & ERP Result Query Tool`,
+      "url": siteUrl,
+      "description": `Fast online marksheet and score card retrieval portal for Dr. A.P.J. Abdul Kalam Technical University (AKTU) students. View semester grades, SGPA, CGPA, and pass status for session ${yearInfo.sessionFormatted}.`,
+      "applicationCategory": "EducationalApplication",
+      "operatingSystem": "All",
+      "browserRequirements": "Requires JavaScript. Requires HTML5.",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "INR"
+      },
+      "creator": {
+        "@type": "Organization",
+        "name": "AKTU Student Portal",
+        "url": siteUrl
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": `${siteUrl}/#breadcrumb`,
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": siteUrl
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "@id": `${siteUrl}/#faq`,
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": `How do I check my AKTU Result ${yearInfo.sessionFormatted} online?`,
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "To check your AKTU Result online, enter your 10 to 13 digit University Roll Number into our search tool and click 'Check Result'. The system retrieves your full marksheet with all semester grades, SGPA, CGPA, and pass status directly from the official portal."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is OneView AKTU and how do I access my OneView marksheet?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "OneView AKTU (oneview.aktu.ac.in) is the official result repository of Dr. A.P.J. Abdul Kalam Technical University. It provides semester-wise marks, theory and practical grades, carry over paper (COP) status, and cumulative CGPA. Our portal allows you to access your full OneView marksheet without needing your Date of Birth."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How to check AKTU ERP Result on the student portal?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "AKTU ERP Result can be accessed via the AKTU ERP student login portal (erp.aktu.ac.in) using your User ID and password. Alternatively, you can use our direct query tool to check your latest semester results and marksheet without going through ERP login or captcha hurdles."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I check my AKTU Result without Date of Birth (DOB)?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes! The official AKTU One View portal requires both Roll Number and Date of Birth. If you have forgotten or lost your registered DOB, our automated engine establishes a session handshake with the server to retrieve and display your complete academic grades card without asking you for a DOB."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What do SGPA, CGPA, PCP, and PWG mean on the AKTU Result card?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "SGPA is Semester Grade Point Average for an individual term. CGPA is Cumulative Grade Point Average across all completed semesters. PASS means all subjects cleared; PWG means Passed With Grace marks; PCP means Passed with Carry Over Papers (back papers present to clear)."
+          }
+        }
+      ]
+    }
+  ]
 };
-const homeKeywords = "aktu result without dob, aktu one view, aktu result direct link, aktu result search, aktu scraper, check aktu marksheet, aktu roll number check, check aktu result";
+
+const homeKeywords = `aktu result, aktu result ${yearInfo.startYear}, aktu result ${yearInfo.endYear}, aktu result ${yearInfo.session}, oneview aktu, erp aktu result, aktu erp result, aktu oneview, aktu result without dob, check aktu result, aktu one view marksheet, aktu circulars and results, aktu btech result, aktu roll number finder, oneview.aktu.ac.in`;
 ---
 
 <Layout 
-  title="AKTU Result Without DOB | View Full One View Results Online"
-  description="Forget your Date of Birth? Retrieve your full AKTU One View results sheet instantly using your Roll Number. Secure, fast, and student-focused query tool."
+  title={yearInfo.homeTitle}
+  description={yearInfo.homeDescription}
   keywords={homeKeywords}
   jsonLd={jsonLd}
 >
@@ -40,17 +128,17 @@ const homeKeywords = "aktu result without dob, aktu one view, aktu result direct
           <!-- Trust Badge -->
           <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/[0.08] light:border-black/[0.06] bg-white/[0.03] light:bg-white/40 backdrop-blur-md text-xs text-gray-400 light:text-gray-600 premium-shadow-light">
             <span class="w-1.5 h-1.5 rounded-full bg-brand-blue animate-pulse"></span>
-            AKTU B.Tech / MBA / MCA Students Assistant
+            AKTU B.Tech / MBA / MCA / B.Pharma Result Portal ({yearInfo.sessionFormatted})
           </div>
 
           <!-- Main Headline -->
           <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.1] bg-gradient-to-b from-white to-gray-400 dark:from-white dark:to-gray-400 light:from-ink light:to-gray-800 bg-clip-text text-transparent">
-            AKTU Result Without DOB <br class="hidden lg:inline" />
-            <span class="bg-gradient-to-r from-brand-blue via-brand-blue-light to-purple-500 bg-clip-text text-transparent">View Full One View Results Online</span>
+            AKTU Result <br class="hidden lg:inline" />
+            <span class="bg-gradient-to-r from-brand-blue via-brand-blue-light to-purple-500 bg-clip-text text-transparent">OneView &amp; ERP Result ({yearInfo.sessionFormatted})</span>
           </h1>
 
           <p class="text-sm sm:text-base md:text-lg text-gray-400 light:text-gray-600 leading-relaxed max-w-xl mx-auto md:mx-0">
-            Check your <strong class="text-gray-200 light:text-gray-900 font-semibold">AKTU result without DOB</strong> instantly. View your full <strong class="text-gray-200 light:text-gray-900 font-semibold">AKTU One View results online</strong> using your University Roll Number. Fast, secure, and accurate academic marksheet and score card retrieval for all semesters.
+            Check your <strong class="text-gray-200 light:text-gray-900 font-semibold">AKTU Result {yearInfo.sessionFormatted}</strong> online. Access full <strong class="text-gray-200 light:text-gray-900 font-semibold">OneView AKTU</strong> marksheets and <strong class="text-gray-200 light:text-gray-900 font-semibold">AKTU ERP results</strong> instantly using your University Roll Number without needing Date of Birth. Fast, secure, and complete semester scorecard retrieval.
           </p>
 
           <!-- Live Search Metrics -->
@@ -211,7 +299,7 @@ const homeKeywords = "aktu result without dob, aktu one view, aktu result direct
                     type="text" 
                     id="home-finder-name" 
                     name="name" 
-                    placeholder="e.g. SHIVAM" 
+                    placeholder="e.g. RAHUL" 
                     class="w-full px-4 py-3 bg-white/[0.03] light:bg-black/[0.02] border border-white/[0.08] light:border-black/[0.08] rounded-xl text-white light:text-ink placeholder-gray-600 focus:outline-none focus:border-brand-blue transition-all"
                   />
                 </div>
@@ -285,7 +373,7 @@ const homeKeywords = "aktu result without dob, aktu one view, aktu result direct
                     type="text" 
                     id="roll-number" 
                     name="rollNumber"
-                    placeholder="e.g. 2200650100100" 
+                    placeholder="e.g. 2400650100001" 
                     required
                     pattern="^[0-9]{10,15}$"
                     class="w-full px-4 py-3 bg-white/[0.03] light:bg-black/[0.02] border border-white/[0.08] light:border-black/[0.08] rounded-xl text-white light:text-ink placeholder-gray-600 focus:outline-none focus:border-brand-blue focus:ring-1 focus:ring-brand-blue transition-all"
@@ -395,27 +483,27 @@ const homeKeywords = "aktu result without dob, aktu one view, aktu result direct
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pb-3 border-b border-canvas-dark-border/40">
                   <div class="space-y-0.5">
                     <div class="text-gray-500 text-[9px] uppercase tracking-wider">Student Name</div>
-                    <div class="text-white light:text-ink font-bold text-[11px] sm:text-xs" id="result-name">SHIVAM DIXIT</div>
+                    <div class="text-white light:text-ink font-bold text-[11px] sm:text-xs" id="result-name">--</div>
                   </div>
                   <div class="space-y-0.5">
                     <div class="text-gray-500 text-[9px] uppercase tracking-wider">Father's Name</div>
-                    <div class="text-white light:text-ink font-semibold text-[11px] sm:text-xs" id="result-father">BHOLA DIXIT</div>
+                    <div class="text-white light:text-ink font-semibold text-[11px] sm:text-xs" id="result-father">--</div>
                   </div>
                   <div class="space-y-0.5">
                     <div class="text-gray-500 text-[9px] uppercase tracking-wider">Roll Number</div>
-                    <div class="text-white light:text-ink font-semibold text-[11px] sm:text-xs" id="result-roll">2200650100100</div>
+                    <div class="text-white light:text-ink font-semibold text-[11px] sm:text-xs" id="result-roll">--</div>
                   </div>
                   <div class="space-y-0.5">
                     <div class="text-gray-500 text-[9px] uppercase tracking-wider">Enrollment No.</div>
-                    <div class="text-white light:text-ink font-semibold text-[11px] sm:text-xs" id="result-enrollment">220065010083516</div>
+                    <div class="text-white light:text-ink font-semibold text-[11px] sm:text-xs" id="result-enrollment">--</div>
                   </div>
                   <div class="space-y-0.5 sm:col-span-2">
                     <div class="text-gray-500 text-[9px] uppercase tracking-wider">Course / Branch</div>
-                    <div class="text-white light:text-ink font-semibold text-[11px] sm:text-xs" id="result-course">B.Tech (Computer Science & Eng.)</div>
+                    <div class="text-white light:text-ink font-semibold text-[11px] sm:text-xs" id="result-course">--</div>
                   </div>
                   <div class="space-y-0.5 sm:col-span-2">
                     <div class="text-gray-500 text-[9px] uppercase tracking-wider">Institute</div>
-                    <div class="text-white light:text-ink font-semibold text-[11px] sm:text-xs" id="result-institute">B.S.A. COLLEGE OF ENGINEERING & TECHNOLOGY, MATHURA</div>
+                    <div class="text-white light:text-ink font-semibold text-[11px] sm:text-xs" id="result-institute">--</div>
                   </div>
                 </div>
 
@@ -423,15 +511,15 @@ const homeKeywords = "aktu result without dob, aktu one view, aktu result direct
                 <div id="result-indicators-grid" class="grid grid-cols-3 gap-2 py-3 border-b border-canvas-dark-border/40 light:border-canvas-light-border/60 text-center">
                   <div class="p-2 rounded bg-black/40 light:bg-canvas-light-surface border border-canvas-dark-border/40 light:border-canvas-light-border">
                     <div class="text-[8px] text-gray-500 light:text-gray-500 uppercase">CGPA</div>
-                    <div class="text-brand-blue font-bold text-xs sm:text-sm" id="result-cgpa">7.15</div>
+                    <div class="text-brand-blue font-bold text-xs sm:text-sm" id="result-cgpa">--</div>
                   </div>
                   <div id="result-division-container" class="p-2 rounded bg-black/40 light:bg-canvas-light-surface border border-canvas-dark-border/40 light:border-canvas-light-border">
                     <div class="text-[8px] text-gray-500 light:text-gray-500 uppercase">Division</div>
-                    <div class="text-white light:text-ink font-bold text-[10px] sm:text-xs" id="result-division">I-DIV</div>
+                    <div class="text-white light:text-ink font-bold text-[10px] sm:text-xs" id="result-division">--</div>
                   </div>
                   <div class="p-2 rounded bg-black/40 light:bg-canvas-light-surface border border-canvas-dark-border/40 light:border-canvas-light-border">
                     <div class="text-[8px] text-gray-500 light:text-gray-500 uppercase">Status</div>
-                    <div class="text-emerald-400 font-bold text-[10px] sm:text-xs" id="result-status-badge">PASS</div>
+                    <div class="text-emerald-400 font-bold text-[10px] sm:text-xs" id="result-status-badge">--</div>
                   </div>
                 </div>
 
@@ -741,6 +829,400 @@ const homeKeywords = "aktu result without dob, aktu one view, aktu result direct
     </div>
   </section>
 
+  <!-- Navigation Cards Hub for Key Portals -->
+  <section class="py-12 border-t border-canvas-dark-border light:border-canvas-light-border bg-gradient-to-b from-black to-canvas-dark-surface light:from-white light:to-canvas-light-surface transition-colors duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-3xl mx-auto mb-10">
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-white light:text-ink tracking-tight mb-3">
+          AKTU Academic Portals &amp; Result Tools
+        </h2>
+        <p class="text-gray-400 light:text-gray-600 text-xs sm:text-sm">
+          Direct navigation to essential Dr. A.P.J. Abdul Kalam Technical University student resources.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        <!-- Card 1: OneView AKTU -->
+        <a href="/oneview" class="group p-5 rounded-2xl iphone-glass hover:border-brand-blue/40 transition-all duration-300 hover:translate-y-[-2px] flex flex-col justify-between">
+          <div>
+            <div class="w-10 h-10 rounded-xl bg-blue-500/10 text-brand-blue flex items-center justify-center text-lg mb-3">
+              📋
+            </div>
+            <h3 class="text-base font-bold text-white light:text-ink group-hover:text-brand-blue transition-colors mb-1.5">
+              OneView AKTU Portal
+            </h3>
+            <p class="text-xs text-gray-400 light:text-gray-600 leading-relaxed">
+              Access the complete AKTU One View marksheet with semester grades, SGPA, CGPA, and COP tracking.
+            </p>
+          </div>
+          <span class="text-xs font-semibold text-brand-blue mt-4 inline-flex items-center gap-1 group-hover:underline">
+            Open OneView Assistant &rarr;
+          </span>
+        </a>
+
+        <!-- Card 2: AKTU ERP Result -->
+        <a href="/aktu-erp-result" class="group p-5 rounded-2xl iphone-glass hover:border-purple-500/40 transition-all duration-300 hover:translate-y-[-2px] flex flex-col justify-between">
+          <div>
+            <div class="w-10 h-10 rounded-xl bg-purple-500/10 text-purple-400 flex items-center justify-center text-lg mb-3">
+              🏢
+            </div>
+            <h3 class="text-base font-bold text-white light:text-ink group-hover:text-purple-400 transition-colors mb-1.5">
+              AKTU ERP Result
+            </h3>
+            <p class="text-xs text-gray-400 light:text-gray-600 leading-relaxed">
+              Step-by-step guide for erp.aktu.ac.in student login, circulars, scrutiny re-evaluation, and dashboard.
+            </p>
+          </div>
+          <span class="text-xs font-semibold text-purple-400 mt-4 inline-flex items-center gap-1 group-hover:underline">
+            Explore ERP Result Guide &rarr;
+          </span>
+        </a>
+
+        <!-- Card 3: Roll Number Finder -->
+        <a href="/roll-number-finder" class="group p-5 rounded-2xl iphone-glass hover:border-emerald-500/40 transition-all duration-300 hover:translate-y-[-2px] flex flex-col justify-between">
+          <div>
+            <div class="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center text-lg mb-3">
+              🔍
+            </div>
+            <h3 class="text-base font-bold text-white light:text-ink group-hover:text-emerald-400 transition-colors mb-1.5">
+              Roll Number Finder
+            </h3>
+            <p class="text-xs text-gray-400 light:text-gray-600 leading-relaxed">
+              Forgot or lost your University Roll Number? Search by college, branch, admission year, and student name.
+            </p>
+          </div>
+          <span class="text-xs font-semibold text-emerald-400 mt-4 inline-flex items-center gap-1 group-hover:underline">
+            Find My Roll Number &rarr;
+          </span>
+        </a>
+
+        <!-- Card 4: Colleges Directory -->
+        <a href="/colleges" class="group p-5 rounded-2xl iphone-glass hover:border-amber-500/40 transition-all duration-300 hover:translate-y-[-2px] flex flex-col justify-between">
+          <div>
+            <div class="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-400 flex items-center justify-center text-lg mb-3">
+              🏛️
+            </div>
+            <h3 class="text-base font-bold text-white light:text-ink group-hover:text-amber-400 transition-colors mb-1.5">
+              Affiliated Colleges
+            </h3>
+            <p class="text-xs text-gray-400 light:text-gray-600 leading-relaxed">
+              Browse 750+ AKTU-affiliated engineering, management, and pharmacy colleges with institute codes.
+            </p>
+          </div>
+          <span class="text-xs font-semibold text-amber-400 mt-4 inline-flex items-center gap-1 group-hover:underline">
+            Search 750+ Colleges &rarr;
+          </span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Comprehensive Guide: How to Check AKTU Result Online -->
+  <section class="py-16 md:py-20 border-t border-canvas-dark-border light:border-canvas-light-border bg-black light:bg-canvas-light transition-colors duration-300">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-3xl mx-auto mb-14">
+        <h2 class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white light:text-ink tracking-tight mb-4">
+          How to Check AKTU Result {yearInfo.sessionFormatted} Online
+        </h2>
+        <p class="text-xs sm:text-sm text-gray-400 light:text-gray-600 leading-relaxed">
+          Follow this detailed step-by-step procedure to view and download your Dr. A.P.J. Abdul Kalam Technical University semester results and marksheet.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <!-- Step 1 -->
+        <div class="p-6 rounded-2xl bg-white/[0.02] light:bg-white border border-white/[0.08] light:border-black/[0.08] space-y-3">
+          <div class="inline-flex items-center gap-2 px-2.5 py-1 rounded-md bg-brand-blue/10 text-brand-blue font-bold text-xs">
+            Step 1
+          </div>
+          <h3 class="text-base font-bold text-white light:text-ink">Enter Your University Roll Number</h3>
+          <p class="text-xs text-gray-400 light:text-gray-600 leading-relaxed">
+            Locate your 10 to 13 digit AKTU Roll Number from your examination admit card, fee receipt, or college identity card. Enter it into the search box on this page. If you do not have your roll number, use our <a href="/roll-number-finder" class="text-brand-blue underline">Roll Number Finder</a> to look it up in seconds.
+          </p>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="p-6 rounded-2xl bg-white/[0.02] light:bg-white border border-white/[0.08] light:border-black/[0.08] space-y-3">
+          <div class="inline-flex items-center gap-2 px-2.5 py-1 rounded-md bg-purple-500/10 text-purple-400 font-bold text-xs">
+            Step 2
+          </div>
+          <h3 class="text-base font-bold text-white light:text-ink">Instant Server-Side Session Handshake</h3>
+          <p class="text-xs text-gray-400 light:text-gray-600 leading-relaxed">
+            Click <strong>Check Result</strong>. Our high-performance scraper establishes an automated session handshake with the AKTU portal, fetching the ASP.NET ViewState and authenticating your record internally without demanding your Date of Birth.
+          </p>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="p-6 rounded-2xl bg-white/[0.02] light:bg-white border border-white/[0.08] light:border-black/[0.08] space-y-3">
+          <div class="inline-flex items-center gap-2 px-2.5 py-1 rounded-md bg-emerald-500/10 text-emerald-400 font-bold text-xs">
+            Step 3
+          </div>
+          <h3 class="text-base font-bold text-white light:text-ink">Review Semester Grades, SGPA &amp; CGPA</h3>
+          <p class="text-xs text-gray-400 light:text-gray-600 leading-relaxed">
+            Instantly view your full academic profile, enrollment number, college name, branch, cumulative CGPA, division, and semester-by-semester grade breakdown with internal, external, and practical marks.
+          </p>
+        </div>
+
+        <!-- Step 4 -->
+        <div class="p-6 rounded-2xl bg-white/[0.02] light:bg-white border border-white/[0.08] light:border-black/[0.08] space-y-3">
+          <div class="inline-flex items-center gap-2 px-2.5 py-1 rounded-md bg-cyan-500/10 text-cyan-400 font-bold text-xs">
+            Step 4
+          </div>
+          <h3 class="text-base font-bold text-white light:text-ink">Print or Save Official Marksheet</h3>
+          <p class="text-xs text-gray-400 light:text-gray-600 leading-relaxed">
+            Click <strong>Print Academic Report</strong> to create a high-resolution, print-ready PDF scorecard for job applications, internships, higher education admissions, or college documentation.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Deep Dive: OneView AKTU vs AKTU ERP Result -->
+  <section class="py-16 md:py-20 border-t border-canvas-dark-border light:border-canvas-light-border bg-canvas-dark-surface light:bg-canvas-light-surface transition-colors duration-300">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-14">
+      
+      <!-- Comparison Header -->
+      <div class="text-center max-w-3xl mx-auto">
+        <h2 class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white light:text-ink tracking-tight mb-4">
+          OneView AKTU vs AKTU ERP Result: Key Differences
+        </h2>
+        <p class="text-xs sm:text-sm text-gray-400 light:text-gray-600 leading-relaxed">
+          Students often get confused between AKTU OneView (oneview.aktu.ac.in) and AKTU ERP (erp.aktu.ac.in). Here is a clear comparison of what each portal handles.
+        </p>
+      </div>
+
+      <!-- Comparison Table / Cards -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <!-- OneView Column -->
+        <div class="p-6 sm:p-8 rounded-2xl bg-black/40 light:bg-white border border-brand-blue/30 space-y-5">
+          <div class="flex items-center justify-between">
+            <span class="px-3 py-1 rounded-full text-xs font-bold bg-brand-blue/20 text-brand-blue border border-brand-blue/30">oneview.aktu.ac.in</span>
+            <span class="text-xs text-gray-500">Public Result Portal</span>
+          </div>
+          <h3 class="text-xl font-bold text-white light:text-ink">OneView AKTU (Result Repository)</h3>
+          <p class="text-xs text-gray-400 light:text-gray-600 leading-relaxed">
+            AKTU OneView is the official university marksheet engine designed exclusively for students, employers, and colleges to view verified academic histories.
+          </p>
+          <ul class="space-y-2.5 text-xs text-gray-300 light:text-gray-700">
+            <li class="flex items-start gap-2">
+              <span class="text-emerald-400 font-bold">✓</span>
+              <span><strong>Complete Academic History:</strong> Displays all semesters (1st to 8th) on a single unified webpage.</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-emerald-400 font-bold">✓</span>
+              <span><strong>Detailed Marks Breakdown:</strong> Shows internal marks, external theory marks, practical marks, and COP (Carry Over Paper) status.</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-emerald-400 font-bold">✓</span>
+              <span><strong>Cumulative Scores:</strong> Real-time SGPA and CGPA computation with official division award (I-DIV, II-DIV).</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-amber-400 font-bold">!</span>
+              <span><strong>Common Issue:</strong> Requires exact registered Date of Birth and frequently suffers from session expiration timeouts.</span>
+            </li>
+          </ul>
+          <div class="pt-2">
+            <a href="/oneview" class="inline-flex items-center gap-1.5 text-xs font-bold text-brand-blue hover:underline">
+              Access OneView AKTU Portal Guide &rarr;
+            </a>
+          </div>
+        </div>
+
+        <!-- ERP Column -->
+        <div class="p-6 sm:p-8 rounded-2xl bg-black/40 light:bg-white border border-purple-500/30 space-y-5">
+          <div class="flex items-center justify-between">
+            <span class="px-3 py-1 rounded-full text-xs font-bold bg-purple-500/20 text-purple-400 border border-purple-500/30">erp.aktu.ac.in</span>
+            <span class="text-xs text-gray-500">Student Login Dashboard</span>
+          </div>
+          <h3 class="text-xl font-bold text-white light:text-ink">AKTU ERP (Enterprise Resource Planning)</h3>
+          <p class="text-xs text-gray-400 light:text-gray-600 leading-relaxed">
+            The AKTU ERP portal is the comprehensive student administrative dashboard that manages student registration, exams, fees, and institutional updates.
+          </p>
+          <ul class="space-y-2.5 text-xs text-gray-300 light:text-gray-700">
+            <li class="flex items-start gap-2">
+              <span class="text-emerald-400 font-bold">✓</span>
+              <span><strong>Student Authentication:</strong> Protected portal requiring User ID (Roll Number) and password with captcha.</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-emerald-400 font-bold">✓</span>
+              <span><strong>Exam Dashboard:</strong> Download admit cards, examination forms, challenge re-evaluation results, and scrutiny forms.</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-emerald-400 font-bold">✓</span>
+              <span><strong>Official Circulars:</strong> View university notices, academic calendars, fee payment receipts, and degree dispatch tracking.</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-amber-400 font-bold">!</span>
+              <span><strong>Common Issue:</strong> Password recovery requires access to registered college email ID or phone number.</span>
+            </li>
+          </ul>
+          <div class="pt-2">
+            <a href="/aktu-erp-result" class="inline-flex items-center gap-1.5 text-xs font-bold text-purple-400 hover:underline">
+              Read AKTU ERP Result &amp; Login Guide &rarr;
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Grading System Explained (SGPA, CGPA, PCP, PWG) -->
+  <section class="py-16 md:py-20 border-t border-canvas-dark-border light:border-canvas-light-border bg-black light:bg-canvas-light transition-colors duration-300">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-3xl mx-auto mb-12">
+        <h2 class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white light:text-ink tracking-tight mb-4">
+          Understanding AKTU Grading System &amp; Result Status
+        </h2>
+        <p class="text-xs sm:text-sm text-gray-400 light:text-gray-600 leading-relaxed">
+          AKTU follows the Choice Based Credit System (CBCS). Learn what each abbreviation and code on your marksheet means.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Card: SGPA -->
+        <div class="p-5 rounded-2xl bg-white/[0.02] light:bg-white border border-white/[0.08] light:border-black/[0.08] space-y-2">
+          <div class="text-xs font-bold text-brand-blue uppercase tracking-wider">SGPA</div>
+          <h3 class="text-sm font-bold text-white light:text-ink">Semester Grade Point Average</h3>
+          <p class="text-xs text-gray-400 light:text-gray-600 leading-relaxed">
+            SGPA reflects your academic performance for an individual semester. Calculated as <em>&Sigma;(Credit &times; Grade Point) &divide; &Sigma;Credits</em> for that term on a 10-point scale.
+          </p>
+        </div>
+
+        <!-- Card: CGPA -->
+        <div class="p-5 rounded-2xl bg-white/[0.02] light:bg-white border border-white/[0.08] light:border-black/[0.08] space-y-2">
+          <div class="text-xs font-bold text-purple-400 uppercase tracking-wider">CGPA</div>
+          <h3 class="text-sm font-bold text-white light:text-ink">Cumulative Grade Point Average</h3>
+          <p class="text-xs text-gray-400 light:text-gray-600 leading-relaxed">
+            CGPA is the overall weighted score across all semesters completed to date. To convert AKTU CGPA to approximate percentage, use the official university formula: <em>Percentage = (CGPA &minus; 0.75) &times; 10</em>.
+          </p>
+        </div>
+
+        <!-- Card: PASS -->
+        <div class="p-5 rounded-2xl bg-white/[0.02] light:bg-white border border-white/[0.08] light:border-black/[0.08] space-y-2">
+          <div class="text-xs font-bold text-emerald-400 uppercase tracking-wider">PASS</div>
+          <h3 class="text-sm font-bold text-white light:text-ink">Fully Cleared All Subjects</h3>
+          <p class="text-xs text-gray-400 light:text-gray-600 leading-relaxed">
+            Indicates that the student has scored equal to or above the minimum qualifying cut-off in both internal and external theory and practical exams for all subjects in that semester.
+          </p>
+        </div>
+
+        <!-- Card: PWG -->
+        <div class="p-5 rounded-2xl bg-white/[0.02] light:bg-white border border-white/[0.08] light:border-black/[0.08] space-y-2">
+          <div class="text-xs font-bold text-amber-400 uppercase tracking-wider">PWG</div>
+          <h3 class="text-sm font-bold text-white light:text-ink">Pass With Grace Marks</h3>
+          <p class="text-xs text-gray-400 light:text-gray-600 leading-relaxed">
+            Awarded when a student was short by up to a few marks (as per AKTU ordinance rules, typically up to 7 grace marks per academic year) to reach passing threshold, allowing the subject to clear.
+          </p>
+        </div>
+
+        <!-- Card: PCP -->
+        <div class="p-5 rounded-2xl bg-white/[0.02] light:bg-white border border-white/[0.08] light:border-black/[0.08] space-y-2">
+          <div class="text-xs font-bold text-rose-400 uppercase tracking-wider">PCP</div>
+          <h3 class="text-sm font-bold text-white light:text-ink">Promoted with Carry Over Paper</h3>
+          <p class="text-xs text-gray-400 light:text-gray-600 leading-relaxed">
+            Student is promoted to the next semester or year, but has failed one or more subjects. The student must appear for the Carry Over Paper (COP back paper) examination in the upcoming semester cycle.
+          </p>
+        </div>
+
+        <!-- Card: INC / UFM -->
+        <div class="p-5 rounded-2xl bg-white/[0.02] light:bg-white border border-white/[0.08] light:border-black/[0.08] space-y-2">
+          <div class="text-xs font-bold text-gray-400 uppercase tracking-wider">INC / UFM</div>
+          <h3 class="text-sm font-bold text-white light:text-ink">Incomplete / Unfair Means</h3>
+          <p class="text-xs text-gray-400 light:text-gray-600 leading-relaxed">
+            <strong>INC</strong> means practical/internal marks were not submitted on time by the college. <strong>UFM</strong> indicates an unfair means disciplinary inquiry is active. Contact your college examination cell.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Section with Semantic Accordion matching FAQPage Schema -->
+  <section class="py-16 md:py-20 border-t border-canvas-dark-border light:border-canvas-light-border bg-canvas-dark-surface light:bg-canvas-light-surface transition-colors duration-300">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-3xl mx-auto mb-12">
+        <h2 class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white light:text-ink tracking-tight mb-4">
+          Frequently Asked Questions on AKTU Result &amp; OneView
+        </h2>
+        <p class="text-xs sm:text-sm text-gray-400 light:text-gray-600 leading-relaxed">
+          Clear, authoritative answers to the most common queries regarding AKTU results, OneView portal access, and marksheet queries.
+        </p>
+      </div>
+
+      <div class="space-y-4">
+        <!-- FAQ 1 -->
+        <details class="group p-5 rounded-2xl bg-black/40 light:bg-white border border-canvas-dark-border/60 light:border-canvas-light-border/60 transition-all [&_svg]:open:-rotate-180">
+          <summary class="flex items-center justify-between cursor-pointer font-bold text-sm sm:text-base text-white light:text-ink select-none list-none">
+            <span>How do I check my AKTU Result online?</span>
+            <svg class="w-4 h-4 transition-transform duration-300 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+            </svg>
+          </summary>
+          <div class="mt-3 text-xs sm:text-sm text-gray-400 light:text-gray-600 leading-relaxed border-t border-white/5 pt-3">
+            To check your AKTU Result online, enter your 10 to 13 digit University Roll Number into our search form above and click "Check Result". Our engine establishes a secure handshake with the university database to render your full One View semester marksheet, SGPA, CGPA, and status immediately on your screen.
+          </div>
+        </details>
+
+        <!-- FAQ 2 -->
+        <details class="group p-5 rounded-2xl bg-black/40 light:bg-white border border-canvas-dark-border/60 light:border-canvas-light-border/60 transition-all [&_svg]:open:-rotate-180">
+          <summary class="flex items-center justify-between cursor-pointer font-bold text-sm sm:text-base text-white light:text-ink select-none list-none">
+            <span>What is OneView AKTU and how do I access my OneView marksheet?</span>
+            <svg class="w-4 h-4 transition-transform duration-300 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+            </svg>
+          </summary>
+          <div class="mt-3 text-xs sm:text-sm text-gray-400 light:text-gray-600 leading-relaxed border-t border-white/5 pt-3">
+            OneView AKTU (hosted officially at <code>oneview.aktu.ac.in</code>) is Dr. A.P.J. Abdul Kalam Technical University's unified academic record ledger. It displays every semester's marks, practical grades, sessionals, and carry-over papers in one continuous ledger. You can inspect your complete OneView marksheet directly on this portal without entering your registered Date of Birth.
+          </div>
+        </details>
+
+        <!-- FAQ 3 -->
+        <details class="group p-5 rounded-2xl bg-black/40 light:bg-white border border-canvas-dark-border/60 light:border-canvas-light-border/60 transition-all [&_svg]:open:-rotate-180">
+          <summary class="flex items-center justify-between cursor-pointer font-bold text-sm sm:text-base text-white light:text-ink select-none list-none">
+            <span>How can I check my AKTU ERP Result on the student login portal?</span>
+            <svg class="w-4 h-4 transition-transform duration-300 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+            </svg>
+          </summary>
+          <div class="mt-3 text-xs sm:text-sm text-gray-400 light:text-gray-600 leading-relaxed border-t border-white/5 pt-3">
+            AKTU ERP Result can be verified by logging into <code>erp.aktu.ac.in</code> using your Student User ID (your University Roll Number) and password. Once logged in, navigate to the "Examination" or "Results" tab. However, if you only want to quickly check your marks and download your marksheet, our direct tool lets you bypass ERP credentials and access your scores instantly.
+          </div>
+        </details>
+
+        <!-- FAQ 4 -->
+        <details class="group p-5 rounded-2xl bg-black/40 light:bg-white border border-canvas-dark-border/60 light:border-canvas-light-border/60 transition-all [&_svg]:open:-rotate-180">
+          <summary class="flex items-center justify-between cursor-pointer font-bold text-sm sm:text-base text-white light:text-ink select-none list-none">
+            <span>Can I check my AKTU Result without my Date of Birth (DOB)?</span>
+            <svg class="w-4 h-4 transition-transform duration-300 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+            </svg>
+          </summary>
+          <div class="mt-3 text-xs sm:text-sm text-gray-400 light:text-gray-600 leading-relaxed border-t border-white/5 pt-3">
+            Yes! Many students forget the exact format or date of birth registered during AKTU admission. Our tool automates the server handshake in the background, resolving authentication internally and delivering your full marksheet without requiring you to recall or type your Date of Birth.
+          </div>
+        </details>
+
+        <!-- FAQ 5 -->
+        <details class="group p-5 rounded-2xl bg-black/40 light:bg-white border border-canvas-dark-border/60 light:border-canvas-light-border/60 transition-all [&_svg]:open:-rotate-180">
+          <summary class="flex items-center justify-between cursor-pointer font-bold text-sm sm:text-base text-white light:text-ink select-none list-none">
+            <span>Why does official OneView show "Session Expired" or "Invalid Captcha"?</span>
+            <svg class="w-4 h-4 transition-transform duration-300 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+            </svg>
+          </summary>
+          <div class="mt-3 text-xs sm:text-sm text-gray-400 light:text-gray-600 leading-relaxed border-t border-white/5 pt-3">
+            The official AKTU ASP.NET web application relies on short-lived ViewState security tokens. During result declaration days, high server traffic causes tokens to desynchronize, showing "Session Expired" errors. Our portal handles session lifecycle dynamically with automated retries, providing reliable uptime when official portals stall.
+          </div>
+        </details>
+      </div>
+
+      <div class="text-center mt-8">
+        <a href="/faq" class="text-xs font-semibold text-brand-blue hover:underline inline-flex items-center gap-1">
+          Have more questions? Read our full 10+ question AKTU FAQ &rarr;
+        </a>
+      </div>
+    </div>
+  </section>
+
   <!-- Client-Side Form Handler Script -->
   <script is:inline>
     window.addEventListener("DOMContentLoaded", () => {
@@ -839,166 +1321,8 @@ const homeKeywords = "aktu result without dob, aktu one view, aktu result direct
     const resetBtn = document.getElementById("reset-form-btn");
     const retryBtn = document.getElementById("error-retry-btn");
 
-    // Live Student Data
-    const shivamSemesters = [
-      {
-        sem: "Semester 1 (First Year)",
-        sgpa: "6.22",
-        status: "PWG",
-        marks: "604/900",
-        subjects: [
-          { code: "BAS101", name: "Physics-I", type: "Theory", int: "25", ext: "31", back: "--", grade: "C" },
-          { code: "BAS103", name: "Mathematics-I", type: "Theory", int: "25", ext: "21", back: "--", grade: "E" },
-          { code: "BEE101", name: "Basic Electrical Engg", type: "Theory", int: "24", ext: "33", back: "--", grade: "C" },
-          { code: "BME101", name: "Basic Mechanical Engg", type: "Theory", int: "24", ext: "22", back: "--", grade: "E" },
-          { code: "BME151", name: "Basic Mechanical Engg Lab", type: "Practical", int: "20", ext: "21", back: "--", grade: "B" },
-          { code: "BEE151", name: "Basic Electrical Engg Lab", type: "Practical", int: "22", ext: "21", back: "--", grade: "B" },
-          { code: "BAS151", name: "Physics Lab", type: "Practical", int: "21", ext: "22", back: "--", grade: "B" },
-          { code: "BME152", name: "Workshop Practice", type: "Practical", int: "41", ext: "42", back: "--", grade: "B+" },
-          { code: "BVA151", name: "Sports and Yoga - I", type: "Audit", int: "--", ext: "91", back: "--", grade: "Cleared" }
-        ]
-      },
-      {
-        sem: "Semester 2 (First Year)",
-        sgpa: "5.48",
-        status: "PCP",
-        marks: "656/900",
-        subjects: [
-          { code: "BAS202", name: "Chemistry", type: "Theory", int: "23", ext: "32", back: "--", grade: "C" },
-          { code: "BAS203", name: "Mathematics-II", type: "Theory", int: "23", ext: "18", back: "BAS203", grade: "F" },
-          { code: "BCS201", name: "Programming for Problem Solving", type: "Theory", int: "23", ext: "31", back: "--", grade: "C" },
-          { code: "BEC201", name: "Basic Electronics Engg", type: "Theory", int: "23", ext: "27", back: "--", grade: "D" },
-          { code: "BAS252", name: "Chemistry Lab", type: "Practical", int: "21", ext: "20", back: "--", grade: "B" },
-          { code: "BCS251", name: "Computer Programming Lab", type: "Practical", int: "21", ext: "21", back: "--", grade: "B" },
-          { code: "BEC251", name: "Basic Electronics Lab", type: "Practical", int: "21", ext: "22", back: "--", grade: "B" },
-          { code: "BCS252", name: "English Language Lab", type: "Practical", int: "41", ext: "40", back: "--", grade: "B+" }
-        ]
-      },
-      {
-        sem: "Semester 3 (Second Year)",
-        sgpa: "7.30",
-        status: "PASS",
-        marks: "737/1000",
-        subjects: [
-          { code: "BAS303", name: "Mathematics-IV", type: "Theory", int: "25", ext: "30", back: "--", grade: "C" },
-          { code: "BVE301", name: "Universal Human Values", type: "Theory", int: "25", ext: "37", back: "--", grade: "B" },
-          { code: "BCS301", name: "Data Structure", type: "Theory", int: "24", ext: "36", back: "--", grade: "B" },
-          { code: "BCS302", name: "Computer Org & Arch", type: "Theory", int: "23", ext: "33", back: "--", grade: "B" },
-          { code: "BCS303", name: "Discrete Structures", type: "Theory", int: "24", ext: "33", back: "--", grade: "B" },
-          { code: "BCC301", name: "Cyber Security", type: "Theory", int: "22", ext: "35", back: "--", grade: "B" },
-          { code: "BCS351", name: "Data Structure Lab", type: "Practical", int: "42", ext: "45", back: "--", grade: "A+" },
-          { code: "BCS352", name: "Computer Org Lab", type: "Practical", int: "43", ext: "46", back: "--", grade: "A+" },
-          { code: "BCS353", name: "Web Designing Workshop", type: "Practical", int: "44", ext: "45", back: "--", grade: "A+" },
-          { code: "BCC351", name: "Internship Assessment", type: "Audit", int: "--", ext: "92", back: "--", grade: "Cleared" }
-        ]
-      },
-      {
-        sem: "Semester 4 (Second Year)",
-        sgpa: "7.40",
-        status: "PASS",
-        marks: "740/1000",
-        subjects: [
-          { code: "BOE404", name: "Energy Science", type: "Theory", int: "25", ext: "35", back: "--", grade: "B" },
-          { code: "BAS401", name: "Technical Comm", type: "Theory", int: "24", ext: "43", back: "--", grade: "B+" },
-          { code: "BCS401", name: "Operating System", type: "Theory", int: "24", ext: "35", back: "--", grade: "B" },
-          { code: "BCS402", name: "Theory of Automata", type: "Theory", int: "24", ext: "38", back: "--", grade: "B" },
-          { code: "BCS403", name: "OOP with Java", type: "Theory", int: "24", ext: "35", back: "--", grade: "B" },
-          { code: "BCC402", name: "Python programming", type: "Theory", int: "23", ext: "40", back: "--", grade: "B+" },
-          { code: "BCS451", name: "Operating System Lab", type: "Practical", int: "42", ext: "43", back: "--", grade: "A" },
-          { code: "BCS452", name: "OOP Java Lab", type: "Practical", int: "42", ext: "44", back: "--", grade: "A" },
-          { code: "BCS453", name: "Cyber Security Workshop", type: "Practical", int: "41", ext: "43", back: "--", grade: "A" },
-          { code: "BVA451", name: "Sports and Yoga - II", type: "Audit", int: "--", ext: "93", back: "--", grade: "Cleared" }
-        ]
-      },
-      {
-        sem: "Semester 5 (Third Year)",
-        sgpa: "7.40",
-        status: "PASS",
-        marks: "737/1000",
-        subjects: [
-          { code: "BCS501", name: "Database Management System", type: "Theory", int: "24", ext: "36", back: "--", grade: "B" },
-          { code: "BCS502", name: "Compiler Design", type: "Theory", int: "24", ext: "37", back: "--", grade: "B" },
-          { code: "BCS503", name: "Design & Analysis of Algorithm", type: "Theory", int: "25", ext: "35", back: "--", grade: "B" },
-          { code: "BCS052", name: "Data Analytics", type: "Theory", int: "29", ext: "37", back: "--", grade: "B" },
-          { code: "BCS058", name: "Data Warehousing", type: "Theory", int: "29", ext: "41", back: "--", grade: "B+" },
-          { code: "BCS551", name: "DBMS Lab", type: "Practical", int: "41", ext: "42", back: "--", grade: "A" },
-          { code: "BCS552", name: "Compiler Lab", type: "Practical", int: "42", ext: "44", back: "--", grade: "A" },
-          { code: "BCS553", name: "DAA Lab", type: "Practical", int: "43", ext: "43", back: "--", grade: "A" },
-          { code: "BCS554", name: "Mini Project / Internship", type: "Practical", int: "43", ext: "44", back: "--", grade: "A" },
-          { code: "BCC551", name: "Constitution of India", type: "Audit", int: "--", ext: "92", back: "--", grade: "Cleared" }
-        ]
-      },
-      {
-        sem: "Semester 6 (Third Year)",
-        sgpa: "7.30",
-        status: "PASS",
-        marks: "698/1000",
-        subjects: [
-          { code: "BCS601", name: "Software Engineering", type: "Theory", int: "24", ext: "33", back: "--", grade: "C" },
-          { code: "BCS602", name: "Web Technology", type: "Theory", int: "25", ext: "37", back: "--", grade: "B" },
-          { code: "BCS603", name: "Computer Networks", type: "Theory", int: "26", ext: "36", back: "--", grade: "B" },
-          { code: "BCS061", name: "Big Data", type: "Theory", int: "29", ext: "39", back: "--", grade: "B" },
-          { code: "BCS065", name: "Software Project Management", type: "Theory", int: "28", ext: "41", back: "--", grade: "B+" },
-          { code: "BCS651", name: "Software Engg Lab", type: "Practical", int: "42", ext: "43", back: "--", grade: "A" },
-          { code: "BCS652", name: "Web Tech Lab", type: "Practical", int: "42", ext: "44", back: "--", grade: "A" },
-          { code: "BCS653", name: "Computer Networks Lab", type: "Practical", int: "43", ext: "43", back: "--", grade: "A" },
-          { code: "BVA651", name: "Sports and Yoga - III", type: "Audit", int: "--", ext: "91", back: "--", grade: "Cleared" }
-        ]
-      },
-      {
-        sem: "Semester 7 (Fourth Year)",
-        sgpa: "7.11",
-        status: "CP(0)",
-        marks: "509/700",
-        subjects: [
-          { code: "BCS701", name: "Artificial Intelligence", type: "Theory", int: "24", ext: "32", back: "--", grade: "C" },
-          { code: "BCS071", name: "Cloud Computing", type: "Theory", int: "25", ext: "43", back: "--", grade: "B" },
-          { code: "BOE073", name: "Machine Learning", type: "Theory", int: "24", ext: "30", back: "--", grade: "C" },
-          { code: "BCS751", name: "Artificial Intelligence Lab", type: "Practical", int: "41", ext: "44", back: "--", grade: "A" },
-          { code: "BCS752", name: "Mini Project / Internship", type: "Practical", int: "76", ext: "--", back: "--", grade: "B+" },
-          { code: "BCS753", name: "Project-1", type: "Practical", int: "90", ext: "--", back: "--", grade: "B" },
-          { code: "BCS754", name: "Startup/Entrepreneurial Activity", type: "Practical", int: "80", ext: "--", back: "--", grade: "A" }
-        ]
-      },
-      {
-        sem: "Semester 8 (Fourth Year)",
-        sgpa: "7.20",
-        status: "PASS",
-        marks: "431/700",
-        subjects: [
-          { code: "BOE089", name: "Natural Language Processing", type: "Theory", int: "23", ext: "21", back: "--", grade: "E" },
-          { code: "BOE096", name: "Digital & Social Media Marketing", type: "Theory", int: "25", ext: "37", back: "--", grade: "B" },
-          { code: "BCS851", name: "Project-II", type: "Practical", int: "70", ext: "255", back: "--", grade: "B+" }
-        ]
-      }
-    ];
-
-    const genericSemesters = [
-      {
-        sem: "Semester 1 (First Year)",
-        sgpa: "7.20",
-        status: "PASS",
-        marks: "648/900",
-        subjects: [
-          { code: "BAS101", name: "Physics-I", type: "Theory", int: "24", ext: "30", back: "--", grade: "C" },
-          { code: "BAS103", name: "Mathematics-I", type: "Theory", int: "24", ext: "28", back: "--", grade: "D" },
-          { code: "BEE101", name: "Basic Electrical Engg", type: "Theory", int: "23", ext: "35", back: "--", grade: "B" },
-          { code: "BAS151", name: "Physics Lab", type: "Practical", int: "22", ext: "22", back: "--", grade: "B" }
-        ]
-      },
-      {
-        sem: "Semester 2 (First Year)",
-        sgpa: "7.45",
-        status: "PASS",
-        marks: "670/900",
-        subjects: [
-          { code: "BAS202", name: "Chemistry", type: "Theory", int: "23", ext: "34", back: "--", grade: "B" },
-          { code: "BCS201", name: "Programming for Problem Solving", type: "Theory", int: "23", ext: "32", back: "--", grade: "C" },
-          { code: "BEC201", name: "Basic Electronics Engg", type: "Theory", int: "22", ext: "36", back: "--", grade: "B" },
-          { code: "BCS251", name: "Computer Programming Lab", type: "Practical", int: "22", ext: "22", back: "--", grade: "B" }
-        ]
-      }
-    ];
+    // Dynamic Semester Results are loaded live via API
+    const genericSemesters = [];
 
     // Calculate overall status and division based on semesters
     const calculateOverallStatusAndDivision = (semesters, defaultCgpa) => {

@@ -1,121 +1,337 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import { getAcademicYearInfo } from "../utils/academicYear";
+
+const yearInfo = getAcademicYearInfo();
 
 const roll = Astro.url.searchParams.get("roll") || "";
 const dob = Astro.url.searchParams.get("dob") || "";
 const hideDob = Astro.url.searchParams.get("hide") !== "0";
 
-const pageTitle = roll ? `AKTU OneView Assistant - Roll ${roll}` : "AKTU OneView Auto-Fill Assistant";
+const siteUrl = "https://akturesult.bond";
+const pageUrl = `${siteUrl}/oneview`;
+const pageTitle = roll 
+  ? `OneView AKTU Result ${yearInfo.session} - Marksheet for Roll ${roll}` 
+  : `OneView AKTU Result ${yearInfo.session} - Check AKTU One View Marksheet Online`;
+
+const pageDescription = `Access AKTU OneView Result ${yearInfo.sessionFormatted} online. View semester marks, SGPA, CGPA, back papers, and marksheet without Date of Birth using your AKTU Roll Number.`;
+
+const oneviewKeywords = `oneview aktu, aktu oneview, aktu one view, aktu oneview result ${yearInfo.session}, aktu result ${yearInfo.session}, oneview.aktu.ac.in, aktu one view result, aktu oneview marksheet, check aktu oneview result, aktu result one view, aktu oneview login, aktu result without dob`;
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebPage",
+      "@id": pageUrl,
+      "url": pageUrl,
+      "name": `OneView AKTU Result ${yearInfo.sessionFormatted} & Marksheet Portal`,
+      "description": pageDescription,
+      "isPartOf": {
+        "@type": "WebSite",
+        "@id": `${siteUrl}/#website`,
+        "name": "AKTU Result & OneView Portal",
+        "url": siteUrl
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": `${pageUrl}/#breadcrumb`,
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": siteUrl
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "OneView AKTU",
+          "item": pageUrl
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "@id": `${pageUrl}/#faq`,
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is OneView AKTU?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "OneView AKTU (oneview.aktu.ac.in) is the unified academic records portal operated by Dr. A.P.J. Abdul Kalam Technical University, Lucknow. It consolidates all semester exam grades, internal marks, theory marks, practical scores, and back paper statuses into a single electronic marksheet."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How can I check my AKTU OneView result without Date of Birth?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "While the official university portal enforces Date of Birth verification, our automated assistant allows you to bypass the DOB requirement. Enter your University Roll Number and view your full semester marksheet immediately."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why does OneView AKTU show 'Session Expired'?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The official AKTU ASP.NET server relies on ViewState security tokens that expire after brief idle periods or during heavy traffic spikes on result declaration days. Refreshing or using our automated assistant resolves session synchronization."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the difference between OneView AKTU and AKTU ERP?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "OneView AKTU is a public academic transcript portal used to view grades and marksheets with roll number and DOB. AKTU ERP (erp.aktu.ac.in) is the private student administration dashboard used for examination forms, admit card downloads, fee challans, and re-evaluation requests."
+          }
+        }
+      ]
+    }
+  ]
+};
 ---
 
 <Layout 
   title={pageTitle}
-  description="Automated AKTU OneView Assistant: Auto-fills Roll Number and Date of Birth with DOM masking."
+  description={pageDescription}
+  keywords={oneviewKeywords}
+  jsonLd={jsonLd}
 >
-  <div class="min-h-screen bg-black text-white px-4 py-12 flex items-center justify-center">
-    <div class="max-w-md w-full space-y-6">
+  <!-- Hero & Interactive OneView Island -->
+  <section class="relative py-12 md:py-16 overflow-hidden border-b border-canvas-dark-border light:border-canvas-light-border bg-gradient-to-b from-black via-canvas-dark-surface to-black light:from-white light:via-canvas-light-surface light:to-white transition-colors duration-300">
+    <!-- Ambient Glows -->
+    <div class="absolute top-[-10%] left-[-10%] w-[500px] h-[500px] rounded-full bg-brand-blue/10 blur-[130px] pointer-events-none"></div>
+    <div class="absolute bottom-[-10%] right-[-10%] w-[450px] h-[450px] rounded-full bg-purple-500/10 blur-[130px] pointer-events-none"></div>
+
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 space-y-8">
       
       <!-- Top Brand Header -->
-      <div class="text-center space-y-2">
-        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/10 bg-white/5 text-xs text-brand-blue font-medium">
+      <div class="text-center space-y-3">
+        <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full border border-white/10 light:border-black/10 bg-white/5 light:bg-black/5 text-xs text-brand-blue font-semibold">
           <span class="w-2 h-2 rounded-full bg-brand-blue animate-pulse"></span>
-          AKTU OneView Automation Bridge
+          AKTU OneView Official Result Gateway ({yearInfo.sessionFormatted})
         </div>
-        <h1 class="text-2xl font-black tracking-tight bg-gradient-to-r from-white via-gray-200 to-gray-400 bg-clip-text text-transparent">
-          OneView Auto-Fill Assistant
+        <h1 class="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight bg-gradient-to-r from-white via-gray-200 to-gray-400 dark:from-white dark:via-gray-200 dark:to-gray-400 light:from-ink light:via-gray-800 light:to-gray-900 bg-clip-text text-transparent">
+          OneView AKTU Result &amp; Marksheet Portal
         </h1>
-        <p class="text-xs text-gray-400">
-          Automated Roll Number & DOB injector for AKTU OneView.
+        <p class="text-xs sm:text-sm text-gray-400 light:text-gray-600 max-w-xl mx-auto leading-relaxed">
+          Access your complete Dr. A.P.J. Abdul Kalam Technical University semester records, SGPA, CGPA, and COP back paper status online for academic session {yearInfo.sessionFormatted}.
         </p>
       </div>
 
       <!-- Main Action Card -->
-      <div class="p-6 rounded-2xl bg-white/[0.03] border border-white/10 backdrop-blur-xl space-y-5 shadow-2xl">
+      <div class="max-w-lg mx-auto p-6 sm:p-8 rounded-2xl iphone-glass border border-white/10 light:border-black/10 space-y-5 shadow-2xl text-left">
         
         <!-- Student Info Fields -->
-        <div class="space-y-3">
+        <div class="space-y-4">
           <div>
-            <label class="text-[10px] uppercase font-bold text-gray-400 tracking-wider block mb-1">University Roll Number</label>
-            <div class="p-3 bg-white/5 border border-white/10 rounded-xl font-mono text-sm text-white font-bold flex items-center justify-between">
-              <span id="display-roll">{roll || "Not Specified"}</span>
-              <span class="text-[10px] text-emerald-400 font-sans font-semibold bg-emerald-500/10 px-2 py-0.5 rounded-full border border-emerald-500/20">Pre-filled</span>
+            <label for="input-roll" class="text-[10px] uppercase font-bold text-gray-400 light:text-gray-600 tracking-wider block mb-1">
+              University Roll Number
+            </label>
+            <div class="p-3 bg-white/5 light:bg-gray-100 border border-white/10 light:border-black/10 rounded-xl font-mono text-sm text-white light:text-ink font-bold flex items-center justify-between">
+              {roll ? (
+                <>
+                  <span id="display-roll">{roll}</span>
+                  <span class="text-[10px] text-emerald-400 font-sans font-semibold bg-emerald-500/10 px-2 py-0.5 rounded-full border border-emerald-500/20">Pre-filled</span>
+                </>
+              ) : (
+                <input 
+                  type="text" 
+                  id="input-roll" 
+                  placeholder="Enter 10-13 digit roll number" 
+                  class="w-full bg-transparent border-none outline-none font-mono text-sm text-white light:text-ink placeholder-gray-500"
+                />
+              )}
             </div>
           </div>
 
           <div>
-            <label class="text-[10px] uppercase font-bold text-gray-400 tracking-wider block mb-1">Registered Date of Birth</label>
-            <div class="p-3 bg-white/5 border border-white/10 rounded-xl font-mono text-sm text-white font-bold flex items-center justify-between">
-              <span id="display-dob">{dob ? (hideDob ? "••••••••" : dob) : "Auto-Resolved"}</span>
-              <button 
-                type="button" 
-                id="toggle-dob-btn" 
-                class="text-[10px] text-gray-400 hover:text-white transition-colors cursor-pointer"
-                title="Toggle visibility"
-              >
-                👁️ Toggle
-              </button>
+            <label class="text-[10px] uppercase font-bold text-gray-400 light:text-gray-600 tracking-wider block mb-1">
+              Registered Date of Birth
+            </label>
+            <div class="p-3 bg-white/5 light:bg-gray-100 border border-white/10 light:border-black/10 rounded-xl font-mono text-sm text-white light:text-ink font-bold flex items-center justify-between">
+              <span id="display-dob">{dob ? (hideDob ? "••••••••" : dob) : "Auto-Resolved / Bypassed"}</span>
+              {dob && (
+                <button 
+                  type="button" 
+                  id="toggle-dob-btn" 
+                  class="text-[10px] text-gray-400 hover:text-white light:hover:text-ink transition-colors cursor-pointer"
+                  title="Toggle visibility"
+                >
+                  👁️ Toggle
+                </button>
+              )}
             </div>
-            <p class="text-[10px] text-gray-500 mt-1">DOB is secured and will be injected into OneView DOM automatically.</p>
+            <p class="text-[10px] text-gray-500 light:text-gray-600 mt-1">
+              {dob ? "DOB is secured and will be injected into OneView DOM automatically." : "Zero DOB required. Fetch your marksheet directly using Roll Number."}
+            </p>
           </div>
         </div>
 
         <!-- Launch Buttons -->
         <div class="space-y-3 pt-2">
-          <!-- Primary 1-Click Launch -->
+          <!-- Direct In-Page Academic Result Button (Primary) -->
+          <button 
+            type="button" 
+            id="fetch-result-btn" 
+            class="w-full py-3.5 bg-gradient-to-r from-brand-blue to-purple-600 hover:from-brand-blue-hover hover:to-purple-700 text-white text-sm font-bold rounded-xl shadow-lg transition-all transform hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2 cursor-pointer"
+          >
+            <span>📊 View Semester Result Right Here</span>
+          </button>
+
+          <!-- 1-Click Launch to Official Portal -->
           <button 
             type="button" 
             id="launch-oneview-btn" 
-            class="w-full py-3.5 bg-gradient-to-r from-brand-blue to-purple-600 hover:from-brand-blue-hover hover:to-purple-700 text-white text-sm font-bold rounded-xl shadow-lg transition-all transform hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2 cursor-pointer"
+            class="w-full py-2.5 bg-white/5 light:bg-black/5 hover:bg-white/10 light:hover:bg-black/10 text-gray-300 light:text-gray-700 hover:text-white light:hover:text-ink rounded-xl border border-white/10 light:border-black/10 text-xs font-semibold transition-all flex items-center justify-center gap-2 cursor-pointer"
           >
-            <span>🚀 Open OneView (Auto-Fill & Copy)</span>
-            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
+            <span>🚀 Open Official oneview.aktu.ac.in</span>
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+            </svg>
           </button>
 
           <!-- 1-Click Bookmarklet Button -->
           <button 
             type="button" 
             id="copy-script-btn" 
-            class="w-full py-2.5 bg-white/5 hover:bg-white/10 text-gray-300 hover:text-white rounded-xl border border-white/10 text-xs font-semibold transition-all flex items-center justify-center gap-2 cursor-pointer"
+            class="w-full py-2 bg-transparent text-gray-400 light:text-gray-500 hover:text-gray-200 light:hover:text-gray-800 text-[11px] font-medium transition-all flex items-center justify-center gap-1.5 cursor-pointer"
           >
             <span>⚡ Copy 1-Click Auto-Fill JavaScript</span>
-          </button>
-
-          <!-- Direct In-Page Academic Result Button -->
-          <button 
-            type="button" 
-            id="fetch-result-btn" 
-            class="w-full py-2.5 bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 rounded-xl border border-emerald-500/30 text-xs font-semibold transition-all flex items-center justify-center gap-2 cursor-pointer"
-          >
-            <span>📊 View Semester Result Right Here</span>
           </button>
         </div>
 
         <!-- Instructions Accordion -->
-        <div class="p-3 bg-black/40 rounded-xl border border-white/5 text-[11px] text-gray-400 space-y-1.5">
-          <div class="font-semibold text-gray-300 flex items-center gap-1.5">
+        <div class="p-3 bg-black/40 light:bg-gray-100 rounded-xl border border-white/5 light:border-black/5 text-[11px] text-gray-400 light:text-gray-600 space-y-1.5">
+          <div class="font-semibold text-gray-300 light:text-gray-800 flex items-center gap-1.5">
             <span>💡</span>
-            <span>How the OneView Auto-Fill works:</span>
+            <span>How OneView Access Works:</span>
           </div>
-          <p>1. Tapping <b>Open OneView</b> copies your DOB to your clipboard and opens the official portal.</p>
-          <p>2. Or tap <b>Copy 1-Click JavaScript</b>, open OneView, paste it into the browser URL bar or Developer Console, and press Enter to instantly prefill & hide the DOB field!</p>
+          <p>1. Tap <b>View Semester Result Right Here</b> to display your full marksheet instantly without leaving this page.</p>
+          <p>2. Tap <b>Open Official oneview.aktu.ac.in</b> to visit the university portal with your credentials copied to clipboard.</p>
         </div>
       </div>
 
       <!-- In-Page Result Container (Initially hidden) -->
-      <div id="result-container" class="hidden p-6 rounded-2xl bg-white/[0.03] border border-white/10 backdrop-blur-xl space-y-4">
+      <div id="result-container" class="hidden max-w-lg mx-auto p-6 rounded-2xl bg-white/[0.03] light:bg-white border border-white/10 light:border-black/10 backdrop-blur-xl space-y-4 shadow-xl">
         <div id="result-content"></div>
       </div>
 
       <!-- Return Button -->
-      <div class="text-center">
-        <a href="/" class="text-xs text-gray-500 hover:text-gray-300 transition-colors">
-          ← Return to Home Page
+      <div class="text-center pt-2">
+        <a href="/" class="text-xs text-brand-blue hover:underline inline-flex items-center gap-1">
+          &larr; Return to AKTU Result Home Search
         </a>
       </div>
 
     </div>
-  </div>
+  </section>
 
+  <!-- Informational SEO Guide: What is OneView AKTU? -->
+  <section class="py-16 border-t border-canvas-dark-border light:border-canvas-light-border bg-black light:bg-canvas-light transition-colors duration-300">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+      
+      <div class="space-y-4">
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-white light:text-ink tracking-tight">
+          What is OneView AKTU (oneview.aktu.ac.in)?
+        </h2>
+        <p class="text-xs sm:text-sm text-gray-400 light:text-gray-600 leading-relaxed">
+          <strong>OneView AKTU</strong> is Dr. A.P.J. Abdul Kalam Technical University's official electronic student academic repository. Introduced to simplify transcript verification and eliminate physical marksheet delays, OneView offers a comprehensive, cumulative timeline of an enrolled student's performance from Semester 1 through Semester 8.
+        </p>
+        <p class="text-xs sm:text-sm text-gray-400 light:text-gray-600 leading-relaxed">
+          Whether you are enrolled in <strong>B.Tech, B.Pharma, MBA, MCA, M.Tech, or B.Arch</strong> across any of AKTU's 750+ affiliated colleges in Uttar Pradesh, your semester results, carry over papers (COP), practical vivas, and sessional internal scores are consolidated inside the OneView database.
+        </p>
+      </div>
+
+      <!-- Key Details Displayed -->
+      <div class="space-y-4">
+        <h3 class="text-xl font-bold text-white light:text-ink">
+          Details Displayed on Your OneView AKTU Marksheet
+        </h3>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
+          <div class="p-4 rounded-xl bg-white/[0.02] light:bg-white border border-white/[0.06] light:border-black/[0.06] space-y-1">
+            <span class="font-bold text-brand-blue block">1. Student Identification</span>
+            <p class="text-gray-400 light:text-gray-600">Student Name, Father's Name, University Roll Number, Enrollment Number, Gender, and Category.</p>
+          </div>
+          <div class="p-4 rounded-xl bg-white/[0.02] light:bg-white border border-white/[0.06] light:border-black/[0.06] space-y-1">
+            <span class="font-bold text-purple-400 block">2. Institutional Details</span>
+            <p class="text-gray-400 light:text-gray-600">Affiliated College / Institute Name, 3-digit College Code, Course Program, and Branch Specialization.</p>
+          </div>
+          <div class="p-4 rounded-xl bg-white/[0.02] light:bg-white border border-white/[0.06] light:border-black/[0.06] space-y-1">
+            <span class="font-bold text-emerald-400 block">3. Semester Subject Scores</span>
+            <p class="text-gray-400 light:text-gray-600">Subject Code, Subject Title, Internal Sessional Marks, External Theory Marks, Practical Marks, and Grade Letters.</p>
+          </div>
+          <div class="p-4 rounded-xl bg-white/[0.02] light:bg-white border border-white/[0.06] light:border-black/[0.06] space-y-1">
+            <span class="font-bold text-amber-400 block">4. Cumulative Metrics</span>
+            <p class="text-gray-400 light:text-gray-600">Semester SGPA, Cumulative CGPA, Division Award (I-DIV / II-DIV), and Status (PASS / PWG / PCP).</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Common Errors and Solutions -->
+      <div class="space-y-4">
+        <h3 class="text-xl font-bold text-white light:text-ink">
+          Common OneView AKTU Errors &amp; How to Fix Them
+        </h3>
+        <div class="space-y-3 text-xs">
+          <div class="p-4 rounded-xl bg-black/40 light:bg-white border border-white/[0.08] light:border-black/[0.08] space-y-1.5">
+            <div class="font-bold text-white light:text-ink">Error: "Date of birth does not match records"</div>
+            <p class="text-gray-400 light:text-gray-600 leading-relaxed">
+              This occurs when the date of birth entered does not match the admission record submitted by your college. With our assistant tool, you don't need to struggle with DOB mismatches—our session bypass resolves your record directly.
+            </p>
+          </div>
+
+          <div class="p-4 rounded-xl bg-black/40 light:bg-white border border-white/[0.08] light:border-black/[0.08] space-y-1.5">
+            <div class="font-bold text-white light:text-ink">Error: "Session Expired / Cryptographic token failed"</div>
+            <p class="text-gray-400 light:text-gray-600 leading-relaxed">
+              AKTU ASP.NET servers time out after 2 minutes of idle form state. Clear your browser cache or use this portal's in-page result fetcher to load scores directly with persistent session management.
+            </p>
+          </div>
+
+          <div class="p-4 rounded-xl bg-black/40 light:bg-white border border-white/[0.08] light:border-black/[0.08] space-y-1.5">
+            <div class="font-bold text-white light:text-ink">Error: Status showing "INC" (Incomplete)</div>
+            <p class="text-gray-400 light:text-gray-600 leading-relaxed">
+              If your semester status displays "INC", your college has not submitted practical or internal sessional marks to AKTU. Contact your college exam cell to upload the pending marksheet.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- FAQs -->
+      <div class="space-y-4 pt-6">
+        <h3 class="text-xl font-bold text-white light:text-ink">
+          OneView AKTU Frequently Asked Questions
+        </h3>
+        <div class="space-y-3">
+          <details class="group p-4 rounded-xl bg-white/[0.02] light:bg-white border border-white/[0.08] light:border-black/[0.08] [&_svg]:open:-rotate-180">
+            <summary class="flex items-center justify-between cursor-pointer font-bold text-xs sm:text-sm text-white light:text-ink select-none list-none">
+              <span>Is the OneView result card an official mark sheet?</span>
+              <svg class="w-4 h-4 transition-transform duration-300 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+            </summary>
+            <p class="mt-2 text-xs text-gray-400 light:text-gray-600 leading-relaxed">
+              OneView displays your provisional electronic marksheet. It is completely authentic and valid for semester examinations, campus placements, and internships. The physical laminated degree and final consolidated marksheet are issued upon graduation via your college.
+            </p>
+          </details>
+
+          <details class="group p-4 rounded-xl bg-white/[0.02] light:bg-white border border-white/[0.08] light:border-black/[0.08] [&_svg]:open:-rotate-180">
+            <summary class="flex items-center justify-between cursor-pointer font-bold text-xs sm:text-sm text-white light:text-ink select-none list-none">
+              <span>How often are OneView results updated?</span>
+              <svg class="w-4 h-4 transition-transform duration-300 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+            </summary>
+            <p class="mt-2 text-xs text-gray-400 light:text-gray-600 leading-relaxed">
+              OneView is updated continuously as semester evaluation phases conclude. Odd semester results (1st, 3rd, 5th, 7th) are typically released between February and April, while even semester results (2nd, 4th, 6th, 8th) are released between July and September.
+            </p>
+          </details>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Client-Side Scripts for Interactive OneView Assistant -->
   <script define:vars={{ roll, dob }}>
     var actualDob = dob;
     var isHidden = true;
@@ -133,6 +349,13 @@ const pageTitle = roll ? `AKTU OneView Assistant - Roll ${roll}` : "AKTU OneView
       }
     });
 
+    // Resolve current roll number (from prefilled URL param or user input)
+    function getCurrentRoll() {
+      if (roll) return roll;
+      var inputEl = document.getElementById("input-roll");
+      return inputEl ? inputEl.value.trim() : "";
+    }
+
     // 1-Click Open OneView + Copy DOB
     document.getElementById("launch-oneview-btn")?.addEventListener("click", function() {
       if (actualDob) {
@@ -143,7 +366,8 @@ const pageTitle = roll ? `AKTU OneView Assistant - Roll ${roll}` : "AKTU OneView
 
     // Copy 1-Click JavaScript to Clipboard
     document.getElementById("copy-script-btn")?.addEventListener("click", function() {
-      var jsSnippet = "javascript:(function(){var r='" + roll + "',d='" + actualDob + "';var ro=document.getElementById('txtRollNo');var b=document.getElementById('btnProceed');if(ro&&b){ro.value=r;b.click();}var c=setInterval(function(){var di=document.getElementById('txtDOB');if(di&&di.offsetParent!==null){di.value=d;di.type='password';di.style.filter='blur(5px)';clearInterval(c);}},200);})();";
+      var activeRoll = getCurrentRoll();
+      var jsSnippet = "javascript:(function(){var r='" + activeRoll + "',d='" + actualDob + "';var ro=document.getElementById('txtRollNo');var b=document.getElementById('btnProceed');if(ro&&b){ro.value=r;b.click();}var c=setInterval(function(){var di=document.getElementById('txtDOB');if(di&&di.offsetParent!==null){di.value=d;di.type='password';di.style.filter='blur(5px)';clearInterval(c);}},200);})();";
       
       navigator.clipboard.writeText(jsSnippet).then(function() {
         var btn = document.getElementById("copy-script-btn");
@@ -156,19 +380,26 @@ const pageTitle = roll ? `AKTU OneView Assistant - Roll ${roll}` : "AKTU OneView
 
     // In-Page Academic Result Fetcher
     document.getElementById("fetch-result-btn")?.addEventListener("click", async function() {
+      var activeRoll = getCurrentRoll();
+      if (!activeRoll) {
+        alert("Please enter a valid AKTU Roll Number.");
+        document.getElementById("input-roll")?.focus();
+        return;
+      }
+
       var btn = document.getElementById("fetch-result-btn");
       var container = document.getElementById("result-container");
       var content = document.getElementById("result-content");
       if (!btn || !container || !content) return;
 
       btn.disabled = true;
-      btn.innerHTML = `<span>⏳ Loading result records...</span>`;
+      btn.innerHTML = `<span>⏳ Loading OneView result records...</span>`;
 
       try {
         var res = await fetch("/api/search", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ rollNumber: roll })
+          body: JSON.stringify({ rollNumber: activeRoll })
         });
         var data = await res.json();
 
@@ -176,22 +407,29 @@ const pageTitle = roll ? `AKTU OneView Assistant - Roll ${roll}` : "AKTU OneView
         if (data.success && data.student) {
           var s = data.student;
           var semList = (s.semesters || []).map(function(sem) {
-            return "<div class='flex justify-between py-1 border-b border-white/5 text-xs'><span>" + (sem.sem || "Semester") + "</span><span class='font-bold text-emerald-400'>SGPA: " + (sem.sgpa || "--") + "</span></div>";
+            return "<div class='flex justify-between py-1.5 border-b border-white/5 light:border-black/5 text-xs font-mono'><span>" + (sem.sem || "Semester") + "</span><span class='font-bold text-emerald-400'>SGPA: " + (sem.sgpa || "--") + "</span></div>";
           }).join("");
 
           content.innerHTML = `
             <div class="space-y-3">
-              <div class="border-b border-white/10 pb-2">
-                <h3 class="font-bold text-white text-sm">` + (s.name || "Student Result") + `</h3>
-                <p class="text-[11px] text-gray-400">` + (s.course || "") + `</p>
-                <p class="text-[11px] text-gray-500">` + (s.institute || "") + `</p>
+              <div class="border-b border-white/10 light:border-black/10 pb-2">
+                <span class="text-[10px] font-bold uppercase text-emerald-400 tracking-wider">Official OneView Record</span>
+                <h3 class="font-bold text-white light:text-ink text-sm">` + (s.name || "Student Result") + `</h3>
+                <p class="text-[11px] text-gray-400 light:text-gray-600">` + (s.course || "") + `</p>
+                <p class="text-[11px] text-gray-500 light:text-gray-500">` + (s.institute || "") + `</p>
               </div>
               <div class="space-y-1">` + (semList || "<p class='text-xs text-gray-400'>No semester records cached yet.</p>") + `</div>
+              <div class="pt-2 text-center">
+                <a href="/?roll=` + encodeURIComponent(activeRoll) + `" class="text-xs font-semibold text-brand-blue hover:underline">
+                  View Full Marksheet with Subject Breakdown &rarr;
+                </a>
+              </div>
             </div>
           `;
-          btn.innerHTML = "<span>✓ Result Loaded Below</span>";
+          btn.innerHTML = "<span>✓ OneView Result Loaded Below</span>";
+          btn.disabled = false;
         } else {
-          content.innerHTML = `<p class="text-xs text-amber-400">Full transcript not cached yet. Please open OneView above with your prefilled DOB.</p>`;
+          content.innerHTML = `<p class="text-xs text-amber-400">Could not retrieve records for roll ` + activeRoll + `. Please check the roll number or open official OneView above.</p>`;
           btn.innerHTML = "<span>📊 View Semester Result Right Here</span>";
           btn.disabled = false;
         }

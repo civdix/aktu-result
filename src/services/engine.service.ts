@@ -206,36 +206,7 @@ async function fetchWithCookies(
 }
 
 export class AktuEngineService {
-  private static localCache = new Map<string, { dob: string; student: any }>([
-    [
-      '2100650100103',
-      {
-        dob: '12/03/2003',
-        student: {
-          name: 'TUSHAR GAUTAM',
-          fatherName: 'Mr DEVESH KUMAR GAUTAM',
-          motherName: 'Mrs BABY GAUTAM',
-          course: 'B.Tech. Computer Science & Engineering',
-          college: 'B.S.A. COLLEGE OF ENGINEERING & TECHNOLOGY,MATHURA [AK65]',
-          enrollmentNo: '2100650100103'
-        }
-      }
-    ],
-    [
-      '2200650100100',
-      {
-        dob: '15/04/2003',
-        student: {
-          name: 'Shivam Dixit',
-          fatherName: 'Bhola Dixit',
-          motherName: 'Archana Dixit',
-          course: 'B.Tech. Computer Science & Engineering',
-          college: 'B.S.A. COLLEGE OF ENGINEERING & TECHNOLOGY,MATHURA [AK65]',
-          enrollmentNo: '2200650100100'
-        }
-      }
-    ]
-  ]);
+  private static localCache = new Map<string, { dob: string; student: any }>();
 
   private static generateDeviceId(): string {
     const randomHex = () => Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);

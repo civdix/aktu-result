@@ -1,5 +1,8 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import { getAcademicYearInfo } from "../utils/academicYear";
+
+const yearInfo = getAcademicYearInfo();
 
 // FAQ List data
 const faqs = [
@@ -28,6 +31,22 @@ const faqs = [
     answer: "SGPA (Semester Grade Point Average) is the score of a single semester. CGPA (Cumulative Grade Point Average) is the overall average score across all completed years. PASS indicates all subjects are clear. PWG (Pass with Grace) means you passed with grace marks in a subject. PCP (Passed with Carry Over Papers) means you have passed the semester but have back papers to clear."
   },
   {
+    question: "What is OneView AKTU and how do I view my OneView marksheet?",
+    answer: "OneView AKTU (oneview.aktu.ac.in) is the official electronic ledger where Dr. A.P.J. Abdul Kalam Technical University publishes semester marks, internal marks, practical grades, and back papers. You can view and print your complete OneView marksheet directly on our portal without needing your registered Date of Birth."
+  },
+  {
+    question: "How do I check my AKTU ERP Result on erp.aktu.ac.in?",
+    answer: "AKTU ERP Result can be accessed on the university ERP student portal (erp.aktu.ac.in) using your User ID (University Roll Number) and password. Alternatively, you can use our instant search tool on the home page to view your marksheet immediately without entering ERP passwords or captchas."
+  },
+  {
+    question: "What is the difference between OneView AKTU and AKTU ERP?",
+    answer: "OneView AKTU is a public portal strictly dedicated to displaying and printing complete semester marksheets and cumulative CGPA. In contrast, AKTU ERP is a private student management dashboard used for exam form submission, admit card downloads, fee payments, circulars, and challenge evaluation (scrutiny) requests."
+  },
+  {
+    question: "How do I calculate percentage from AKTU CGPA?",
+    answer: "AKTU follows the official conversion formula: Percentage = (CGPA - 0.75) * 10. For example, if your cumulative CGPA is 8.0, your percentage is (8.0 - 0.75) * 10 = 72.5%."
+  },
+  {
     question: "How to find the roll number of an AKTU student?",
     answer: "You can find an AKTU student's roll number by using our dedicated Roll Number Finder tool. Enter the admission year, affiliated college, and branch. You can also specify the student's name to filter the scanned class database cached records."
   },
@@ -54,12 +73,12 @@ const faqJsonLd = {
     }
   }))
 };
-const faqKeywords = "aktu faq, aktu result help, aktu session expired, what is pcp aktu, what is pwg aktu, aktu carryover result, aktu sgpa cgpa meaning, how to check aktu result";
+const faqKeywords = "aktu result faq, oneview aktu, erp aktu result, aktu erp result, aktu oneview, aktu result help, aktu session expired, what is pcp aktu, what is pwg aktu, aktu carryover result, aktu sgpa cgpa meaning, how to check aktu result";
 ---
 
 <Layout 
-  title="FAQ - AKTU Result Without DOB | Questions & Support"
-  description="Commonly asked questions about recovering AKTU One View marks sheets, solving session validation errors, and understanding SGPA/CGPA cards."
+  title="FAQ - AKTU Result, OneView & ERP Result Questions Answered"
+  description={`Common questions about checking AKTU Result ${yearInfo.sessionFormatted}, OneView AKTU marksheets, AKTU ERP student login, resolving session expired errors, and SGPA/CGPA cards.`}
   keywords={faqKeywords}
   jsonLd={faqJsonLd}
 >

@@ -66,12 +66,12 @@ const finderJsonLd = {
     }
   ]
 };
-const finderKeywords = "aktu roll number finder, find aktu roll number, aktu student roll search, check roll number aktu, aktu roll list, roll range aktu, aktu college roll codes, find student details aktu";
+const finderKeywords = "aktu roll number finder, find aktu roll number, aktu result, oneview aktu, erp aktu result, check roll number aktu, aktu student roll search, aktu roll list, roll range aktu, find student details aktu";
 ---
 
-<Layout
-  title="AKTU Roll Number Finder | Find College/Branch Roll Number Ranges"
-  description="Forgot your AKTU roll number? Search by college, branch/course, admission year, and student name to recover roll numbers or look up class roll number ranges."
+<Layout 
+  title="AKTU Roll Number Finder | Check AKTU Result & Roll Online"
+  description="Find your AKTU roll number to check AKTU Result 2025 and OneView marksheet. Search by college, branch, admission year, and student name to recover roll numbers instantly."
   keywords={finderKeywords}
   jsonLd={finderJsonLd}
 >
@@ -202,7 +202,7 @@ const finderKeywords = "aktu roll number finder, find aktu roll number, aktu stu
                 <input 
                   type="text" 
                   id="finder-name" 
-                  placeholder="e.g. SHIVAM" 
+                  placeholder="e.g. RAHUL" 
                   class="w-full px-3 py-2 bg-black/50 light:bg-gray-50 border border-canvas-dark-border light:border-canvas-light-border rounded-lg text-white light:text-ink text-xs focus:outline-none focus:border-brand-blue transition-all"
                 />
                 <p class="text-[9px] text-gray-500 mt-1 font-medium">Narrow down class records by student name.</p>
@@ -420,14 +420,14 @@ const finderKeywords = "aktu roll number finder, find aktu roll number, aktu stu
                 <!-- cURL -->
                 <pre is:raw class="finder-code-block" id="finder-code-curl" data-lines="4"><span class="text-gray-500">curl</span> -X POST http://localhost:4321/api/find-roll \
   -H <span class="text-gray-300">"Content-Type: application/json"</span> \
-  -d <span class="text-gray-300">'{"admissionYear": "22", "collegeCode": "065", "branchCode": "010", "name": "SHIVAM"}'</span></pre>
+  -d <span class="text-gray-300">'{"admissionYear": "24", "collegeCode": "065", "branchCode": "010", "name": "RAHUL"}'</span></pre>
                 
                 <!-- Nodejs -->
                 <pre is:raw class="finder-code-block hidden" id="finder-code-nodejs" data-lines="14"><span class="text-blue-400">const</span> payload = {
-  admissionYear: <span class="text-gray-300">"22"</span>,
+  admissionYear: <span class="text-gray-300">"24"</span>,
   collegeCode: <span class="text-gray-300">"065"</span>,
   branchCode: <span class="text-gray-300">"010"</span>,
-  name: <span class="text-gray-300">"SHIVAM"</span>
+  name: <span class="text-gray-300">"RAHUL"</span>
 };
 
 <span class="text-gray-500">fetch</span>(<span class="text-gray-300">'/api/find-roll'</span>, {
@@ -442,10 +442,10 @@ const finderKeywords = "aktu roll number finder, find aktu roll number, aktu stu
                 <pre is:raw class="finder-code-block hidden" id="finder-code-python" data-lines="10"><span class="text-blue-400">import</span> requests
 
 payload = {
-  <span class="text-gray-300">"admissionYear"</span>: <span class="text-gray-300">"22"</span>,
+  <span class="text-gray-300">"admissionYear"</span>: <span class="text-gray-300">"24"</span>,
   <span class="text-gray-300">"collegeCode"</span>: <span class="text-gray-300">"065"</span>,
   <span class="text-gray-300">"branchCode"</span>: <span class="text-gray-300">"010"</span>,
-  <span class="text-gray-300">"name"</span>: <span class="text-gray-300">"SHIVAM"</span>
+  <span class="text-gray-300">"name"</span>: <span class="text-gray-300">"RAHUL"</span>
 }
 res = requests.post(<span class="text-gray-300">"http://localhost:4321/api/find-roll"</span>, json=payload)
 print(res.json())</pre>
@@ -459,11 +459,11 @@ print(res.json())</pre>
             <pre is:raw class="font-mono text-[10px] p-3 rounded-lg border border-canvas-dark-border light:border-canvas-light-border bg-black/40 text-emerald-400 overflow-x-auto">
 {
   "success": true,
-  "prefix": "220065010",
-  "rangeStart": "2200650100001",
-  "rangeEnd": "2200650100120",
+  "prefix": "240065010",
+  "rangeStart": "2400650100001",
+  "rangeEnd": "2400650100120",
   "matches": [
-    { "name": "SHIVAM DIXIT", "rollNumber": "2200650100100", "source": "cache" }
+    { "name": "RAHUL VERMA", "rollNumber": "2400650100001", "source": "cache" }
   ]
 }</pre>
           </div>
