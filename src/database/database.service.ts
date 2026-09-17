@@ -5,7 +5,7 @@ import { Student } from '../interfaces';
 let database: Db | null = null;
 let client: MongoClient | null = null;
 let lastConnectAttempt = 0;
-const CONNECT_COOLDOWN_MS = 30000; // 30 seconds
+const CONNECT_COOLDOWN_MS = 5000; // 5 seconds
 
 export class DatabaseService {
   static async connectToDatabase(): Promise<Db | null> {
@@ -14,17 +14,17 @@ export class DatabaseService {
         const pingPromise = database.command({ ping: 1 });
         let timeoutId: any;
         const timeoutPromise = new Promise<never>((_, reject) => {
-          timeoutId = setTimeout(() => reject(new Error('Ping timed out')), 500);
+          timeoutId = setTimeout(() => reject(new Error('Ping timed out')), 2000);
         });
         await Promise.race([pingPromise, timeoutPromise]);
         if (timeoutId) clearTimeout(timeoutId);
         return database;
       } catch (err) {
-        console.warn('Cached MongoDB connection is dead or ping timed out, cleaning up and returning null for this request...', err);
+        console.warn('Cached MongoDB connection is dead or ping timed out, cleaning up...', err);
         database = null;
         if (client) {
           try {
-            await client.close(true);
+            client.close(true).catch(() => {});
           } catch (e) {
             // ignore
           }
@@ -54,21 +54,20 @@ export class DatabaseService {
       if (!client) {
         const { MongoClient } = await import('mongodb');
         client = new MongoClient(uri, {
-          serverSelectionTimeoutMS: 1500,
-          connectTimeoutMS: 1500,
-          maxPoolSize: 1
+          serverSelectionTimeoutMS: 8000,
+          connectTimeoutMS: 8000,
+          maxPoolSize: 10
         });
       }
 
-      // Wrap client.connect() in a promise race with a timeout.
-      // This is crucial in serverless/edge/worker runtimes (like Miniflare/Cloudflare)
-      // where MongoDB's Node-specific socket setup can hang indefinitely without throwing.
       const connectPromise = client.connect();
+      // Attach noop catch to suppress unhandled rejections if timeout rejects first
+      connectPromise.catch(() => {});
       let timeoutId: any;
       const timeoutPromise = new Promise<never>((_, reject) => {
         timeoutId = setTimeout(() => {
-          reject(new Error('MongoDB connection attempt timed out (1500ms limit reached)'));
-        }, 1500);
+          reject(new Error('MongoDB connection attempt timed out (8000ms limit reached)'));
+        }, 8000);
       });
 
       await Promise.race([connectPromise, timeoutPromise]);
@@ -77,10 +76,10 @@ export class DatabaseService {
       database = client.db(dbName);
       return database;
     } catch (error) {
-      console.warn('MongoDB connection unavailable in edge worker environment:', error);
+      console.warn('MongoDB connection unavailable or timed out:', error);
       if (client) {
         try {
-          await client.close(true);
+          client.close(true).catch(() => {});
         } catch (closeError) {
           // ignore
         }

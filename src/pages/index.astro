@@ -2767,7 +2767,11 @@ const homeKeywords = `aktu result, aktu result ${yearInfo.startYear}, aktu resul
           });
           const vData = await vRes.json();
           if (vData && vData.success) {
-            renderSearchVerifiedProfile(vData);
+            if (vData.semesters && vData.semesters.length > 0) {
+              displayFullResult(vData);
+            } else {
+              renderSearchVerifiedProfile(vData);
+            }
           } else if (vData && vData.needsManualCaptcha && vData.captchaImage) {
             currentSession = vData.session || currentSession;
             updateModal(vData.captchaImage, vData.error || "Incorrect code. Please enter the new characters shown.");
@@ -2867,7 +2871,11 @@ const homeKeywords = `aktu result, aktu result ${yearInfo.startYear}, aktu resul
             if (data.totalSearches) {
               updateCounterUI(data.totalSearches);
             }
-            renderSearchVerifiedProfile(data);
+            if (data.semesters && data.semesters.length > 0) {
+              displayFullResult(data);
+            } else {
+              renderSearchVerifiedProfile(data);
+            }
           } else if (data.needsManualCaptcha && data.captchaImage) {
             renderSearchManualCaptcha(data, enteredRoll);
           } else {
@@ -2882,8 +2890,18 @@ const homeKeywords = `aktu result, aktu result ${yearInfo.startYear}, aktu resul
           document.getElementById("error-title").textContent = "Fetch Failed";
           document.getElementById("error-desc").textContent = "Connection error. Please check your connection and try again.";
           errorState.classList.remove("hidden");
-        });
+      });
     });
-    });
-  </script>
+
+    // Auto-trigger search if roll query parameter is present in URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const urlRoll = urlParams.get('roll') || urlParams.get('rollNumber');
+    if (urlRoll && rollInput) {
+      rollInput.value = urlRoll;
+      setTimeout(() => {
+        searchForm.dispatchEvent(new Event('submit', { cancelable: true }));
+      }, 150);
+    }
+  });
+</script>
 </Layout>

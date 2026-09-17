@@ -1,6 +1,7 @@
-{"message":"Enabling image processing with Cloudflare Images for production with the \"IMAGES\" Images binding.","label":"@astrojs/cloudflare","level":"info"}
-{"message":"Enabling sessions with Cloudflare KV with the \"AKTU_SESSION\" KV binding.","label":"@astrojs/cloudflare","level":"info"}
+{"message":"Enabling sessions with filesystem storage","label":"@astrojs/node","level":"info"}
+{"message":"connected.","label":"vite","level":"info"}
+{"message":"Generated 1ms","label":"types","level":"info"}
+{"message":"connected.","label":"vite","level":"info"}
 {"message":"Re-optimizing dependencies because vite config has changed","label":"vite","level":"info"}
-Using secrets defined in .env
-{"message":"[optimizer] scanning dependencies...","label":"vite","level":"info"}
-{"message":"[optimizer] bundling dependencies...","label":"vite","level":"info"}
+{"message":" astro  v7.0.9 ready in 5922 ms\n┃ Local    http://localhost:4321/\n┃ Network  use --host to expose","label":"SKIP_FORMAT","level":"info"}
+{"message":"watching for file changes...","label":null,"level":"info"}
