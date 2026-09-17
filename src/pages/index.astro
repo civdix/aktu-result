@@ -15,6 +15,17 @@ const jsonLd = {
       "url": siteUrl,
       "name": "AKTU Result & OneView Portal",
       "description": `Check AKTU Result ${yearInfo.sessionFormatted}, OneView AKTU marksheet, and AKTU ERP result online using your University Roll Number without Date of Birth.`,
+      "publisher": {
+        "@type": "Organization",
+        "name": "AKTU Student Portal",
+        "url": siteUrl,
+        "logo": {
+          "@type": "ImageObject",
+          "url": `${siteUrl}/web-app-manifest-512x512.png`,
+          "width": 512,
+          "height": 512
+        }
+      },
       "potentialAction": {
         "@type": "SearchAction",
         "target": {
@@ -29,6 +40,7 @@ const jsonLd = {
       "@id": `${siteUrl}/#app`,
       "name": `AKTU Result ${yearInfo.sessionFormatted}, OneView & ERP Result Query Tool`,
       "url": siteUrl,
+      "image": `${siteUrl}/web-app-manifest-512x512.png`,
       "description": `Fast online marksheet and score card retrieval portal for Dr. A.P.J. Abdul Kalam Technical University (AKTU) students. View semester grades, SGPA, CGPA, and pass status for session ${yearInfo.sessionFormatted}.`,
       "applicationCategory": "EducationalApplication",
       "operatingSystem": "All",
@@ -41,7 +53,13 @@ const jsonLd = {
       "creator": {
         "@type": "Organization",
         "name": "AKTU Student Portal",
-        "url": siteUrl
+        "url": siteUrl,
+        "logo": {
+          "@type": "ImageObject",
+          "url": `${siteUrl}/web-app-manifest-512x512.png`,
+          "width": 512,
+          "height": 512
+        }
       }
     },
     {

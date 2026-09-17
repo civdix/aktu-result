@@ -37,11 +37,15 @@ const isActive = (path: string) => {
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     
-    <!-- Favicon & Brand Icons -->    
-    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+    <!-- Favicon & Search Engine Icons (Google Search Console & Multi-Device Compliant) -->    
+    <link rel="icon" href="/favicon.ico" sizes="48x48 32x32 16x16" />
+    <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48x48.png" />
+    <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/web-app-manifest-192x192.png" />
+    <link rel="icon" type="image/png" sizes="512x512" href="/web-app-manifest-512x512.png" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="shortcut icon" href="/favicon.ico" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="shortcut icon" href="/favicon.ico" />
     <meta name="apple-mobile-web-app-title" content="AKTU Result" />
     <link rel="manifest" href="/site.webmanifest" />
     
@@ -113,8 +117,16 @@ const isActive = (path: string) => {
         <div class="flex items-center justify-between h-12">
           <!-- Logo / Brand Title -->
           <div class="flex items-center">
-            <a href="/" class="flex items-center gap-2 group">
-              <img src class="w-8 h-8 rounded-lg bg-gradient-to-tr from-brand-blue to-purple-600 flex items-center justify-center text-white font-black text-sm premium-shadow-dark transition-all duration-300 group-hover:scale-105" />
+            <a href="/" class="flex items-center gap-2.5 group">
+              <img 
+                src="/images/gemini-svg.webp" 
+                alt="AKTU Result Logo" 
+                width="32" 
+                height="32" 
+                class="w-8 h-8 rounded-full object-cover shadow-sm transition-all duration-300 group-hover:scale-105 border border-white/10" 
+                loading="eager" 
+                decoding="async"
+              />
               <span class="font-bold tracking-tight text-sm sm:text-base bg-gradient-to-r from-white to-gray-400 dark:from-white dark:to-gray-400 light:from-ink light:to-gray-700 bg-clip-text text-transparent group-hover:opacity-90">
                 AKTU Result <span class="text-brand-blue font-semibold">Without DOB</span>
               </span>
@@ -235,8 +247,17 @@ const isActive = (path: string) => {
         </div>
 
         <div class="mt-12 pt-8 border-t border-canvas-dark-border light:border-canvas-light-border flex flex-col md:flex-row items-center justify-between gap-6 text-xs text-gray-600">
-          <div>
-            &copy; {new Date().getFullYear()} AKTU Result Without DOB. All rights reserved.
+          <div class="flex items-center gap-2.5">
+            <img 
+              src="/images/gemini-svg.webp" 
+              alt="AKTU Result Logo" 
+              width="24" 
+              height="24" 
+              class="w-6 h-6 rounded-full object-cover border border-white/10" 
+              loading="lazy" 
+              decoding="async"
+            />
+            <span>&copy; {new Date().getFullYear()} AKTU Result Without DOB. All rights reserved.</span>
           </div>
           
           <!-- Explicit Third-Party Disclaimer Banner -->

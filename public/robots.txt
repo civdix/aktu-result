@@ -1,5 +1,8 @@
 User-agent: *
 Allow: /
 
+User-agent: Googlebot-Image
+Allow: /
+
 Sitemap: https://akturesult.bond/sitemap.xml
 Sitemap: https://akturesult.bond/sitemap-colleges.xml
