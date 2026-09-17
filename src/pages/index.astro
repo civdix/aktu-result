@@ -1269,9 +1269,9 @@ const homeKeywords = `aktu result, aktu result ${yearInfo.startYear}, aktu resul
     // Call it on load
     fetchLiveCounter();
 
-    // Prefill rollNumber from URL parameter
+    // Prefill rollNumber from URL parameter and auto-trigger background search
     const urlParams = new URLSearchParams(window.location.search);
-    const rollParam = urlParams.get('rollNumber');
+    const rollParam = urlParams.get('rollNumber') || urlParams.get('roll');
     const pageRollInput = document.getElementById("roll-number");
     if (rollParam && pageRollInput) {
       pageRollInput.value = rollParam;
@@ -1279,7 +1279,11 @@ const homeKeywords = `aktu result, aktu result ${yearInfo.startYear}, aktu resul
         pageRollInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
         pageRollInput.focus();
         pageRollInput.classList.add("ring-2", "ring-brand-blue/50");
-      }, 150);
+        const searchFormEl = document.getElementById("search-form");
+        if (searchFormEl) {
+          searchFormEl.dispatchEvent(new Event("submit"));
+        }
+      }, 300);
     }
     // DOM Elements
     const heroGrid = document.getElementById("hero-grid");
