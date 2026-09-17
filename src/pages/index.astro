@@ -1243,7 +1243,7 @@ const homeKeywords = `aktu result, aktu result ${yearInfo.startYear}, aktu resul
 
   <!-- Client-Side Form Handler Script -->
   <script is:inline>
-    window.addEventListener("DOMContentLoaded", () => {
+    const initApp = () => {
       // Animate counter from current display to new count
       const updateCounterUI = (count) => {
       const counterEl = document.getElementById("live-counter");
@@ -2911,15 +2911,12 @@ const homeKeywords = `aktu result, aktu result ${yearInfo.startYear}, aktu resul
       });
     });
 
-    // Auto-trigger search if roll query parameter is present in URL
-    const urlParams = new URLSearchParams(window.location.search);
-    const urlRoll = urlParams.get('roll') || urlParams.get('rollNumber');
-    if (urlRoll && rollInput) {
-      rollInput.value = urlRoll;
-      setTimeout(() => {
-        searchForm.dispatchEvent(new Event('submit', { cancelable: true }));
-      }, 150);
-    }
-  });
+  };
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initApp);
+  } else {
+    initApp();
+  }
 </script>
 </Layout>
