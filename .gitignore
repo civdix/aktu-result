@@ -12,3 +12,8 @@ wrangler.jsonc
 
 # Local Vercel settings/cache
 .vercel/
+
+# Android build artifacts
+aktu-android-app/.gradle/
+aktu-android-app/local.properties
+aktu-android-app/**/build/

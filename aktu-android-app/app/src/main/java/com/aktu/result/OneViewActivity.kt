@@ -13,6 +13,7 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.aktu.result.databinding.ActivityOneviewBinding
 
 class OneViewActivity : AppCompatActivity() {
@@ -158,7 +159,7 @@ class OneViewActivity : AppCompatActivity() {
         fun onDobFilled() {
             runOnUiThread {
                 binding.bannerText.text = "✓ DOB Autofilled! Please tap the 'I'm not a robot' box below."
-                binding.statusBarBanner.setBackgroundColor(getColor(R.color.brand_accent))
+                binding.statusBarBanner.setBackgroundColor(ContextCompat.getColor(this@OneViewActivity, R.color.brand_accent))
             }
         }
 
@@ -166,7 +167,7 @@ class OneViewActivity : AppCompatActivity() {
         fun onAutoSubmit() {
             runOnUiThread {
                 binding.bannerText.text = "⚡ CAPTCHA Verified! Loading marksheets..."
-                binding.statusBarBanner.setBackgroundColor(getColor(R.color.brand_primary))
+                binding.statusBarBanner.setBackgroundColor(ContextCompat.getColor(this@OneViewActivity, R.color.brand_primary))
             }
         }
 

@@ -1,10 +1,12 @@
 package com.aktu.result
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import com.aktu.result.databinding.ActivityMainBinding
 import kotlinx.coroutines.launch
@@ -27,13 +29,31 @@ class MainActivity : AppCompatActivity() {
 
             startSearchProcess(roll)
         }
+
+        binding.btnWhatsapp.setOnClickListener {
+            try {
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://chat.whatsapp.com/LoCFMpg5yyHIkd3gcywACo"))
+                startActivity(intent)
+            } catch (e: Exception) {
+                Toast.makeText(this, "Could not open WhatsApp link", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        binding.btnTelegram.setOnClickListener {
+            try {
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://t.me/+B1IibFFFftc0NjNl"))
+                startActivity(intent)
+            } catch (e: Exception) {
+                Toast.makeText(this, "Could not open Telegram link", Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
     private fun startSearchProcess(rollNumber: String) {
         binding.progressBar.visibility = View.VISIBLE
         binding.btnSubmit.isEnabled = false
         binding.statusMessage.text = "Querying AKTU database for verified Date of Birth..."
-        binding.statusMessage.setTextColor(getColor(R.color.brand_primary))
+        binding.statusMessage.setTextColor(ContextCompat.getColor(this, R.color.brand_primary))
 
         lifecycleScope.launch {
             val res = DobApiService.findDob(rollNumber)
@@ -42,7 +62,7 @@ class MainActivity : AppCompatActivity() {
 
             if (res.success && !res.dob.isNullOrEmpty()) {
                 binding.statusMessage.text = "✓ DOB Found: ${res.dob}! Launching OneView..."
-                binding.statusMessage.setTextColor(getColor(R.color.brand_accent))
+                binding.statusMessage.setTextColor(ContextCompat.getColor(this, R.color.brand_accent))
 
                 launchOneView(rollNumber, res.dob, res.name ?: "Student")
             } else {

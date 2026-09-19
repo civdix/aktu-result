@@ -11,8 +11,8 @@ import java.net.URL
 
 object DobApiService {
 
-    // Point this to your backend server URL (e.g., http://10.0.2.2:4321/api/dob for local emulator or your deployed URL)
-    var BASE_URL = "http://10.0.2.2:4321/api/dob"
+    // Production backend endpoint on akturesult.bond
+    var BASE_URL = "https://akturesult.bond/api/dob"
 
     data class DobResult(
         val success: Boolean,
