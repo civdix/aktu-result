@@ -17,3 +17,4 @@ wrangler.jsonc
 aktu-android-app/.gradle/
 aktu-android-app/local.properties
 aktu-android-app/**/build/
+uber-apk-signer.jar
