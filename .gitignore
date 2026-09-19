@@ -18,3 +18,12 @@ aktu-android-app/.gradle/
 aktu-android-app/local.properties
 aktu-android-app/**/build/
 uber-apk-signer.jar
+*.jar
+*.exe
+native-build/bin/
+native-build/gen/
+native-build/dex_out/
+native-build/*.apk
+native-build/*.zip
+check_sort.py
+rebuild_apk.py

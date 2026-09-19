@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">AKTU Result Bond</string>
+    <string name="loading">Loading AKTU Portal...</string>
+    <string name="no_internet">No Internet Connection</string>
+    <string name="retry">Retry</string>
+    <string name="whatsapp_community">WhatsApp Alerts</string>
+    <string name="telegram_group">Telegram Group</string>
+</resources>

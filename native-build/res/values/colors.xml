@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="primary_dark">#0B132B</color>
+    <color name="primary_surface">#1C2541</color>
+    <color name="brand_blue">#2563EB</color>
+    <color name="accent_gold">#F59E0B</color>
+    <color name="text_light">#F8FAFC</color>
+    <color name="text_muted">#94A3B8</color>
+    <color name="whatsapp_green">#25D366</color>
+    <color name="telegram_blue">#0088CC</color>
+</resources>
