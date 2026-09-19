@@ -31,8 +31,10 @@ export function getAcademicYearInfo(date = new Date()) {
     session,              // e.g. "2026-2027"
     sessionFormatted,     // e.g. "2026–2027"
     primaryYear: `${currentYear}`,
-    homeTitle: `AKTU Result ${session} - OneView AKTU & ERP Result Portal`,
-    homeDescription: `Check AKTU Result ${session} online. Access your OneView AKTU marksheet, AKTU ERP result, and semester score cards instantly by Roll Number without Date of Birth.`,
+    homeTitle: `AKTU Result Without Date of Birth - OneView AKTU & ERP Result ${session}`,
+    homeDescription: `Check AKTU Result without Date of Birth (DOB) online for session ${sessionFormatted}. Access your OneView AKTU marksheet, AKTU ERP result, and semester score cards instantly by Roll Number.`,
+    withoutDobTitle: `AKTU Result Without Date of Birth | Check OneView Marksheet Online`,
+    withoutDobDescription: `Check AKTU Result without Date of Birth (DOB) online. Enter your AKTU Roll Number to view complete OneView marksheet, semester scorecards, SGPA, CGPA, and ERP result instantly.`,
     oneviewTitle: `OneView AKTU Result ${session} | Check Marksheet Online`,
     oneviewDescription: `Check OneView AKTU Result ${session} online. View full semester marks, SGPA, CGPA, back papers, and marksheet without Date of Birth using your AKTU Roll Number.`,
     erpTitle: `AKTU ERP Result ${session} | AKTU ERP Login & Student Portal Guide`,

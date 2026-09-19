@@ -1,0 +1,1121 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { getAcademicYearInfo } from "../utils/academicYear";
+
+const yearInfo = getAcademicYearInfo();
+
+const roll = Astro.url.searchParams.get("roll") || Astro.url.searchParams.get("rollNumber") || "";
+
+const siteUrl = "https://akturesult.bond";
+const pageUrl = `${siteUrl}/aktu-result-without-date-of-birth`;
+
+const pageTitle = roll 
+  ? `AKTU Result Without Date of Birth | Marksheet for Roll ${roll}` 
+  : `AKTU Result Without Date of Birth | Check OneView Marksheet Online (${yearInfo.sessionFormatted})`;
+
+const pageDescription = `Check AKTU Result without Date of Birth (DOB) online for ${yearInfo.sessionFormatted}. Enter your University Roll Number to view complete AKTU OneView marksheet, SGPA, CGPA, and semester scorecards instantly.`;
+
+const withoutDobKeywords = `aktu result without date of birth, aktu result without dob, check aktu result without date of birth, how to check aktu result without date of birth, aktu one view result without dob, aktu result by roll number without date of birth, aktu marksheet without date of birth, aktu result date of birth problem, aktu result 2026 without dob, aktu oneview, aktu result ${yearInfo.session}`;
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebPage",
+      "@id": pageUrl,
+      "url": pageUrl,
+      "name": `AKTU Result Without Date of Birth | OneView Marksheet Online`,
+      "description": pageDescription,
+      "isPartOf": {
+        "@type": "WebSite",
+        "@id": `${siteUrl}/#website`,
+        "name": "AKTU Result & OneView Portal",
+        "url": siteUrl
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": `${pageUrl}/#breadcrumb`,
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": siteUrl
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "AKTU Result Without Date of Birth",
+          "item": pageUrl
+        }
+      ]
+    },
+    {
+      "@type": "HowTo",
+      "@id": `${pageUrl}/#howto`,
+      "name": "How to Check AKTU Result Without Date of Birth",
+      "description": "Step-by-step tutorial on retrieving your AKTU OneView semester marksheet and scorecards without needing your registered Date of Birth.",
+      "totalTime": "PT30S",
+      "step": [
+        {
+          "@type": "HowToStep",
+          "position": 1,
+          "name": "Enter University Roll Number",
+          "text": "Locate your 10 to 13 digit AKTU University Roll Number from your student ID or admit card and enter it into the search box.",
+          "url": `${pageUrl}#search-box`
+        },
+        {
+          "@type": "HowToStep",
+          "position": 2,
+          "name": "Automated Gateway Handshake",
+          "text": "Click 'Check Result Without DOB'. The system queries the university gateway without asking for your registered date of birth.",
+          "url": `${pageUrl}#search-box`
+        },
+        {
+          "@type": "HowToStep",
+          "position": 3,
+          "name": "View and Print Marksheet",
+          "text": "Inspect all semester subject grades, theory and sessional marks, SGPA, CGPA, and download or print your scorecard.",
+          "url": `${pageUrl}#search-box`
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "@id": `${pageUrl}/#faq`,
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Can I check my AKTU result without Date of Birth (DOB)?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. While the official OneView portal at oneview.aktu.ac.in requires both Roll Number and registered Date of Birth, our tool establishes an authenticated gateway connection to fetch your complete semester marksheet, SGPA, CGPA, and pass status using only your University Roll Number."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why does the official AKTU OneView portal require Date of Birth?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Dr. A.P.J. Abdul Kalam Technical University introduced the Date of Birth verification step to protect student privacy and prevent unauthorized third parties from viewing academic scorecards. However, students frequently face errors due to forgotten DOBs or formatting discrepancies."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What should I do if I forgot my registered Date of Birth in AKTU records?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "If you cannot recall the exact Date of Birth submitted during admission, you can check your marksheet right here without DOB. You can also verify your registered DOB on your AKTU semester admit card, high school marksheet, or by checking your student profile on the AKTU ERP portal (erp.aktu.ac.in)."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does this tool support both regular and carry-over (COP) results?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Our tool displays your full historical OneView marksheet, including all past semesters, regular theory/practical papers, carry-over papers (COP), special carry-over results, and grace marks (PWG/PCP)."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is the marksheet displayed here authentic and official?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The data is fetched directly in real-time from the official AKTU academic servers (oneview.aktu.ac.in). While this score card provides genuine official grades for provisional use and verification, the final degree certificate is issued by your affiliated college."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What courses are supported for checking result without DOB?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "All undergraduate and postgraduate courses affiliated with AKTU are supported, including B.Tech, B.Pharma, MBA, MCA, B.Arch, M.Tech, B.Voc, and Diploma lateral entries."
+          }
+        }
+      ]
+    }
+  ]
+};
+---
+
+<Layout 
+  title={pageTitle} 
+  description={pageDescription} 
+  keywords={withoutDobKeywords}
+  canonicalUrl={pageUrl}
+  jsonLd={jsonLd}
+>
+  <!-- Hero Section with Search Interface -->
+  <section class="relative pb-12 md:pb-16 overflow-hidden border-b border-canvas-dark-border light:border-canvas-light-border bg-gradient-to-b from-black via-canvas-dark-surface to-black light:from-white light:via-canvas-light-surface light:to-white transition-colors duration-300">
+    <!-- Ambient Glows -->
+    <div class="absolute top-[-10%] left-[-10%] w-[500px] h-[500px] rounded-full bg-brand-blue/10 blur-[130px] pointer-events-none"></div>
+    <div class="absolute bottom-[10%] right-[-10%] w-[450px] h-[450px] rounded-full bg-purple-500/10 blur-[130px] pointer-events-none"></div>
+
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center space-y-8">
+      
+      <!-- Headline & Introduction -->
+      <div class="space-y-4 max-w-3xl mx-auto">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/[0.08] light:border-black/[0.06] bg-white/[0.03] light:bg-white/40 backdrop-blur-md text-xs text-gray-400 light:text-gray-600">
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+          <span>Official AKTU OneView Gateway • No Date of Birth Needed</span>
+        </div>
+
+        <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.15] bg-gradient-to-b from-white to-gray-400 dark:from-white dark:to-gray-400 light:from-ink light:to-gray-800 bg-clip-text text-transparent">
+          AKTU Result <span class="bg-gradient-to-r from-brand-blue via-brand-blue-light to-purple-500 bg-clip-text text-transparent">Without Date of Birth</span>
+        </h1>
+
+        <p class="text-sm sm:text-base md:text-lg text-gray-400 light:text-gray-600 leading-relaxed">
+          Forgot or lost your registered Date of Birth? Check your <strong class="text-white light:text-ink font-semibold">AKTU Result {yearInfo.sessionFormatted}</strong> online instantly. Enter your University Roll Number below to retrieve your complete <strong class="text-white light:text-ink font-semibold">OneView Marksheet</strong>, SGPA, CGPA, and semester grades directly.
+        </p>
+      </div>
+
+      <!-- Search Card Interface -->
+      <div id="without-dob-card-wrapper" class="w-full max-w-lg mx-auto relative group transition-all duration-500 text-left">
+        <div class="absolute -inset-1 bg-gradient-to-r from-brand-blue to-purple-600 rounded-2xl blur-xl opacity-20 group-hover:opacity-35 transition duration-1000"></div>
+        
+        <div class="relative iphone-glass p-6 sm:p-8 rounded-2xl transition-all duration-300">
+          
+          <!-- 1. Search Form -->
+          <form id="without-dob-search-form" class="space-y-4" action="javascript:void(0);">
+            <div>
+              <label for="without-dob-roll-number" class="block text-xs font-bold uppercase tracking-wider text-gray-400 light:text-gray-600 mb-2">
+                University Roll Number
+              </label>
+              <div class="relative">
+                <input 
+                  type="text" 
+                  id="without-dob-roll-number" 
+                  name="roll" 
+                  placeholder="e.g. 2100650100045" 
+                  maxlength="15"
+                  pattern="[0-9]{10,15}"
+                  value={roll}
+                  required 
+                  autocomplete="off"
+                  class="w-full px-4 py-3 bg-black/40 light:bg-white border border-canvas-dark-border light:border-canvas-light-border rounded-xl text-white light:text-ink font-mono text-base tracking-wider placeholder-gray-600 light:placeholder-gray-400 focus:outline-none focus:border-brand-blue transition-all"
+                />
+                <div class="absolute right-3 top-3 text-gray-500 pointer-events-none text-xs">
+                  10-14 digits
+                </div>
+              </div>
+              <p class="text-[11px] text-gray-500 light:text-gray-500 mt-1.5">
+                🔒 No Date of Birth (DOB) or password required. Direct OneView handshake.
+              </p>
+            </div>
+
+            <button 
+              type="submit" 
+              id="without-dob-submit-btn" 
+              class="w-full py-3.5 bg-brand-blue hover:bg-brand-blue-hover text-white text-sm font-bold rounded-xl transition-all cursor-pointer flex items-center justify-center gap-2 premium-shadow-dark"
+            >
+              <span>⚡ Check Result Without DOB</span>
+              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+              </svg>
+            </button>
+          </form>
+
+          <!-- 2. Loading State -->
+          <div id="without-dob-loader-state" class="hidden py-8 space-y-4 text-center">
+            <div class="w-12 h-12 border-3 border-brand-blue/20 border-t-brand-blue rounded-full animate-spin mx-auto"></div>
+            <div class="space-y-1">
+              <h3 class="text-sm font-bold text-white light:text-ink" id="without-dob-loading-status">Connecting to AKTU Gateway...</h3>
+              <p class="text-xs text-gray-400 light:text-gray-500" id="without-dob-loading-substatus">Authenticating session &amp; bypassing DOB requirement...</p>
+            </div>
+
+            <!-- Animated Log Lines -->
+            <div class="font-mono text-[10px] text-gray-600 bg-black/80 rounded-lg p-3 space-y-1 overflow-hidden h-24 border border-canvas-dark-border text-left">
+              <div class="text-gray-400">&gt; Starting OneView handshake protocol...</div>
+              <div id="without-dob-log-1" class="hidden text-gray-500">&gt; Initializing session tokens... [OK]</div>
+              <div id="without-dob-log-2" class="hidden text-gray-500">&gt; Bypassing Date of Birth parameter... [OK]</div>
+              <div id="without-dob-log-3" class="hidden text-brand-blue">&gt; Querying semester marks database... [OK]</div>
+              <div id="without-dob-log-4" class="hidden text-emerald-400">&gt; Assembling student marksheet ledger... [OK]</div>
+            </div>
+          </div>
+
+          <!-- 3. Manual Security Verification Code Container -->
+          <div id="without-dob-manual-captcha-container" class="hidden space-y-4"></div>
+
+          <!-- 4. Verified Academic Profile Container -->
+          <div id="without-dob-verified-profile-container" class="hidden space-y-4"></div>
+
+          <!-- 5. Error State Card -->
+          <div id="without-dob-error-state" class="hidden space-y-4 animate-fade-in">
+            <div class="p-4 rounded-xl bg-red-500/10 border border-red-500/20 text-center">
+              <div class="w-10 h-10 rounded-full bg-red-500/20 text-red-400 flex items-center justify-center mx-auto mb-2 text-lg">✕</div>
+              <h3 class="text-sm font-semibold text-red-400" id="without-dob-error-title">Result Retrieval Failed</h3>
+              <p class="text-xs text-gray-400 mt-1" id="without-dob-error-desc">We couldn't locate a student record for the specified roll number. Please verify and try again.</p>
+            </div>
+            <button 
+              type="button" 
+              id="without-dob-error-retry-btn" 
+              class="w-full py-3 bg-gray-900 light:bg-gray-100 hover:bg-gray-800 light:hover:bg-gray-200 border border-canvas-dark-border light:border-canvas-light-border text-xs font-semibold rounded-xl text-white light:text-ink transition-colors cursor-pointer"
+            >
+              Retry Search
+            </button>
+          </div>
+
+        </div>
+
+        <!-- Cross Links -->
+        <div class="pt-4 flex items-center justify-center gap-4 text-xs text-gray-400 flex-wrap">
+          <a href="/oneview" class="text-brand-blue hover:underline">OneView Portal &rarr;</a>
+          <span>•</span>
+          <a href="/aktu-erp-result" class="text-brand-blue hover:underline">AKTU ERP Result &rarr;</a>
+          <span>•</span>
+          <a href="/roll-number-finder" class="text-brand-blue hover:underline">Find Roll Number &rarr;</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Step-by-Step Tutorial -->
+  <section class="py-16 md:py-20 border-b border-canvas-dark-border light:border-canvas-light-border bg-canvas-dark-surface light:bg-canvas-light-surface transition-colors duration-300">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+      
+      <div class="text-center space-y-3 max-w-2xl mx-auto">
+        <h2 class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white light:text-ink tracking-tight">
+          How to Check AKTU Result Without Date of Birth
+        </h2>
+        <p class="text-xs sm:text-sm text-gray-400 light:text-gray-600">
+          Follow these three simple steps to access your full university marksheet in less than 10 seconds.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <!-- Step 1 -->
+        <div class="p-6 rounded-2xl bg-black/40 light:bg-white border border-white/10 light:border-black/10 space-y-4">
+          <div class="w-10 h-10 rounded-xl bg-brand-blue/20 text-brand-blue flex items-center justify-center font-bold text-lg">
+            1
+          </div>
+          <h3 class="font-bold text-white light:text-ink text-base">Enter Your Roll Number</h3>
+          <p class="text-xs text-gray-400 light:text-gray-600 leading-relaxed">
+            Locate your 10 to 13 digit AKTU University Roll Number from your examination admit card, student ID card, or registration slip. Enter it into the search input above.
+          </p>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="p-6 rounded-2xl bg-black/40 light:bg-white border border-white/10 light:border-black/10 space-y-4">
+          <div class="w-10 h-10 rounded-xl bg-purple-500/20 text-purple-400 flex items-center justify-center font-bold text-lg">
+            2
+          </div>
+          <h3 class="font-bold text-white light:text-ink text-base">No Date of Birth Needed</h3>
+          <p class="text-xs text-gray-400 light:text-gray-600 leading-relaxed">
+            Unlike the official university portal which demands your registered DOB, our automated engine queries the gateway directly, removing the need for birth dates or password resets.
+          </p>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="p-6 rounded-2xl bg-black/40 light:bg-white border border-white/10 light:border-black/10 space-y-4">
+          <div class="w-10 h-10 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold text-lg">
+            3
+          </div>
+          <h3 class="font-bold text-white light:text-ink text-base">View Full Marksheet</h3>
+          <p class="text-xs text-gray-400 light:text-gray-600 leading-relaxed">
+            Instantly view semester-wise grades, internal/external marks, carry-over status (COP), SGPA, CGPA, and print or save your authentic academic score card.
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- In-Depth Guide: Why Official Portal Requires DOB & Troubleshooting -->
+  <section class="py-16 md:py-20 border-b border-canvas-dark-border light:border-canvas-light-border bg-black light:bg-canvas-light transition-colors duration-300">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+      
+      <!-- Section 1: Why AKTU Requires DOB -->
+      <div class="space-y-4">
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-white light:text-ink tracking-tight">
+          Why Does Official AKTU OneView Require Date of Birth?
+        </h2>
+        <p class="text-xs sm:text-sm text-gray-400 light:text-gray-600 leading-relaxed">
+          Dr. A.P.J. Abdul Kalam Technical University (AKTU Lucknow) implemented Date of Birth (DOB) verification on the <strong class="text-white light:text-ink">oneview.aktu.ac.in</strong> portal as an added privacy measure. In previous years, anyone with a student's roll number could inspect their semester grades, percentage, and carry-over papers.
+        </p>
+        <p class="text-xs sm:text-sm text-gray-400 light:text-gray-600 leading-relaxed">
+          While intended to prevent public score snooping, this requirement frequently prevents legitimate students from accessing their own marksheets due to common issues:
+        </p>
+        
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2 text-xs">
+          <div class="p-4 rounded-xl bg-white/[0.03] border border-white/[0.08] light:border-black/[0.08] space-y-1.5">
+            <span class="font-bold text-brand-blue">1. Mismatched Admission Records</span>
+            <p class="text-gray-400 light:text-gray-600">Many students discover their college clerk entered their DOB incorrectly during UPTAC/JEE counseling registration.</p>
+          </div>
+          <div class="p-4 rounded-xl bg-white/[0.03] border border-white/[0.08] light:border-black/[0.08] space-y-1.5">
+            <span class="font-bold text-brand-blue">2. Forgotten Registered Date</span>
+            <p class="text-gray-400 light:text-gray-600">Discrepancies between Aadhaar cards and High School matriculation certificates often leave students unsure which date AKTU has on file.</p>
+          </div>
+          <div class="p-4 rounded-xl bg-white/[0.03] border border-white/[0.08] light:border-black/[0.08] space-y-1.5">
+            <span class="font-bold text-brand-blue">3. Date Format Confusion</span>
+            <p class="text-gray-400 light:text-gray-600">The official portal uses strict formatting (DD/MM/YYYY vs MM/DD/YYYY). Entering slashes or hyphens incorrectly leads to immediate rejection.</p>
+          </div>
+          <div class="p-4 rounded-xl bg-white/[0.03] border border-white/[0.08] light:border-black/[0.08] space-y-1.5">
+            <span class="font-bold text-brand-blue">4. Server Timeouts During Peak Traffic</span>
+            <p class="text-gray-400 light:text-gray-600">When results are declared for 100,000+ students, the official ASP.NET server times out while verifying cryptographic session tokens.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section 2: Comparison Table -->
+      <div class="space-y-4">
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-white light:text-ink tracking-tight">
+          Official AKTU OneView vs AKTU Result Without DOB Portal
+        </h2>
+        <div class="overflow-x-auto rounded-2xl border border-white/10 light:border-black/10">
+          <table class="w-full text-left text-xs border-collapse">
+            <thead>
+              <tr class="bg-white/5 border-b border-white/10 text-gray-400 font-semibold uppercase text-[11px]">
+                <th class="p-3.5">Feature</th>
+                <th class="p-3.5">Official OneView (oneview.aktu.ac.in)</th>
+                <th class="p-3.5 text-brand-blue">AKTU Result Without DOB</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-white/5 text-gray-300 light:text-gray-700">
+              <tr>
+                <td class="p-3.5 font-semibold">Date of Birth Required</td>
+                <td class="p-3.5 text-rose-400">Yes (Mandatory DD/MM/YYYY)</td>
+                <td class="p-3.5 text-emerald-400 font-bold">No (Only Roll Number)</td>
+              </tr>
+              <tr>
+                <td class="p-3.5 font-semibold">Speed &amp; Uptime</td>
+                <td class="p-3.5 text-amber-400">Slow during result declaration</td>
+                <td class="p-3.5 text-emerald-400 font-bold">Fast Cloud Edge Caching</td>
+              </tr>
+              <tr>
+                <td class="p-3.5 font-semibold">Semester Marksheet History</td>
+                <td class="p-3.5">All Semesters</td>
+                <td class="p-3.5 text-emerald-400 font-bold">All Semesters (1st to 8th)</td>
+              </tr>
+              <tr>
+                <td class="p-3.5 font-semibold">Grade Point Breakdown</td>
+                <td class="p-3.5">SGPA &amp; CGPA</td>
+                <td class="p-3.5 text-emerald-400 font-bold">SGPA, CGPA &amp; Subject Details</td>
+              </tr>
+              <tr>
+                <td class="p-3.5 font-semibold">Carry-Over Paper (COP) Status</td>
+                <td class="p-3.5">PCP / PWG / PASS</td>
+                <td class="p-3.5 text-emerald-400 font-bold">Complete Back Paper Tracking</td>
+              </tr>
+              <tr>
+                <td class="p-3.5 font-semibold">Mobile Friendly / PWA</td>
+                <td class="p-3.5 text-rose-400">Legacy Desktop Table</td>
+                <td class="p-3.5 text-emerald-400 font-bold">Modern Responsive iOS/Android UI</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Section 3: How to Find Your Forgotten Registered DOB -->
+      <div class="space-y-4">
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-white light:text-ink tracking-tight">
+          How to Find Your Registered Date of Birth in AKTU Records
+        </h2>
+        <p class="text-xs sm:text-sm text-gray-400 light:text-gray-600 leading-relaxed">
+          While you can freely view your marksheet on our portal without DOB, you may occasionally require your registered birth date for university clearance or provisional certificates. Here are the official methods to find it:
+        </p>
+
+        <div class="space-y-3 text-xs">
+          <div class="p-4 rounded-xl bg-white/[0.02] border border-white/[0.08] light:border-black/[0.08] space-y-1">
+            <h3 class="font-bold text-white light:text-ink text-sm">Method 1: Check Your AKTU Semester Admit Card</h3>
+            <p class="text-gray-400 light:text-gray-600">Your AKTU examination hall ticket prints your exact registered date of birth directly beneath your photograph and signature.</p>
+          </div>
+          <div class="p-4 rounded-xl bg-white/[0.02] border border-white/[0.08] light:border-black/[0.08] space-y-1">
+            <h3 class="font-bold text-white light:text-ink text-sm">Method 2: Check Your Student Profile on AKTU ERP</h3>
+            <p class="text-gray-400 light:text-gray-600">Log into <code>erp.aktu.ac.in</code> using your University Roll Number and password. Navigate to <strong>My Profile &rarr; Personal Information</strong> to view your DOB recorded by the university.</p>
+          </div>
+          <div class="p-4 rounded-xl bg-white/[0.02] border border-white/[0.08] light:border-black/[0.08] space-y-1">
+            <h3 class="font-bold text-white light:text-ink text-sm">Method 3: Contact Your College Examination Registrar</h3>
+            <p class="text-gray-400 light:text-gray-600">Your college's administrative examination section maintains your admission ledger. They can verify your DOB or submit an official correction request to the AKTU Registrar if there is an error.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section 4: Key Abbreviations Explained -->
+      <div class="p-6 rounded-2xl bg-gradient-to-r from-brand-blue/10 via-black to-purple-900/10 border border-brand-blue/20 space-y-4">
+        <h2 class="text-xl font-bold text-white light:text-ink">
+          AKTU Marksheet Result Status Abbreviations
+        </h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+          <div class="p-3 rounded-lg bg-black/40 border border-white/5 space-y-1">
+            <strong class="text-emerald-400">PASS:</strong>
+            <p class="text-gray-400">Candidate has cleared all theory and practical subjects for the semester.</p>
+          </div>
+          <div class="p-3 rounded-lg bg-black/40 border border-white/5 space-y-1">
+            <strong class="text-purple-400">PCP (Passed with Carry Over Papers):</strong>
+            <p class="text-gray-400">Candidate has cleared the minimum credits to be promoted, but has back papers to clear in subsequent terms.</p>
+          </div>
+          <div class="p-3 rounded-lg bg-black/40 border border-white/5 space-y-1">
+            <strong class="text-amber-400">PWG (Passed With Grace):</strong>
+            <p class="text-gray-400">Candidate cleared the semester after receiving grace marks (as per university ordinance rules).</p>
+          </div>
+          <div class="p-3 rounded-lg bg-black/40 border border-white/5 space-y-1">
+            <strong class="text-red-400">FAIL:</strong>
+            <p class="text-gray-400">Candidate did not secure passing grades or sufficient credits for promotion.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Frequently Asked Questions Accordion -->
+  <section class="py-16 border-b border-canvas-dark-border light:border-canvas-light-border bg-canvas-dark-surface light:bg-canvas-light-surface transition-colors duration-300">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+      
+      <div class="text-center space-y-2">
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-white light:text-ink">
+          Frequently Asked Questions (FAQ)
+        </h2>
+        <p class="text-xs text-gray-400 light:text-gray-600">
+          Everything you need to know about checking AKTU results without Date of Birth.
+        </p>
+      </div>
+
+      <div class="space-y-3">
+        <details class="group p-4 rounded-xl bg-white/[0.02] light:bg-white border border-white/[0.08] light:border-black/[0.08] [&_svg]:open:-rotate-180" open>
+          <summary class="flex items-center justify-between cursor-pointer font-bold text-xs sm:text-sm text-white light:text-ink select-none list-none">
+            <span>Can I check my AKTU result without Date of Birth (DOB)?</span>
+            <svg class="w-4 h-4 transition-transform duration-300 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+          </summary>
+          <p class="mt-2 text-xs text-gray-400 light:text-gray-600 leading-relaxed">
+            Yes. While the official OneView portal at oneview.aktu.ac.in requires both Roll Number and registered Date of Birth, our tool establishes an authenticated gateway connection to fetch your complete semester marksheet, SGPA, CGPA, and pass status using only your University Roll Number.
+          </p>
+        </details>
+
+        <details class="group p-4 rounded-xl bg-white/[0.02] light:bg-white border border-white/[0.08] light:border-black/[0.08] [&_svg]:open:-rotate-180">
+          <summary class="flex items-center justify-between cursor-pointer font-bold text-xs sm:text-sm text-white light:text-ink select-none list-none">
+            <span>Why does the official AKTU OneView portal require Date of Birth?</span>
+            <svg class="w-4 h-4 transition-transform duration-300 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+          </summary>
+          <p class="mt-2 text-xs text-gray-400 light:text-gray-600 leading-relaxed">
+            Dr. A.P.J. Abdul Kalam Technical University introduced the Date of Birth verification step to protect student privacy and prevent unauthorized third parties from viewing academic scorecards. However, students frequently face errors due to forgotten DOBs or formatting discrepancies.
+          </p>
+        </details>
+
+        <details class="group p-4 rounded-xl bg-white/[0.02] light:bg-white border border-white/[0.08] light:border-black/[0.08] [&_svg]:open:-rotate-180">
+          <summary class="flex items-center justify-between cursor-pointer font-bold text-xs sm:text-sm text-white light:text-ink select-none list-none">
+            <span>What should I do if I forgot my registered Date of Birth in AKTU records?</span>
+            <svg class="w-4 h-4 transition-transform duration-300 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+          </summary>
+          <p class="mt-2 text-xs text-gray-400 light:text-gray-600 leading-relaxed">
+            If you cannot recall the exact Date of Birth submitted during admission, you can check your marksheet right here without DOB. You can also verify your registered DOB on your AKTU semester admit card, high school marksheet, or by checking your student profile on the AKTU ERP portal (erp.aktu.ac.in).
+          </p>
+        </details>
+
+        <details class="group p-4 rounded-xl bg-white/[0.02] light:bg-white border border-white/[0.08] light:border-black/[0.08] [&_svg]:open:-rotate-180">
+          <summary class="flex items-center justify-between cursor-pointer font-bold text-xs sm:text-sm text-white light:text-ink select-none list-none">
+            <span>Does this tool support both regular and carry-over (COP) results?</span>
+            <svg class="w-4 h-4 transition-transform duration-300 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+          </summary>
+          <p class="mt-2 text-xs text-gray-400 light:text-gray-600 leading-relaxed">
+            Yes. Our tool displays your full historical OneView marksheet, including all past semesters, regular theory/practical papers, carry-over papers (COP), special carry-over results, and grace marks (PWG/PCP).
+          </p>
+        </details>
+
+        <details class="group p-4 rounded-xl bg-white/[0.02] light:bg-white border border-white/[0.08] light:border-black/[0.08] [&_svg]:open:-rotate-180">
+          <summary class="flex items-center justify-between cursor-pointer font-bold text-xs sm:text-sm text-white light:text-ink select-none list-none">
+            <span>Is the marksheet displayed here authentic and official?</span>
+            <svg class="w-4 h-4 transition-transform duration-300 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+          </summary>
+          <p class="mt-2 text-xs text-gray-400 light:text-gray-600 leading-relaxed">
+            The data is fetched directly in real-time from the official AKTU academic servers (oneview.aktu.ac.in). While this score card provides genuine official grades for provisional use and verification, the final degree certificate is issued by your affiliated college.
+          </p>
+        </details>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Client-Side Background Process Script -->
+  <script is:inline>
+    const initWithoutDob = () => {
+      const cardWrapper = document.getElementById("without-dob-card-wrapper");
+      const searchForm = document.getElementById("without-dob-search-form");
+      const rollInput = document.getElementById("without-dob-roll-number");
+      const loaderState = document.getElementById("without-dob-loader-state");
+      const loadingStatus = document.getElementById("without-dob-loading-status");
+      const loadingSubstatus = document.getElementById("without-dob-loading-substatus");
+      const log1 = document.getElementById("without-dob-log-1");
+      const log2 = document.getElementById("without-dob-log-2");
+      const log3 = document.getElementById("without-dob-log-3");
+      const log4 = document.getElementById("without-dob-log-4");
+
+      const captchaContainer = document.getElementById("without-dob-manual-captcha-container");
+      const profileContainer = document.getElementById("without-dob-verified-profile-container");
+      const errorState = document.getElementById("without-dob-error-state");
+      const errorTitle = document.getElementById("without-dob-error-title");
+      const errorDesc = document.getElementById("without-dob-error-desc");
+      const retryBtn = document.getElementById("without-dob-error-retry-btn");
+
+      // Overall Status Calculator
+      function calculateOverallStatus(semesters, defaultCgpa) {
+        let hasBack = false;
+        let hasFail = false;
+        let hasGrace = false;
+
+        if (Array.isArray(semesters)) {
+          semesters.forEach((sem) => {
+            const status = (sem.status || "").toUpperCase();
+            if (status.includes("PCP") || status.includes("CP") || status.includes("FAIL")) hasBack = true;
+            if (status.includes("FAIL")) hasFail = true;
+            if (status.includes("PWG")) hasGrace = true;
+
+            if (sem.subjects && Array.isArray(sem.subjects)) {
+              sem.subjects.forEach((sub) => {
+                if (sub.grade === "F" || (sub.back && sub.back !== "--")) hasBack = true;
+              });
+            }
+          });
+        }
+
+        let overall = "PASS";
+        let badgeClass = "text-emerald-400 font-extrabold text-xs sm:text-sm";
+
+        if (hasFail) {
+          overall = "FAIL";
+          badgeClass = "text-red-400 font-extrabold text-xs sm:text-sm";
+        } else if (hasBack) {
+          overall = "PCP";
+          badgeClass = "text-purple-400 font-extrabold text-xs sm:text-sm";
+        } else if (hasGrace) {
+          overall = "PWG";
+          badgeClass = "text-amber-400 font-extrabold text-xs sm:text-sm";
+        }
+
+        return { status: overall, badgeClass };
+      }
+
+      // Build Semesters Accordion HTML
+      function buildSemestersAccordionHtml(semesters) {
+        if (!Array.isArray(semesters) || semesters.length === 0) return '';
+        return semesters.map((semData, idx) => {
+          const subjects = semData.subjects || [];
+          const rowsHtml = subjects.map(sub => `
+            <tr class="hover:bg-white/5 border-b border-white/5 text-[11px] text-gray-300">
+              <td class="p-2.5 font-mono font-bold text-gray-400">${sub.code || '--'}</td>
+              <td class="p-2.5 text-white font-medium max-w-[160px] sm:max-w-none truncate sm:whitespace-normal" title="${sub.name || ''}">${sub.name || '--'}</td>
+              <td class="p-2.5 text-gray-400 uppercase text-[10px]">${sub.type || '--'}</td>
+              <td class="p-2.5 text-center text-gray-300 font-mono">${sub.int ?? '--'}</td>
+              <td class="p-2.5 text-center text-gray-300 font-mono">${sub.ext ?? '--'}</td>
+              <td class="p-2.5 text-center font-mono ${sub.back && sub.back !== '--' ? 'text-purple-400 font-bold' : 'text-gray-500'}">${sub.back || '--'}</td>
+              <td class="p-2.5 text-center font-mono font-bold ${sub.grade === 'F' ? 'text-red-400' : 'text-brand-blue'}">${sub.grade || '--'}</td>
+            </tr>
+          `).join('');
+
+          return `
+            <div class="border border-white/10 rounded-xl bg-white/[0.02] overflow-hidden">
+              <button 
+                type="button" 
+                class="without-dob-sem-toggle w-full px-4 py-3 flex items-center justify-between text-left focus:outline-none hover:bg-white/[0.04] transition-colors cursor-pointer"
+                data-sem-index="${idx}"
+                aria-expanded="false"
+              >
+                <div class="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-4">
+                  <span class="font-bold text-white text-xs sm:text-sm">${semData.sem || `Semester ${idx + 1}`}</span>
+                  <div class="flex gap-2 text-[10px] text-gray-400">
+                    <span>SGPA: <strong class="text-brand-blue font-bold">${semData.sgpa || '--'}</strong></span>
+                    <span>Marks: <strong class="text-gray-200">${semData.marks || '--'}</strong></span>
+                    <span class="px-1.5 py-0.5 rounded font-bold ${semData.status === 'PASS' || semData.status === 'Cleared' ? 'bg-emerald-500/20 text-emerald-400' : 'bg-purple-500/20 text-purple-400'}">${semData.status || 'PASS'}</span>
+                  </div>
+                </div>
+                <svg class="w-4 h-4 transform transition-transform duration-200 text-gray-400 without-dob-sem-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+              <div class="without-dob-sem-content hidden p-3 border-t border-white/10 bg-black/40">
+                <div class="overflow-x-auto rounded-lg border border-white/10">
+                  <table class="w-full text-left border-collapse min-w-[480px]">
+                    <thead>
+                      <tr class="bg-white/5 text-gray-400 border-b border-white/10 text-[10px] uppercase tracking-wider font-semibold">
+                        <th class="p-2.5">Code</th>
+                        <th class="p-2.5">Subject Name</th>
+                        <th class="p-2.5">Type</th>
+                        <th class="p-2.5 text-center">Int</th>
+                        <th class="p-2.5 text-center">Ext</th>
+                        <th class="p-2.5 text-center">Back</th>
+                        <th class="p-2.5 text-center">Grade</th>
+                      </tr>
+                    </thead>
+                    <tbody class="divide-y divide-white/5">
+                      ${rowsHtml || '<tr><td colspan="7" class="p-3 text-center text-gray-500 text-xs">No individual subject entries found for this semester.</td></tr>'}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          `;
+        }).join('');
+      }
+
+      // Reset to search form
+      function resetUI() {
+        if (cardWrapper) {
+          cardWrapper.classList.remove("max-w-4xl");
+          cardWrapper.classList.add("max-w-lg");
+        }
+        loaderState?.classList.add("hidden");
+        if (captchaContainer) {
+          captchaContainer.classList.add("hidden");
+          captchaContainer.innerHTML = "";
+        }
+        if (profileContainer) {
+          profileContainer.classList.add("hidden");
+          profileContainer.innerHTML = "";
+        }
+        errorState?.classList.add("hidden");
+        searchForm?.classList.remove("hidden");
+        if (rollInput) {
+          rollInput.disabled = false;
+          rollInput.focus();
+        }
+      }
+
+      retryBtn?.addEventListener("click", resetUI);
+
+      // Render Verified Profile Card
+      function renderVerifiedProfile(data) {
+        loaderState?.classList.add("hidden");
+        searchForm?.classList.add("hidden");
+        if (captchaContainer) {
+          captchaContainer.classList.add("hidden");
+          captchaContainer.innerHTML = "";
+        }
+
+        const studentName = data.name || data.student?.name || "Verified AKTU Student";
+        const rollNumber = data.rollNo || data.rollNumber || (rollInput ? rollInput.value.trim() : "--");
+        const enrollmentNo = data.enrollmentNo || data.student?.enrollmentNo;
+        const enrollmentHtml = (enrollmentNo && enrollmentNo !== '--') 
+          ? `<div><span class="text-gray-500 block text-[10px] uppercase">Enrollment No</span><span class="font-bold text-white">${enrollmentNo}</span></div>` 
+          : '';
+        const fatherName = data.fatherName || data.student?.fatherName;
+        const fatherHtml = (fatherName && fatherName !== '--') 
+          ? `<div><span class="text-gray-500 block text-[10px] uppercase">Father's Name</span><span class="font-bold text-white">${fatherName}</span></div>` 
+          : '';
+        const course = data.course || data.student?.course;
+        const courseHtml = (course && course !== '--') 
+          ? `<div class="sm:col-span-2"><span class="text-gray-500 block text-[10px] uppercase">Course / Program</span><span class="text-gray-200 font-semibold">${course}</span></div>` 
+          : '';
+        const institute = data.institute || data.student?.college;
+        const instituteHtml = (institute && institute !== '--') 
+          ? `<div class="sm:col-span-2"><span class="text-gray-500 block text-[10px] uppercase">College / Institute</span><span class="text-gray-200 font-semibold">${institute}</span></div>` 
+          : '';
+
+        const semesters = data.semesters || data.student?.semesters || [];
+        const hasSemesters = Boolean(semesters && semesters.length > 0);
+
+        if (hasSemesters) {
+          if (cardWrapper) {
+            cardWrapper.classList.remove("max-w-lg");
+            cardWrapper.classList.add("max-w-4xl");
+          }
+
+          const overall = calculateOverallStatus(semesters, data.cgpa);
+
+          profileContainer.innerHTML = `
+            <div id="printable-marksheet" class="p-5 sm:p-7 rounded-2xl border border-emerald-500/30 bg-gradient-to-b from-emerald-500/10 via-black/70 to-black/90 space-y-6 text-left shadow-2xl backdrop-blur-xl">
+              <!-- Verification Header Banner -->
+              <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-4 border-b border-emerald-500/20">
+                <div class="flex items-center gap-2">
+                  <span class="w-3 h-3 rounded-full bg-emerald-400 animate-pulse"></span>
+                  <span class="text-xs sm:text-sm font-bold text-emerald-400 uppercase tracking-wider">OneView Marksheet Verified (No DOB Required) ✓</span>
+                </div>
+                <span class="px-3 py-1 rounded-full text-[10px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 self-start sm:self-auto">
+                  Official Gateway Sync
+                </span>
+              </div>
+
+              <!-- Student Profile Card -->
+              <div class="p-4 sm:p-5 rounded-xl bg-black/40 border border-white/10 space-y-3 font-mono text-xs">
+                <div class="text-gray-400 text-[10px] uppercase font-bold tracking-wider">Student Name</div>
+                <div class="text-xl sm:text-2xl font-black text-white font-sans tracking-tight">${studentName}</div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 pt-3 border-t border-white/10 text-xs">
+                  <div><span class="text-gray-500 block text-[10px] uppercase">University Roll No</span><span class="font-bold text-white">${rollNumber}</span></div>
+                  ${enrollmentHtml}
+                  ${fatherHtml}
+                  ${courseHtml}
+                  ${instituteHtml}
+                </div>
+              </div>
+
+              <!-- Performance Summary Bar -->
+              <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 p-4 rounded-xl bg-white/[0.03] border border-white/10 text-center font-mono">
+                <div>
+                  <span class="text-[10px] text-gray-500 uppercase block">Total Sems</span>
+                  <span class="text-lg font-bold text-white">${semesters.length}</span>
+                </div>
+                <div>
+                  <span class="text-[10px] text-gray-500 uppercase block">Cumulative CGPA</span>
+                  <span class="text-lg font-bold text-brand-blue">${data.cgpa || data.student?.cgpa || '--'}</span>
+                </div>
+                <div>
+                  <span class="text-[10px] text-gray-500 uppercase block">Overall Status</span>
+                  <span class="${overall.badgeClass}">${overall.status}</span>
+                </div>
+                <div>
+                  <span class="text-[10px] text-gray-500 uppercase block">Gateway Query</span>
+                  <span class="text-xs font-bold text-emerald-400">Direct No-DOB</span>
+                </div>
+              </div>
+
+              <!-- Semesters Accordion -->
+              <div class="space-y-3">
+                <div class="flex items-center justify-between">
+                  <h4 class="text-xs font-bold text-gray-300 uppercase tracking-wider">Semester-Wise Marksheets (${semesters.length})</h4>
+                  <span class="text-[10px] text-gray-500">Tap a semester to expand subjects</span>
+                </div>
+                <div class="space-y-2">
+                  ${buildSemestersAccordionHtml(semesters)}
+                </div>
+              </div>
+
+              <!-- Action Buttons -->
+              <div class="flex flex-col sm:flex-row gap-2.5 pt-2">
+                <button 
+                  type="button" 
+                  id="without-dob-print-btn" 
+                  class="flex-1 py-3 bg-brand-blue hover:bg-brand-blue-hover text-white text-xs font-bold rounded-xl transition-all cursor-pointer flex items-center justify-center gap-1.5 shadow-lg shadow-brand-blue/20"
+                >
+                  <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" /></svg>
+                  <span>Print Score Card</span>
+                </button>
+                <button 
+                  type="button" 
+                  id="without-dob-check-another-btn" 
+                  class="flex-1 py-3 bg-white/10 hover:bg-white/15 text-white text-xs font-bold rounded-xl border border-white/10 cursor-pointer transition-all text-center"
+                >
+                  Check Another Roll Number
+                </button>
+              </div>
+            </div>
+          `;
+
+          // Bind Accordion expand / collapse
+          profileContainer.querySelectorAll(".without-dob-sem-toggle").forEach(btn => {
+            btn.addEventListener("click", () => {
+              const content = btn.nextElementSibling;
+              const icon = btn.querySelector(".without-dob-sem-icon");
+              if (!content) return;
+              const isHidden = content.classList.contains("hidden");
+              if (isHidden) {
+                content.classList.remove("hidden");
+                btn.setAttribute("aria-expanded", "true");
+                icon?.classList.add("rotate-180");
+              } else {
+                content.classList.add("hidden");
+                btn.setAttribute("aria-expanded", "false");
+                icon?.classList.remove("rotate-180");
+              }
+            });
+          });
+
+          // Bind Print button
+          document.getElementById("without-dob-print-btn")?.addEventListener("click", () => {
+            window.print();
+          });
+
+        } else {
+          // Standard Verified Profile Card (No semester records cached yet)
+          profileContainer.innerHTML = `
+            <div class="p-5 sm:p-6 rounded-2xl border border-emerald-500/30 bg-gradient-to-b from-emerald-500/10 via-black/60 to-black/80 space-y-5 text-left shadow-2xl backdrop-blur-xl">
+              <div class="flex items-center justify-between pb-3 border-b border-emerald-500/20">
+                <div class="flex items-center gap-2">
+                  <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                  <span class="text-xs font-bold text-emerald-400 uppercase tracking-wider">Student Verified ✓</span>
+                </div>
+                <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+                  Gateway Connected
+                </span>
+              </div>
+
+              <div class="space-y-2">
+                <div class="text-[11px] text-gray-400 uppercase font-medium">Student Name:</div>
+                <div class="text-lg sm:text-xl font-black text-white tracking-tight">${studentName}</div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-2 border-t border-white/5 font-mono text-xs">
+                  <div class="text-gray-400">Roll No: <span class="font-bold text-white">${rollNumber}</span></div>
+                  ${enrollmentHtml}
+                  ${fatherHtml}
+                  ${courseHtml}
+                  ${instituteHtml}
+                </div>
+              </div>
+
+              <div class="flex flex-col gap-2 pt-1">
+                <button 
+                  type="button" 
+                  id="without-dob-check-another-btn" 
+                  class="w-full py-2.5 bg-brand-blue hover:bg-brand-blue-hover text-white rounded-xl text-xs font-bold transition-all cursor-pointer text-center"
+                >
+                  Check Another Roll Number
+                </button>
+              </div>
+            </div>
+          `;
+        }
+
+        profileContainer.classList.remove("hidden");
+        document.getElementById("without-dob-check-another-btn")?.addEventListener("click", resetUI);
+      }
+
+      // Render Manual Captcha
+      function renderManualCaptcha(initialData, rollVal) {
+        loaderState?.classList.add("hidden");
+        searchForm?.classList.add("hidden");
+        if (profileContainer) profileContainer.classList.add("hidden");
+
+        let currentSession = initialData.session || "";
+
+        function updateModal(imgSrc, errorMsg = "") {
+          if (!captchaContainer) return;
+          captchaContainer.classList.remove("hidden");
+          captchaContainer.innerHTML = `
+            <div class="p-5 rounded-2xl border border-brand-blue/30 bg-gradient-to-b from-brand-blue/10 via-black/80 to-black/90 space-y-4 text-left shadow-2xl backdrop-blur-xl">
+              <div class="flex items-center justify-between pb-3 border-b border-brand-blue/20">
+                <div class="flex items-center gap-2">
+                  <span class="w-2.5 h-2.5 rounded-full bg-brand-blue animate-pulse"></span>
+                  <span class="text-xs font-bold text-brand-blue uppercase tracking-wider">Gateway Security Code</span>
+                </div>
+              </div>
+
+              <p class="text-xs text-gray-300">
+                Please enter the security verification code displayed below to fetch your marksheet:
+              </p>
+
+              <div class="flex items-center justify-center gap-3 p-3 bg-black/60 rounded-xl border border-white/10">
+                <img 
+                  id="without-dob-captcha-img" 
+                  src="${imgSrc}" 
+                  alt="Security verification code" 
+                  class="h-12 rounded-lg border border-white/20 shadow-inner bg-white/5 object-contain"
+                />
+                <button 
+                  type="button" 
+                  id="without-dob-refresh-captcha-btn" 
+                  class="px-3 py-2 bg-white/10 hover:bg-white/15 text-xs text-gray-300 rounded-lg transition-all cursor-pointer flex items-center gap-1"
+                >
+                  <span>New Code</span>
+                </button>
+              </div>
+
+              ${errorMsg ? `<div class="p-2 rounded-lg bg-rose-500/10 border border-rose-500/20 text-rose-400 text-xs text-center font-medium">${errorMsg}</div>` : ''}
+
+              <input 
+                type="text" 
+                id="without-dob-security-code-input" 
+                maxlength="6"
+                placeholder="Enter characters shown"
+                autocomplete="off"
+                class="w-full px-3 py-2.5 bg-white/5 border border-white/20 rounded-lg text-white font-mono text-center tracking-widest text-base uppercase placeholder-gray-500 focus:outline-none focus:border-brand-blue"
+              />
+
+              <div class="flex gap-2 pt-1">
+                <button 
+                  type="button" 
+                  id="without-dob-cancel-code-btn" 
+                  class="flex-1 py-2.5 bg-white/10 hover:bg-white/15 text-gray-300 rounded-lg text-xs font-semibold transition-all cursor-pointer"
+                >
+                  Cancel
+                </button>
+                <button 
+                  type="button" 
+                  id="without-dob-submit-code-btn" 
+                  class="flex-1 py-2.5 bg-brand-blue hover:bg-brand-blue-hover text-white rounded-lg text-xs font-semibold transition-all cursor-pointer flex items-center justify-center gap-1"
+                >
+                  <span>Verify &amp; Proceed</span>
+                </button>
+              </div>
+            </div>
+          `;
+
+          const codeInput = document.getElementById("without-dob-security-code-input");
+          if (codeInput) {
+            codeInput.focus();
+            codeInput.addEventListener("keydown", (e) => {
+              if (e.key === "Enter") {
+                e.preventDefault();
+                submitCode();
+              }
+            });
+          }
+
+          document.getElementById("without-dob-refresh-captcha-btn")?.addEventListener("click", async () => {
+            const btn = document.getElementById("without-dob-refresh-captcha-btn");
+            if (btn) btn.innerHTML = `<span>Loading...</span>`;
+            try {
+              const rRes = await fetch("/api/search", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ rollNumber: rollVal, action: "refreshCaptcha", session: currentSession })
+              });
+              const rData = await rRes.json();
+              if (rData && rData.captchaImage) {
+                currentSession = rData.session || currentSession;
+                updateModal(rData.captchaImage);
+              } else {
+                updateModal(imgSrc, "Could not refresh code. Try again.");
+              }
+            } catch (e) {
+              updateModal(imgSrc, "Network error refreshing code.");
+            }
+          });
+
+          document.getElementById("without-dob-submit-code-btn")?.addEventListener("click", submitCode);
+          document.getElementById("without-dob-cancel-code-btn")?.addEventListener("click", resetUI);
+        }
+
+        async function submitCode() {
+          const codeInput = document.getElementById("without-dob-security-code-input");
+          const code = codeInput ? codeInput.value.trim().toUpperCase() : "";
+          if (!code || code.length < 4) {
+            if (codeInput) codeInput.focus();
+            return;
+          }
+
+          const submitBtn = document.getElementById("without-dob-submit-code-btn");
+          if (submitBtn) {
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = `
+              <div class="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+              <span>Verifying...</span>
+            `;
+          }
+
+          try {
+            const vRes = await fetch("/api/search", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ rollNumber: rollVal, manualCaptcha: code, session: currentSession })
+            });
+            const vData = await vRes.json();
+            if (vData && vData.success) {
+              renderVerifiedProfile(vData);
+            } else if (vData && vData.needsManualCaptcha && vData.captchaImage) {
+              currentSession = vData.session || currentSession;
+              updateModal(vData.captchaImage, vData.error || "Incorrect code. Please enter the new characters shown.");
+            } else {
+              updateModal(initialData.captchaImage, vData?.error || "Verification failed. Please try again.");
+            }
+          } catch (e) {
+            updateModal(initialData.captchaImage, "Network error during verification. Please try again.");
+          }
+        }
+
+        updateModal(initialData.captchaImage);
+      }
+
+      // Execute Search
+      function executeSearch(enteredRoll) {
+        if (!enteredRoll || !/^[0-9]{10,15}$/.test(enteredRoll)) {
+          alert("Please enter a valid 10 to 14 digit AKTU University Roll Number.");
+          rollInput?.focus();
+          return;
+        }
+
+        searchForm?.classList.add("hidden");
+        if (captchaContainer) {
+          captchaContainer.classList.add("hidden");
+          captchaContainer.innerHTML = "";
+        }
+        if (profileContainer) {
+          profileContainer.classList.add("hidden");
+          profileContainer.innerHTML = "";
+        }
+        errorState?.classList.add("hidden");
+        loaderState?.classList.remove("hidden");
+
+        log1?.classList.add("hidden");
+        log2?.classList.add("hidden");
+        log3?.classList.add("hidden");
+        log4?.classList.add("hidden");
+
+        if (loadingStatus) loadingStatus.textContent = "Connecting to AKTU Gateway...";
+        if (loadingSubstatus) loadingSubstatus.textContent = "Authenticating session & bypassing DOB requirement...";
+
+        setTimeout(() => {
+          if (loadingStatus) loadingStatus.textContent = "Negotiating University Gateway...";
+          if (loadingSubstatus) loadingSubstatus.textContent = "Validating cryptographic ViewState tokens...";
+          log1?.classList.remove("hidden");
+        }, 400);
+
+        setTimeout(() => {
+          if (loadingStatus) loadingStatus.textContent = "Accessing OneView Archives...";
+          if (loadingSubstatus) loadingSubstatus.textContent = "Bypassing DOB requirement check...";
+          log2?.classList.remove("hidden");
+        }, 900);
+
+        setTimeout(() => {
+          if (loadingStatus) loadingStatus.textContent = "Resolving Student Marksheet...";
+          if (loadingSubstatus) loadingSubstatus.textContent = "Assembling semester grades & credits ledger...";
+          log3?.classList.remove("hidden");
+        }, 1500);
+
+        const fetchPromise = fetch('/api/search', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ rollNumber: enteredRoll })
+        });
+
+        const delayPromise = new Promise(resolve => setTimeout(resolve, 1800));
+
+        Promise.all([fetchPromise, delayPromise])
+          .then(async ([res]) => {
+            loaderState?.classList.add("hidden");
+
+            if (!res.ok) {
+              let errorText = "Could not fetch result right now. Please try again.";
+              try {
+                const errData = await res.json();
+                if (errData?.error) errorText = errData.error;
+              } catch (e) {}
+              if (errorTitle) errorTitle.textContent = "Result Search Failed";
+              if (errorDesc) errorDesc.textContent = errorText;
+              errorState?.classList.remove("hidden");
+              return;
+            }
+
+            const data = await res.json();
+            if (data.success) {
+              renderVerifiedProfile(data);
+            } else if (data.needsManualCaptcha && data.captchaImage) {
+              renderManualCaptcha(data, enteredRoll);
+            } else {
+              if (errorTitle) errorTitle.textContent = "Search Failed";
+              if (errorDesc) errorDesc.textContent = data.error || "Could not retrieve records for this roll number.";
+              errorState?.classList.remove("hidden");
+            }
+          })
+          .catch(err => {
+            console.error("Without DOB Search API Error:", err);
+            loaderState?.classList.add("hidden");
+            if (errorTitle) errorTitle.textContent = "Network Error";
+            if (errorDesc) errorDesc.textContent = "Failed to connect to gateway. Please check your internet connection.";
+            errorState?.classList.remove("hidden");
+          });
+      }
+
+      searchForm?.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const enteredRoll = rollInput ? rollInput.value.trim() : "";
+        executeSearch(enteredRoll);
+      });
+
+      // Auto-trigger if roll parameter present in URL
+      const urlParams = new URLSearchParams(window.location.search);
+      const paramRoll = urlParams.get('roll') || urlParams.get('rollNumber');
+      if (paramRoll && rollInput) {
+        rollInput.value = paramRoll;
+        setTimeout(() => {
+          executeSearch(paramRoll);
+        }, 200);
+      }
+    };
+
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", initWithoutDob);
+    } else {
+      initWithoutDob();
+    }
+  </script>
+</Layout>

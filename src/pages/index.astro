@@ -123,7 +123,7 @@ const jsonLd = {
   ]
 };
 
-const homeKeywords = `aktu result, aktu result ${yearInfo.startYear}, aktu result ${yearInfo.endYear}, aktu result ${yearInfo.session}, oneview aktu, erp aktu result, aktu erp result, aktu oneview, aktu result without dob, check aktu result, aktu one view marksheet, aktu circulars and results, aktu btech result, aktu roll number finder, oneview.aktu.ac.in`;
+const homeKeywords = `aktu result without date of birth, aktu result without dob, check aktu result without date of birth, how to check aktu result without date of birth, aktu one view result without dob, aktu result by roll number without date of birth, aktu result, aktu result ${yearInfo.startYear}, aktu result ${yearInfo.endYear}, aktu result ${yearInfo.session}, oneview aktu, erp aktu result, aktu erp result, aktu oneview, check aktu result, aktu one view marksheet, aktu circulars and results, aktu btech result, aktu roll number finder, oneview.aktu.ac.in`;
 ---
 
 <Layout 
@@ -145,18 +145,18 @@ const homeKeywords = `aktu result, aktu result ${yearInfo.startYear}, aktu resul
         <div id="hero-copy" class="md:col-span-7 text-center md:text-left space-y-6 transition-all duration-500">
           <!-- Trust Badge -->
           <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/[0.08] light:border-black/[0.06] bg-white/[0.03] light:bg-white/40 backdrop-blur-md text-xs text-gray-400 light:text-gray-600 premium-shadow-light">
-            <span class="w-1.5 h-1.5 rounded-full bg-brand-blue animate-pulse"></span>
-            AKTU B.Tech / MBA / MCA / B.Pharma Result Portal ({yearInfo.sessionFormatted})
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+            No Date of Birth Required • AKTU Result Portal ({yearInfo.sessionFormatted})
           </div>
 
           <!-- Main Headline -->
           <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.1] bg-gradient-to-b from-white to-gray-400 dark:from-white dark:to-gray-400 light:from-ink light:to-gray-800 bg-clip-text text-transparent">
             AKTU Result <br class="hidden lg:inline" />
-            <span class="bg-gradient-to-r from-brand-blue via-brand-blue-light to-purple-500 bg-clip-text text-transparent">OneView &amp; ERP Result ({yearInfo.sessionFormatted})</span>
+            <span class="bg-gradient-to-r from-brand-blue via-brand-blue-light to-purple-500 bg-clip-text text-transparent">Without Date of Birth ({yearInfo.sessionFormatted})</span>
           </h1>
 
           <p class="text-sm sm:text-base md:text-lg text-gray-400 light:text-gray-600 leading-relaxed max-w-xl mx-auto md:mx-0">
-            Check your <strong class="text-gray-200 light:text-gray-900 font-semibold">AKTU Result {yearInfo.sessionFormatted}</strong> online. Access full <strong class="text-gray-200 light:text-gray-900 font-semibold">OneView AKTU</strong> marksheets and <strong class="text-gray-200 light:text-gray-900 font-semibold">AKTU ERP results</strong> instantly using your University Roll Number without needing Date of Birth. Fast, secure, and complete semester scorecard retrieval.
+            Check your <strong class="text-gray-200 light:text-gray-900 font-semibold">AKTU Result without Date of Birth</strong> online. Access full <strong class="text-gray-200 light:text-gray-900 font-semibold">OneView AKTU</strong> marksheets and <strong class="text-gray-200 light:text-gray-900 font-semibold">AKTU ERP results</strong> instantly using your University Roll Number without needing registered DOB. Fast, secure, and complete semester scorecard retrieval.
           </p>
 
           <!-- Live Search Metrics -->
@@ -859,44 +859,62 @@ const homeKeywords = `aktu result, aktu result ${yearInfo.startYear}, aktu resul
         </p>
       </div>
 
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-        <!-- Card 1: OneView AKTU -->
-        <a href="#hero-card-wrapper" class="group p-5 rounded-2xl iphone-glass hover:border-brand-blue/40 transition-all duration-300 hover:translate-y-[-2px] flex flex-col justify-between">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        <!-- Card 1: AKTU Result Without Date of Birth -->
+        <a href="/aktu-result-without-date-of-birth" class="group p-5 rounded-2xl iphone-glass border-brand-blue/30 hover:border-brand-blue transition-all duration-300 hover:translate-y-[-2px] flex flex-col justify-between">
           <div>
-            <div class="w-10 h-10 rounded-xl bg-blue-500/10 text-brand-blue flex items-center justify-center text-lg mb-3">
-              📋
+            <div class="w-10 h-10 rounded-xl bg-brand-blue/10 text-brand-blue flex items-center justify-center text-lg mb-3">
+              ⚡
             </div>
             <h3 class="text-base font-bold text-white light:text-ink group-hover:text-brand-blue transition-colors mb-1.5">
-              OneView AKTU Marksheet
+              AKTU Result Without DOB
             </h3>
             <p class="text-xs text-gray-400 light:text-gray-600 leading-relaxed">
-              Access your complete AKTU One View marksheet with semester grades, SGPA, CGPA, and COP tracking without Date of Birth.
+              Check AKTU Result without Date of Birth. Instant OneView marksheet, SGPA, CGPA, and semester grades by University Roll Number.
             </p>
           </div>
           <span class="text-xs font-semibold text-brand-blue mt-4 inline-flex items-center gap-1 group-hover:underline">
-            Check OneView Online &rarr;
+            Check Without DOB &rarr;
           </span>
         </a>
 
-        <!-- Card 2: AKTU ERP Result -->
-        <a href="https://erp.aktu.ac.in/WebPages/OneView/OneView.aspx" target="_blank" rel="noopener noreferrer" class="group p-5 rounded-2xl iphone-glass hover:border-purple-500/40 transition-all duration-300 hover:translate-y-[-2px] flex flex-col justify-between">
+        <!-- Card 2: OneView AKTU -->
+        <a href="/oneview" class="group p-5 rounded-2xl iphone-glass hover:border-cyan-500/40 transition-all duration-300 hover:translate-y-[-2px] flex flex-col justify-between">
+          <div>
+            <div class="w-10 h-10 rounded-xl bg-cyan-500/10 text-cyan-400 flex items-center justify-center text-lg mb-3">
+              📋
+            </div>
+            <h3 class="text-base font-bold text-white light:text-ink group-hover:text-cyan-400 transition-colors mb-1.5">
+              OneView AKTU Portal
+            </h3>
+            <p class="text-xs text-gray-400 light:text-gray-600 leading-relaxed">
+              Access your official AKTU One View marksheet with full semester subject grades, theory/practical marks, and COP tracking.
+            </p>
+          </div>
+          <span class="text-xs font-semibold text-cyan-400 mt-4 inline-flex items-center gap-1 group-hover:underline">
+            OneView Portal &rarr;
+          </span>
+        </a>
+
+        <!-- Card 3: AKTU ERP Result -->
+        <a href="/aktu-erp-result" class="group p-5 rounded-2xl iphone-glass hover:border-purple-500/40 transition-all duration-300 hover:translate-y-[-2px] flex flex-col justify-between">
           <div>
             <div class="w-10 h-10 rounded-xl bg-purple-500/10 text-purple-400 flex items-center justify-center text-lg mb-3">
               🏢
             </div>
             <h3 class="text-base font-bold text-white light:text-ink group-hover:text-purple-400 transition-colors mb-1.5">
-              AKTU ERP Portal
+              AKTU ERP Result &amp; Login
             </h3>
             <p class="text-xs text-gray-400 light:text-gray-600 leading-relaxed">
-              Official gateway for erp.aktu.ac.in student login, admit cards, exam forms, and scrutiny re-evaluation.
+              Guide and direct access for erp.aktu.ac.in student login, admit cards, exam circulars, and challenge evaluation results.
             </p>
           </div>
           <span class="text-xs font-semibold text-purple-400 mt-4 inline-flex items-center gap-1 group-hover:underline">
-            Open Official ERP Portal &rarr;
+            ERP Result Guide &rarr;
           </span>
         </a>
 
-        <!-- Card 3: Roll Number Finder -->
+        <!-- Card 4: Roll Number Finder -->
         <a href="/roll-number-finder" class="group p-5 rounded-2xl iphone-glass hover:border-emerald-500/40 transition-all duration-300 hover:translate-y-[-2px] flex flex-col justify-between">
           <div>
             <div class="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center text-lg mb-3">
@@ -906,7 +924,7 @@ const homeKeywords = `aktu result, aktu result ${yearInfo.startYear}, aktu resul
               Roll Number Finder
             </h3>
             <p class="text-xs text-gray-400 light:text-gray-600 leading-relaxed">
-              Forgot or lost your University Roll Number? Search by college, branch, admission year, and student name.
+              Forgot or lost your University Roll Number? Search by college, branch, admission year, and student name in seconds.
             </p>
           </div>
           <span class="text-xs font-semibold text-emerald-400 mt-4 inline-flex items-center gap-1 group-hover:underline">
@@ -914,17 +932,17 @@ const homeKeywords = `aktu result, aktu result ${yearInfo.startYear}, aktu resul
           </span>
         </a>
 
-        <!-- Card 4: Colleges Directory -->
-        <a href="/colleges" class="group p-5 rounded-2xl iphone-glass hover:border-amber-500/40 transition-all duration-300 hover:translate-y-[-2px] flex flex-col justify-between">
+        <!-- Card 5: Colleges Directory -->
+        <a href="/colleges" class="group p-5 rounded-2xl iphone-glass hover:border-amber-500/40 transition-all duration-300 hover:translate-y-[-2px] flex flex-col justify-between sm:col-span-2 lg:col-span-2">
           <div>
             <div class="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-400 flex items-center justify-center text-lg mb-3">
               🏛️
             </div>
             <h3 class="text-base font-bold text-white light:text-ink group-hover:text-amber-400 transition-colors mb-1.5">
-              Affiliated Colleges
+              Affiliated Colleges Directory (750+ Institutes)
             </h3>
             <p class="text-xs text-gray-400 light:text-gray-600 leading-relaxed">
-              Browse 750+ AKTU-affiliated engineering, management, and pharmacy colleges with institute codes.
+              Browse 750+ AKTU-affiliated engineering, management, and pharmacy colleges with official institute codes, district locations, and student lists.
             </p>
           </div>
           <span class="text-xs font-semibold text-amber-400 mt-4 inline-flex items-center gap-1 group-hover:underline">
@@ -991,6 +1009,69 @@ const homeKeywords = `aktu result, aktu result ${yearInfo.startYear}, aktu resul
             Click <strong>Print Academic Report</strong> to create a high-resolution, print-ready PDF scorecard for job applications, internships, higher education admissions, or college documentation.
           </p>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Dedicated SEO Section: AKTU Result Without Date of Birth -->
+  <section class="py-16 md:py-20 border-t border-canvas-dark-border light:border-canvas-light-border bg-gradient-to-b from-black via-canvas-dark-surface to-black light:from-white light:via-canvas-light-surface light:to-white transition-colors duration-300">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+      <div class="text-center max-w-3xl mx-auto space-y-4">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-emerald-500/20 bg-emerald-500/10 text-xs text-emerald-400 font-semibold">
+          <span>✓ Solution for Students Who Forgot Registered DOB</span>
+        </div>
+        <h2 class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white light:text-ink tracking-tight">
+          How to Check AKTU Result Without Date of Birth
+        </h2>
+        <p class="text-xs sm:text-sm text-gray-400 light:text-gray-600 leading-relaxed">
+          The official AKTU OneView portal (oneview.aktu.ac.in) requires both a Roll Number and registered Date of Birth. If you have forgotten your birth date or face authentication mismatches, here is how our tool resolves it.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="p-6 rounded-2xl bg-white/[0.02] light:bg-white border border-white/[0.08] light:border-black/[0.08] space-y-3">
+          <div class="w-10 h-10 rounded-xl bg-brand-blue/10 text-brand-blue flex items-center justify-center font-bold text-base">
+            01
+          </div>
+          <h3 class="text-base font-bold text-white light:text-ink">Why OneView Blocks Access</h3>
+          <p class="text-xs text-gray-400 light:text-gray-600 leading-relaxed">
+            AKTU added DOB verification to prevent third parties from looking up marks. However, format errors (DD/MM/YYYY vs MM/DD/YYYY) and clerk data entry mistakes frequently lock students out of their own records.
+          </p>
+        </div>
+
+        <div class="p-6 rounded-2xl bg-white/[0.02] light:bg-white border border-white/[0.08] light:border-black/[0.08] space-y-3">
+          <div class="w-10 h-10 rounded-xl bg-purple-500/10 text-purple-400 flex items-center justify-center font-bold text-base">
+            02
+          </div>
+          <h3 class="text-base font-bold text-white light:text-ink">Direct Gateway Handshake</h3>
+          <p class="text-xs text-gray-400 light:text-gray-600 leading-relaxed">
+            Our platform interacts directly with the AKTU OneView web server using session handshake protocols, fetching your genuine marksheet, SGPA, CGPA, and backlog details by University Roll Number alone.
+          </p>
+        </div>
+
+        <div class="p-6 rounded-2xl bg-white/[0.02] light:bg-white border border-white/[0.08] light:border-black/[0.08] space-y-3">
+          <div class="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center font-bold text-base">
+            03
+          </div>
+          <h3 class="text-base font-bold text-white light:text-ink">Instant Marksheet Retrieval</h3>
+          <p class="text-xs text-gray-400 light:text-gray-600 leading-relaxed">
+            View full historical marks across all completed semesters (1st to 8th) for regular and carry-over papers (COP) with complete security, no personal data logging, and instant PDF printing.
+          </p>
+        </div>
+      </div>
+
+      <!-- Action Banner -->
+      <div class="p-6 rounded-2xl bg-gradient-to-r from-brand-blue/15 via-purple-600/10 to-transparent border border-brand-blue/30 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div class="text-left space-y-1">
+          <h3 class="text-base font-bold text-white light:text-ink">Looking for the dedicated Without DOB Portal?</h3>
+          <p class="text-xs text-gray-400 light:text-gray-600">Access full semester marksheets, grade cards, and score breakdowns with zero DOB hurdles.</p>
+        </div>
+        <a 
+          href="/aktu-result-without-date-of-birth" 
+          class="px-5 py-2.5 rounded-xl bg-brand-blue hover:bg-brand-blue-hover text-white text-xs font-bold transition-all shadow-lg shadow-brand-blue/20 whitespace-nowrap"
+        >
+          Check AKTU Result Without DOB &rarr;
+        </a>
       </div>
     </div>
   </section>
