@@ -1,0 +1,793 @@
+---
+import Layout from "../layouts/Layout.astro";
+import colleges from "../data/colleges.json";
+import branches from "../data/branches.json";
+import { slugifyCollege } from "../utils/slugify";
+import { getAcademicYearInfo } from "../utils/academicYear";
+
+const yearInfo = getAcademicYearInfo();
+const siteUrl = "https://akturesult.bond";
+const pageUrl = `${siteUrl}/aktu-affiliated-cse-college`;
+
+// Filter curated top AKTU CSE Colleges
+const topCseCollegeData = [
+  {
+    code: "052",
+    name: "Institute of Engineering & Technology, Lucknow (IET)",
+    type: "Government (Autonomous)",
+    city: "Lucknow",
+    established: 1984,
+    avgPackage: "8.5 LPA",
+    highestPackage: "45.0 LPA",
+    cseSeats: "120+",
+    specializations: ["Core CSE (10)", "AI (152)", "Self-Finance"],
+    nirfRank: "Top State Govt",
+    tag: "Rank #1 Government"
+  },
+  {
+    code: "104",
+    name: "Kamla Nehru Institute of Technology, Sultanpur (KNIT)",
+    type: "Government (Autonomous)",
+    city: "Sultanpur",
+    established: 1976,
+    avgPackage: "6.8 LPA",
+    highestPackage: "35.0 LPA",
+    cseSeats: "90+",
+    specializations: ["Core CSE (10)", "IT (11)"],
+    nirfRank: "Govt Autonomous",
+    tag: "Rank #2 Government"
+  },
+  {
+    code: "043",
+    name: "Bundelkhand Institute of Engineering & Technology, Jhansi (BIET)",
+    type: "Government (Autonomous)",
+    city: "Jhansi",
+    established: 1989,
+    avgPackage: "6.5 LPA",
+    highestPackage: "30.0 LPA",
+    cseSeats: "90+",
+    specializations: ["Core CSE (10)", "IT (11)"],
+    nirfRank: "Govt Autonomous",
+    tag: "Rank #3 Government"
+  },
+  {
+    code: "091",
+    name: "JSS Academy of Technical Education, Noida (JSS Noida)",
+    type: "Private Affiliated",
+    city: "Noida (Delhi-NCR)",
+    established: 1998,
+    avgPackage: "7.5 LPA",
+    highestPackage: "42.0 LPA",
+    cseSeats: "180+",
+    specializations: ["Core CSE (10)", "AI & ML (153)", "Data Science (154)"],
+    nirfRank: "NBA Accredited",
+    tag: "Top NCR Choice"
+  },
+  {
+    code: "027",
+    name: "Ajay Kumar Garg Engineering College, Ghaziabad (AKGEC)",
+    type: "Private Affiliated",
+    city: "Ghaziabad (Delhi-NCR)",
+    established: 1998,
+    avgPackage: "6.2 LPA",
+    highestPackage: "38.0 LPA",
+    cseSeats: "240+",
+    specializations: ["Core CSE (10)", "AI & ML (153)", "Data Science (154)", "CS Hindi"],
+    nirfRank: "NBA Accredited",
+    tag: "Premier Placement Record"
+  },
+  {
+    code: "029",
+    name: "KIET Group of Institutions, Ghaziabad (KIET)",
+    type: "Private (Autonomous)",
+    city: "Ghaziabad (Delhi-NCR)",
+    established: 1998,
+    avgPackage: "7.2 LPA",
+    highestPackage: "48.4 LPA",
+    cseSeats: "240+",
+    specializations: ["Core CSE (10)", "AI & ML (153)", "CS (12)", "IT (11)"],
+    nirfRank: "NAAC A+ Grade",
+    tag: "Top Private Autonomous"
+  },
+  {
+    code: "032",
+    name: "ABES Engineering College, Ghaziabad (ABES)",
+    type: "Private Affiliated",
+    city: "Ghaziabad (Delhi-NCR)",
+    established: 2000,
+    avgPackage: "6.0 LPA",
+    highestPackage: "35.0 LPA",
+    cseSeats: "240+",
+    specializations: ["Core CSE (10)", "AI & ML (153)", "Data Science (154)"],
+    nirfRank: "NBA Accredited",
+    tag: "High Placement Density"
+  },
+  {
+    code: "192",
+    name: "GL Bajaj Institute of Technology & Management, Greater Noida",
+    type: "Private Affiliated",
+    city: "Greater Noida (Delhi-NCR)",
+    established: 2005,
+    avgPackage: "7.5 LPA",
+    highestPackage: "58.0 LPA",
+    cseSeats: "240+",
+    specializations: ["Core CSE (10)", "AI & ML (153)", "Data Science (154)", "Cyber Security (172)"],
+    nirfRank: "NBA & NAAC A+",
+    tag: "58 LPA Highest Package"
+  },
+  {
+    code: "097",
+    name: "Galgotias College of Engineering & Technology, Greater Noida (GCET)",
+    type: "Private Affiliated",
+    city: "Greater Noida (Delhi-NCR)",
+    established: 2000,
+    avgPackage: "6.5 LPA",
+    highestPackage: "39.0 LPA",
+    cseSeats: "180+",
+    specializations: ["Core CSE (10)", "AI & ML (153)", "Data Science (154)"],
+    nirfRank: "NAAC A Grade",
+    tag: "Modern Campus & NCR Hub"
+  },
+  {
+    code: "133",
+    name: "Noida Institute of Engineering & Technology, Greater Noida (NIET)",
+    type: "Private (Autonomous)",
+    city: "Greater Noida (Delhi-NCR)",
+    established: 2001,
+    avgPackage: "6.0 LPA",
+    highestPackage: "44.0 LPA",
+    cseSeats: "240+",
+    specializations: ["Core CSE (10)", "AI & ML (153)", "IoT (155)", "Cyber Security (172)"],
+    nirfRank: "Autonomous Status",
+    tag: "Emerging Tech Hub"
+  },
+  {
+    code: "068",
+    name: "Meerut Institute of Engineering & Technology, Meerut (MIET)",
+    type: "Private Affiliated",
+    city: "Meerut",
+    established: 1997,
+    avgPackage: "5.5 LPA",
+    highestPackage: "28.0 LPA",
+    cseSeats: "180+",
+    specializations: ["Core CSE (10)", "AI & ML (153)", "Data Science (154)"],
+    nirfRank: "Pioneer West UP",
+    tag: "Historic Technical Heritage"
+  },
+  {
+    code: "164",
+    name: "Pranveer Singh Institute of Technology, Kanpur (PSIT)",
+    type: "Private Affiliated",
+    city: "Kanpur",
+    established: 2004,
+    avgPackage: "5.8 LPA",
+    highestPackage: "32.0 LPA",
+    cseSeats: "240+",
+    specializations: ["Core CSE (10)", "AI & ML (153)", "IoT (155)"],
+    nirfRank: "NAAC A Grade",
+    tag: "Kanpur Tech Leader"
+  },
+  {
+    code: "734",
+    name: "Rajkiya Engineering College, Banda (REC Banda)",
+    type: "Government",
+    city: "Banda",
+    established: 2010,
+    avgPackage: "5.0 LPA",
+    highestPackage: "18.0 LPA",
+    cseSeats: "60+",
+    specializations: ["Core CSE (10)"],
+    nirfRank: "State Government",
+    tag: "Affordable Govt REC"
+  },
+  {
+    code: "735",
+    name: "Rajkiya Engineering College, Bijnor (REC Bijnor)",
+    type: "Government",
+    city: "Bijnor",
+    established: 2010,
+    avgPackage: "5.2 LPA",
+    highestPackage: "20.0 LPA",
+    cseSeats: "60+",
+    specializations: ["Core CSE (10)", "IT (11)"],
+    nirfRank: "State Government",
+    tag: "Affordable Govt REC"
+  }
+];
+
+// Specialization codes
+const cseSpecializations = [
+  { code: "10", name: "Computer Science and Engineering (Core)", description: "The flagship 4-year engineering program covering OS, Algorithms, DBMS, and Systems Architecture." },
+  { code: "152", name: "CSE (Artificial Intelligence)", description: "Core CSE with dedicated specialization in Machine Learning, Deep Neural Networks, and NLP." },
+  { code: "153", name: "CSE (AI & Machine Learning)", description: "High-demand branch focusing on Predictive Analytics, Autonomous Systems, and Applied AI." },
+  { code: "154", name: "CSE (Data Science)", description: "Data Engineering, Big Data Frameworks, Statistical Modeling, and Business Intelligence." },
+  { code: "155", name: "CSE (Internet of Things - IoT)", description: "Hardware-software integration, Embedded Systems, Smart Sensors, and Edge Computing." },
+  { code: "156", name: "Computer Science & Business Systems (CSBS)", description: "Developed in collaboration with TCS, blending software design with finance, marketing, and agile management." },
+  { code: "172", name: "CSE (Cyber Security)", description: "Information Assurance, Ethical Hacking, Cryptography, and Cloud Infrastructure Defense." },
+  { code: "11", name: "Computer Science & Information Technology", description: "Comprehensive software engineering, network protocols, and distributed enterprise computing." }
+];
+
+const pageTitle = `Top AKTU Affiliated CSE Colleges 2026-2027 | Rankings, Codes & Cutoffs`;
+const pageDescription = `Complete guide to the best AKTU affiliated CSE colleges in Uttar Pradesh. Check government and private college codes, Computer Science branch codes (10, 153), fee structures, placements, and roll marksheet lookup without Date of Birth.`;
+const pageKeywords = `aktu affiliated cse college, aktu affiliated cse colleges, best aktu affiliated cse college, top aktu affiliated cse colleges in noida, top aktu affiliated cse colleges in ghaziabad, aktu cse branch code, aktu computer science engineering colleges list, iet lucknow cse code, jss noida cse code, akgec cse code, kiet cse branch code, gl bajaj cse, aktu affiliated colleges, aktu result without dob`;
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebPage",
+      "@id": pageUrl,
+      "url": pageUrl,
+      "name": pageTitle,
+      "description": pageDescription,
+      "isPartOf": {
+        "@type": "WebSite",
+        "@id": `${siteUrl}/#website`,
+        "name": "AKTU Result & OneView Portal",
+        "url": siteUrl
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": `${pageUrl}/#breadcrumb`,
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": siteUrl
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "AKTU Affiliated Colleges",
+          "item": `${siteUrl}/colleges`
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "AKTU Affiliated CSE College",
+          "item": pageUrl
+        }
+      ]
+    },
+    {
+      "@type": "ItemList",
+      "@id": `${pageUrl}/#collegelist`,
+      "name": "Best AKTU Affiliated CSE Colleges in Uttar Pradesh",
+      "description": "Ranked directory of Dr. A.P.J. Abdul Kalam Technical University affiliated colleges offering B.Tech Computer Science and Engineering.",
+      "itemListElement": topCseCollegeData.map((c, index) => ({
+        "@type": "ListItem",
+        "position": index + 1,
+        "name": `${c.name} (Code: ${c.code})`,
+        "url": `${siteUrl}/college/${slugifyCollege(c.name, c.code)}`
+      }))
+    },
+    {
+      "@type": "FAQPage",
+      "@id": `${pageUrl}/#faq`,
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Which is the #1 best AKTU affiliated CSE college in Uttar Pradesh?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Institute of Engineering & Technology (IET Lucknow - College Code 052) is widely regarded as the top government AKTU affiliated CSE college. Among private affiliated colleges, JSS Academy of Technical Education (Noida - Code 091), Ajay Kumar Garg Engineering College (AKGEC Ghaziabad - Code 027), and KIET Group of Institutions (Ghaziabad - Code 029) are the highest-rated for Computer Science placements."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the AKTU branch code for Computer Science and Engineering (CSE)?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The primary branch code for core Computer Science & Engineering in AKTU is 10. Key specializations include 152 for CSE (AI), 153 for CSE (AI & Machine Learning), 154 for CSE (Data Science), 155 for CSE (IoT), 156 for CSBS, and 172 for CSE (Cyber Security)."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the average package for CSE graduates from top AKTU affiliated colleges?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Graduates from premier AKTU affiliated CSE colleges like IET Lucknow, JSS Noida, AKGEC, and GL Bajaj secure average packages between 6.0 LPA and 8.5 LPA, with highest domestic and international packages reaching up to 45 LPA to 58 LPA."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I check semester marksheet for any AKTU affiliated CSE college without Date of Birth?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes! On akturesult.bond/aktu-result-without-date-of-birth, you can enter any AKTU roll number from any affiliated CSE college to inspect full OneView scorecards, semester marks, SGPA, and carryover status without entering a Date of Birth."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How is the AKTU Roll Number formulated for a CSE student?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "An AKTU CSE roll number consists of 10 or 13 digits: 2 digits for Admission Year (e.g. 23) + 3 digits for College Code (e.g. 052) + 2/3 digits for Branch Code (10 for core CSE or 153 for AI/ML) + 3-digit serial sequence (001-240)."
+          }
+        }
+      ]
+    }
+  ]
+};
+---
+
+<Layout
+  title={pageTitle}
+  description={pageDescription}
+  keywords={pageKeywords}
+  jsonLd={jsonLd}
+>
+  <!-- Breadcrumbs & Hero Section -->
+  <section class="py-12 sm:py-16 md:py-20 border-b border-canvas-dark-border light:border-canvas-light-border bg-gradient-to-b from-black via-canvas-dark-surface to-black light:from-white light:via-canvas-light-surface light:to-white">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+      
+      <!-- Breadcrumb Bar -->
+      <nav aria-label="Breadcrumb" class="mb-6 flex items-center gap-2 text-xs text-gray-500 light:text-gray-500 font-medium">
+        <a href="/" class="hover:text-white light:hover:text-ink transition-colors">Home</a>
+        <span>/</span>
+        <a href="/colleges" class="hover:text-white light:hover:text-ink transition-colors">AKTU Affiliated Colleges</a>
+        <span>/</span>
+        <span class="text-brand-blue font-semibold">AKTU Affiliated CSE College</span>
+      </nav>
+
+      <!-- Badge & H1 Header -->
+      <div class="max-w-3xl">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-brand-blue/10 text-brand-blue border border-brand-blue/20 mb-4">
+          <span class="w-1.5 h-1.5 rounded-full bg-brand-blue animate-pulse"></span>
+          <span>Official 2026-2027 Engineering Directory</span>
+        </div>
+        <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-white light:text-ink mb-4 leading-tight">
+          Top AKTU Affiliated CSE Colleges in UP
+        </h1>
+        <p class="text-sm sm:text-base text-gray-400 light:text-gray-600 leading-relaxed mb-8">
+          Detailed rankings, verified institute codes, B.Tech Computer Science branch codes (10, 153, 154), and placement records for premier Government and Private colleges affiliated with Dr. A.P.J. Abdul Kalam Technical University (AKTU Lucknow).
+        </p>
+      </div>
+
+      <!-- Quick Highlights Grid -->
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 mt-6">
+        <div class="p-4 rounded-2xl border border-canvas-dark-border light:border-canvas-light-border bg-canvas-dark-tile light:bg-white premium-shadow-dark light:premium-shadow-light">
+          <div class="text-[10px] sm:text-xs text-gray-500 uppercase tracking-wider font-semibold">Affiliated Institutes</div>
+          <div class="text-xl sm:text-2xl font-black text-white light:text-ink mt-1">120+ Colleges</div>
+          <div class="text-[10px] text-emerald-400 font-medium mt-1">Across Noida, Ghaziabad & UP</div>
+        </div>
+
+        <div class="p-4 rounded-2xl border border-canvas-dark-border light:border-canvas-light-border bg-canvas-dark-tile light:bg-white premium-shadow-dark light:premium-shadow-light">
+          <div class="text-[10px] sm:text-xs text-gray-500 uppercase tracking-wider font-semibold">Core Branch Code</div>
+          <div class="text-xl sm:text-2xl font-black text-brand-blue mt-1">Branch 10</div>
+          <div class="text-[10px] text-gray-400 light:text-gray-600 mt-1">CSE & 7 Specializations</div>
+        </div>
+
+        <div class="p-4 rounded-2xl border border-canvas-dark-border light:border-canvas-light-border bg-canvas-dark-tile light:bg-white premium-shadow-dark light:premium-shadow-light">
+          <div class="text-[10px] sm:text-xs text-gray-500 uppercase tracking-wider font-semibold">Highest Package</div>
+          <div class="text-xl sm:text-2xl font-black text-emerald-400 mt-1">58.0 LPA</div>
+          <div class="text-[10px] text-gray-400 light:text-gray-600 mt-1">Offered On-Campus</div>
+        </div>
+
+        <div class="p-4 rounded-2xl border border-canvas-dark-border light:border-canvas-light-border bg-canvas-dark-tile light:bg-white premium-shadow-dark light:premium-shadow-light">
+          <div class="text-[10px] sm:text-xs text-gray-500 uppercase tracking-wider font-semibold">Marksheet Scanner</div>
+          <div class="text-xl sm:text-2xl font-black text-purple-400 mt-1">Zero DOB</div>
+          <div class="text-[10px] text-gray-400 light:text-gray-600 mt-1">Direct OneView Access</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Interactive Search & Filter Controls -->
+  <section class="py-8 bg-canvas-dark-surface/60 light:bg-gray-50 border-b border-canvas-dark-border light:border-canvas-light-border">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 flex flex-col md:flex-row items-center justify-between gap-4">
+      
+      <!-- Search Input Island -->
+      <div class="relative w-full md:max-w-md">
+        <input 
+          type="text" 
+          id="cse-college-search" 
+          placeholder="Search by college name, code (e.g. 052, 027, 091), or city..."
+          class="w-full px-4 py-2.5 bg-black/60 light:bg-white border border-canvas-dark-border light:border-gray-200 rounded-xl text-white light:text-ink placeholder-gray-500 text-xs font-medium focus:outline-none focus:border-brand-blue"
+        />
+        <span class="absolute right-3.5 top-2.5 text-gray-500 text-xs">🔍</span>
+      </div>
+
+      <!-- Quick Filter Buttons -->
+      <div class="flex items-center gap-2 overflow-x-auto w-full md:w-auto pb-1">
+        <button class="filter-pill active px-3 py-1.5 rounded-lg text-xs font-semibold bg-brand-blue text-white transition-colors cursor-pointer shrink-0" data-filter="all">
+          All Colleges (<span id="count-all">{topCseCollegeData.length}</span>)
+        </button>
+        <button class="filter-pill px-3 py-1.5 rounded-lg text-xs font-semibold bg-black/40 light:bg-white border border-canvas-dark-border light:border-gray-200 text-gray-400 light:text-gray-700 hover:text-white transition-colors cursor-pointer shrink-0" data-filter="Government">
+          Government & RECs
+        </button>
+        <button class="filter-pill px-3 py-1.5 rounded-lg text-xs font-semibold bg-black/40 light:bg-white border border-canvas-dark-border light:border-gray-200 text-gray-400 light:text-gray-700 hover:text-white transition-colors cursor-pointer shrink-0" data-filter="Private">
+          Top Private NCR
+        </button>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Curated Colleges Cards Directory -->
+  <section class="py-12 bg-black light:bg-white">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+      
+      <div class="flex items-center justify-between mb-6">
+        <div>
+          <h2 class="text-xl sm:text-2xl font-bold text-white light:text-ink">
+            Premier AKTU Affiliated CSE Colleges Directory
+          </h2>
+          <p class="text-xs text-gray-400 light:text-gray-600 mt-1">
+            Click any college to scan class roll numbers, check batch-wise results, and explore branch specializations.
+          </p>
+        </div>
+        <a href="/colleges" class="text-xs font-bold text-brand-blue hover:underline hidden sm:inline-flex items-center gap-1">
+          <span>View all 750+ AKTU colleges</span>
+          <span>&rarr;</span>
+        </a>
+      </div>
+
+      <!-- Grid of Ranked Colleges -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5" id="cse-colleges-container">
+        {topCseCollegeData.map((c) => {
+          const collegeSlug = slugifyCollege(c.name, c.code);
+          return (
+            <div 
+              class="cse-college-card p-6 rounded-2xl border border-canvas-dark-border light:border-canvas-light-border bg-canvas-dark-tile light:bg-white hover:border-brand-blue/40 transition-all premium-shadow-dark light:premium-shadow-light flex flex-col justify-between"
+              data-type={c.type.includes("Government") ? "Government" : "Private"}
+              data-text={`${c.name.toLowerCase()} ${c.code} ${c.city.toLowerCase()}`}
+            >
+              <div>
+                <!-- Card Header -->
+                <div class="flex items-start justify-between gap-3 mb-3">
+                  <div class="flex items-center gap-2">
+                    <span class="px-2.5 py-1 rounded-md bg-brand-blue/15 text-brand-blue text-xs font-black font-mono">
+                      Code {c.code}
+                    </span>
+                    <span class="text-[11px] font-semibold px-2 py-0.5 rounded bg-white/5 light:bg-gray-100 text-gray-400 light:text-gray-600">
+                      {c.city}
+                    </span>
+                  </div>
+                  <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                    {c.tag}
+                  </span>
+                </div>
+
+                <!-- College Title -->
+                <h3 class="text-base font-bold text-white light:text-ink leading-snug mb-2">
+                  <a href={`/college/${collegeSlug}`} class="hover:text-brand-blue transition-colors">
+                    {c.name}
+                  </a>
+                </h3>
+
+                <!-- Key Specs Grid -->
+                <div class="grid grid-cols-3 gap-2 my-4 p-3 rounded-xl bg-black/40 light:bg-gray-50 border border-canvas-dark-border/40 light:border-gray-200 text-center">
+                  <div>
+                    <span class="block text-[9px] text-gray-500 uppercase font-semibold">Institute Type</span>
+                    <span class="text-xs font-bold text-white light:text-ink">{c.type.split(" ")[0]}</span>
+                  </div>
+                  <div>
+                    <span class="block text-[9px] text-gray-500 uppercase font-semibold">Avg Package</span>
+                    <span class="text-xs font-bold text-emerald-400">{c.avgPackage}</span>
+                  </div>
+                  <div>
+                    <span class="block text-[9px] text-gray-500 uppercase font-semibold">Peak Package</span>
+                    <span class="text-xs font-bold text-brand-blue">{c.highestPackage}</span>
+                  </div>
+                </div>
+
+                <!-- Specializations Badges -->
+                <div class="space-y-1.5 mb-4">
+                  <span class="text-[10px] text-gray-500 uppercase font-bold tracking-wider">Available CSE Specializations:</span>
+                  <div class="flex flex-wrap gap-1.5">
+                    {c.specializations.map((spec) => (
+                      <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-canvas-dark-surface light:bg-gray-100 border border-canvas-dark-border light:border-gray-200 text-gray-300 light:text-gray-700">
+                        {spec}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              <!-- Action Links Footer -->
+              <div class="pt-4 border-t border-canvas-dark-border/40 light:border-gray-100 flex items-center justify-between gap-3">
+                <a 
+                  href={`/college/${collegeSlug}`} 
+                  class="text-xs font-bold text-brand-blue hover:text-brand-blue-hover flex items-center gap-1 cursor-pointer"
+                >
+                  <span>Scan Class Roll Numbers</span>
+                  <span>&rarr;</span>
+                </a>
+                <a 
+                  href="/aktu-result-without-date-of-birth" 
+                  class="text-[11px] font-semibold text-gray-400 hover:text-white light:text-gray-500 light:hover:text-ink transition-colors"
+                >
+                  Check Result Without DOB
+                </a>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Complete AKTU CSE Branch Codes Guide -->
+  <section class="py-16 bg-canvas-dark-surface light:bg-gray-50 border-t border-canvas-dark-border light:border-canvas-light-border">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+      
+      <div class="max-w-3xl mb-10">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-purple-500/10 text-purple-400 border border-purple-500/20 mb-3">
+          <span>🧠 AKTU Academic Curriculum</span>
+        </div>
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-white light:text-ink mb-3">
+          Official AKTU CSE Branch Codes Reference
+        </h2>
+        <p class="text-sm text-gray-400 light:text-gray-600 leading-relaxed">
+          Dr. A.P.J. Abdul Kalam Technical University designates distinct 2-digit and 3-digit branch codes for each Computer Science stream. These codes are embedded directly inside every student's university roll number.
+        </p>
+      </div>
+
+      <!-- Specializations Table -->
+      <div class="overflow-x-auto rounded-2xl border border-canvas-dark-border light:border-canvas-light-border bg-canvas-dark-tile light:bg-white mb-12">
+        <table class="w-full text-left text-xs sm:text-sm">
+          <thead class="bg-black/40 light:bg-gray-100 border-b border-canvas-dark-border light:border-gray-200 text-gray-400 light:text-gray-600 font-bold uppercase text-[10px] tracking-wider">
+            <tr>
+              <th class="py-3.5 px-4 sm:px-6">Branch Code</th>
+              <th class="py-3.5 px-4 sm:px-6">Program Name</th>
+              <th class="py-3.5 px-4 sm:px-6 hidden md:table-cell">Core Curriculum Focus</th>
+              <th class="py-3.5 px-4 sm:px-6 text-right">Direct Result Scan</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-canvas-dark-border/40 light:divide-gray-100 font-normal">
+            {cseSpecializations.map((b) => (
+              <tr class="hover:bg-brand-blue/5 transition-colors">
+                <td class="py-3.5 px-4 sm:px-6 font-mono font-bold text-brand-blue text-sm">
+                  {b.code}
+                </td>
+                <td class="py-3.5 px-4 sm:px-6 font-semibold text-white light:text-ink">
+                  {b.name}
+                </td>
+                <td class="py-3.5 px-4 sm:px-6 text-gray-400 light:text-gray-600 hidden md:table-cell text-xs leading-relaxed">
+                  {b.description}
+                </td>
+                <td class="py-3.5 px-4 sm:px-6 text-right">
+                  <a 
+                    href="/roll-number-finder" 
+                    class="inline-block px-3 py-1 rounded-lg bg-brand-blue/10 hover:bg-brand-blue/20 text-brand-blue text-xs font-bold transition-colors"
+                  >
+                    Find Roll &rarr;
+                  </a>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <!-- AKTU CSE Roll Number Formula Banner -->
+      <div class="p-6 sm:p-8 rounded-2xl border border-brand-blue/30 bg-gradient-to-br from-brand-blue/10 via-black to-black light:via-white light:to-gray-50">
+        <h3 class="text-base sm:text-lg font-bold text-white light:text-ink mb-2 flex items-center gap-2">
+          <span>⚙️ How to Decode Any AKTU Affiliated CSE Student Roll Number</span>
+        </h3>
+        <p class="text-xs sm:text-sm text-gray-400 light:text-gray-600 mb-6 max-w-3xl leading-relaxed">
+          AKTU roll numbers follow a strictly deterministic sequence. For example, consider roll number <code class="font-mono text-brand-blue font-bold">2300520100045</code> from Institute of Engineering & Technology (IET Lucknow):
+        </p>
+
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
+          <div class="p-4 rounded-xl bg-black/60 light:bg-white border border-canvas-dark-border light:border-gray-200">
+            <span class="text-lg font-black font-mono text-brand-blue">23</span>
+            <span class="block text-[11px] font-bold text-white light:text-ink mt-1">Admission Batch</span>
+            <span class="block text-[10px] text-gray-500">Admitted in Year 2023</span>
+          </div>
+
+          <div class="p-4 rounded-xl bg-black/60 light:bg-white border border-canvas-dark-border light:border-gray-200">
+            <span class="text-lg font-black font-mono text-emerald-400">052</span>
+            <span class="block text-[11px] font-bold text-white light:text-ink mt-1">College Code</span>
+            <span class="block text-[10px] text-gray-500">052 = IET Lucknow</span>
+          </div>
+
+          <div class="p-4 rounded-xl bg-black/60 light:bg-white border border-canvas-dark-border light:border-gray-200">
+            <span class="text-lg font-black font-mono text-purple-400">010</span>
+            <span class="block text-[11px] font-bold text-white light:text-ink mt-1">Branch Code</span>
+            <span class="block text-[10px] text-gray-500">10 = Core CSE</span>
+          </div>
+
+          <div class="p-4 rounded-xl bg-black/60 light:bg-white border border-canvas-dark-border light:border-gray-200">
+            <span class="text-lg font-black font-mono text-amber-400">0045</span>
+            <span class="block text-[11px] font-bold text-white light:text-ink mt-1">Student Serial</span>
+            <span class="block text-[10px] text-gray-500">Roll Serial in Batch</span>
+          </div>
+        </div>
+
+        <div class="mt-6 text-center sm:text-left flex flex-col sm:flex-row items-center justify-between gap-4 pt-4 border-t border-canvas-dark-border/40 light:border-gray-200">
+          <span class="text-xs text-gray-400 light:text-gray-600">
+            Forgot your roll number or need to check marks for the whole class without Date of Birth?
+          </span>
+          <a 
+            href="/roll-number-finder" 
+            class="px-4 py-2 rounded-xl bg-brand-blue hover:bg-brand-blue-hover text-white text-xs font-bold transition-all shadow-md shrink-0"
+          >
+            Launch Roll Number Finder &rarr;
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Community & Alerts CTA Section -->
+  <section class="py-12 bg-black light:bg-white border-b border-canvas-dark-border light:border-canvas-light-border">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 text-center">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 mb-4">
+        <span>📢 Join 25,000+ AKTU Engineering Students</span>
+      </div>
+      <h2 class="text-2xl sm:text-3xl font-extrabold text-white light:text-ink mb-3">
+        Instant AKTU Results & CSE Placement Alerts
+      </h2>
+      <p class="text-sm text-gray-400 light:text-gray-600 mb-8 max-w-xl mx-auto leading-relaxed">
+        Join our dedicated student communities for semester score updates, carryover circulars, coding placement preparation notes, and fast marksheet links.
+      </p>
+
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+        <a 
+          href="https://chat.whatsapp.com/LoCFMpg5yyHIkd3gcywACo" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          class="w-full sm:w-auto px-6 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold transition-all shadow-lg flex items-center justify-center gap-2"
+        >
+          <span>💬 Join WhatsApp Community</span>
+        </a>
+        <a 
+          href="https://t.me/+B1IibFFFftc0NjNl" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          class="w-full sm:w-auto px-6 py-3 rounded-xl bg-sky-600 hover:bg-sky-500 text-white text-xs font-bold transition-all shadow-lg flex items-center justify-center gap-2"
+        >
+          <span>📢 Join Telegram Channel</span>
+        </a>
+        <a 
+          href="/download-app" 
+          class="w-full sm:w-auto px-6 py-3 rounded-xl bg-canvas-dark-surface light:bg-gray-100 hover:border-brand-blue border border-canvas-dark-border light:border-gray-200 text-white light:text-ink text-xs font-bold transition-all flex items-center justify-center gap-2"
+        >
+          <span>📱 Download Android App</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- In-Depth SEO Guide & FAQ Section -->
+  <section class="py-16 bg-canvas-dark-surface/40 light:bg-gray-50">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6">
+      
+      <div class="mb-10 text-center">
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-white light:text-ink mb-3">
+          Frequently Asked Questions on AKTU Affiliated CSE Colleges
+        </h2>
+        <p class="text-xs sm:text-sm text-gray-400 light:text-gray-600">
+          Essential answers for students planning admission or checking university exam marks.
+        </p>
+      </div>
+
+      <div class="space-y-4">
+        <details class="group p-5 rounded-2xl border border-canvas-dark-border light:border-canvas-light-border bg-canvas-dark-tile light:bg-white shadow-sm" open>
+          <summary class="list-none flex justify-between items-center cursor-pointer font-bold text-sm sm:text-base text-white light:text-ink">
+            <span>Which is the #1 best AKTU affiliated CSE college in Uttar Pradesh?</span>
+            <span class="text-xs text-brand-blue group-open:rotate-180 transition-transform">&darr;</span>
+          </summary>
+          <p class="mt-3 text-xs sm:text-sm text-gray-400 light:text-gray-600 leading-relaxed border-t border-canvas-dark-border/30 light:border-gray-100 pt-3">
+            Institute of Engineering & Technology (IET Lucknow - College Code 052) is universally considered the #1 state government AKTU affiliated CSE institute, requiring 97+ percentile in JEE Main via UPTAC. Among private affiliated colleges, JSS Noida (Code 091), Ajay Kumar Garg Engineering College (AKGEC Ghaziabad - Code 027), and KIET Group of Institutions (Code 029) lead with strong placement statistics in top software firms.
+          </p>
+        </details>
+
+        <details class="group p-5 rounded-2xl border border-canvas-dark-border light:border-canvas-light-border bg-canvas-dark-tile light:bg-white shadow-sm">
+          <summary class="list-none flex justify-between items-center cursor-pointer font-bold text-sm sm:text-base text-white light:text-ink">
+            <span>What is the AKTU branch code for Computer Science & Engineering?</span>
+            <span class="text-xs text-brand-blue group-open:rotate-180 transition-transform">&darr;</span>
+          </summary>
+          <p class="mt-3 text-xs sm:text-sm text-gray-400 light:text-gray-600 leading-relaxed border-t border-canvas-dark-border/30 light:border-gray-100 pt-3">
+            The standard branch code for core B.Tech Computer Science & Engineering is <strong>10</strong>. Specialization codes include <strong>152</strong> for AI, <strong>153</strong> for AI & Machine Learning, <strong>154</strong> for Data Science, <strong>155</strong> for Internet of Things, <strong>156</strong> for CSBS, and <strong>172</strong> for Cyber Security.
+          </p>
+        </details>
+
+        <details class="group p-5 rounded-2xl border border-canvas-dark-border light:border-canvas-light-border bg-canvas-dark-tile light:bg-white shadow-sm">
+          <summary class="list-none flex justify-between items-center cursor-pointer font-bold text-sm sm:text-base text-white light:text-ink">
+            <span>How do placements compare between government and private AKTU CSE colleges?</span>
+            <span class="text-xs text-brand-blue group-open:rotate-180 transition-transform">&darr;</span>
+          </summary>
+          <p class="mt-3 text-xs sm:text-sm text-gray-400 light:text-gray-600 leading-relaxed border-t border-canvas-dark-border/30 light:border-gray-100 pt-3">
+            Government colleges like IET Lucknow boast exceptional ROI with minimal tuition fees and strong off-campus and on-campus product-company offers. Top private NCR colleges like GL Bajaj (highest package 58 LPA), JSS Noida, and AKGEC benefit from immediate proximity to tech parks in Noida and Gurgaon, attracting heavy on-campus recruitment from Amazon, TCS Digital, Cisco, and Infosys.
+          </p>
+        </details>
+
+        <details class="group p-5 rounded-2xl border border-canvas-dark-border light:border-canvas-light-border bg-canvas-dark-tile light:bg-white shadow-sm">
+          <summary class="list-none flex justify-between items-center cursor-pointer font-bold text-sm sm:text-base text-white light:text-ink">
+            <span>Can I check my AKTU CSE semester scorecard without Date of Birth?</span>
+            <span class="text-xs text-brand-blue group-open:rotate-180 transition-transform">&darr;</span>
+          </summary>
+          <p class="mt-3 text-xs sm:text-sm text-gray-400 light:text-gray-600 leading-relaxed border-t border-canvas-dark-border/30 light:border-gray-100 pt-3">
+            Yes! If the official AKTU portal requires a Date of Birth or throws birth date mismatch errors, you can use our <a href="/aktu-result-without-date-of-birth" class="text-brand-blue font-bold hover:underline">AKTU Result Without Date of Birth</a> tool. Just enter your 10 to 13 digit roll number to view theory marks, internal marks, SGPA, CGPA, and COP carryover paper results.
+          </p>
+        </details>
+
+        <details class="group p-5 rounded-2xl border border-canvas-dark-border light:border-canvas-light-border bg-canvas-dark-tile light:bg-white shadow-sm">
+          <summary class="list-none flex justify-between items-center cursor-pointer font-bold text-sm sm:text-base text-white light:text-ink">
+            <span>What is the admission procedure for AKTU affiliated CSE colleges?</span>
+            <span class="text-xs text-brand-blue group-open:rotate-180 transition-transform">&darr;</span>
+          </summary>
+          <p class="mt-3 text-xs sm:text-sm text-gray-400 light:text-gray-600 leading-relaxed border-t border-canvas-dark-border/30 light:border-gray-100 pt-3">
+            85% of seats across all AKTU affiliated engineering colleges are filled through centralized UPTAC counselling based on JEE Main CRL (Common Rank List). The remaining 15% seats in private affiliated colleges can be filled via institutional management quota / direct admission based on Class 12 PCM merit.
+          </p>
+        </details>
+      </div>
+
+      <!-- Cross-Links Navigation Block -->
+      <div class="mt-12 p-6 rounded-2xl border border-canvas-dark-border light:border-gray-200 bg-black/40 light:bg-white">
+        <h3 class="text-sm font-bold text-white light:text-ink uppercase tracking-wider mb-4">
+          Related AKTU Resources & Quick Portals
+        </h3>
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs font-semibold">
+          <a href="/colleges" class="p-2.5 rounded-lg bg-canvas-dark-surface light:bg-gray-50 border border-canvas-dark-border light:border-gray-200 text-gray-300 light:text-gray-700 hover:text-brand-blue hover:border-brand-blue transition-all text-center">
+            🏛️ All Affiliated Colleges
+          </a>
+          <a href="/roll-number-finder" class="p-2.5 rounded-lg bg-canvas-dark-surface light:bg-gray-50 border border-canvas-dark-border light:border-gray-200 text-gray-300 light:text-gray-700 hover:text-brand-blue hover:border-brand-blue transition-all text-center">
+            🔍 Roll Number Finder
+          </a>
+          <a href="/aktu-result-without-date-of-birth" class="p-2.5 rounded-lg bg-canvas-dark-surface light:bg-gray-50 border border-canvas-dark-border light:border-gray-200 text-gray-300 light:text-gray-700 hover:text-brand-blue hover:border-brand-blue transition-all text-center">
+            📄 Result Without DOB
+          </a>
+          <a href="/oneview" class="p-2.5 rounded-lg bg-canvas-dark-surface light:bg-gray-50 border border-canvas-dark-border light:border-gray-200 text-gray-300 light:text-gray-700 hover:text-brand-blue hover:border-brand-blue transition-all text-center">
+            ⚡ OneView Marksheet
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Client-side filtering script -->
+  <script is:inline>
+    window.addEventListener("DOMContentLoaded", () => {
+      const searchInput = document.getElementById("cse-college-search");
+      const filterPills = document.querySelectorAll(".filter-pill");
+      const cards = document.querySelectorAll(".cse-college-card");
+
+      let currentFilter = "all";
+
+      function updateVisibility() {
+        const query = (searchInput?.value || "").trim().toLowerCase();
+
+        cards.forEach((card) => {
+          const type = card.getAttribute("data-type") || "";
+          const text = card.getAttribute("data-text") || "";
+
+          const matchesType = currentFilter === "all" || type.toLowerCase().includes(currentFilter.toLowerCase());
+          const matchesQuery = query === "" || text.includes(query);
+
+          if (matchesType && matchesQuery) {
+            card.classList.remove("hidden");
+          } else {
+            card.classList.add("hidden");
+          }
+        });
+      }
+
+      searchInput?.addEventListener("input", updateVisibility);
+
+      filterPills.forEach((pill) => {
+        pill.addEventListener("click", () => {
+          filterPills.forEach((p) => {
+            p.classList.remove("active", "bg-brand-blue", "text-white");
+            p.classList.add("bg-black/40", "light:bg-white", "text-gray-400", "light:text-gray-700");
+          });
+
+          pill.classList.add("active", "bg-brand-blue", "text-white");
+          pill.classList.remove("bg-black/40", "light:bg-white", "text-gray-400", "light:text-gray-700");
+
+          currentFilter = pill.getAttribute("data-filter") || "all";
+          updateVisibility();
+        });
+      });
+    });
+  </script>
+</Layout>

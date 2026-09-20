@@ -11,29 +11,99 @@ const sortedBranches = [...branches].sort((a, b) => a.name.localeCompare(b.name)
 
 const collegesJsonLd = {
   "@context": "https://schema.org",
-  "@type": "WebPage",
-  "name": "AKTU Affiliated Colleges Result Directory",
-  "description": "Complete directory list of all colleges and institutes affiliated with Dr. A.P.J. Abdul Kalam Technical University (AKTU) Lucknow. View result recovery options by institute.",
-  "url": "https://akturesult.bond/colleges"
+  "@graph": [
+    {
+      "@type": "WebPage",
+      "@id": "https://akturesult.bond/colleges",
+      "url": "https://akturesult.bond/colleges",
+      "name": "AKTU Affiliated Colleges List 2026-2027 | Complete Directory & Codes",
+      "description": "Complete directory of AKTU affiliated colleges across UP with institute codes, B.Tech CSE colleges, and marksheet lookup without Date of Birth.",
+      "isPartOf": {
+        "@type": "WebSite",
+        "@id": "https://akturesult.bond/#website",
+        "name": "AKTU Result & OneView Portal",
+        "url": "https://akturesult.bond"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://akturesult.bond/colleges/#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://akturesult.bond"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "AKTU Affiliated Colleges",
+          "item": "https://akturesult.bond/colleges"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://akturesult.bond/colleges/#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How many AKTU affiliated colleges are there in Uttar Pradesh?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Dr. A.P.J. Abdul Kalam Technical University (AKTU) has over 750 affiliated colleges and institutes across Uttar Pradesh offering B.Tech, B.Pharm, MBA, MCA, and M.Tech programs."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What are the top government AKTU affiliated colleges?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The premier government AKTU affiliated colleges include Institute of Engineering & Technology (IET Lucknow - Code 052), Kamla Nehru Institute of Technology (KNIT Sultanpur - Code 104), Bundelkhand Institute of Engineering & Technology (BIET Jhansi - Code 043), and Rajkiya Engineering Colleges (RECs)."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What are the top private AKTU affiliated colleges for CSE?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Top private AKTU affiliated CSE colleges include JSS Academy of Technical Education (Noida - Code 091), Ajay Kumar Garg Engineering College (AKGEC Ghaziabad - Code 027), KIET Group of Institutions (Ghaziabad - Code 029), ABES Engineering College (Ghaziabad - Code 032), and GL Bajaj Institute of Technology & Management (Greater Noida - Code 192)."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How can I check marksheet for any AKTU affiliated college without Date of Birth?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "You can check any student marksheet across all AKTU affiliated colleges without Date of Birth by entering the 10-13 digit AKTU Roll Number directly on akturesult.bond/aktu-result-without-date-of-birth or by selecting the college in this directory."
+          }
+        }
+      ]
+    }
+  ]
 };
 
-const collegeKeywords = "aktu colleges list, aktu colleges result, aktu colleges list btech, aktu result without dob, check aktu result by college, aktu result branch-wise, college code aktu";
+const collegeKeywords = "aktu affiliated colleges, aktu affiliated colleges list, aktu affiliated cse college, aktu affiliated engineering colleges, list of aktu affiliated colleges in up, aktu college codes, dr apj abdul kalam technical university affiliated colleges, aktu result without dob, check aktu result by college, aktu result branch-wise, college code aktu";
 ---
 
 <Layout
-  title="AKTU Affiliated Colleges | Result without DOB Search Directory"
-  description="Search and browse Dr. A.P.J. Abdul Kalam Technical University (AKTU) affiliated colleges. Recover semester and carryover results without date of birth."
+  title="AKTU Affiliated Colleges List 2026-2027 | Complete Directory & Codes"
+  description="Complete directory of AKTU affiliated colleges across UP with institute codes, B.Tech CSE colleges, and marksheet lookup without Date of Birth."
   keywords={collegeKeywords}
   jsonLd={collegesJsonLd}
 >
   <!-- Header Banner -->
   <section class="py-16 md:py-24 border-b border-canvas-dark-border light:border-canvas-light-border bg-gradient-to-b from-black to-canvas-dark-surface light:from-white light:to-canvas-light-surface text-center">
     <div class="max-w-3xl mx-auto px-4 sm:px-6">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-brand-blue/10 text-brand-blue border border-brand-blue/20 mb-4">
+        <span>🏛️ Official University Directory</span>
+      </div>
       <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight mb-4 text-white light:text-ink">
-        AKTU Colleges Directory
+        AKTU Affiliated Colleges Directory
       </h1>
-      <p class="text-base sm:text-lg text-gray-400 light:text-gray-600 max-w-xl mx-auto leading-relaxed">
-        Browse all 1,300+ colleges affiliated with Dr. A.P.J. Abdul Kalam Technical University. Recover grades cards and marks sheets without Date of Birth.
+      <p class="text-base sm:text-lg text-gray-400 light:text-gray-600 max-w-2xl mx-auto leading-relaxed">
+        Explore verified AKTU affiliated colleges across Uttar Pradesh. Search institute codes, discover top B.Tech Computer Science (CSE) colleges, and view semester scorecards without Date of Birth.
       </p>
     </div>
   </section>
@@ -42,10 +112,32 @@ const collegeKeywords = "aktu colleges list, aktu colleges result, aktu colleges
   <section class="py-12 bg-black light:bg-white text-gray-400 light:text-gray-600">
     <div class="max-w-5xl mx-auto px-4 sm:px-6">
       
+      <!-- Featured Callout: Top AKTU Affiliated CSE Colleges -->
+      <div class="mb-10 p-5 sm:p-6 rounded-2xl border border-brand-blue/30 bg-gradient-to-r from-brand-blue/10 via-brand-blue/5 to-transparent flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div class="space-y-1 text-center sm:text-left">
+          <div class="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-brand-blue text-white uppercase tracking-wider">
+            <span>🔥 Hot Directory</span>
+          </div>
+          <h2 class="text-base sm:text-lg font-bold text-white light:text-ink">
+            Looking for Computer Science & Engineering Colleges?
+          </h2>
+          <p class="text-xs text-gray-400 light:text-gray-600 max-w-xl">
+            Check top AKTU affiliated CSE colleges, official branch codes (10, 153 AI/ML, 154 Data Science), fee structures, cutoffs, and class roll scanners.
+          </p>
+        </div>
+        <a 
+          href="/aktu-affiliated-cse-college" 
+          class="shrink-0 px-5 py-2.5 rounded-xl bg-brand-blue hover:bg-brand-blue-hover text-white text-xs font-bold transition-all shadow-lg shadow-brand-blue/20 flex items-center gap-2"
+        >
+          <span>Top AKTU CSE Colleges</span>
+          <span>&rarr;</span>
+        </a>
+      </div>
+
       <!-- Search Input Island -->
       <div class="max-w-xl mx-auto mb-10">
         <label for="college-directory-search" class="block text-xs font-semibold text-gray-400 light:text-gray-500 uppercase tracking-wider mb-2 text-center">
-          Search College by Name or Code
+          Search AKTU Affiliated Colleges by Name or Code
         </label>
         <div class="relative">
           <input 
@@ -57,7 +149,7 @@ const collegeKeywords = "aktu colleges list, aktu colleges result, aktu colleges
           <span class="absolute right-4 top-3.5 text-gray-500 text-sm">🔍</span>
         </div>
         <p class="text-[10px] text-gray-600 light:text-gray-400 mt-2 text-center">
-          Showing <span id="displayed-count">{sortedColleges.length}</span> of {sortedColleges.length} institutes.
+          Showing <span id="displayed-count">{sortedColleges.length}</span> of {sortedColleges.length} AKTU affiliated colleges.
         </p>
       </div>
 
@@ -134,40 +226,124 @@ const collegeKeywords = "aktu colleges list, aktu colleges result, aktu colleges
         </details>
       </div>
 
-      <!-- Complete Courses & Branches SEO Crawler Landing List -->
-      <div class="mt-8 border-t border-canvas-dark-border/20 light:border-canvas-light-border/20 pt-8">
-        <details class="group cursor-pointer select-none">
-          <summary class="list-none flex items-center justify-between text-xs font-semibold text-gray-500 uppercase tracking-wider hover:text-white light:hover:text-ink transition-colors">
-            <span>Show Complete Courses & Branches SEO Index</span>
-            <span class="text-xs transform group-open:rotate-180 transition-transform">&darr;</span>
-          </summary>
-          
-          <div class="mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 text-[10px] sm:text-xs text-gray-500 border border-canvas-dark-border/40 light:border-canvas-light-border/60 bg-black/40 light:bg-gray-50 rounded-2xl p-6 select-text cursor-default">
-            {sortedBranches.map((b) => (
-              <div class="space-y-1.5 p-3 rounded-lg border border-canvas-dark-border/10 light:border-canvas-light-border/20 bg-black/25 light:bg-white font-mono">
-                <h4 class="font-bold text-white light:text-ink text-[11px]">{b.name} Result (Code {b.code})</h4>
-                <div class="space-y-1 text-gray-500">
-                  <div class="flex items-center gap-1.5">
-                    <span class="w-1.5 h-1.5 rounded-full bg-brand-blue"></span>
-                    <span class="font-semibold text-gray-400 light:text-gray-600">{b.name} Result</span>
-                  </div>
-                  <div class="flex items-center gap-1.5">
-                    <span class="w-1 h-1 rounded-full bg-brand-blue/60"></span>
-                    <span>{b.name} Result without DOB</span>
-                  </div>
-                  <div class="flex items-center gap-1.5">
-                    <span class="w-1 h-1 rounded-full bg-brand-blue/60"></span>
-                    <span>AKTU {b.name} Result</span>
-                  </div>
-                  <div class="flex items-center gap-1.5">
-                    <span class="w-1 h-1 rounded-full bg-brand-blue/60"></span>
-                    <span>Dr. A.P.J. Abdul Kalam Technical University {b.name} Result</span>
-                  </div>
-                </div>
-              </div>
-            ))}
+      <!-- In-Depth Guide to AKTU Affiliated Colleges -->
+      <div class="mt-16 pt-12 border-t border-canvas-dark-border/40 light:border-canvas-light-border/40 text-left">
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-white light:text-ink mb-6">
+          Guide to AKTU Affiliated Colleges in Uttar Pradesh
+        </h2>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+          <div class="p-5 rounded-2xl border border-canvas-dark-border light:border-canvas-light-border bg-canvas-dark-surface light:bg-gray-50">
+            <div class="w-8 h-8 rounded-xl bg-brand-blue/10 text-brand-blue flex items-center justify-center font-bold mb-3 text-sm">
+              01
+            </div>
+            <h3 class="text-sm font-bold text-white light:text-ink mb-2">Government & Autonomous</h3>
+            <p class="text-xs text-gray-400 light:text-gray-600 leading-relaxed">
+              Top state-funded institutions like Institute of Engineering & Technology (IET Lucknow), KNIT Sultanpur, and BIET Jhansi offer premier faculty, low fees, and top placements through UPTAC counseling.
+            </p>
           </div>
-        </details>
+
+          <div class="p-5 rounded-2xl border border-canvas-dark-border light:border-canvas-light-border bg-canvas-dark-surface light:bg-gray-50">
+            <div class="w-8 h-8 rounded-xl bg-brand-blue/10 text-brand-blue flex items-center justify-center font-bold mb-3 text-sm">
+              02
+            </div>
+            <h3 class="text-sm font-bold text-white light:text-ink mb-2">Rajkiya Engineering Colleges</h3>
+            <p class="text-xs text-gray-400 light:text-gray-600 leading-relaxed">
+              Established across tier-2 and tier-3 UP districts including REC Banda (734), REC Bijnor (735), REC Azamgarh (736), and REC Kannauj (839), providing affordable engineering education.
+            </p>
+          </div>
+
+          <div class="p-5 rounded-2xl border border-canvas-dark-border light:border-canvas-light-border bg-canvas-dark-surface light:bg-gray-50">
+            <div class="w-8 h-8 rounded-xl bg-brand-blue/10 text-brand-blue flex items-center justify-center font-bold mb-3 text-sm">
+              03
+            </div>
+            <h3 class="text-sm font-bold text-white light:text-ink mb-2">Top Private Affiliated Colleges</h3>
+            <p class="text-xs text-gray-400 light:text-gray-600 leading-relaxed">
+              Institutions in Delhi-NCR (Noida, Greater Noida, Ghaziabad) like JSS Noida (091), AKGEC (027), KIET (029), and ABES (032) lead in B.Tech CSE placements and state-of-the-art tech labs.
+            </p>
+          </div>
+        </div>
+
+        <!-- How AKTU College Code Decodes Roll Numbers -->
+        <div class="p-6 rounded-2xl border border-canvas-dark-border light:border-canvas-light-border bg-canvas-dark-tile light:bg-white mb-12">
+          <h3 class="text-base font-bold text-white light:text-ink mb-3 flex items-center gap-2">
+            <span>🔢 How AKTU College Codes Decode Student Roll Numbers</span>
+          </h3>
+          <p class="text-xs sm:text-sm text-gray-400 light:text-gray-600 leading-relaxed mb-4">
+            Every Dr. A.P.J. Abdul Kalam Technical University roll number is structured systematically. Knowing your college code and branch code lets you deduce roll numbers across your entire class:
+          </p>
+          <div class="grid grid-cols-1 sm:grid-cols-4 gap-3 text-center">
+            <div class="p-3 rounded-xl bg-black/40 light:bg-gray-50 border border-canvas-dark-border/40 light:border-gray-200">
+              <span class="block text-[10px] text-gray-500 uppercase tracking-wider font-semibold">Admission Year</span>
+              <span class="text-sm font-bold font-mono text-brand-blue">22 / 23 / 24</span>
+              <span class="block text-[10px] text-gray-500 mt-0.5">First 2 digits</span>
+            </div>
+            <div class="p-3 rounded-xl bg-black/40 light:bg-gray-50 border border-canvas-dark-border/40 light:border-gray-200">
+              <span class="block text-[10px] text-gray-500 uppercase tracking-wider font-semibold">College Code</span>
+              <span class="text-sm font-bold font-mono text-emerald-400">052 / 027 / 091</span>
+              <span class="block text-[10px] text-gray-500 mt-0.5">Next 3 digits</span>
+            </div>
+            <div class="p-3 rounded-xl bg-black/40 light:bg-gray-50 border border-canvas-dark-border/40 light:border-gray-200">
+              <span class="block text-[10px] text-gray-500 uppercase tracking-wider font-semibold">Branch Code</span>
+              <span class="text-sm font-bold font-mono text-purple-400">10 (CSE) / 153</span>
+              <span class="block text-[10px] text-gray-500 mt-0.5">Middle 2-3 digits</span>
+            </div>
+            <div class="p-3 rounded-xl bg-black/40 light:bg-gray-50 border border-canvas-dark-border/40 light:border-gray-200">
+              <span class="block text-[10px] text-gray-500 uppercase tracking-wider font-semibold">Serial Number</span>
+              <span class="text-sm font-bold font-mono text-amber-400">001 to 240</span>
+              <span class="block text-[10px] text-gray-500 mt-0.5">Final 3 digits</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- FAQ Accordion Section -->
+        <div class="mt-8">
+          <h3 class="text-xl font-bold text-white light:text-ink mb-6">
+            Frequently Asked Questions about AKTU Affiliated Colleges
+          </h3>
+          <div class="space-y-4">
+            <details class="group p-4 rounded-xl border border-canvas-dark-border light:border-canvas-light-border bg-canvas-dark-tile light:bg-white">
+              <summary class="list-none flex justify-between items-center cursor-pointer font-semibold text-xs sm:text-sm text-white light:text-ink">
+                <span>How many AKTU affiliated colleges are there in Uttar Pradesh?</span>
+                <span class="text-xs text-brand-blue group-open:rotate-180 transition-transform">&darr;</span>
+              </summary>
+              <p class="mt-3 text-xs text-gray-400 light:text-gray-600 leading-relaxed border-t border-canvas-dark-border/30 light:border-gray-100 pt-3">
+                Dr. A.P.J. Abdul Kalam Technical University (AKTU Lucknow) has more than 750 affiliated colleges and institutes across UP providing undergraduate and postgraduate degrees in Engineering, Pharmacy, Management, and Computer Applications.
+              </p>
+            </details>
+
+            <details class="group p-4 rounded-xl border border-canvas-dark-border light:border-canvas-light-border bg-canvas-dark-tile light:bg-white">
+              <summary class="list-none flex justify-between items-center cursor-pointer font-semibold text-xs sm:text-sm text-white light:text-ink">
+                <span>What are the top government AKTU affiliated colleges?</span>
+                <span class="text-xs text-brand-blue group-open:rotate-180 transition-transform">&darr;</span>
+              </summary>
+              <p class="mt-3 text-xs text-gray-400 light:text-gray-600 leading-relaxed border-t border-canvas-dark-border/30 light:border-gray-100 pt-3">
+                The top government AKTU affiliated institutes include Institute of Engineering & Technology (IET Lucknow - Code 052), Kamla Nehru Institute of Technology (KNIT Sultanpur - Code 104), Bundelkhand Institute of Engineering & Technology (BIET Jhansi - Code 043), and state Rajkiya Engineering Colleges (REC Banda, REC Bijnor, REC Kannauj).
+              </p>
+            </details>
+
+            <details class="group p-4 rounded-xl border border-canvas-dark-border light:border-canvas-light-border bg-canvas-dark-tile light:bg-white">
+              <summary class="list-none flex justify-between items-center cursor-pointer font-semibold text-xs sm:text-sm text-white light:text-ink">
+                <span>What are the top private AKTU affiliated colleges for CSE?</span>
+                <span class="text-xs text-brand-blue group-open:rotate-180 transition-transform">&darr;</span>
+              </summary>
+              <p class="mt-3 text-xs text-gray-400 light:text-gray-600 leading-relaxed border-t border-canvas-dark-border/30 light:border-gray-100 pt-3">
+                Top private AKTU affiliated colleges for Computer Science & Engineering include JSS Academy of Technical Education (Noida - Code 091), Ajay Kumar Garg Engineering College (AKGEC Ghaziabad - Code 027), KIET Group of Institutions (Ghaziabad - Code 029), ABES Engineering College (Ghaziabad - Code 032), and GL Bajaj Institute of Technology & Management (Greater Noida - Code 192). You can view our complete <a href="/aktu-affiliated-cse-college" class="text-brand-blue underline font-semibold">AKTU Affiliated CSE Colleges Guide</a> for detailed rankings and branch codes.
+              </p>
+            </details>
+
+            <details class="group p-4 rounded-xl border border-canvas-dark-border light:border-canvas-light-border bg-canvas-dark-tile light:bg-white">
+              <summary class="list-none flex justify-between items-center cursor-pointer font-semibold text-xs sm:text-sm text-white light:text-ink">
+                <span>How can I check marksheet for any AKTU affiliated college without Date of Birth?</span>
+                <span class="text-xs text-brand-blue group-open:rotate-180 transition-transform">&darr;</span>
+              </summary>
+              <p class="mt-3 text-xs text-gray-400 light:text-gray-600 leading-relaxed border-t border-canvas-dark-border/30 light:border-gray-100 pt-3">
+                Simply enter your 10 to 13 digit AKTU Roll Number directly into our <a href="/aktu-result-without-date-of-birth" class="text-brand-blue underline font-semibold">AKTU Result Without Date of Birth</a> tool. The gateway verifies marksheets across all affiliated colleges in UP without requiring a student birth date.
+              </p>
+            </details>
+          </div>
+        </div>
+
       </div>
 
     </div>
