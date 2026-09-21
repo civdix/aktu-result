@@ -115,6 +115,12 @@ const mainMenu = new Keyboard()
 
 // /start command
 bot.command('start', async (ctx) => {
+  const payload = (ctx.match || '').trim();
+  if (/^[0-9]{10,15}$/.test(payload)) {
+    await processRollLookup(ctx, payload);
+    return;
+  }
+
   const welcomeText = 
     '👋 *Welcome to the AKTU Official Result & Marksheet Bot!*\n\n' +
     '⚡ *Features Available:*\n' +

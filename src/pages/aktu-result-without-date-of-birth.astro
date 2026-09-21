@@ -214,6 +214,14 @@ const jsonLd = {
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
               </svg>
             </button>
+
+            <div class="pt-1 flex items-center justify-center gap-1.5 text-center text-xs text-gray-400">
+              <svg class="w-3.5 h-3.5 fill-sky-400 shrink-0" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.75-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z"/></svg>
+              <span>Instant results also via</span>
+              <a href="https://t.me/akturesultwithoutdobbot" target="_blank" rel="noopener noreferrer" class="text-sky-400 font-semibold hover:underline">
+                Telegram Bot (@akturesultwithoutdobbot)
+              </a>
+            </div>
           </form>
 
           <!-- 2. Loading State -->
@@ -247,6 +255,18 @@ const jsonLd = {
               <h3 class="text-sm font-semibold text-red-400" id="without-dob-error-title">Result Retrieval Failed</h3>
               <p class="text-xs text-gray-400 mt-1" id="without-dob-error-desc">We couldn't locate a student record for the specified roll number. Please verify and try again.</p>
             </div>
+
+            <a 
+              id="without-dob-error-bot-btn"
+              href="https://t.me/akturesultwithoutdobbot" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              class="w-full py-3 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white text-xs font-bold rounded-xl transition-all shadow-md flex items-center justify-center gap-2 text-center cursor-pointer"
+            >
+              <svg class="w-4 h-4 fill-current shrink-0" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.75-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z"/></svg>
+              <span>Get Result on Telegram Bot (@akturesultwithoutdobbot)</span>
+            </a>
+
             <button 
               type="button" 
               id="without-dob-error-retry-btn" 
@@ -686,6 +706,7 @@ const jsonLd = {
 
         const studentName = data.name || data.student?.name || "Verified AKTU Student";
         const rollNumber = data.rollNo || data.rollNumber || (rollInput ? rollInput.value.trim() : "--");
+        const botUrl = data.telegramBotUrl || `https://t.me/akturesultwithoutdobbot?start=${encodeURIComponent(rollNumber)}`;
         const enrollmentNo = data.enrollmentNo || data.student?.enrollmentNo;
         const enrollmentHtml = (enrollmentNo && enrollmentNo !== '--') 
           ? `<div><span class="text-gray-500 block text-[10px] uppercase">Enrollment No</span><span class="font-bold text-white">${enrollmentNo}</span></div>` 
@@ -781,12 +802,21 @@ const jsonLd = {
                   <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" /></svg>
                   <span>Print Score Card</span>
                 </button>
+                <a 
+                  href="${botUrl}" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  class="flex-1 py-3 bg-blue-600/20 hover:bg-blue-600/30 text-sky-300 hover:text-white border border-blue-500/30 text-xs font-bold rounded-xl transition-all cursor-pointer flex items-center justify-center gap-1.5 text-center"
+                >
+                  <svg class="w-4 h-4 fill-current shrink-0" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.75-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z"/></svg>
+                  <span>Official PDF on Bot</span>
+                </a>
                 <button 
                   type="button" 
                   id="without-dob-check-another-btn" 
                   class="flex-1 py-3 bg-white/10 hover:bg-white/15 text-white text-xs font-bold rounded-xl border border-white/10 cursor-pointer transition-all text-center"
                 >
-                  Check Another Roll Number
+                  Check Another
                 </button>
               </div>
             </div>
@@ -842,11 +872,50 @@ const jsonLd = {
                 </div>
               </div>
 
+              <!-- Telegram Bot Result Promotion Box -->
+              <div class="p-4 sm:p-5 rounded-xl bg-gradient-to-br from-blue-600/25 via-sky-600/15 to-purple-600/20 border border-sky-500/30 space-y-3.5 shadow-lg">
+                <div class="flex items-center gap-3">
+                  <img src="/images/gemini-svg.webp" alt="AKTU Result Bot Logo" class="w-10 h-10 rounded-full object-cover shadow-md border border-white/10 shrink-0" />
+                  <div>
+                    <span class="text-xs font-bold text-white uppercase tracking-wider block">Access Full Result &amp; Marksheet</span>
+                    <span class="text-[11px] text-sky-400 font-mono">Official Telegram Bot (@akturesultwithoutdobbot)</span>
+                  </div>
+                </div>
+
+                <p class="text-xs text-gray-300 leading-relaxed">
+                  Your academic record is confirmed! To inspect your <b>complete semester marksheet</b>, individual subject scores, <b>SGPA / CGPA</b>, and download your <b>official PDF marksheet without Date of Birth</b>, tap below to open our Telegram Bot:
+                </p>
+
+                <div class="grid grid-cols-2 gap-2 text-[11px] text-gray-300">
+                  <div class="flex items-center gap-1.5"><span class="text-emerald-400 font-bold">✓</span> No DOB Required</div>
+                  <div class="flex items-center gap-1.5"><span class="text-emerald-400 font-bold">✓</span> Full OneView Transcript</div>
+                  <div class="flex items-center gap-1.5"><span class="text-emerald-400 font-bold">✓</span> Official PDF Marksheet</div>
+                  <div class="flex items-center gap-1.5"><span class="text-emerald-400 font-bold">✓</span> Instant Free Delivery</div>
+                </div>
+
+                <!-- Primary Telegram Bot CTA Button -->
+                <a 
+                  href="${botUrl}" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  class="w-full py-3.5 sm:py-4 bg-gradient-to-r from-brand-blue via-sky-500 to-purple-600 hover:from-brand-blue-hover hover:to-purple-500 text-white text-xs sm:text-sm font-bold rounded-xl transition-all shadow-xl hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2.5 text-center cursor-pointer"
+                >
+                  <svg class="w-5 h-5 fill-current shrink-0" viewBox="0 0 24 24">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.75-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z"/>
+                  </svg>
+                  <span>👉 Get Full Result On Telegram (@akturesultwithoutdobbot)</span>
+                </a>
+
+                <p class="text-[10px] text-gray-400 text-center">
+                  Direct Bot: <a href="${botUrl}" target="_blank" class="text-sky-400 underline font-mono">@akturesultwithoutdobbot</a> (Pre-loaded with Roll ${rollNumber})
+                </p>
+              </div>
+
               <div class="flex flex-col gap-2 pt-1">
                 <button 
                   type="button" 
                   id="without-dob-check-another-btn" 
-                  class="w-full py-2.5 bg-brand-blue hover:bg-brand-blue-hover text-white rounded-xl text-xs font-bold transition-all cursor-pointer text-center"
+                  class="w-full py-2.5 bg-white/10 hover:bg-white/15 text-white rounded-xl text-xs font-semibold border border-white/10 transition-all cursor-pointer text-center"
                 >
                   Check Another Roll Number
                 </button>
@@ -1063,15 +1132,23 @@ const jsonLd = {
           .then(async ([res]) => {
             loaderState?.classList.add("hidden");
 
+            function showError(title, desc) {
+              if (errorTitle) errorTitle.textContent = title;
+              if (errorDesc) errorDesc.textContent = desc;
+              const errBotBtn = document.getElementById("without-dob-error-bot-btn");
+              if (errBotBtn && enteredRoll) {
+                errBotBtn.setAttribute("href", `https://t.me/akturesultwithoutdobbot?start=${encodeURIComponent(enteredRoll)}`);
+              }
+              errorState?.classList.remove("hidden");
+            }
+
             if (!res.ok) {
               let errorText = "Could not fetch result right now. Please try again.";
               try {
                 const errData = await res.json();
                 if (errData?.error) errorText = errData.error;
               } catch (e) {}
-              if (errorTitle) errorTitle.textContent = "Result Search Failed";
-              if (errorDesc) errorDesc.textContent = errorText;
-              errorState?.classList.remove("hidden");
+              showError("Result Search Failed", errorText);
               return;
             }
 
@@ -1081,9 +1158,7 @@ const jsonLd = {
             } else if (data.needsManualCaptcha && data.captchaImage) {
               renderManualCaptcha(data, enteredRoll);
             } else {
-              if (errorTitle) errorTitle.textContent = "Search Failed";
-              if (errorDesc) errorDesc.textContent = data.error || "Could not retrieve records for this roll number.";
-              errorState?.classList.remove("hidden");
+              showError("Search Failed", data.error || "Could not retrieve records for this roll number.");
             }
           })
           .catch(err => {
@@ -1091,6 +1166,10 @@ const jsonLd = {
             loaderState?.classList.add("hidden");
             if (errorTitle) errorTitle.textContent = "Network Error";
             if (errorDesc) errorDesc.textContent = "Failed to connect to gateway. Please check your internet connection.";
+            const errBotBtn = document.getElementById("without-dob-error-bot-btn");
+            if (errBotBtn && enteredRoll) {
+              errBotBtn.setAttribute("href", `https://t.me/akturesultwithoutdobbot?start=${encodeURIComponent(enteredRoll)}`);
+            }
             errorState?.classList.remove("hidden");
           });
       }
