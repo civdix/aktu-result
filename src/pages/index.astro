@@ -1926,6 +1926,51 @@ const homeKeywords = `aktu result without date of birth, aktu result without dob
       }
     });
 
+    // Search normalization helpers for college and branch comboboxes
+    const normalizeSearchClean = (str) => (str || "").toLowerCase().replace(/[^a-z0-9]/g, "");
+    const normalizeSearchWords = (str) => (str || "")
+      .toLowerCase()
+      .replace(/(?<=\b[a-z0-9])[\.\s]+(?=[a-z0-9](\.|\s|$))/gi, "")
+      .replace(/[^a-z0-9\s]/g, " ")
+      .replace(/\s+/g, " ")
+      .trim();
+
+    const matchesSearchItem = (name, code, query) => {
+      if (!query) return true;
+      const qRaw = query.trim().toLowerCase();
+      if (!qRaw) return true;
+
+      const nRaw = (name || "").toLowerCase();
+      const cRaw = (code || "").toLowerCase();
+
+      // 1. Code match (exact, without leading zeros, or substring)
+      const qNum = qRaw.replace(/^0+/, "");
+      const cNum = cRaw.replace(/^0+/, "");
+      if (cRaw.includes(qRaw) || (qNum && cNum === qNum)) return true;
+
+      // 2. Direct substring match
+      if (nRaw.includes(qRaw)) return true;
+
+      // 3. Normalized stripped match (ignoring dots, spaces, hyphens, punctuation)
+      const qClean = normalizeSearchClean(qRaw);
+      const nClean = normalizeSearchClean(nRaw);
+      if (qClean && nClean.includes(qClean)) return true;
+
+      // 4. Multi-token match with acronym collapsing
+      const qWordsNorm = normalizeSearchWords(qRaw);
+      const nWordsNorm = normalizeSearchWords(nRaw);
+      if (nWordsNorm.includes(qWordsNorm)) return true;
+
+      const tokens = qWordsNorm.split(/\s+/).filter(Boolean);
+      if (tokens.length > 1) {
+        return tokens.every((t) => {
+          const tClean = normalizeSearchClean(t);
+          return nWordsNorm.includes(t) || (tClean && nClean.includes(tClean));
+        });
+      }
+      return false;
+    };
+
     // Setup combobox dropdown helper
     const setupCombobox = (comboboxId, searchInputId, hiddenInputId, dropdownId, listId, isSearchable) => {
       const combobox = document.getElementById(comboboxId);
@@ -1947,14 +1992,14 @@ const homeKeywords = `aktu result without date of birth, aktu result without dob
       // Filter options as user types
       if (isSearchable) {
         searchInput.addEventListener("input", () => {
-          const query = searchInput.value.trim().toLowerCase();
+          const query = searchInput.value;
           dropdown.classList.remove("hidden");
           
           items.forEach(item => {
-            const name = item.getAttribute("data-name") ? item.getAttribute("data-name").toLowerCase() : "";
-            const code = item.getAttribute("data-code") ? item.getAttribute("data-code").toLowerCase() : "";
-            const labelText = item.textContent.trim().toLowerCase();
-            if (name.includes(query) || code.includes(query) || labelText.includes(query)) {
+            const name = item.getAttribute("data-name") || "";
+            const code = item.getAttribute("data-code") || "";
+            const labelText = item.textContent.trim();
+            if (matchesSearchItem(`${name} ${labelText}`, code, query)) {
               item.classList.remove("hidden");
             } else {
               item.classList.add("hidden");
@@ -2075,13 +2120,11 @@ const homeKeywords = `aktu result without date of birth, aktu result without dob
       const openAndFilter = async (query = '') => {
         dropdown.classList.remove("hidden");
         const data = await ensureData();
-        const cleanQ = query.trim().toLowerCase();
-        if (!cleanQ) {
+        if (!query.trim()) {
           renderItems(data);
         } else {
           const filtered = data.filter(item => 
-            (item.name && item.name.toLowerCase().includes(cleanQ)) || 
-            (item.code && item.code.toLowerCase().includes(cleanQ))
+            matchesSearchItem(item.name, item.code, query)
           );
           renderItems(filtered);
         }

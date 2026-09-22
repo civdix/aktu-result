@@ -1,4 +1,5 @@
 import type { College } from "../interfaces";
+import { matchesCollegeSearch } from "./searchUtils";
 
 /**
  * Converts a college name and code into an SEO-friendly URL slug.
@@ -71,6 +72,10 @@ export function findCollegeBySlug(slug: string, collegesList: College[]): Colleg
     const cName = (c.name || "").toLowerCase();
     return cName.includes(cleanAsWords) || cleanAsWords.includes(cName);
   });
+  if (college) return college;
+
+  // 6. Robust normalized match (ignoring dots, spaces, dashes)
+  college = collegesList.find((c) => matchesCollegeSearch(c.name, c.code, clean));
   if (college) return college;
 
   return null;

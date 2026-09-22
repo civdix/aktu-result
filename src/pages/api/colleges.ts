@@ -1,13 +1,14 @@
-﻿import type { APIRoute } from 'astro';
+import type { APIRoute } from 'astro';
 import colleges from '../../data/colleges.json';
 import { slugifyCollege } from '../../utils/slugify';
+import { matchesCollegeSearch } from '../../utils/searchUtils';
 
 export const prerender = false;
 
 export const GET: APIRoute = async ({ request }) => {
   try {
     const url = new URL(request.url);
-    const searchParam = (url.searchParams.get('q') || url.searchParams.get('search') || '').trim().toLowerCase();
+    const searchParam = (url.searchParams.get('q') || url.searchParams.get('search') || '').trim();
     const codeParam = (url.searchParams.get('code') || '').trim().toLowerCase();
 
     let list = colleges.map(c => ({
@@ -22,7 +23,7 @@ export const GET: APIRoute = async ({ request }) => {
       const cleanCode = codeParam.replace(/^0+/, '');
       list = list.filter(c => c.code.toLowerCase() === codeParam || (cleanCode && c.code.replace(/^0+/, '') === cleanCode));
     } else if (searchParam) {
-      list = list.filter(c => c.name.toLowerCase().includes(searchParam) || c.code.toLowerCase().includes(searchParam));
+      list = list.filter(c => matchesCollegeSearch(c.name, c.code, searchParam));
     }
 
     // Optional pagination

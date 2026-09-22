@@ -754,17 +754,55 @@ const jsonLd = {
 
       let currentFilter = "all";
 
+      const normalizeClean = (str) => (str || "").toLowerCase().replace(/[^a-z0-9]/g, "");
+      const normalizeWords = (str) => (str || "")
+        .toLowerCase()
+        .replace(/(?<=\b[a-z0-9])[\.\s]+(?=[a-z0-9](\.|\s|$))/gi, "")
+        .replace(/[^a-z0-9\s]/g, " ")
+        .replace(/\s+/g, " ")
+        .trim();
+
+      const matchesQuery = (text, query) => {
+        if (!query) return true;
+        const qRaw = query.trim().toLowerCase();
+        if (!qRaw) return true;
+
+        const tRaw = (text || "").toLowerCase();
+
+        // 1. Direct substring match
+        if (tRaw.includes(qRaw)) return true;
+
+        // 2. Stripped match (ignoring dots, spaces, hyphens, punctuation)
+        const qClean = normalizeClean(qRaw);
+        const tClean = normalizeClean(tRaw);
+        if (qClean && tClean.includes(qClean)) return true;
+
+        // 3. Multi-token match with acronym collapsing
+        const qWordsNorm = normalizeWords(qRaw);
+        const tWordsNorm = normalizeWords(tRaw);
+        if (tWordsNorm.includes(qWordsNorm)) return true;
+
+        const tokens = qWordsNorm.split(/\s+/).filter(Boolean);
+        if (tokens.length > 1) {
+          return tokens.every((t) => {
+            const tClean = normalizeClean(t);
+            return tWordsNorm.includes(t) || (tClean && tClean.length > 0 && tClean.includes(tClean));
+          });
+        }
+        return false;
+      };
+
       function updateVisibility() {
-        const query = (searchInput?.value || "").trim().toLowerCase();
+        const query = searchInput?.value || "";
 
         cards.forEach((card) => {
           const type = card.getAttribute("data-type") || "";
           const text = card.getAttribute("data-text") || "";
 
           const matchesType = currentFilter === "all" || type.toLowerCase().includes(currentFilter.toLowerCase());
-          const matchesQuery = query === "" || text.includes(query);
+          const matches = matchesType && matchesQuery(text, query);
 
-          if (matchesType && matchesQuery) {
+          if (matches) {
             card.classList.remove("hidden");
           } else {
             card.classList.add("hidden");

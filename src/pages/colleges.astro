@@ -364,15 +364,59 @@ const collegeKeywords = "aktu affiliated colleges, aktu affiliated colleges list
       const displayedCount = document.getElementById("displayed-count");
       const cards = document.querySelectorAll(".college-card");
       
+      const normalizeClean = (str) => (str || "").toLowerCase().replace(/[^a-z0-9]/g, "");
+      const normalizeWords = (str) => (str || "")
+        .toLowerCase()
+        .replace(/(?<=\b[a-z0-9])[\.\s]+(?=[a-z0-9](\.|\s|$))/gi, "")
+        .replace(/[^a-z0-9\s]/g, " ")
+        .replace(/\s+/g, " ")
+        .trim();
+
+      const matchesQuery = (name, code, query) => {
+        if (!query) return true;
+        const qRaw = query.trim().toLowerCase();
+        if (!qRaw) return true;
+        
+        const nRaw = (name || "").toLowerCase();
+        const cRaw = (code || "").toLowerCase();
+
+        // 1. Code match (exact, without leading zero, or substring)
+        const qNum = qRaw.replace(/^0+/, "");
+        const cNum = cRaw.replace(/^0+/, "");
+        if (cRaw.includes(qRaw) || (qNum && cNum === qNum)) return true;
+
+        // 2. Direct substring match
+        if (nRaw.includes(qRaw)) return true;
+
+        // 3. Normalized stripped match (ignoring dots, spaces, hyphens, punctuation)
+        const qClean = normalizeClean(qRaw);
+        const nClean = normalizeClean(nRaw);
+        if (qClean && nClean.includes(qClean)) return true;
+
+        // 4. Multi-token match with acronym collapsing
+        const qWordsNorm = normalizeWords(qRaw);
+        const nWordsNorm = normalizeWords(nRaw);
+        if (nWordsNorm.includes(qWordsNorm)) return true;
+
+        const tokens = qWordsNorm.split(/\s+/).filter(Boolean);
+        if (tokens.length > 1) {
+          return tokens.every((t) => {
+            const tClean = normalizeClean(t);
+            return nWordsNorm.includes(t) || (tClean && nClean.includes(tClean));
+          });
+        }
+        return false;
+      };
+
       searchInput?.addEventListener("input", () => {
-        const query = searchInput.value.trim().toLowerCase();
+        const query = searchInput.value;
         let matchesCount = 0;
         
         cards.forEach((card) => {
           const name = card.getAttribute("data-name") || "";
           const code = card.getAttribute("data-code") || "";
           
-          if (name.includes(query) || code.includes(query)) {
+          if (matchesQuery(name, code, query)) {
             card.classList.remove("hidden");
             matchesCount++;
           } else {

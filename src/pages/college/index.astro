@@ -1,8 +1,9 @@
-﻿---
+---
 export const prerender = false;
 
 import colleges from "../../data/colleges.json";
 import { slugifyCollege } from "../../utils/slugify";
+import { matchesCollegeSearch } from "../../utils/searchUtils";
 
 const acceptHeader = Astro.request.headers.get("accept") || "";
 const url = new URL(Astro.request.url);
@@ -10,7 +11,7 @@ const format = url.searchParams.get("format");
 const isJson = acceptHeader.includes("application/json") || format === "json";
 
 if (isJson) {
-  const query = (url.searchParams.get("q") || url.searchParams.get("search") || "").trim().toLowerCase();
+  const query = (url.searchParams.get("q") || url.searchParams.get("search") || "").trim();
   const code = (url.searchParams.get("code") || "").trim().toLowerCase();
 
   let results = colleges.map(c => ({
@@ -21,7 +22,7 @@ if (isJson) {
   if (code) {
     results = results.filter(c => c.code.toLowerCase() === code || c.code.replace(/^0+/, '') === code.replace(/^0+/, ''));
   } else if (query) {
-    results = results.filter(c => c.name.toLowerCase().includes(query) || c.code.toLowerCase().includes(query));
+    results = results.filter(c => matchesCollegeSearch(c.name, c.code, query));
   }
 
   return new Response(
