@@ -30,6 +30,18 @@ const agentCard = {
     pushNotifications: false,
     extensions: [
       {
+        uri: 'https://github.com/google-agentic-commerce/ap2/tree/v0.1',
+        required: false,
+        role: 'credentials-provider',
+        description: 'Google Agent Payments Protocol (AP2) credentials and transaction authorization.'
+      },
+      {
+        uri: 'https://github.com/google-agentic-commerce/ap2',
+        required: false,
+        role: 'credentials-provider',
+        description: 'Google Agent Payments Protocol (AP2) payment verification.'
+      },
+      {
         uri: 'https://ap2-protocol.org/',
         required: false,
         role: 'credentials-provider',
@@ -50,6 +62,18 @@ const agentCard = {
     }
   ],
   extensions: [
+    {
+      uri: 'https://github.com/google-agentic-commerce/ap2/tree/v0.1',
+      required: false,
+      role: 'credentials-provider',
+      description: 'Google Agent Payments Protocol (AP2) credentials and transaction authorization.'
+    },
+    {
+      uri: 'https://github.com/google-agentic-commerce/ap2',
+      required: false,
+      role: 'credentials-provider',
+      description: 'Google Agent Payments Protocol (AP2) payment verification.'
+    },
     {
       uri: 'https://ap2-protocol.org/',
       required: false,
