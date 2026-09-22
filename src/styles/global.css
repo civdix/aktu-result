@@ -486,3 +486,37 @@
 .light #home-year-dropdown::-webkit-scrollbar-thumb:hover {
   background: rgba(0, 0, 0, 0.3);
 }
+
+/* Fail-safe Light Mode High-Contrast Rules for Dynamic Result Profiles & Marksheets */
+.light #printable-marksheet {
+  background-color: #fafafc !important;
+  border-color: #e5e5e7 !important;
+  color: #1d1d1f !important;
+}
+
+.light #printable-marksheet .text-white {
+  color: #1d1d1f !important;
+}
+
+.light #printable-marksheet .text-gray-400,
+.light #printable-marksheet .text-gray-500 {
+  color: #6b7280 !important;
+}
+
+.light #search-verified-profile-container,
+.light #without-dob-verified-profile-container,
+.light #oneview-verified-profile-container,
+.light #erp-verified-profile-container {
+  color: #1d1d1f;
+}
+
+.light #search-verified-profile-container .text-white,
+.light #without-dob-verified-profile-container .text-white,
+.light #oneview-verified-profile-container .text-white,
+.light #erp-verified-profile-container .text-white {
+  color: #1d1d1f !important;
+}
+
+.light #semesters-accordion-container table tr td:nth-child(2) {
+  color: #1d1d1f !important;
+}

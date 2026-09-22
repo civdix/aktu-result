@@ -215,10 +215,10 @@ const jsonLd = {
               </svg>
             </button>
 
-            <div class="pt-1 flex items-center justify-center gap-1.5 text-center text-xs text-gray-400">
+            <div class="pt-1 flex items-center justify-center gap-1.5 text-center text-xs text-gray-400 light:text-gray-600">
               <svg class="w-3.5 h-3.5 fill-sky-400 shrink-0" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.75-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z"/></svg>
               <span>Instant results also via</span>
-              <a href="https://t.me/akturesultwithoutdobbot" target="_blank" rel="noopener noreferrer" class="text-sky-400 font-semibold hover:underline">
+              <a href="https://t.me/akturesultwithoutdobbot" target="_blank" rel="noopener noreferrer" class="text-sky-400 light:text-brand-blue font-semibold hover:underline">
                 Telegram Bot (@akturesultwithoutdobbot)
               </a>
             </div>
@@ -233,7 +233,7 @@ const jsonLd = {
             </div>
 
             <!-- Animated Log Lines -->
-            <div class="font-mono text-[10px] text-gray-600 bg-black/80 rounded-lg p-3 space-y-1 overflow-hidden h-24 border border-canvas-dark-border text-left">
+            <div class="font-mono text-[10px] text-gray-600 light:text-gray-500 bg-black/80 light:bg-gray-100 rounded-lg p-3 space-y-1 overflow-hidden h-24 border border-canvas-dark-border light:border-gray-200 text-left">
               <div class="text-gray-400">&gt; Starting OneView handshake protocol...</div>
               <div id="without-dob-log-1" class="hidden text-gray-500">&gt; Initializing session tokens... [OK]</div>
               <div id="without-dob-log-2" class="hidden text-gray-500">&gt; Bypassing Date of Birth parameter... [OK]</div>
@@ -386,7 +386,7 @@ const jsonLd = {
         <div class="overflow-x-auto rounded-2xl border border-white/10 light:border-black/10">
           <table class="w-full text-left text-xs border-collapse">
             <thead>
-              <tr class="bg-white/5 border-b border-white/10 text-gray-400 font-semibold uppercase text-[11px]">
+              <tr class="bg-white/5 light:bg-gray-100 border-b border-white/10 light:border-gray-200 text-gray-400 light:text-gray-600 font-semibold uppercase text-[11px]">
                 <th class="p-3.5">Feature</th>
                 <th class="p-3.5">Official OneView (oneview.aktu.ac.in)</th>
                 <th class="p-3.5 text-brand-blue">AKTU Result Without DOB</th>
@@ -454,26 +454,26 @@ const jsonLd = {
       </div>
 
       <!-- Section 4: Key Abbreviations Explained -->
-      <div class="p-6 rounded-2xl bg-gradient-to-r from-brand-blue/10 via-black to-purple-900/10 border border-brand-blue/20 space-y-4">
+      <div class="p-6 rounded-2xl bg-gradient-to-r from-brand-blue/10 via-black to-purple-900/10 light:bg-gradient-to-r light:from-blue-50 light:via-white light:to-purple-50/50 border border-brand-blue/20 light:border-blue-200 space-y-4 light:shadow-sm">
         <h2 class="text-xl font-bold text-white light:text-ink">
           AKTU Marksheet Result Status Abbreviations
         </h2>
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
-          <div class="p-3 rounded-lg bg-black/40 border border-white/5 space-y-1">
-            <strong class="text-emerald-400">PASS:</strong>
-            <p class="text-gray-400">Candidate has cleared all theory and practical subjects for the semester.</p>
+          <div class="p-3 rounded-lg bg-black/40 light:bg-white border border-white/5 light:border-gray-200 space-y-1 light:shadow-xs">
+            <strong class="text-emerald-400 light:text-emerald-700">PASS:</strong>
+            <p class="text-gray-400 light:text-gray-600">Candidate has cleared all theory and practical subjects for the semester.</p>
           </div>
-          <div class="p-3 rounded-lg bg-black/40 border border-white/5 space-y-1">
-            <strong class="text-purple-400">PCP (Passed with Carry Over Papers):</strong>
-            <p class="text-gray-400">Candidate has cleared the minimum credits to be promoted, but has back papers to clear in subsequent terms.</p>
+          <div class="p-3 rounded-lg bg-black/40 light:bg-white border border-white/5 light:border-gray-200 space-y-1 light:shadow-xs">
+            <strong class="text-purple-400 light:text-purple-700">PCP (Passed with Carry Over Papers):</strong>
+            <p class="text-gray-400 light:text-gray-600">Candidate has cleared the minimum credits to be promoted, but has back papers to clear in subsequent terms.</p>
           </div>
-          <div class="p-3 rounded-lg bg-black/40 border border-white/5 space-y-1">
-            <strong class="text-amber-400">PWG (Passed With Grace):</strong>
-            <p class="text-gray-400">Candidate cleared the semester after receiving grace marks (as per university ordinance rules).</p>
+          <div class="p-3 rounded-lg bg-black/40 light:bg-white border border-white/5 light:border-gray-200 space-y-1 light:shadow-xs">
+            <strong class="text-amber-400 light:text-amber-700">PWG (Passed With Grace):</strong>
+            <p class="text-gray-400 light:text-gray-600">Candidate cleared the semester after receiving grace marks (as per university ordinance rules).</p>
           </div>
-          <div class="p-3 rounded-lg bg-black/40 border border-white/5 space-y-1">
-            <strong class="text-red-400">FAIL:</strong>
-            <p class="text-gray-400">Candidate did not secure passing grades or sufficient credits for promotion.</p>
+          <div class="p-3 rounded-lg bg-black/40 light:bg-white border border-white/5 light:border-gray-200 space-y-1 light:shadow-xs">
+            <strong class="text-red-400 light:text-red-600">FAIL:</strong>
+            <p class="text-gray-400 light:text-gray-600">Candidate did not secure passing grades or sufficient credits for promotion.</p>
           </div>
         </div>
       </div>
@@ -614,42 +614,42 @@ const jsonLd = {
         return semesters.map((semData, idx) => {
           const subjects = semData.subjects || [];
           const rowsHtml = subjects.map(sub => `
-            <tr class="hover:bg-white/5 border-b border-white/5 text-[11px] text-gray-300">
-              <td class="p-2.5 font-mono font-bold text-gray-400">${sub.code || '--'}</td>
-              <td class="p-2.5 text-white font-medium max-w-[160px] sm:max-w-none truncate sm:whitespace-normal" title="${sub.name || ''}">${sub.name || '--'}</td>
-              <td class="p-2.5 text-gray-400 uppercase text-[10px]">${sub.type || '--'}</td>
-              <td class="p-2.5 text-center text-gray-300 font-mono">${sub.int ?? '--'}</td>
-              <td class="p-2.5 text-center text-gray-300 font-mono">${sub.ext ?? '--'}</td>
-              <td class="p-2.5 text-center font-mono ${sub.back && sub.back !== '--' ? 'text-purple-400 font-bold' : 'text-gray-500'}">${sub.back || '--'}</td>
-              <td class="p-2.5 text-center font-mono font-bold ${sub.grade === 'F' ? 'text-red-400' : 'text-brand-blue'}">${sub.grade || '--'}</td>
+            <tr class="hover:bg-white/5 light:hover:bg-gray-50 border-b border-white/5 light:border-gray-100 text-[11px] text-gray-300 light:text-gray-700">
+              <td class="p-2.5 font-mono font-bold text-gray-400 light:text-gray-500">${sub.code || '--'}</td>
+              <td class="p-2.5 text-white light:text-ink font-medium max-w-[160px] sm:max-w-none truncate sm:whitespace-normal" title="${sub.name || ''}">${sub.name || '--'}</td>
+              <td class="p-2.5 text-gray-400 light:text-gray-500 uppercase text-[10px]">${sub.type || '--'}</td>
+              <td class="p-2.5 text-center text-gray-300 light:text-gray-700 font-mono">${sub.int ?? '--'}</td>
+              <td class="p-2.5 text-center text-gray-300 light:text-gray-700 font-mono">${sub.ext ?? '--'}</td>
+              <td class="p-2.5 text-center font-mono ${sub.back && sub.back !== '--' ? 'text-purple-400 light:text-purple-700 font-bold' : 'text-gray-500'}">${sub.back || '--'}</td>
+              <td class="p-2.5 text-center font-mono font-bold ${sub.grade === 'F' ? 'text-red-400 light:text-red-600' : 'text-brand-blue'}">${sub.grade || '--'}</td>
             </tr>
           `).join('');
 
           return `
-            <div class="border border-white/10 rounded-xl bg-white/[0.02] overflow-hidden">
+            <div class="border border-white/10 light:border-gray-200 rounded-xl bg-white/[0.02] light:bg-white overflow-hidden light:shadow-xs">
               <button 
                 type="button" 
-                class="without-dob-sem-toggle w-full px-4 py-3 flex items-center justify-between text-left focus:outline-none hover:bg-white/[0.04] transition-colors cursor-pointer"
+                class="without-dob-sem-toggle w-full px-4 py-3 flex items-center justify-between text-left focus:outline-none hover:bg-white/[0.04] light:hover:bg-gray-50 transition-colors cursor-pointer"
                 data-sem-index="${idx}"
                 aria-expanded="false"
               >
                 <div class="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-4">
-                  <span class="font-bold text-white text-xs sm:text-sm">${semData.sem || `Semester ${idx + 1}`}</span>
-                  <div class="flex gap-2 text-[10px] text-gray-400">
+                  <span class="font-bold text-white light:text-ink text-xs sm:text-sm">${semData.sem || `Semester ${idx + 1}`}</span>
+                  <div class="flex gap-2 text-[10px] text-gray-400 light:text-gray-600">
                     <span>SGPA: <strong class="text-brand-blue font-bold">${semData.sgpa || '--'}</strong></span>
-                    <span>Marks: <strong class="text-gray-200">${semData.marks || '--'}</strong></span>
-                    <span class="px-1.5 py-0.5 rounded font-bold ${semData.status === 'PASS' || semData.status === 'Cleared' ? 'bg-emerald-500/20 text-emerald-400' : 'bg-purple-500/20 text-purple-400'}">${semData.status || 'PASS'}</span>
+                    <span>Marks: <strong class="text-gray-200 light:text-gray-800">${semData.marks || '--'}</strong></span>
+                    <span class="px-1.5 py-0.5 rounded font-bold ${semData.status === 'PASS' || semData.status === 'Cleared' ? 'bg-emerald-500/20 light:bg-emerald-100 text-emerald-400 light:text-emerald-800' : 'bg-purple-500/20 light:bg-purple-100 text-purple-400 light:text-purple-800'}">${semData.status || 'PASS'}</span>
                   </div>
                 </div>
                 <svg class="w-4 h-4 transform transition-transform duration-200 text-gray-400 without-dob-sem-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                 </svg>
               </button>
-              <div class="without-dob-sem-content hidden p-3 border-t border-white/10 bg-black/40">
-                <div class="overflow-x-auto rounded-lg border border-white/10">
+              <div class="without-dob-sem-content hidden p-3 border-t border-white/10 light:border-gray-200 bg-black/40 light:bg-gray-50/50">
+                <div class="overflow-x-auto rounded-lg border border-white/10 light:border-gray-200 bg-black/20 light:bg-white">
                   <table class="w-full text-left border-collapse min-w-[480px]">
                     <thead>
-                      <tr class="bg-white/5 text-gray-400 border-b border-white/10 text-[10px] uppercase tracking-wider font-semibold">
+                      <tr class="bg-white/5 light:bg-gray-100 text-gray-400 light:text-gray-600 border-b border-white/10 light:border-gray-200 text-[10px] uppercase tracking-wider font-semibold">
                         <th class="p-2.5">Code</th>
                         <th class="p-2.5">Subject Name</th>
                         <th class="p-2.5">Type</th>
@@ -659,8 +659,8 @@ const jsonLd = {
                         <th class="p-2.5 text-center">Grade</th>
                       </tr>
                     </thead>
-                    <tbody class="divide-y divide-white/5">
-                      ${rowsHtml || '<tr><td colspan="7" class="p-3 text-center text-gray-500 text-xs">No individual subject entries found for this semester.</td></tr>'}
+                    <tbody class="divide-y divide-white/5 light:divide-gray-100">
+                      ${rowsHtml || '<tr><td colspan="7" class="p-3 text-center text-gray-500 light:text-gray-600 text-xs">No individual subject entries found for this semester.</td></tr>'}
                     </tbody>
                   </table>
                 </div>
@@ -709,19 +709,19 @@ const jsonLd = {
         const botUrl = data.telegramBotUrl || `https://t.me/akturesultwithoutdobbot?start=${encodeURIComponent(rollNumber)}`;
         const enrollmentNo = data.enrollmentNo || data.student?.enrollmentNo;
         const enrollmentHtml = (enrollmentNo && enrollmentNo !== '--') 
-          ? `<div><span class="text-gray-500 block text-[10px] uppercase">Enrollment No</span><span class="font-bold text-white">${enrollmentNo}</span></div>` 
+          ? `<div><span class="text-gray-500 light:text-gray-500 block text-[10px] uppercase">Enrollment No</span><span class="font-bold text-white light:text-ink">${enrollmentNo}</span></div>` 
           : '';
         const fatherName = data.fatherName || data.student?.fatherName;
         const fatherHtml = (fatherName && fatherName !== '--') 
-          ? `<div><span class="text-gray-500 block text-[10px] uppercase">Father's Name</span><span class="font-bold text-white">${fatherName}</span></div>` 
+          ? `<div><span class="text-gray-500 light:text-gray-500 block text-[10px] uppercase">Father's Name</span><span class="font-bold text-white light:text-ink">${fatherName}</span></div>` 
           : '';
         const course = data.course || data.student?.course;
         const courseHtml = (course && course !== '--') 
-          ? `<div class="sm:col-span-2"><span class="text-gray-500 block text-[10px] uppercase">Course / Program</span><span class="text-gray-200 font-semibold">${course}</span></div>` 
+          ? `<div class="sm:col-span-2"><span class="text-gray-500 light:text-gray-500 block text-[10px] uppercase">Course / Program</span><span class="text-gray-200 light:text-gray-800 font-semibold">${course}</span></div>` 
           : '';
         const institute = data.institute || data.student?.college;
         const instituteHtml = (institute && institute !== '--') 
-          ? `<div class="sm:col-span-2"><span class="text-gray-500 block text-[10px] uppercase">College / Institute</span><span class="text-gray-200 font-semibold">${institute}</span></div>` 
+          ? `<div class="sm:col-span-2"><span class="text-gray-500 light:text-gray-500 block text-[10px] uppercase">College / Institute</span><span class="text-gray-200 light:text-gray-800 font-semibold">${institute}</span></div>` 
           : '';
 
         const semesters = data.semesters || data.student?.semesters || [];
@@ -736,24 +736,24 @@ const jsonLd = {
           const overall = calculateOverallStatus(semesters, data.cgpa);
 
           profileContainer.innerHTML = `
-            <div id="printable-marksheet" class="p-5 sm:p-7 rounded-2xl border border-emerald-500/30 bg-gradient-to-b from-emerald-500/10 via-black/70 to-black/90 space-y-6 text-left shadow-2xl backdrop-blur-xl">
+            <div id="printable-marksheet" class="p-5 sm:p-7 rounded-2xl border border-emerald-500/30 light:border-emerald-200 bg-gradient-to-b from-emerald-500/10 via-black/70 to-black/90 light:bg-gradient-to-b light:from-emerald-50/80 light:via-white light:to-gray-50/60 space-y-6 text-left shadow-2xl light:shadow-xl backdrop-blur-xl">
               <!-- Verification Header Banner -->
-              <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-4 border-b border-emerald-500/20">
+              <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-4 border-b border-emerald-500/20 light:border-emerald-200">
                 <div class="flex items-center gap-2">
-                  <span class="w-3 h-3 rounded-full bg-emerald-400 animate-pulse"></span>
-                  <span class="text-xs sm:text-sm font-bold text-emerald-400 uppercase tracking-wider">OneView Marksheet Verified (No DOB Required) ✓</span>
+                  <span class="w-3 h-3 rounded-full bg-emerald-400 light:bg-emerald-600 animate-pulse"></span>
+                  <span class="text-xs sm:text-sm font-bold text-emerald-400 light:text-emerald-700 uppercase tracking-wider">OneView Marksheet Verified (No DOB Required) ✓</span>
                 </div>
-                <span class="px-3 py-1 rounded-full text-[10px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 self-start sm:self-auto">
+                <span class="px-3 py-1 rounded-full text-[10px] font-bold bg-emerald-500/20 light:bg-emerald-100 text-emerald-300 light:text-emerald-800 border border-emerald-500/30 light:border-emerald-200 self-start sm:self-auto">
                   Official Gateway Sync
                 </span>
               </div>
 
               <!-- Student Profile Card -->
-              <div class="p-4 sm:p-5 rounded-xl bg-black/40 border border-white/10 space-y-3 font-mono text-xs">
-                <div class="text-gray-400 text-[10px] uppercase font-bold tracking-wider">Student Name</div>
-                <div class="text-xl sm:text-2xl font-black text-white font-sans tracking-tight">${studentName}</div>
-                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 pt-3 border-t border-white/10 text-xs">
-                  <div><span class="text-gray-500 block text-[10px] uppercase">University Roll No</span><span class="font-bold text-white">${rollNumber}</span></div>
+              <div class="p-4 sm:p-5 rounded-xl bg-black/40 light:bg-white border border-white/10 light:border-gray-200 space-y-3 font-mono text-xs light:shadow-xs">
+                <div class="text-gray-400 light:text-gray-500 text-[10px] uppercase font-bold tracking-wider">Student Name</div>
+                <div class="text-xl sm:text-2xl font-black text-white light:text-ink font-sans tracking-tight">${studentName}</div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 pt-3 border-t border-white/10 light:border-gray-200 text-xs">
+                  <div><span class="text-gray-500 light:text-gray-500 block text-[10px] uppercase">University Roll No</span><span class="font-bold text-white light:text-ink">${rollNumber}</span></div>
                   ${enrollmentHtml}
                   ${fatherHtml}
                   ${courseHtml}
@@ -762,10 +762,10 @@ const jsonLd = {
               </div>
 
               <!-- Performance Summary Bar -->
-              <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 p-4 rounded-xl bg-white/[0.03] border border-white/10 text-center font-mono">
+              <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 p-4 rounded-xl bg-white/[0.03] light:bg-white border border-white/10 light:border-gray-200 text-center font-mono light:shadow-xs">
                 <div>
                   <span class="text-[10px] text-gray-500 uppercase block">Total Sems</span>
-                  <span class="text-lg font-bold text-white">${semesters.length}</span>
+                  <span class="text-lg font-bold text-white light:text-ink">${semesters.length}</span>
                 </div>
                 <div>
                   <span class="text-[10px] text-gray-500 uppercase block">Cumulative CGPA</span>
@@ -777,15 +777,15 @@ const jsonLd = {
                 </div>
                 <div>
                   <span class="text-[10px] text-gray-500 uppercase block">Gateway Query</span>
-                  <span class="text-xs font-bold text-emerald-400">Direct No-DOB</span>
+                  <span class="text-xs font-bold text-emerald-400 light:text-emerald-600">Direct No-DOB</span>
                 </div>
               </div>
 
               <!-- Semesters Accordion -->
               <div class="space-y-3">
                 <div class="flex items-center justify-between">
-                  <h4 class="text-xs font-bold text-gray-300 uppercase tracking-wider">Semester-Wise Marksheets (${semesters.length})</h4>
-                  <span class="text-[10px] text-gray-500">Tap a semester to expand subjects</span>
+                  <h4 class="text-xs font-bold text-gray-300 light:text-gray-700 uppercase tracking-wider">Semester-Wise Marksheets (${semesters.length})</h4>
+                  <span class="text-[10px] text-gray-500 light:text-gray-500">Tap a semester to expand subjects</span>
                 </div>
                 <div class="space-y-2">
                   ${buildSemestersAccordionHtml(semesters)}
@@ -806,7 +806,7 @@ const jsonLd = {
                   href="${botUrl}" 
                   target="_blank" 
                   rel="noopener noreferrer" 
-                  class="flex-1 py-3 bg-blue-600/20 hover:bg-blue-600/30 text-sky-300 hover:text-white border border-blue-500/30 text-xs font-bold rounded-xl transition-all cursor-pointer flex items-center justify-center gap-1.5 text-center"
+                  class="flex-1 py-3 bg-blue-600/20 light:bg-blue-50 hover:bg-blue-600/30 light:hover:bg-blue-100 text-sky-300 light:text-brand-blue border border-blue-500/30 light:border-blue-200 text-xs font-bold rounded-xl transition-all cursor-pointer flex items-center justify-center gap-1.5 text-center"
                 >
                   <svg class="w-4 h-4 fill-current shrink-0" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.75-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z"/></svg>
                   <span>Official PDF on Bot</span>
@@ -814,7 +814,7 @@ const jsonLd = {
                 <button 
                   type="button" 
                   id="without-dob-check-another-btn" 
-                  class="flex-1 py-3 bg-white/10 hover:bg-white/15 text-white text-xs font-bold rounded-xl border border-white/10 cursor-pointer transition-all text-center"
+                  class="flex-1 py-3 bg-white/10 light:bg-gray-100 hover:bg-white/15 light:hover:bg-gray-200 text-white light:text-gray-800 text-xs font-bold rounded-xl border border-white/10 light:border-gray-300 cursor-pointer transition-all text-center"
                 >
                   Check Another
                 </button>
@@ -849,22 +849,22 @@ const jsonLd = {
         } else {
           // Standard Verified Profile Card (No semester records cached yet)
           profileContainer.innerHTML = `
-            <div class="p-5 sm:p-6 rounded-2xl border border-emerald-500/30 bg-gradient-to-b from-emerald-500/10 via-black/60 to-black/80 space-y-5 text-left shadow-2xl backdrop-blur-xl">
-              <div class="flex items-center justify-between pb-3 border-b border-emerald-500/20">
+            <div class="p-5 sm:p-6 rounded-2xl border border-emerald-500/30 light:border-emerald-200 bg-gradient-to-b from-emerald-500/10 via-black/60 to-black/80 light:bg-gradient-to-b light:from-emerald-50/80 light:via-white light:to-gray-50/60 space-y-5 text-left shadow-2xl light:shadow-xl backdrop-blur-xl">
+              <div class="flex items-center justify-between pb-3 border-b border-emerald-500/20 light:border-emerald-200">
                 <div class="flex items-center gap-2">
-                  <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
-                  <span class="text-xs font-bold text-emerald-400 uppercase tracking-wider">Student Verified ✓</span>
+                  <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 light:bg-emerald-600 animate-pulse"></span>
+                  <span class="text-xs font-bold text-emerald-400 light:text-emerald-700 uppercase tracking-wider">Student Verified ✓</span>
                 </div>
-                <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+                <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/20 light:bg-emerald-100 text-emerald-300 light:text-emerald-800 border border-emerald-500/30 light:border-emerald-200">
                   Gateway Connected
                 </span>
               </div>
 
               <div class="space-y-2">
-                <div class="text-[11px] text-gray-400 uppercase font-medium">Student Name:</div>
-                <div class="text-lg sm:text-xl font-black text-white tracking-tight">${studentName}</div>
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-2 border-t border-white/5 font-mono text-xs">
-                  <div class="text-gray-400">Roll No: <span class="font-bold text-white">${rollNumber}</span></div>
+                <div class="text-[11px] text-gray-400 light:text-gray-500 uppercase font-medium">Student Name:</div>
+                <div class="text-lg sm:text-xl font-black text-white light:text-ink tracking-tight">${studentName}</div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-2 border-t border-white/5 light:border-gray-200 font-mono text-xs">
+                  <div class="text-gray-400 light:text-gray-500">Roll No: <span class="font-bold text-white light:text-ink">${rollNumber}</span></div>
                   ${enrollmentHtml}
                   ${fatherHtml}
                   ${courseHtml}
@@ -873,24 +873,24 @@ const jsonLd = {
               </div>
 
               <!-- Telegram Bot Result Promotion Box -->
-              <div class="p-4 sm:p-5 rounded-xl bg-gradient-to-br from-blue-600/25 via-sky-600/15 to-purple-600/20 border border-sky-500/30 space-y-3.5 shadow-lg">
+              <div class="p-4 sm:p-5 rounded-xl bg-gradient-to-br from-blue-600/25 via-sky-600/15 to-purple-600/20 light:bg-gradient-to-br light:from-blue-50 light:via-sky-50/60 light:to-purple-50/50 border border-sky-500/30 light:border-sky-200 space-y-3.5 shadow-lg light:shadow-sm">
                 <div class="flex items-center gap-3">
                   <img src="/images/gemini-svg.webp" alt="AKTU Result Bot Logo" class="w-10 h-10 rounded-full object-cover shadow-md border border-white/10 shrink-0" />
                   <div>
-                    <span class="text-xs font-bold text-white uppercase tracking-wider block">Access Full Result &amp; Marksheet</span>
-                    <span class="text-[11px] text-sky-400 font-mono">Official Telegram Bot (@akturesultwithoutdobbot)</span>
+                    <span class="text-xs font-bold text-white light:text-ink uppercase tracking-wider block">Access Full Result &amp; Marksheet</span>
+                    <span class="text-[11px] text-sky-400 light:text-sky-700 font-mono">Official Telegram Bot (@akturesultwithoutdobbot)</span>
                   </div>
                 </div>
 
-                <p class="text-xs text-gray-300 leading-relaxed">
+                <p class="text-xs text-gray-300 light:text-gray-700 leading-relaxed">
                   Your academic record is confirmed! To inspect your <b>complete semester marksheet</b>, individual subject scores, <b>SGPA / CGPA</b>, and download your <b>official PDF marksheet without Date of Birth</b>, tap below to open our Telegram Bot:
                 </p>
 
-                <div class="grid grid-cols-2 gap-2 text-[11px] text-gray-300">
-                  <div class="flex items-center gap-1.5"><span class="text-emerald-400 font-bold">✓</span> No DOB Required</div>
-                  <div class="flex items-center gap-1.5"><span class="text-emerald-400 font-bold">✓</span> Full OneView Transcript</div>
-                  <div class="flex items-center gap-1.5"><span class="text-emerald-400 font-bold">✓</span> Official PDF Marksheet</div>
-                  <div class="flex items-center gap-1.5"><span class="text-emerald-400 font-bold">✓</span> Instant Free Delivery</div>
+                <div class="grid grid-cols-2 gap-2 text-[11px] text-gray-300 light:text-gray-700">
+                  <div class="flex items-center gap-1.5"><span class="text-emerald-400 light:text-emerald-600 font-bold">✓</span> No DOB Required</div>
+                  <div class="flex items-center gap-1.5"><span class="text-emerald-400 light:text-emerald-600 font-bold">✓</span> Full OneView Transcript</div>
+                  <div class="flex items-center gap-1.5"><span class="text-emerald-400 light:text-emerald-600 font-bold">✓</span> Official PDF Marksheet</div>
+                  <div class="flex items-center gap-1.5"><span class="text-emerald-400 light:text-emerald-600 font-bold">✓</span> Instant Free Delivery</div>
                 </div>
 
                 <!-- Primary Telegram Bot CTA Button -->
@@ -906,8 +906,8 @@ const jsonLd = {
                   <span>👉 Get Full Result On Telegram (@akturesultwithoutdobbot)</span>
                 </a>
 
-                <p class="text-[10px] text-gray-400 text-center">
-                  Direct Bot: <a href="${botUrl}" target="_blank" class="text-sky-400 underline font-mono">@akturesultwithoutdobbot</a> (Pre-loaded with Roll ${rollNumber})
+                <p class="text-[10px] text-gray-400 light:text-gray-600 text-center">
+                  Direct Bot: <a href="${botUrl}" target="_blank" class="text-sky-400 light:text-brand-blue underline font-mono">@akturesultwithoutdobbot</a> (Pre-loaded with Roll ${rollNumber})
                 </p>
               </div>
 
@@ -915,7 +915,7 @@ const jsonLd = {
                 <button 
                   type="button" 
                   id="without-dob-check-another-btn" 
-                  class="w-full py-2.5 bg-white/10 hover:bg-white/15 text-white rounded-xl text-xs font-semibold border border-white/10 transition-all cursor-pointer text-center"
+                  class="w-full py-2.5 bg-white/10 light:bg-gray-100 hover:bg-white/15 light:hover:bg-gray-200 text-white light:text-gray-800 rounded-xl text-xs font-semibold border border-white/10 light:border-gray-300 transition-all cursor-pointer text-center"
                 >
                   Check Another Roll Number
                 </button>
@@ -940,29 +940,29 @@ const jsonLd = {
           if (!captchaContainer) return;
           captchaContainer.classList.remove("hidden");
           captchaContainer.innerHTML = `
-            <div class="p-5 rounded-2xl border border-brand-blue/30 bg-gradient-to-b from-brand-blue/10 via-black/80 to-black/90 space-y-4 text-left shadow-2xl backdrop-blur-xl">
-              <div class="flex items-center justify-between pb-3 border-b border-brand-blue/20">
+            <div class="p-5 rounded-2xl border border-brand-blue/30 light:border-gray-200 bg-gradient-to-b from-brand-blue/10 via-black/80 to-black/90 light:bg-white space-y-4 text-left shadow-2xl light:shadow-lg backdrop-blur-xl">
+              <div class="flex items-center justify-between pb-3 border-b border-brand-blue/20 light:border-gray-200">
                 <div class="flex items-center gap-2">
                   <span class="w-2.5 h-2.5 rounded-full bg-brand-blue animate-pulse"></span>
                   <span class="text-xs font-bold text-brand-blue uppercase tracking-wider">Gateway Security Code</span>
                 </div>
               </div>
 
-              <p class="text-xs text-gray-300">
+              <p class="text-xs text-gray-300 light:text-gray-700">
                 Please enter the security verification code displayed below to fetch your marksheet:
               </p>
 
-              <div class="flex items-center justify-center gap-3 p-3 bg-black/60 rounded-xl border border-white/10">
+              <div class="flex items-center justify-center gap-3 p-3 bg-black/60 light:bg-gray-50 rounded-xl border border-white/10 light:border-gray-200">
                 <img 
                   id="without-dob-captcha-img" 
                   src="${imgSrc}" 
                   alt="Security verification code" 
-                  class="h-12 rounded-lg border border-white/20 shadow-inner bg-white/5 object-contain"
+                  class="h-12 rounded-lg border border-white/20 light:border-gray-200 shadow-inner bg-white/5 light:bg-white object-contain"
                 />
                 <button 
                   type="button" 
                   id="without-dob-refresh-captcha-btn" 
-                  class="px-3 py-2 bg-white/10 hover:bg-white/15 text-xs text-gray-300 rounded-lg transition-all cursor-pointer flex items-center gap-1"
+                  class="px-3 py-2 bg-white/10 hover:bg-white/15 light:bg-gray-100 light:hover:bg-gray-200 text-xs text-gray-300 light:text-gray-700 rounded-lg transition-all cursor-pointer flex items-center gap-1 border border-transparent light:border-gray-200"
                 >
                   <span>New Code</span>
                 </button>
@@ -976,14 +976,14 @@ const jsonLd = {
                 maxlength="6"
                 placeholder="Enter characters shown"
                 autocomplete="off"
-                class="w-full px-3 py-2.5 bg-white/5 border border-white/20 rounded-lg text-white font-mono text-center tracking-widest text-base uppercase placeholder-gray-500 focus:outline-none focus:border-brand-blue"
+                class="w-full px-3 py-2.5 bg-white/5 border border-white/20 light:bg-gray-50 light:border-gray-300 rounded-lg text-white light:text-ink light:placeholder-gray-400 font-mono text-center tracking-widest text-base uppercase placeholder-gray-500 focus:outline-none focus:border-brand-blue"
               />
 
               <div class="flex gap-2 pt-1">
                 <button 
                   type="button" 
                   id="without-dob-cancel-code-btn" 
-                  class="flex-1 py-2.5 bg-white/10 hover:bg-white/15 text-gray-300 rounded-lg text-xs font-semibold transition-all cursor-pointer"
+                  class="flex-1 py-2.5 bg-white/10 hover:bg-white/15 light:bg-gray-100 light:hover:bg-gray-200 text-gray-300 light:text-gray-700 rounded-lg text-xs font-semibold transition-all cursor-pointer border border-transparent light:border-gray-200"
                 >
                   Cancel
                 </button>

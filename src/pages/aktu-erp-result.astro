@@ -420,42 +420,42 @@ const jsonLd = {
         return semesters.map((semData, idx) => {
           const subjects = semData.subjects || [];
           const rowsHtml = subjects.map(sub => `
-            <tr class="hover:bg-white/5 border-b border-white/5 text-[11px] text-gray-300">
-              <td class="p-2.5 font-mono font-bold text-gray-400">${sub.code || '--'}</td>
-              <td class="p-2.5 text-white font-medium max-w-[160px] sm:max-w-none truncate sm:whitespace-normal" title="${sub.name || ''}">${sub.name || '--'}</td>
-              <td class="p-2.5 text-gray-400 uppercase text-[10px]">${sub.type || '--'}</td>
-              <td class="p-2.5 text-center text-gray-300 font-mono">${sub.int ?? '--'}</td>
-              <td class="p-2.5 text-center text-gray-300 font-mono">${sub.ext ?? '--'}</td>
-              <td class="p-2.5 text-center font-mono ${sub.back && sub.back !== '--' ? 'text-purple-400 font-bold' : 'text-gray-500'}">${sub.back || '--'}</td>
-              <td class="p-2.5 text-center font-mono font-bold ${sub.grade === 'F' ? 'text-red-400' : 'text-brand-blue'}">${sub.grade || '--'}</td>
+            <tr class="hover:bg-white/5 light:hover:bg-gray-50 border-b border-white/5 light:border-gray-100 text-[11px] text-gray-300 light:text-gray-700">
+              <td class="p-2.5 font-mono font-bold text-gray-400 light:text-gray-500">${sub.code || '--'}</td>
+              <td class="p-2.5 text-white light:text-ink font-medium max-w-[160px] sm:max-w-none truncate sm:whitespace-normal" title="${sub.name || ''}">${sub.name || '--'}</td>
+              <td class="p-2.5 text-gray-400 light:text-gray-500 uppercase text-[10px]">${sub.type || '--'}</td>
+              <td class="p-2.5 text-center text-gray-300 light:text-gray-700 font-mono">${sub.int ?? '--'}</td>
+              <td class="p-2.5 text-center text-gray-300 light:text-gray-700 font-mono">${sub.ext ?? '--'}</td>
+              <td class="p-2.5 text-center font-mono ${sub.back && sub.back !== '--' ? 'text-purple-400 light:text-purple-700 font-bold' : 'text-gray-500'}">${sub.back || '--'}</td>
+              <td class="p-2.5 text-center font-mono font-bold ${sub.grade === 'F' ? 'text-red-400 light:text-red-600' : 'text-brand-blue'}">${sub.grade || '--'}</td>
             </tr>
           `).join('');
 
           return `
-            <div class="border border-white/10 rounded-xl bg-white/[0.02] overflow-hidden">
+            <div class="border border-white/10 light:border-gray-200 rounded-xl bg-white/[0.02] light:bg-white overflow-hidden light:shadow-xs">
               <button 
                 type="button" 
-                class="erp-sem-toggle w-full px-4 py-3 flex items-center justify-between text-left focus:outline-none hover:bg-white/[0.04] transition-colors cursor-pointer"
+                class="erp-sem-toggle w-full px-4 py-3 flex items-center justify-between text-left focus:outline-none hover:bg-white/[0.04] light:hover:bg-gray-50 transition-colors cursor-pointer"
                 data-sem-index="${idx}"
                 aria-expanded="false"
               >
                 <div class="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-4">
-                  <span class="font-bold text-white text-xs sm:text-sm">${semData.sem || `Semester ${idx + 1}`}</span>
-                  <div class="flex gap-2 text-[10px] text-gray-400">
+                  <span class="font-bold text-white light:text-ink text-xs sm:text-sm">${semData.sem || `Semester ${idx + 1}`}</span>
+                  <div class="flex gap-2 text-[10px] text-gray-400 light:text-gray-600">
                     <span>SGPA: <strong class="text-brand-blue font-bold">${semData.sgpa || '--'}</strong></span>
-                    <span>Marks: <strong class="text-gray-200">${semData.marks || '--'}</strong></span>
-                    <span class="px-1.5 py-0.5 rounded font-bold ${semData.status === 'PASS' || semData.status === 'Cleared' ? 'bg-emerald-500/20 text-emerald-400' : 'bg-purple-500/20 text-purple-400'}">${semData.status || 'PASS'}</span>
+                    <span>Marks: <strong class="text-gray-200 light:text-gray-800">${semData.marks || '--'}</strong></span>
+                    <span class="px-1.5 py-0.5 rounded font-bold ${semData.status === 'PASS' || semData.status === 'Cleared' ? 'bg-emerald-500/20 light:bg-emerald-100 text-emerald-400 light:text-emerald-800' : 'bg-purple-500/20 light:bg-purple-100 text-purple-400 light:text-purple-800'}">${semData.status || 'PASS'}</span>
                   </div>
                 </div>
                 <svg class="w-4 h-4 transform transition-transform duration-200 text-gray-400 erp-sem-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                 </svg>
               </button>
-              <div class="erp-sem-content hidden p-3 border-t border-white/10 bg-black/40">
-                <div class="overflow-x-auto rounded-lg border border-white/10">
+              <div class="erp-sem-content hidden p-3 border-t border-white/10 light:border-gray-200 bg-black/40 light:bg-gray-50/50">
+                <div class="overflow-x-auto rounded-lg border border-white/10 light:border-gray-200 bg-black/20 light:bg-white">
                   <table class="w-full text-left border-collapse min-w-[480px]">
                     <thead>
-                      <tr class="bg-white/5 text-gray-400 border-b border-white/10 text-[10px] uppercase tracking-wider font-semibold">
+                      <tr class="bg-white/5 light:bg-gray-100 text-gray-400 light:text-gray-600 border-b border-white/10 light:border-gray-200 text-[10px] uppercase tracking-wider font-semibold">
                         <th class="p-2.5">Code</th>
                         <th class="p-2.5">Subject Name</th>
                         <th class="p-2.5">Type</th>
@@ -465,8 +465,8 @@ const jsonLd = {
                         <th class="p-2.5 text-center">Grade</th>
                       </tr>
                     </thead>
-                    <tbody class="divide-y divide-white/5">
-                      ${rowsHtml || '<tr><td colspan="7" class="p-3 text-center text-gray-500 text-xs">No individual subject entries found for this semester.</td></tr>'}
+                    <tbody class="divide-y divide-white/5 light:divide-gray-100">
+                      ${rowsHtml || '<tr><td colspan="7" class="p-3 text-center text-gray-500 light:text-gray-600 text-xs">No individual subject entries found for this semester.</td></tr>'}
                     </tbody>
                   </table>
                 </div>
@@ -523,19 +523,19 @@ const jsonLd = {
         const rollNumber = data.rollNumber || (rollInput ? rollInput.value.trim() : "");
         const enrollmentNo = data.enrollmentNumber || data.student?.enrollmentNo;
         const enrollmentHtml = (enrollmentNo && enrollmentNo !== '--') 
-          ? `<div><span class="text-gray-500 block text-[10px] uppercase">Enrollment No</span><span class="font-bold text-white">${enrollmentNo}</span></div>` 
+          ? `<div><span class="text-gray-500 light:text-gray-500 block text-[10px] uppercase">Enrollment No</span><span class="font-bold text-white light:text-ink">${enrollmentNo}</span></div>` 
           : '';
         const fatherName = data.fatherName || data.student?.fatherName;
         const fatherHtml = (fatherName && fatherName !== '--') 
-          ? `<div><span class="text-gray-500 block text-[10px] uppercase">Father's Name</span><span class="text-gray-200 font-semibold">${fatherName}</span></div>` 
+          ? `<div><span class="text-gray-500 light:text-gray-500 block text-[10px] uppercase">Father's Name</span><span class="text-gray-200 light:text-gray-800 font-semibold">${fatherName}</span></div>` 
           : '';
         const course = data.course || data.student?.course;
         const courseHtml = (course && course !== '--') 
-          ? `<div class="sm:col-span-2"><span class="text-gray-500 block text-[10px] uppercase">Course / Program</span><span class="text-gray-200 font-semibold">${course}</span></div>` 
+          ? `<div class="sm:col-span-2"><span class="text-gray-500 light:text-gray-500 block text-[10px] uppercase">Course / Program</span><span class="text-gray-200 light:text-gray-800 font-semibold">${course}</span></div>` 
           : '';
         const institute = data.institute || data.student?.college;
         const instituteHtml = (institute && institute !== '--') 
-          ? `<div class="sm:col-span-2"><span class="text-gray-500 block text-[10px] uppercase">College / Institute</span><span class="text-gray-200 font-semibold">${institute}</span></div>` 
+          ? `<div class="sm:col-span-2"><span class="text-gray-500 light:text-gray-500 block text-[10px] uppercase">College / Institute</span><span class="text-gray-200 light:text-gray-800 font-semibold">${institute}</span></div>` 
           : '';
 
         const botUrl = data.telegramBotUrl || `https://t.me/akturesultwithoutdobbot?start=${encodeURIComponent(rollNumber)}`;
@@ -551,24 +551,24 @@ const jsonLd = {
           const overall = calculateOverallStatus(semesters, data.cgpa);
 
           profileContainer.innerHTML = `
-            <div id="printable-marksheet" class="p-5 sm:p-7 rounded-2xl border border-purple-500/30 bg-gradient-to-b from-purple-500/10 via-black/70 to-black/90 space-y-6 text-left shadow-2xl backdrop-blur-xl">
+            <div id="printable-marksheet" class="p-5 sm:p-7 rounded-2xl border border-purple-500/30 light:border-purple-200 bg-gradient-to-b from-purple-500/10 via-black/70 to-black/90 light:bg-gradient-to-b light:from-purple-50/80 light:via-white light:to-gray-50/60 space-y-6 text-left shadow-2xl light:shadow-xl backdrop-blur-xl">
               <!-- Verification Header Banner -->
-              <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-4 border-b border-purple-500/20">
+              <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-4 border-b border-purple-500/20 light:border-purple-200">
                 <div class="flex items-center gap-2">
-                  <span class="w-3 h-3 rounded-full bg-emerald-400 animate-pulse"></span>
-                  <span class="text-xs sm:text-sm font-bold text-emerald-400 uppercase tracking-wider">AKTU ERP Marksheet Verified Ô£à</span>
+                  <span class="w-3 h-3 rounded-full bg-emerald-400 light:bg-emerald-600 animate-pulse"></span>
+                  <span class="text-xs sm:text-sm font-bold text-emerald-400 light:text-emerald-700 uppercase tracking-wider">AKTU ERP Marksheet Verified ✅</span>
                 </div>
-                <span class="px-3 py-1 rounded-full text-[10px] font-bold bg-purple-500/20 text-purple-300 border border-purple-500/30 self-start sm:self-auto">
+                <span class="px-3 py-1 rounded-full text-[10px] font-bold bg-purple-500/20 light:bg-purple-100 text-purple-300 light:text-purple-800 border border-purple-500/30 light:border-purple-200 self-start sm:self-auto">
                   ERP Records Synced
                 </span>
               </div>
 
               <!-- Student Profile Card -->
-              <div class="p-4 sm:p-5 rounded-xl bg-black/40 border border-white/10 space-y-3 font-mono text-xs">
-                <div class="text-gray-400 text-[10px] uppercase font-bold tracking-wider">Student Name</div>
-                <div class="text-xl sm:text-2xl font-black text-white font-sans tracking-tight">${studentName}</div>
-                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 pt-3 border-t border-white/10 text-xs">
-                  <div><span class="text-gray-500 block text-[10px] uppercase">University Roll No</span><span class="font-bold text-white">${rollNumber}</span></div>
+              <div class="p-4 sm:p-5 rounded-xl bg-black/40 light:bg-white border border-white/10 light:border-gray-200 space-y-3 font-mono text-xs light:shadow-xs">
+                <div class="text-gray-400 light:text-gray-500 text-[10px] uppercase font-bold tracking-wider">Student Name</div>
+                <div class="text-xl sm:text-2xl font-black text-white light:text-ink font-sans tracking-tight">${studentName}</div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 pt-3 border-t border-white/10 light:border-gray-200 text-xs">
+                  <div><span class="text-gray-500 light:text-gray-500 block text-[10px] uppercase">University Roll No</span><span class="font-bold text-white light:text-ink">${rollNumber}</span></div>
                   ${enrollmentHtml}
                   ${fatherHtml}
                   ${courseHtml}
@@ -578,16 +578,16 @@ const jsonLd = {
 
               <!-- Cumulative Indicators Bar -->
               <div class="grid grid-cols-3 gap-2 text-center font-mono">
-                <div class="p-3 rounded-xl bg-black/40 border border-white/10">
-                  <div class="text-[9px] text-gray-400 uppercase">Cumulative CGPA</div>
+                <div class="p-3 rounded-xl bg-black/40 light:bg-white border border-white/10 light:border-gray-200 light:shadow-xs">
+                  <div class="text-[9px] text-gray-400 light:text-gray-500 uppercase">Cumulative CGPA</div>
                   <div class="text-brand-blue font-extrabold text-sm sm:text-base">${data.cgpa || '--'}</div>
                 </div>
-                <div class="p-3 rounded-xl bg-black/40 border border-white/10">
-                  <div class="text-[9px] text-gray-400 uppercase">Division Award</div>
-                  <div class="text-white font-extrabold text-xs sm:text-sm">${data.divisionAwarded || (data.courseCompleted ? 'Awarded' : 'In Progress')}</div>
+                <div class="p-3 rounded-xl bg-black/40 light:bg-white border border-white/10 light:border-gray-200 light:shadow-xs">
+                  <div class="text-[9px] text-gray-400 light:text-gray-500 uppercase">Division Award</div>
+                  <div class="text-white light:text-ink font-extrabold text-xs sm:text-sm">${data.divisionAwarded || (data.courseCompleted ? 'Awarded' : 'In Progress')}</div>
                 </div>
-                <div class="p-3 rounded-xl bg-black/40 border border-white/10">
-                  <div class="text-[9px] text-gray-400 uppercase">Overall Status</div>
+                <div class="p-3 rounded-xl bg-black/40 light:bg-white border border-white/10 light:border-gray-200 light:shadow-xs">
+                  <div class="text-[9px] text-gray-400 light:text-gray-500 uppercase">Overall Status</div>
                   <div class="${overall.badgeClass}">${overall.status}</div>
                 </div>
               </div>
@@ -595,8 +595,8 @@ const jsonLd = {
               <!-- Semesters Accordion Section -->
               <div class="space-y-2.5 pt-1">
                 <div class="flex items-center justify-between">
-                  <span class="text-xs font-bold text-white uppercase tracking-wider">Semester Reports (${semesters.length} Semesters)</span>
-                  <span class="text-[10px] text-gray-400">Click any semester to expand subject scores</span>
+                  <span class="text-xs font-bold text-white light:text-ink uppercase tracking-wider">Semester Reports (${semesters.length} Semesters)</span>
+                  <span class="text-[10px] text-gray-400 light:text-gray-500">Click any semester to expand subject scores</span>
                 </div>
                 <div class="space-y-2.5" id="erp-semesters-accordion">
                   ${buildSemestersAccordionHtml(semesters)}
@@ -605,8 +605,8 @@ const jsonLd = {
 
               <!-- Graduation Summary (if present) -->
               ${data.finalResultHtml ? `
-                <div class="p-3.5 bg-black/40 rounded-xl border border-white/10 text-xs overflow-x-auto space-y-1">
-                  <div class="text-[10px] text-gray-400 uppercase font-bold">Graduation Summary Ledger:</div>
+                <div class="p-3.5 bg-black/40 light:bg-white rounded-xl border border-white/10 light:border-gray-200 text-xs overflow-x-auto space-y-1">
+                  <div class="text-[10px] text-gray-400 light:text-gray-600 uppercase font-bold">Graduation Summary Ledger:</div>
                   ${data.finalResultHtml}
                 </div>
               ` : ''}
@@ -619,7 +619,7 @@ const jsonLd = {
                   class="w-full py-3.5 bg-brand-blue hover:bg-brand-blue-hover text-white text-xs sm:text-sm font-bold rounded-xl transition-all shadow-lg flex items-center justify-center gap-2 cursor-pointer"
                 >
                   <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" /></svg>
-                  <span>­ƒû¿´©Å Print Academic Report</span>
+                  <span>🖨️ Print Academic Report</span>
                 </button>
 
                 <a 
@@ -628,17 +628,17 @@ const jsonLd = {
                   rel="noopener noreferrer" 
                   class="w-full py-3.5 bg-gradient-to-r from-purple-600 to-brand-blue hover:from-purple-700 hover:to-brand-blue-hover text-white text-xs sm:text-sm font-bold rounded-xl shadow-lg transition-all flex items-center justify-center gap-2 cursor-pointer text-center"
                 >
-                  <span>­ƒöù Open Official ERP Portal</span>
+                  <span>🔗 Open Official ERP Portal</span>
                   <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
                 </a>
               </div>
 
-              <div class="pt-1 border-t border-white/10">
+              <div class="pt-1 border-t border-white/10 light:border-gray-200">
                 <a 
                   href="${botUrl}" 
                   target="_blank" 
                   rel="noopener noreferrer" 
-                  class="w-full py-2.5 bg-blue-500/10 hover:bg-blue-500/20 text-blue-400 text-xs font-semibold rounded-xl border border-blue-500/20 transition-all flex items-center justify-center gap-1.5 text-center cursor-pointer"
+                  class="w-full py-2.5 bg-blue-500/10 light:bg-blue-50 hover:bg-blue-500/20 light:hover:bg-blue-100 text-blue-400 light:text-brand-blue text-xs font-semibold rounded-xl border border-blue-500/20 light:border-blue-200 transition-all flex items-center justify-center gap-1.5 text-center cursor-pointer"
                 >
                   <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
                     <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.75-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z"/>
@@ -651,9 +651,9 @@ const jsonLd = {
             <button 
               type="button" 
               id="erp-check-another-btn" 
-              class="w-full py-2.5 bg-white/[0.05] hover:bg-white/[0.1] text-white text-xs font-semibold rounded-xl border border-white/10 cursor-pointer transition-all text-center mt-3"
+              class="w-full py-2.5 bg-white/[0.05] light:bg-gray-100 hover:bg-white/[0.1] light:hover:bg-gray-200 text-white light:text-gray-800 text-xs font-semibold rounded-xl border border-white/10 light:border-gray-200 cursor-pointer transition-all text-center mt-3"
             >
-              ÔåÉ Check Another Roll Number
+              ← Check Another Roll Number
             </button>
           `;
 
@@ -688,24 +688,24 @@ const jsonLd = {
           }
 
           profileContainer.innerHTML = `
-            <div class="p-5 sm:p-6 rounded-2xl border border-purple-500/30 bg-gradient-to-b from-purple-500/10 via-black/60 to-black/80 space-y-5 text-left shadow-2xl backdrop-blur-xl">
+            <div class="p-5 sm:p-6 rounded-2xl border border-purple-500/30 light:border-purple-200 bg-gradient-to-b from-purple-500/10 via-black/60 to-black/80 light:bg-gradient-to-b light:from-purple-50/80 light:via-white light:to-gray-50/60 space-y-5 text-left shadow-2xl light:shadow-xl backdrop-blur-xl">
               <!-- Status Header -->
-              <div class="flex items-center justify-between pb-3 border-b border-purple-500/20">
+              <div class="flex items-center justify-between pb-3 border-b border-purple-500/20 light:border-purple-200">
                 <div class="flex items-center gap-2">
-                  <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
-                  <span class="text-xs font-bold text-emerald-400 uppercase tracking-wider">ERP Student Record Verified Ô£à</span>
+                  <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 light:bg-emerald-600 animate-pulse"></span>
+                  <span class="text-xs font-bold text-emerald-400 light:text-emerald-700 uppercase tracking-wider">ERP Student Record Verified ✅</span>
                 </div>
-                <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-purple-500/20 text-purple-300 border border-purple-500/30">
+                <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-purple-500/20 light:bg-purple-100 text-purple-300 light:text-purple-800 border border-purple-500/30 light:border-purple-200">
                   AKTU Portal
                 </span>
               </div>
 
               <!-- Student Profile Information -->
               <div class="space-y-2">
-                <div class="text-[11px] text-gray-400 uppercase font-medium">Student Name:</div>
-                <div class="text-lg sm:text-xl font-black text-white tracking-tight">${studentName}</div>
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-2 border-t border-white/5 font-mono text-xs">
-                  <div class="text-gray-400">Roll No: <span class="font-bold text-white">${rollNumber}</span></div>
+                <div class="text-[11px] text-gray-400 light:text-gray-500 uppercase font-medium">Student Name:</div>
+                <div class="text-lg sm:text-xl font-black text-white light:text-ink tracking-tight">${studentName}</div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-2 border-t border-white/5 light:border-gray-200 font-mono text-xs">
+                  <div class="text-gray-400 light:text-gray-500">Roll No: <span class="font-bold text-white light:text-ink">${rollNumber}</span></div>
                   ${enrollmentHtml}
                   ${fatherHtml}
                   ${courseHtml}
@@ -721,7 +721,7 @@ const jsonLd = {
                   rel="noopener noreferrer" 
                   class="w-full py-3.5 bg-gradient-to-r from-purple-600 via-brand-blue to-emerald-600 hover:from-purple-700 hover:to-emerald-500 text-white text-xs sm:text-sm font-bold rounded-xl shadow-lg transition-all flex items-center justify-center gap-2 text-center cursor-pointer"
                 >
-                  <span>­ƒöù Open Official AKTU ERP Login &rarr;</span>
+                  <span>🔗 Open Official AKTU ERP Login &rarr;</span>
                 </a>
 
                 <a 
@@ -741,9 +741,9 @@ const jsonLd = {
             <button 
               type="button" 
               id="erp-check-another-btn" 
-              class="w-full py-2.5 bg-white/[0.05] hover:bg-white/[0.1] text-white text-xs font-semibold rounded-xl border border-white/10 cursor-pointer transition-all text-center mt-3"
+              class="w-full py-2.5 bg-white/[0.05] light:bg-gray-100 hover:bg-white/[0.1] light:hover:bg-gray-200 text-white light:text-gray-800 text-xs font-semibold rounded-xl border border-white/10 light:border-gray-200 cursor-pointer transition-all text-center mt-3"
             >
-              ÔåÉ Check Another Roll Number
+              ← Check Another Roll Number
             </button>
           `;
         }
@@ -765,20 +765,20 @@ const jsonLd = {
 
         function updateModal(imgSrc, errorMsg) {
           captchaContainer.innerHTML = `
-            <div class="p-4 rounded-xl border border-purple-500/30 bg-black/60 space-y-3 text-left">
+            <div class="p-4 rounded-xl border border-purple-500/30 light:border-purple-200 bg-black/60 light:bg-white space-y-3 text-left light:shadow-lg">
               <div class="flex items-center justify-between">
-                <span class="text-xs font-bold text-purple-400">Security Verification</span>
-                <span class="text-[10px] text-gray-400">Step 2 of 2</span>
+                <span class="text-xs font-bold text-purple-400 light:text-purple-700">Security Verification</span>
+                <span class="text-[10px] text-gray-400 light:text-gray-500">Step 2 of 2</span>
               </div>
-              <p class="text-xs text-gray-400">Enter the 5 characters shown below to load ERP marksheet:</p>
+              <p class="text-xs text-gray-400 light:text-gray-600">Enter the 5 characters shown below to load ERP marksheet:</p>
               
-              <div class="flex items-center justify-center gap-3 p-3 bg-white/5 rounded-xl border border-white/10">
+              <div class="flex items-center justify-center gap-3 p-3 bg-white/5 light:bg-gray-50 rounded-xl border border-white/10 light:border-gray-200">
                 <img id="erp-captcha-img" src="${imgSrc}" alt="Security Captcha" class="h-10 rounded shadow bg-white" />
                 <button 
                   type="button" 
                   id="erp-refresh-captcha-btn" 
                   title="Load new code"
-                  class="px-2.5 py-2 bg-white/10 hover:bg-white/20 text-gray-300 hover:text-white rounded-lg transition-all text-xs flex items-center gap-1 cursor-pointer"
+                  class="px-2.5 py-2 bg-white/10 hover:bg-white/20 light:bg-gray-100 light:hover:bg-gray-200 text-gray-300 hover:text-white light:text-gray-700 light:hover:text-ink rounded-lg transition-all text-xs flex items-center gap-1 cursor-pointer border border-transparent light:border-gray-200"
                 >
                   <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" /></svg>
                   <span>New Code</span>
@@ -793,14 +793,14 @@ const jsonLd = {
                 maxlength="6"
                 placeholder="Enter 5 characters"
                 autocomplete="off"
-                class="w-full px-3 py-2.5 bg-white/5 border border-white/20 rounded-lg text-white font-mono text-center tracking-widest text-base uppercase placeholder-gray-500 focus:outline-none focus:border-purple-400"
+                class="w-full px-3 py-2.5 bg-white/5 border border-white/20 light:bg-gray-50 light:border-gray-300 rounded-lg text-white light:text-ink light:placeholder-gray-400 font-mono text-center tracking-widest text-base uppercase placeholder-gray-500 focus:outline-none focus:border-purple-400"
               />
 
               <div class="flex gap-2 pt-1">
                 <button 
                   type="button" 
                   id="erp-cancel-code-btn" 
-                  class="flex-1 py-2.5 bg-white/10 hover:bg-white/15 text-gray-300 rounded-lg text-xs font-semibold transition-all cursor-pointer"
+                  class="flex-1 py-2.5 bg-white/10 hover:bg-white/15 light:bg-gray-100 light:hover:bg-gray-200 text-gray-300 light:text-gray-700 rounded-lg text-xs font-semibold transition-all cursor-pointer border border-transparent light:border-gray-200"
                 >
                   Cancel
                 </button>
