@@ -6,6 +6,7 @@ import colleges from "../../data/colleges.json";
 import branches from "../../data/branches.json";
 import aktuColleges from "../../data/AKTUCollege.json";
 import { slugifyCollege, findCollegeBySlug } from "../../utils/slugify";
+import { getCollegeWebsiteInfo } from "../../utils/collegeWebsite";
 
 const { slug } = Astro.params;
 const rawCollege = Astro.props.college || (slug ? findCollegeBySlug(slug, colleges) : null);
@@ -27,6 +28,9 @@ const detail = aktuColleges.find((a: any) =>
 const collegeAddress = detail?.CGAddress || `${college.name}, Uttar Pradesh`;
 const collegePincode = detail?.CGPincode || "";
 
+// Resolve official website details and ERP links
+const websiteInfo = getCollegeWebsiteInfo(college.code, college.name, college.CGId);
+
 // If client requests JSON or ?format=json, return college details as JSON API response
 const acceptHeader = Astro.request.headers.get("accept") || "";
 const requestUrl = new URL(Astro.request.url);
@@ -41,7 +45,11 @@ if (acceptHeader.includes("application/json") || requestUrl.searchParams.get("fo
         CGCode: college.CGCode,
         slug: canonicalSlug,
         address: collegeAddress,
-        pincode: collegePincode
+        pincode: collegePincode,
+        website: websiteInfo.url,
+        isWebsiteVerified: websiteInfo.isVerified,
+        displayUrl: websiteInfo.displayUrl,
+        erpUrl: websiteInfo.erpUrl
       }
     }),
     {
@@ -65,6 +73,12 @@ const jsonLd = {
       "name": college.name,
       "alternateName": [`AKTU Code ${college.code}`, college.CGCode || `AK${college.code}`],
       "identifier": college.code,
+      "url": websiteInfo.url,
+      "sameAs": [
+        websiteInfo.url,
+        websiteInfo.erpUrl,
+        "https://aktu.ac.in"
+      ],
       "address": {
         "@type": "PostalAddress",
         "streetAddress": collegeAddress,
@@ -83,8 +97,8 @@ const jsonLd = {
       "@type": "WebPage",
       "@id": pageUrl,
       "url": pageUrl,
-      "name": `Find AKTU Roll Number of ${college.name} (${college.code})`,
-      "description": `Search student roll numbers and class rosters for ${college.name} (Code: ${college.code}) by name, branch, and admission year.`,
+      "name": `${college.name} AKTU Result 2026 - Check Marksheet Without DOB`,
+      "description": `Check official AKTU semester results, marksheet, official college website (${websiteInfo.displayUrl}), and student roll numbers for ${college.name} (Code: ${college.code}).`,
       "isPartOf": {
         "@type": "WebSite",
         "@id": `${siteUrl}#website`,
@@ -121,26 +135,42 @@ const jsonLd = {
       "mainEntity": [
         {
           "@type": "Question",
-          "name": `What is the AKTU college code for ${college.name}?`,
+          "name": `How to check AKTU Result for ${college.name} without Date of Birth?`,
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": `The official AKTU college code for ${college.name} is ${college.code} (ERP Code: ${college.CGCode || `AK${college.code}`}).`
+            "text": `Students of ${college.name} can check their AKTU OneView semester results instantly without Date of Birth by entering their 10-13 digit University Roll Number on this page or the AKTU Result Without DOB portal.`
           }
         },
         {
           "@type": "Question",
-          "name": `How to find student roll numbers of ${college.name} by name?`,
+          "name": `What is the official website of ${college.name} and AKTU institute code?`,
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": `To find student roll numbers at ${college.name}, select the admission year and branch, enter the student's name, solve the security captcha, and click 'Search Class Roster'.`
+            "text": `The official AKTU institute code for ${college.name} is ${college.code} (ERP Code: ${college.CGCode || `AK${college.code}`}). The official college website is accessible at ${websiteInfo.url} and the university ERP portal profile is at ${websiteInfo.erpUrl}.`
           }
         },
         {
           "@type": "Question",
-          "name": `How can ${college.name} students check their AKTU results without Date of Birth?`,
+          "name": `How to find student roll numbers for ${college.name} by name?`,
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": `Students of ${college.name} can retrieve their university roll number on this page, then use the AKTU Result Without DOB tool to access their complete semester score sheet directly.`
+            "text": `To find student roll numbers at ${college.name}, select the admission year and branch, type the student name, solve the simple math verification, and view the class student roster.`
+          }
+        },
+        {
+          "@type": "Question",
+          "name": `Where can students of ${college.name} download their AKTU marksheet PDF?`,
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": `After verifying their academic record on our portal, students of ${college.name} can download their official OneView PDF marksheet or access their digital marksheet directly via Telegram Bot (@akturesultwithoutdobbot).`
+          }
+        },
+        {
+          "@type": "Question",
+          "name": `What are the passing criteria and grace marks policy for ${college.name}?`,
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": `As per AKTU academic guidelines, students of ${college.name} must secure at least 30% in university end-semester theory examinations and 40% aggregate (Theory + Internal) per subject. Up to 7-10 grace marks are awarded annually under statutory rules to clear semester status.`
           }
         }
       ]
@@ -148,12 +178,12 @@ const jsonLd = {
   ]
 };
 
-const collegeKeywords = `find aktu roll number of ${college.name}, ${college.name} roll number by name, ${college.name} college code ${college.code}, aktu roll finder ${college.code}, search aktu class roster, student list ${college.name}, ${college.name} result without dob`;
+const collegeKeywords = `${college.name} aktu result, aktu result for ${college.name}, ${college.name} result without dob, ${college.name} result 2026, ${college.name} one view, aktu one view ${college.name}, ${college.name} college code ${college.code}, ${college.name} website, official website of ${college.name}, ${college.name} roll number finder, find aktu roll number of ${college.name}, ${college.name} semester marksheet, aktu odd sem result ${college.name}, aktu even sem result ${college.name}`;
 ---
 
 <Layout 
-  title={`Find AKTU Roll Number of ${college.name} | Class Roster`}
-  description={`Search and find roll numbers of students at ${college.name} (${college.code}) by name. Complete class roster finder tool for AKTU.`}
+  title={`${college.name} AKTU Result 2026 - Check Online Without DOB (Code ${college.code})`}
+  description={`Check ${college.name} (Code ${college.code}) AKTU results online without Date of Birth. View One View semester scorecards, official college website (${websiteInfo.displayUrl}), and student roll number finder.`}
   keywords={collegeKeywords}
   jsonLd={jsonLd}
 >
@@ -173,41 +203,196 @@ const collegeKeywords = `find aktu roll number of ${college.name}, ${college.nam
         <span class="text-brand-blue font-bold">{college.code}</span>
       </nav>
 
-      <div id="hero-grid" class="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12 items-center min-h-[500px] transition-all duration-500">
-        <!-- Left Side: Copywriting -->
+      <div id="hero-grid" class="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12 items-start min-h-[500px] transition-all duration-500">
+        
+        <!-- Left Side: Copywriting & Primary College Information -->
         <div id="hero-copy" class="md:col-span-7 text-center md:text-left space-y-6 transition-all duration-500">
           <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/[0.08] light:border-black/[0.06] bg-white/[0.03] light:bg-white/40 backdrop-blur-md text-xs text-gray-400 light:text-gray-600 premium-shadow-light">
             <span class="w-1.5 h-1.5 rounded-full bg-brand-blue animate-pulse"></span>
-            College Code {college.code}
+            <span>🏛️ AKTU Affiliated Institute • Code {college.code}</span>
           </div>
 
           <h1 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold tracking-tight leading-[1.1] text-white light:text-ink">
-            Find AKTU Roll Number of <br />
-            <span class="bg-gradient-to-r from-brand-blue via-brand-blue-light to-purple-500 bg-clip-text text-transparent">{college.name}</span>
+            <span class="bg-gradient-to-r from-brand-blue via-brand-blue-light to-purple-500 bg-clip-text text-transparent">{college.name}</span> <br />
+            AKTU Result 2026
           </h1>
 
           <p class="text-xs sm:text-sm md:text-base text-gray-400 light:text-gray-600 leading-relaxed max-w-xl">
-            Search students by name, select their course/branch and year of admission to find valid AKTU roll numbers and complete class student lists for this institute.
+            Check semester examination results, OneView marksheet, and SGPA/CGPA for <strong>{college.name}</strong> (College Code: <strong>{college.code}</strong>) without Date of Birth. Access official college website, find forgotten roll numbers by name, and explore class rosters.
           </p>
 
+          <!-- Quick Official Resource Action Links -->
+          <div class="flex flex-wrap gap-2.5 pt-1 justify-center md:justify-start">
+            <a 
+              href={websiteInfo.url} 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-brand-blue/10 light:bg-blue-50 hover:bg-brand-blue/20 light:hover:bg-blue-100 text-brand-blue text-xs font-bold border border-brand-blue/25 light:border-blue-200 transition-all shadow-xs"
+              title={`Visit official website of ${college.name}`}
+            >
+              <span>🌐 {websiteInfo.isVerified ? `Website: ${websiteInfo.displayUrl}` : "Official College Website"}</span>
+              <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+              </svg>
+            </a>
+
+            <a 
+              href={websiteInfo.erpUrl} 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-purple-500/10 light:bg-purple-50 hover:bg-purple-500/20 light:hover:bg-purple-100 text-purple-400 light:text-purple-700 text-xs font-bold border border-purple-500/25 light:border-purple-200 transition-all shadow-xs"
+              title="View AKTU ERP official college affiliation profile"
+            >
+              <span>🏛️ AKTU ERP Profile (Code {college.code})</span>
+              <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+              </svg>
+            </a>
+
+            <a 
+              href="https://oneview.aktu.ac.in" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-emerald-500/10 light:bg-emerald-50 hover:bg-emerald-500/20 light:hover:bg-emerald-100 text-emerald-400 light:text-emerald-700 text-xs font-bold border border-emerald-500/25 light:border-emerald-200 transition-all shadow-xs"
+              title="AKTU One View portal"
+            >
+              <span>📄 Official OneView Portal</span>
+              <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+              </svg>
+            </a>
+          </div>
+
+          <!-- SEO Keywords Bar -->
           <div class="p-4 rounded-xl border border-canvas-dark-border light:border-canvas-light-border bg-canvas-dark-tile/50 light:bg-gray-50 text-xs space-y-2">
-            <h3 class="font-bold text-white light:text-ink">SEO Search Queries:</h3>
-            <ul class="grid grid-cols-1 sm:grid-cols-2 gap-1 text-[10px] text-gray-500 list-inside font-mono">
-              <li>• Find roll number of {college.name}</li>
-              <li>• {college.name} student search</li>
-              <li>• AKTU roll number list for code {college.code}</li>
-              <li>• Check class roster of code {college.code}</li>
-            </ul>
+            <h3 class="font-bold text-white light:text-ink flex items-center gap-2">
+              <span class="text-brand-blue">⚡</span>
+              <span>Popular Searches for {college.name}:</span>
+            </h3>
+            <div class="flex flex-wrap gap-1.5 text-[11px] text-gray-400 light:text-gray-600 font-mono">
+              <span class="px-2 py-0.5 rounded bg-black/40 light:bg-white border border-white/5 light:border-gray-200">{college.name} aktu result</span>
+              <span class="px-2 py-0.5 rounded bg-black/40 light:bg-white border border-white/5 light:border-gray-200">{college.name} result without dob</span>
+              <span class="px-2 py-0.5 rounded bg-black/40 light:bg-white border border-white/5 light:border-gray-200">{college.name} one view</span>
+              <span class="px-2 py-0.5 rounded bg-black/40 light:bg-white border border-white/5 light:border-gray-200">college code {college.code}</span>
+              <span class="px-2 py-0.5 rounded bg-black/40 light:bg-white border border-white/5 light:border-gray-200">{college.name} website</span>
+            </div>
           </div>
         </div>
 
-        <!-- Right Side: Search Form -->
+        <!-- Right Side: Interactive Result & Roster Dual Tab Hub -->
         <div id="hero-card-wrapper" class="md:col-span-5 w-full max-w-lg mx-auto relative group transition-all duration-500">
           <div class="absolute -inset-1.5 bg-gradient-to-r from-brand-blue to-purple-600 rounded-2xl blur-xl opacity-20 group-hover:opacity-35 transition duration-1000 group-hover:duration-200"></div>
           
-          <div class="relative iphone-glass p-6 sm:p-8 rounded-2xl transition-all duration-300 text-left">
-            <div id="home-view-roll-finder" class="space-y-6">
-              <form id="home-finder-form" class="space-y-5">
+          <div class="relative iphone-glass p-5 sm:p-7 rounded-2xl transition-all duration-300 text-left light:bg-white light:border-gray-200 light:shadow-xl">
+            
+            <!-- Navigation Tabs: Result Checker (Primary) & Roll Finder -->
+            <div class="flex items-center gap-1 p-1 bg-black/40 light:bg-gray-100 rounded-xl mb-5 border border-white/5 light:border-gray-200">
+              <button 
+                type="button" 
+                id="college-tab-result-btn" 
+                class="flex-1 py-2 px-3 rounded-lg text-xs font-bold transition-all text-center flex items-center justify-center gap-1.5 bg-brand-blue text-white shadow cursor-pointer"
+              >
+                <span>⚡ Check Result</span>
+              </button>
+              <button 
+                type="button" 
+                id="college-tab-roster-btn" 
+                class="flex-1 py-2 px-3 rounded-lg text-xs font-bold transition-all text-center flex items-center justify-center gap-1.5 text-gray-400 light:text-gray-600 hover:text-white light:hover:text-ink cursor-pointer"
+              >
+                <span>👥 Find Roll by Name</span>
+              </button>
+            </div>
+
+            <!-- PANEL 1: Check AKTU Result (Primary Flow) -->
+            <div id="college-panel-result" class="space-y-4">
+              <div class="space-y-1">
+                <h2 class="text-sm font-bold text-white light:text-ink flex items-center gap-2">
+                  <span>Check {college.name} Result</span>
+                </h2>
+                <p class="text-xs text-gray-400 light:text-gray-600">
+                  Instant OneView semester scorecard without Date of Birth.
+                </p>
+              </div>
+
+              <form id="college-result-form" class="space-y-4">
+                <div>
+                  <label for="college-roll-input" class="block text-xs font-semibold text-gray-400 light:text-gray-500 uppercase tracking-wider mb-2">
+                    Enter University Roll Number
+                  </label>
+                  <input 
+                    type="text" 
+                    id="college-roll-input" 
+                    placeholder={`e.g. 2100${college.code.padStart(3, '0')}10001`} 
+                    maxlength="14"
+                    required
+                    autocomplete="off"
+                    class="w-full px-4 py-3 bg-white/[0.03] light:bg-gray-50 border border-white/[0.1] light:border-gray-300 rounded-xl text-white light:text-ink font-mono text-sm tracking-wider focus:outline-none focus:border-brand-blue focus:ring-1 focus:ring-brand-blue transition-all"
+                  />
+                  <span class="block text-[10px] text-gray-500 mt-1.5">
+                    💡 Tip: Roll numbers for this college typically contain institute code <strong>'{college.code.padStart(3, '0')}'</strong>.
+                  </span>
+                </div>
+
+                <button 
+                  type="submit" 
+                  id="college-result-submit-btn" 
+                  class="w-full py-3.5 bg-gradient-to-r from-brand-blue to-purple-600 hover:from-brand-blue-hover hover:to-purple-700 text-white text-xs sm:text-sm font-bold rounded-xl transition-all shadow-lg hover:shadow-brand-blue/30 cursor-pointer flex items-center justify-center gap-2"
+                >
+                  <span>Check {college.name} Result</span>
+                  <span>&rarr;</span>
+                </button>
+
+                <div class="text-center pt-1">
+                  <button 
+                    type="button" 
+                    id="switch-to-roster-btn" 
+                    class="text-xs text-brand-blue hover:underline cursor-pointer font-medium"
+                  >
+                    Don't know your roll number? Find it by Name & Branch &rarr;
+                  </button>
+                </div>
+              </form>
+
+              <!-- Result Loader State -->
+              <div id="college-result-loader" class="hidden py-8 text-center space-y-3">
+                <div class="w-10 h-10 border-3 border-brand-blue/20 border-t-brand-blue rounded-full animate-spin mx-auto"></div>
+                <div class="space-y-1">
+                  <div class="text-xs font-bold text-white light:text-ink" id="college-result-loading-title">Connecting to AKTU Gateway...</div>
+                  <div class="text-[11px] text-gray-400 light:text-gray-500" id="college-result-loading-sub">Authenticating student record for code {college.code}...</div>
+                </div>
+              </div>
+
+              <!-- Result Output Display -->
+              <div id="college-result-output" class="hidden space-y-4"></div>
+
+              <!-- Result Error Display -->
+              <div id="college-result-error" class="hidden space-y-3 animate-fade-in">
+                <div class="p-4 rounded-xl bg-red-500/10 border border-red-500/20 text-center space-y-1">
+                  <div class="text-red-400 font-bold text-xs" id="college-error-title">No Academic Record Found</div>
+                  <p class="text-gray-400 light:text-gray-600 text-[11px]" id="college-error-desc">Please verify that the 10-13 digit roll number belongs to {college.name}.</p>
+                </div>
+                <button 
+                  type="button" 
+                  id="college-result-retry-btn" 
+                  class="w-full py-2.5 bg-gray-900 light:bg-gray-100 hover:bg-gray-800 light:hover:bg-gray-200 border border-white/10 light:border-gray-200 text-white light:text-ink text-xs font-semibold rounded-xl transition-all cursor-pointer"
+                >
+                  Retry Search
+                </button>
+              </div>
+            </div>
+
+            <!-- PANEL 2: Find Roll Number by Name (Roster Search Flow) -->
+            <div id="college-panel-roster" class="hidden space-y-6">
+              <div class="space-y-1">
+                <h2 class="text-sm font-bold text-white light:text-ink">
+                  Find Student Roll Number by Name
+                </h2>
+                <p class="text-xs text-gray-400 light:text-gray-600">
+                  Search student lists and class rosters for {college.name}.
+                </p>
+              </div>
+
+              <form id="home-finder-form" class="space-y-4">
                 <!-- Admission Year -->
                 <div class="relative" id="home-year-combobox">
                   <label class="block text-xs font-semibold text-gray-400 light:text-gray-500 uppercase tracking-wider mb-2">
@@ -220,7 +405,7 @@ const collegeKeywords = `find aktu roll number of ${college.name}, ${college.nam
                       placeholder="Select Year"
                       readonly
                       required
-                      class="w-full px-4 py-3 bg-white/[0.03] light:bg-black/[0.02] border border-white/[0.08] light:border-black/[0.08] rounded-xl text-white light:text-ink placeholder-gray-500 focus:outline-none focus:border-brand-blue focus:ring-1 focus:ring-brand-blue transition-all pr-10 cursor-pointer text-xs"
+                      class="w-full px-4 py-3 bg-white/[0.03] light:bg-gray-50 border border-white/[0.08] light:border-gray-300 rounded-xl text-white light:text-ink placeholder-gray-500 focus:outline-none focus:border-brand-blue focus:ring-1 focus:ring-brand-blue transition-all pr-10 cursor-pointer text-xs"
                     />
                     <input type="hidden" id="home-finder-year" name="admissionYear" />
                     <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none text-gray-500">
@@ -232,17 +417,17 @@ const collegeKeywords = `find aktu roll number of ${college.name}, ${college.nam
                   <!-- Dropdown Options List -->
                   <div 
                     id="home-year-dropdown" 
-                    class="hidden absolute z-50 w-full mt-1 bg-[#121212]/95 light:bg-white/95 backdrop-blur-md border border-white/[0.1] light:border-black/[0.1] rounded-xl shadow-2xl max-h-60 overflow-y-auto"
+                    class="hidden absolute z-50 w-full mt-1 bg-[#121212]/95 light:bg-white/95 backdrop-blur-md border border-white/[0.1] light:border-gray-200 rounded-xl shadow-2xl max-h-60 overflow-y-auto"
                   >
                     <div class="p-1 space-y-0.5" id="home-year-list">
                       <button type="button" data-value="2025" class="w-full text-left px-3 py-2.5 rounded-lg text-xs text-gray-300 light:text-gray-700 hover:bg-brand-blue hover:text-white light:hover:bg-brand-blue light:hover:text-white transition-all cursor-pointer">2025</button>
                       <button type="button" data-value="2024" class="w-full text-left px-3 py-2.5 rounded-lg text-xs text-gray-300 light:text-gray-700 hover:bg-brand-blue hover:text-white light:hover:bg-brand-blue light:hover:text-white transition-all cursor-pointer">2024</button>
                       <button type="button" data-value="2023" class="w-full text-left px-3 py-2.5 rounded-lg text-xs text-gray-300 light:text-gray-700 hover:bg-brand-blue hover:text-white light:hover:bg-brand-blue light:hover:text-white transition-all cursor-pointer">2023</button>
                       <button type="button" data-value="2022" class="w-full text-left px-3 py-2.5 rounded-lg text-xs text-gray-300 light:text-gray-700 hover:bg-brand-blue hover:text-white light:hover:bg-brand-blue light:hover:text-white transition-all cursor-pointer">2022</button>
-                      <button type="button" data-value="2021" class="w-full text-left px-3 py-2.5 rounded-lg text-xs text-gray-300 light:text-gray-705 hover:bg-brand-blue hover:text-white light:hover:bg-brand-blue light:hover:text-white transition-all cursor-pointer">2021</button>
-                      <button type="button" data-value="2020" class="w-full text-left px-3 py-2.5 rounded-lg text-xs text-gray-300 light:text-gray-705 hover:bg-brand-blue hover:text-white light:hover:bg-brand-blue light:hover:text-white transition-all cursor-pointer">2020</button>
-                      <button type="button" data-value="2019" class="w-full text-left px-3 py-2.5 rounded-lg text-xs text-gray-300 light:text-gray-705 hover:bg-brand-blue hover:text-white light:hover:bg-brand-blue light:hover:text-white transition-all cursor-pointer">2019</button>
-                      <button type="button" data-value="2018" class="w-full text-left px-3 py-2.5 rounded-lg text-xs text-gray-300 light:text-gray-705 hover:bg-brand-blue hover:text-white light:hover:bg-brand-blue light:hover:text-white transition-all cursor-pointer">2018</button>
+                      <button type="button" data-value="2021" class="w-full text-left px-3 py-2.5 rounded-lg text-xs text-gray-300 light:text-gray-700 hover:bg-brand-blue hover:text-white light:hover:bg-brand-blue light:hover:text-white transition-all cursor-pointer">2021</button>
+                      <button type="button" data-value="2020" class="w-full text-left px-3 py-2.5 rounded-lg text-xs text-gray-300 light:text-gray-700 hover:bg-brand-blue hover:text-white light:hover:bg-brand-blue light:hover:text-white transition-all cursor-pointer">2020</button>
+                      <button type="button" data-value="2019" class="w-full text-left px-3 py-2.5 rounded-lg text-xs text-gray-300 light:text-gray-700 hover:bg-brand-blue hover:text-white light:hover:bg-brand-blue light:hover:text-white transition-all cursor-pointer">2019</button>
+                      <button type="button" data-value="2018" class="w-full text-left px-3 py-2.5 rounded-lg text-xs text-gray-300 light:text-gray-700 hover:bg-brand-blue hover:text-white light:hover:bg-brand-blue light:hover:text-white transition-all cursor-pointer">2018</button>
                     </div>
                   </div>
                 </div>
@@ -257,7 +442,7 @@ const collegeKeywords = `find aktu roll number of ${college.name}, ${college.nam
                     id="home-college-search" 
                     value={`${college.name} (${college.code})`}
                     readonly
-                    class="w-full px-4 py-3 bg-white/[0.03] light:bg-black/[0.02] border border-white/[0.08] light:border-black/[0.08] rounded-xl text-white light:text-ink text-xs focus:outline-none cursor-not-allowed opacity-80"
+                    class="w-full px-4 py-3 bg-white/[0.03] light:bg-gray-100 border border-white/[0.08] light:border-gray-300 rounded-xl text-white light:text-ink text-xs focus:outline-none cursor-not-allowed opacity-80"
                   />
                   <input type="hidden" id="home-finder-college" name="collegeCode" value={college.code} />
                 </div>
@@ -274,7 +459,7 @@ const collegeKeywords = `find aktu roll number of ${college.name}, ${college.nam
                       placeholder="Type branch name or code..."
                       autocomplete="off"
                       required
-                      class="w-full px-4 py-3 bg-white/[0.03] light:bg-black/[0.02] border border-white/[0.08] light:border-black/[0.08] rounded-xl text-white light:text-ink placeholder-gray-500 focus:outline-none focus:border-brand-blue focus:ring-1 focus:ring-brand-blue transition-all pr-10 text-xs"
+                      class="w-full px-4 py-3 bg-white/[0.03] light:bg-gray-50 border border-white/[0.08] light:border-gray-300 rounded-xl text-white light:text-ink placeholder-gray-500 focus:outline-none focus:border-brand-blue focus:ring-1 focus:ring-brand-blue transition-all pr-10 text-xs"
                     />
                     <input type="hidden" id="home-finder-branch" name="branchCode" />
                     <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none text-gray-500">
@@ -286,7 +471,7 @@ const collegeKeywords = `find aktu roll number of ${college.name}, ${college.nam
                   <!-- Dropdown Options List -->
                   <div 
                     id="home-branch-dropdown" 
-                    class="hidden absolute z-50 w-full mt-1 bg-[#121212]/95 light:bg-white/95 backdrop-blur-md border border-white/[0.1] light:border-black/[0.1] rounded-xl shadow-2xl max-h-60 overflow-y-auto"
+                    class="hidden absolute z-50 w-full mt-1 bg-[#121212]/95 light:bg-white/95 backdrop-blur-md border border-white/[0.1] light:border-gray-200 rounded-xl shadow-2xl max-h-60 overflow-y-auto"
                   >
                     <div class="p-1 space-y-0.5" id="home-branch-list">
                       {sortedBranches.map((b) => (
@@ -313,12 +498,12 @@ const collegeKeywords = `find aktu roll number of ${college.name}, ${college.nam
                     type="text" 
                     id="home-finder-name" 
                     placeholder="Enter student first/last name"
-                    class="w-full px-4 py-3 bg-white/[0.03] light:bg-black/[0.02] border border-white/[0.08] light:border-black/[0.08] rounded-xl text-white light:text-ink placeholder-gray-500 focus:outline-none focus:border-brand-blue focus:ring-1 focus:ring-brand-blue transition-all text-xs font-medium"
+                    class="w-full px-4 py-3 bg-white/[0.03] light:bg-gray-50 border border-white/[0.08] light:border-gray-300 rounded-xl text-white light:text-ink placeholder-gray-500 focus:outline-none focus:border-brand-blue focus:ring-1 focus:ring-brand-blue transition-all text-xs font-medium"
                   />
                 </div>
 
                 <!-- Captcha Validation -->
-                <div class="p-3 bg-white/[0.02] light:bg-black/[0.01] border border-white/[0.06] light:border-black/[0.06] rounded-xl flex items-center justify-between gap-4">
+                <div class="p-3 bg-white/[0.02] light:bg-gray-50 border border-white/[0.06] light:border-gray-200 rounded-xl flex items-center justify-between gap-4">
                   <div class="text-xs text-gray-300 light:text-gray-700">
                     Solve: <span id="home-finder-captcha-num1" class="font-bold text-white light:text-ink">?</span> + <span id="home-finder-captcha-num2" class="font-bold text-white light:text-ink">?</span> =
                   </div>
@@ -327,14 +512,14 @@ const collegeKeywords = `find aktu roll number of ${college.name}, ${college.nam
                     id="home-finder-captcha-answer" 
                     required 
                     placeholder="Ans"
-                    class="w-20 px-3 py-1.5 bg-black/40 light:bg-white border border-white/[0.1] light:border-black/[0.1] rounded-lg text-white light:text-ink focus:outline-none focus:border-brand-blue text-xs text-center font-bold"
+                    class="w-20 px-3 py-1.5 bg-black/40 light:bg-white border border-white/[0.1] light:border-gray-300 rounded-lg text-white light:text-ink focus:outline-none focus:border-brand-blue text-xs text-center font-bold"
                   />
                 </div>
 
                 <button 
                   type="submit" 
                   id="home-finder-submit-btn" 
-                  class="w-full py-3 bg-brand-blue hover:bg-brand-blue-hover text-white text-xs font-semibold rounded-xl transition-all shadow-lg hover:shadow-brand-blue/20 cursor-pointer"
+                  class="w-full py-3.5 bg-brand-blue hover:bg-brand-blue-hover text-white text-xs font-semibold rounded-xl transition-all shadow-lg hover:shadow-brand-blue/20 cursor-pointer"
                 >
                   Search Class Roster
                 </button>
@@ -346,127 +531,237 @@ const collegeKeywords = `find aktu roll number of ${college.name}, ${college.nam
                   <div class="absolute inset-0 rounded-full border-4 border-brand-blue/20"></div>
                   <div class="absolute inset-0 rounded-full border-4 border-brand-blue border-t-transparent animate-spin"></div>
                 </div>
-                <div class="text-xs text-gray-400 light:text-gray-650" id="home-finder-loading-substatus">Searching database...</div>
+                <div class="text-xs text-gray-400 light:text-gray-600" id="home-finder-loading-substatus">Searching database...</div>
               </div>
 
               <!-- Output Results -->
               <div id="home-finder-output" class="hidden space-y-4"></div>
             </div>
+
           </div>
         </div>
+
       </div>
     </div>
   </section>
 
-  <!-- Institute Profile & Overview Section -->
+  <!-- Institute Profile & Official Details Section -->
   <section class="py-12 border-b border-canvas-dark-border light:border-canvas-light-border bg-canvas-dark-surface light:bg-canvas-light-surface transition-colors">
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
-        
-        <!-- Left 2 cols: College Details -->
-        <div class="md:col-span-2 space-y-6">
-          <div>
-            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-brand-blue/30 bg-brand-blue/10 text-brand-blue text-xs font-semibold mb-3">
-              🏛️ AKTU Affiliated Institute
-            </div>
-            <h2 class="text-2xl sm:text-3xl font-extrabold text-white light:text-ink tracking-tight">
-              About {college.name}
-            </h2>
-            <p class="text-sm text-gray-400 light:text-gray-600 mt-2 leading-relaxed">
-              {college.name} (AKTU College Code: <strong>{college.code}</strong>) is an affiliated educational institute under Dr. A.P.J. Abdul Kalam Technical University, Lucknow. Students enrolled here pursue undergraduate and postgraduate technical degrees including B.Tech, B.Pharm, MBA, MCA, and M.Tech programs.
-            </p>
+      
+      <div class="max-w-3xl mb-8">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-brand-blue/30 bg-brand-blue/10 text-brand-blue text-xs font-semibold mb-3">
+          🏛️ Verified College Profile & Credentials
+        </div>
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-white light:text-ink tracking-tight">
+          About {college.name}
+        </h2>
+        <p class="text-sm text-gray-400 light:text-gray-600 mt-2 leading-relaxed">
+          {college.name} (AKTU College Code: <strong>{college.code}</strong>, ERP Code: <strong>{college.CGCode || `AK${college.code}`}</strong>) is an affiliated educational institute under Dr. A.P.J. Abdul Kalam Technical University, Lucknow. Students enrolled here pursue university-approved degrees including B.Tech, B.Pharm, MBA, MCA, and M.Tech programs.
+        </p>
+      </div>
+
+      <!-- Quick Stats & Facts Cards Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+        <!-- 1. AKTU Code -->
+        <div class="p-5 rounded-2xl border border-white/[0.08] light:border-gray-200 bg-black/40 light:bg-white space-y-2 light:shadow-xs">
+          <div class="w-8 h-8 rounded-lg bg-brand-blue/10 text-brand-blue flex items-center justify-center font-bold text-xs">
+            🔢
           </div>
-
-          <!-- Quick Stats & Facts Grid -->
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div class="p-4 rounded-xl border border-white/[0.08] light:border-black/[0.08] bg-black/40 light:bg-white space-y-1">
-              <span class="text-[10px] uppercase font-bold text-gray-400 tracking-wider">Official AKTU Code</span>
-              <div class="text-lg font-mono font-bold text-brand-blue">{college.code}</div>
-              <p class="text-[11px] text-gray-500">ERP Identifier: {college.CGCode || `AK${college.code}`}</p>
-            </div>
-
-            <div class="p-4 rounded-xl border border-white/[0.08] light:border-black/[0.08] bg-black/40 light:bg-white space-y-1">
-              <span class="text-[10px] uppercase font-bold text-gray-400 tracking-wider">Affiliated University</span>
-              <div class="text-xs font-bold text-white light:text-ink">AKTU / UPTU Lucknow</div>
-              <p class="text-[11px] text-gray-500">State Technical University (Govt. of UP)</p>
-            </div>
-
-            <div class="sm:col-span-2 p-4 rounded-xl border border-white/[0.08] light:border-black/[0.08] bg-black/40 light:bg-white space-y-1">
-              <span class="text-[10px] uppercase font-bold text-gray-400 tracking-wider">Campus Location & Address</span>
-              <div class="text-xs text-gray-300 light:text-gray-700 leading-relaxed font-medium">
-                📍 {collegeAddress} {collegePincode ? ` - ${collegePincode}` : ''}
-              </div>
-            </div>
-          </div>
+          <span class="text-[10px] uppercase font-bold text-gray-400 light:text-gray-500 tracking-wider block">Official AKTU Code</span>
+          <div class="text-2xl font-mono font-bold text-brand-blue">{college.code}</div>
+          <p class="text-[11px] text-gray-500">ERP Identifier: {college.CGCode || `AK${college.code}`}</p>
         </div>
 
-        <!-- Right 1 col: Direct Result CTA Card -->
-        <div class="p-6 rounded-2xl border border-brand-blue/30 bg-gradient-to-br from-brand-blue/10 via-black/40 to-purple-900/10 light:bg-white premium-shadow-dark space-y-4">
-          <div class="w-10 h-10 rounded-xl bg-brand-blue text-white flex items-center justify-center font-bold text-lg">
-            ⚡
-          </div>
+        <!-- 2. Official Website -->
+        <div class="p-5 rounded-2xl border border-white/[0.08] light:border-gray-200 bg-black/40 light:bg-white space-y-2 light:shadow-xs flex flex-col justify-between">
           <div>
-            <h3 class="text-base font-bold text-white light:text-ink">
-              Check Result Without DOB
-            </h3>
-            <p class="text-xs text-gray-400 light:text-gray-600 mt-1 leading-relaxed">
-              Already have your university roll number? Check your full One View semester marksheet instantly without entering your Date of Birth.
-            </p>
+            <div class="w-8 h-8 rounded-lg bg-emerald-500/10 text-emerald-500 flex items-center justify-center font-bold text-xs">
+              🌐
+            </div>
+            <span class="text-[10px] uppercase font-bold text-gray-400 light:text-gray-500 tracking-wider block mt-2">Official College Website</span>
+            <div class="text-sm font-bold text-white light:text-ink truncate mt-0.5" title={websiteInfo.url}>
+              {websiteInfo.displayUrl}
+            </div>
+            <span class={`inline-block mt-1 text-[9px] px-2 py-0.5 rounded font-semibold ${websiteInfo.isVerified ? 'bg-emerald-500/15 text-emerald-400 light:text-emerald-700' : 'bg-brand-blue/15 text-brand-blue'}`}>
+              {websiteInfo.isVerified ? '✓ Verified Direct Domain' : '🔍 Web Directory Link'}
+            </span>
           </div>
-
           <a 
-            href="/" 
-            class="w-full inline-flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-brand-blue hover:bg-brand-blue-hover text-white text-xs font-bold transition-all shadow-lg hover:shadow-brand-blue/30 cursor-pointer"
+            href={websiteInfo.url} 
+            target="_blank" 
+            rel="noopener noreferrer"
+            class="text-[11px] font-bold text-brand-blue hover:underline inline-flex items-center gap-1 mt-2"
           >
-            <span>View Result Online Now</span>
+            <span>Visit College Website</span>
             <span>&rarr;</span>
           </a>
-
-          <div class="text-[10px] text-gray-500 text-center flex items-center justify-center gap-2">
-            <span>🔒 Secure Portal</span>
-            <span>•</span>
-            <span>⚡ Instant Marks</span>
-          </div>
         </div>
 
+        <!-- 3. AKTU ERP Profile -->
+        <div class="p-5 rounded-2xl border border-white/[0.08] light:border-gray-200 bg-black/40 light:bg-white space-y-2 light:shadow-xs flex flex-col justify-between">
+          <div>
+            <div class="w-8 h-8 rounded-lg bg-purple-500/10 text-purple-400 flex items-center justify-center font-bold text-xs">
+              🏛️
+            </div>
+            <span class="text-[10px] uppercase font-bold text-gray-400 light:text-gray-500 tracking-wider block mt-2">AKTU ERP Profile</span>
+            <div class="text-sm font-bold text-white light:text-ink mt-0.5">
+              Govt. Affiliation Ledger
+            </div>
+            <span class="text-[10px] text-gray-500 block">ID: {college.CGId || college.code}</span>
+          </div>
+          <a 
+            href={websiteInfo.erpUrl} 
+            target="_blank" 
+            rel="noopener noreferrer"
+            class="text-[11px] font-bold text-purple-400 light:text-purple-700 hover:underline inline-flex items-center gap-1 mt-2"
+          >
+            <span>Open ERP Record</span>
+            <span>&rarr;</span>
+          </a>
+        </div>
+
+        <!-- 4. Affiliated State University -->
+        <div class="p-5 rounded-2xl border border-white/[0.08] light:border-gray-200 bg-black/40 light:bg-white space-y-2 light:shadow-xs">
+          <div class="w-8 h-8 rounded-lg bg-sky-500/10 text-sky-400 flex items-center justify-center font-bold text-xs">
+            🎓
+          </div>
+          <span class="text-[10px] uppercase font-bold text-gray-400 light:text-gray-500 tracking-wider block">Affiliated University</span>
+          <div class="text-xs font-bold text-white light:text-ink leading-snug">AKTU / UPTU Lucknow</div>
+          <p class="text-[11px] text-gray-500">Dr. A.P.J. Abdul Kalam Technical University</p>
+        </div>
       </div>
+
+      <!-- Campus Location Card -->
+      <div class="p-6 rounded-2xl border border-white/[0.08] light:border-gray-200 bg-black/40 light:bg-white space-y-2 light:shadow-xs">
+        <span class="text-[10px] uppercase font-bold text-gray-400 light:text-gray-500 tracking-wider">Campus Address & Location</span>
+        <div class="text-sm text-gray-200 light:text-gray-800 leading-relaxed font-medium">
+          📍 {collegeAddress} {collegePincode ? ` - ${collegePincode}` : ''}
+        </div>
+        <div class="text-xs text-gray-500 pt-1 flex items-center gap-3">
+          <span>Region: Uttar Pradesh, India</span>
+          <span>•</span>
+          <span>Affiliation Type: AKTU Approved Institution</span>
+        </div>
+      </div>
+
     </div>
   </section>
 
-  <!-- How It Works Section -->
+  <!-- Comprehensive AKTU Result Guide for This College -->
   <section class="py-12 border-b border-canvas-dark-border light:border-canvas-light-border bg-black light:bg-white transition-colors">
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      
       <div class="text-center max-w-2xl mx-auto mb-10">
-        <h2 class="text-xl sm:text-2xl font-bold text-white light:text-ink">
-          How to Find {college.name} Student Rolls
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-blue/10 text-brand-blue text-xs font-semibold mb-2">
+          ⚡ Academic & Examination Guide
+        </div>
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-white light:text-ink">
+          AKTU Result & Examination System for {college.name}
         </h2>
-        <p class="text-xs text-gray-400 light:text-gray-600 mt-1">
-          Follow these 3 quick steps to locate any student roll number or class roster.
+        <p class="text-xs sm:text-sm text-gray-400 light:text-gray-600 mt-2">
+          Everything students of {college.name} need to know regarding semester examinations, OneView scorecards, passing marks, and grace policies.
         </p>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div class="p-5 rounded-xl border border-white/[0.08] light:border-black/[0.08] bg-white/[0.02] light:bg-gray-50 space-y-2">
+        
+        <!-- Card 1: Semester Cycles -->
+        <div class="p-6 rounded-2xl border border-white/[0.08] light:border-gray-200 bg-canvas-dark-surface light:bg-gray-50 space-y-3">
+          <div class="w-10 h-10 rounded-xl bg-brand-blue/10 text-brand-blue flex items-center justify-center font-bold text-sm">
+            🗓️
+          </div>
+          <h3 class="text-sm font-bold text-white light:text-ink">
+            Odd & Even Semester Cycles
+          </h3>
+          <p class="text-xs text-gray-400 light:text-gray-600 leading-relaxed">
+            AKTU conducts semester examinations twice a year. Odd semester exams (1st, 3rd, 5th, 7th) take place in December–January with results declared around February–April. Even semester exams (2nd, 4th, 6th, 8th) take place in June–July with results in July–September.
+          </p>
+        </div>
+
+        <!-- Card 2: Passing Marks & Grading System -->
+        <div class="p-6 rounded-2xl border border-white/[0.08] light:border-gray-200 bg-canvas-dark-surface light:bg-gray-50 space-y-3">
+          <div class="w-10 h-10 rounded-xl bg-purple-500/10 text-purple-400 flex items-center justify-center font-bold text-sm">
+            📊
+          </div>
+          <h3 class="text-sm font-bold text-white light:text-ink">
+            Passing Marks & SGPA Scale
+          </h3>
+          <p class="text-xs text-gray-400 light:text-gray-600 leading-relaxed">
+            To pass any subject at {college.name}, students must secure a minimum of <strong>30% in university theory examinations</strong> and a minimum <strong>40% aggregate</strong> across external theory plus internal/sessional assessments. Semester performance is evaluated on a 10-point SGPA/CGPA scale.
+          </p>
+        </div>
+
+        <!-- Card 3: Grace Marks & Carry Over Papers (COP) -->
+        <div class="p-6 rounded-2xl border border-white/[0.08] light:border-gray-200 bg-canvas-dark-surface light:bg-gray-50 space-y-3">
+          <div class="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center font-bold text-sm">
+            🛡️
+          </div>
+          <h3 class="text-sm font-bold text-white light:text-ink">
+            Grace Marks & COP Rules
+          </h3>
+          <p class="text-xs text-gray-400 light:text-gray-600 leading-relaxed">
+            If a student is missing up to 7-10 marks in maximum 1-2 subjects, AKTU automatically awards grace marks (indicated with 'PWG' - Pass With Grace). Students with backlogs can appear for Carry Over Papers (COP) in the subsequent semester cycle.
+          </p>
+        </div>
+
+      </div>
+
+      <!-- Scrutiny & Challenge Evaluation Banner -->
+      <div class="mt-8 p-6 rounded-2xl border border-brand-blue/30 bg-gradient-to-r from-brand-blue/10 via-purple-900/10 to-transparent flex flex-col md:flex-row items-center justify-between gap-4">
+        <div class="space-y-1 text-center md:text-left">
+          <h4 class="text-sm sm:text-base font-bold text-white light:text-ink">
+            Need Scrutiny or Challenge Evaluation for {college.name}?
+          </h4>
+          <p class="text-xs text-gray-400 light:text-gray-600 max-w-2xl">
+            If you suspect an error in your published marksheet, AKTU opens Stage-1 Scrutiny and Stage-2 Answer Sheet Inspection via the ERP portal within 15 days of result declaration.
+          </p>
+        </div>
+        <a 
+          href="/" 
+          class="shrink-0 px-5 py-3 rounded-xl bg-brand-blue hover:bg-brand-blue-hover text-white text-xs font-bold transition-all shadow-md"
+        >
+          Check Marks Online &rarr;
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 3-Step Result Verification Workflow -->
+  <section class="py-12 border-b border-canvas-dark-border light:border-canvas-light-border bg-canvas-dark-surface light:bg-canvas-light-surface transition-colors">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-2xl mx-auto mb-10">
+        <h2 class="text-xl sm:text-2xl font-bold text-white light:text-ink">
+          How to Check {college.name} Result Online
+        </h2>
+        <p class="text-xs text-gray-400 light:text-gray-600 mt-1">
+          Follow these 3 quick steps to view semester scorecards and official PDF marksheets.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="p-5 rounded-xl border border-white/[0.08] light:border-gray-200 bg-white/[0.02] light:bg-white space-y-2 light:shadow-xs">
           <div class="w-7 h-7 rounded-lg bg-brand-blue/20 text-brand-blue font-bold text-xs flex items-center justify-center font-mono">1</div>
-          <h3 class="text-sm font-bold text-white light:text-ink">Select Year & Branch</h3>
+          <h3 class="text-sm font-bold text-white light:text-ink">Obtain Roll Number</h3>
           <p class="text-xs text-gray-400 light:text-gray-600 leading-relaxed">
-            Pick the student's admission year (e.g. 2021, 2022, 2023) and their enrolled engineering or management branch.
+            Locate your 10-13 digit AKTU roll number from your admit card or student ID card. If forgotten, use the "Find Roll by Name" roster tool above.
           </p>
         </div>
 
-        <div class="p-5 rounded-xl border border-white/[0.08] light:border-black/[0.08] bg-white/[0.02] light:bg-gray-50 space-y-2">
+        <div class="p-5 rounded-xl border border-white/[0.08] light:border-gray-200 bg-white/[0.02] light:bg-white space-y-2 light:shadow-xs">
           <div class="w-7 h-7 rounded-lg bg-purple-500/20 text-purple-400 font-bold text-xs flex items-center justify-center font-mono">2</div>
-          <h3 class="text-sm font-bold text-white light:text-ink">Enter Student Name</h3>
+          <h3 class="text-sm font-bold text-white light:text-ink">Enter on Search Box</h3>
           <p class="text-xs text-gray-400 light:text-gray-600 leading-relaxed">
-            Type first or last name to narrow down matches, or leave blank to browse the entire class range for this college.
+            Enter your roll number on the "Check Result" tab above. You do NOT need your Date of Birth, resolving common server lockout errors.
           </p>
         </div>
 
-        <div class="p-5 rounded-xl border border-white/[0.08] light:border-black/[0.08] bg-white/[0.02] light:bg-gray-50 space-y-2">
+        <div class="p-5 rounded-xl border border-white/[0.08] light:border-gray-200 bg-white/[0.02] light:bg-white space-y-2 light:shadow-xs">
           <div class="w-7 h-7 rounded-lg bg-emerald-500/20 text-emerald-400 font-bold text-xs flex items-center justify-center font-mono">3</div>
-          <h3 class="text-sm font-bold text-white light:text-ink">Copy Roll & View Result</h3>
+          <h3 class="text-sm font-bold text-white light:text-ink">View &amp; Save Marksheet</h3>
           <p class="text-xs text-gray-400 light:text-gray-600 leading-relaxed">
-            Click "Copy" beside the matched student and proceed to the Result Checker to view all semester grades without Date of Birth.
+            Instantly view semester grades, internal/external breakdown, SGPA, and download the official PDF score card directly on Telegram or your browser.
           </p>
         </div>
       </div>
@@ -474,45 +769,65 @@ const collegeKeywords = `find aktu roll number of ${college.name}, ${college.nam
   </section>
 
   <!-- FAQ Section -->
-  <section class="py-12 bg-canvas-dark-surface light:bg-canvas-light-surface transition-colors">
+  <section class="py-12 bg-black light:bg-white transition-colors">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="text-center mb-8">
         <h2 class="text-xl sm:text-2xl font-bold text-white light:text-ink">
-          Frequently Asked Questions ({college.code})
+          Frequently Asked Questions ({college.name} - Code {college.code})
         </h2>
         <p class="text-xs text-gray-400 light:text-gray-600 mt-1">
-          Everything you need to know about checking AKTU results and finding roll numbers for {college.name}.
+          Everything you need to know about checking AKTU results, official college website, and roll numbers for {college.name}.
         </p>
       </div>
 
       <div class="space-y-3">
-        <details class="group p-4 rounded-xl border border-white/[0.08] light:border-black/[0.08] bg-black/40 light:bg-white transition-all">
+        <details class="group p-4 rounded-xl border border-white/[0.08] light:border-gray-200 bg-black/40 light:bg-gray-50 transition-all">
           <summary class="flex justify-between items-center text-xs sm:text-sm font-bold text-white light:text-ink cursor-pointer list-none select-none">
-            <span>What is the official AKTU college code for {college.name}?</span>
+            <span>How to check AKTU Result for {college.name} without Date of Birth?</span>
             <span class="text-xs transform group-open:rotate-180 transition-transform text-gray-400">&darr;</span>
           </summary>
-          <p class="text-xs text-gray-400 light:text-gray-600 mt-3 leading-relaxed border-t border-white/[0.05] light:border-black/[0.05] pt-3">
-            The official AKTU college code for {college.name} is <strong>{college.code}</strong> (ERP code: {college.CGCode || `AK${college.code}`}). This code forms digits 3 to 5 of every student's official university roll number enrolled in this institution.
+          <p class="text-xs text-gray-400 light:text-gray-600 mt-3 leading-relaxed border-t border-white/[0.05] light:border-gray-200 pt-3">
+            Students of {college.name} can check their AKTU OneView semester results instantly without Date of Birth by entering their University Roll Number into the "Check Result" tab at the top of this page. Our platform queries the university database and provides full semester marks and grades without requiring DOB authentication.
           </p>
         </details>
 
-        <details class="group p-4 rounded-xl border border-white/[0.08] light:border-black/[0.08] bg-black/40 light:bg-white transition-all">
+        <details class="group p-4 rounded-xl border border-white/[0.08] light:border-gray-200 bg-black/40 light:bg-gray-50 transition-all">
+          <summary class="flex justify-between items-center text-xs sm:text-sm font-bold text-white light:text-ink cursor-pointer list-none select-none">
+            <span>What is the official website of {college.name} and AKTU college code?</span>
+            <span class="text-xs transform group-open:rotate-180 transition-transform text-gray-400">&darr;</span>
+          </summary>
+          <p class="text-xs text-gray-400 light:text-gray-600 mt-3 leading-relaxed border-t border-white/[0.05] light:border-gray-200 pt-3">
+            The official AKTU institute code for {college.name} is <strong>{college.code}</strong> (ERP identifier: {college.CGCode || `AK${college.code}`}). The official college website is <a href={websiteInfo.url} target="_blank" rel="noopener noreferrer" class="text-brand-blue underline font-semibold">{websiteInfo.displayUrl}</a>, and its state government affiliation profile can be viewed on the <a href={websiteInfo.erpUrl} target="_blank" rel="noopener noreferrer" class="text-brand-blue underline">AKTU ERP Portal</a>.
+          </p>
+        </details>
+
+        <details class="group p-4 rounded-xl border border-white/[0.08] light:border-gray-200 bg-black/40 light:bg-gray-50 transition-all">
           <summary class="flex justify-between items-center text-xs sm:text-sm font-bold text-white light:text-ink cursor-pointer list-none select-none">
             <span>How can I find my AKTU roll number for {college.name} if I forgot it?</span>
             <span class="text-xs transform group-open:rotate-180 transition-transform text-gray-400">&darr;</span>
           </summary>
-          <p class="text-xs text-gray-400 light:text-gray-600 mt-3 leading-relaxed border-t border-white/[0.05] light:border-black/[0.05] pt-3">
-            Use the Class Roster Search tool at the top of this page. Select your admission year and course/branch, enter your name, solve the security math challenge, and click 'Search Class Roster' to retrieve your active university roll number instantly.
+          <p class="text-xs text-gray-400 light:text-gray-600 mt-3 leading-relaxed border-t border-white/[0.05] light:border-gray-200 pt-3">
+            Switch to the "Find Roll by Name" tab above. Select your admission year and course/branch, enter your student name, solve the security math challenge, and click 'Search Class Roster' to retrieve your active university roll number instantly.
           </p>
         </details>
 
-        <details class="group p-4 rounded-xl border border-white/[0.08] light:border-black/[0.08] bg-black/40 light:bg-white transition-all">
+        <details class="group p-4 rounded-xl border border-white/[0.08] light:border-gray-200 bg-black/40 light:bg-gray-50 transition-all">
           <summary class="flex justify-between items-center text-xs sm:text-sm font-bold text-white light:text-ink cursor-pointer list-none select-none">
-            <span>Can {college.name} students check semester results without Date of Birth?</span>
+            <span>Can {college.name} students download official PDF marksheet?</span>
             <span class="text-xs transform group-open:rotate-180 transition-transform text-gray-400">&darr;</span>
           </summary>
-          <p class="text-xs text-gray-400 light:text-gray-600 mt-3 leading-relaxed border-t border-white/[0.05] light:border-black/[0.05] pt-3">
-            Yes! AKTU's official One View portal normally demands a Date of Birth, but our platform lets students of {college.name} retrieve their complete academic result, marksheet, SGPA, and CGPA using just their 10-13 digit University Roll Number.
+          <p class="text-xs text-gray-400 light:text-gray-600 mt-3 leading-relaxed border-t border-white/[0.05] light:border-gray-200 pt-3">
+            Yes! When you verify your result on this page, you receive direct access to generate an official provisional PDF marksheet or deliver it directly to your Telegram account via <a href="https://t.me/akturesultwithoutdobbot" target="_blank" class="text-brand-blue underline">@akturesultwithoutdobbot</a>.
+          </p>
+        </details>
+
+        <details class="group p-4 rounded-xl border border-white/[0.08] light:border-gray-200 bg-black/40 light:bg-gray-50 transition-all">
+          <summary class="flex justify-between items-center text-xs sm:text-sm font-bold text-white light:text-ink cursor-pointer list-none select-none">
+            <span>What are the passing criteria and grace marks rules for {college.name}?</span>
+            <span class="text-xs transform group-open:rotate-180 transition-transform text-gray-400">&darr;</span>
+          </summary>
+          <p class="text-xs text-gray-400 light:text-gray-600 mt-3 leading-relaxed border-t border-white/[0.05] light:border-gray-200 pt-3">
+            Students must achieve a minimum of 30% in university theory examinations and 40% aggregate (Theory + Internal) to pass each course. Up to 7-10 grace marks are awarded annually under AKTU ordinances for students on the border of passing.
           </p>
         </details>
       </div>
@@ -526,10 +841,197 @@ const collegeKeywords = `find aktu roll number of ${college.name}, ${college.nam
     </div>
   </section>
 
-  <!-- Client-Side Form & Combobox Handler Script -->
+  <!-- Client-Side Form, Tabs & API Handler Script -->
   <script is:inline>
     window.addEventListener("DOMContentLoaded", () => {
-      // Setup combobox dropdown helper
+      // 1. Dual Tab Controller
+      const resultTabBtn = document.getElementById("college-tab-result-btn");
+      const rosterTabBtn = document.getElementById("college-tab-roster-btn");
+      const resultPanel = document.getElementById("college-panel-result");
+      const rosterPanel = document.getElementById("college-panel-roster");
+      const switchToRosterBtn = document.getElementById("switch-to-roster-btn");
+
+      const activateTab = (tab) => {
+        if (tab === "result") {
+          resultTabBtn?.classList.remove("text-gray-400", "light:text-gray-600");
+          resultTabBtn?.classList.add("bg-brand-blue", "text-white", "shadow");
+          rosterTabBtn?.classList.remove("bg-brand-blue", "text-white", "shadow");
+          rosterTabBtn?.classList.add("text-gray-400", "light:text-gray-600");
+
+          resultPanel?.classList.remove("hidden");
+          rosterPanel?.classList.add("hidden");
+        } else {
+          rosterTabBtn?.classList.remove("text-gray-400", "light:text-gray-600");
+          rosterTabBtn?.classList.add("bg-brand-blue", "text-white", "shadow");
+          resultTabBtn?.classList.remove("bg-brand-blue", "text-white", "shadow");
+          resultTabBtn?.classList.add("text-gray-400", "light:text-gray-600");
+
+          rosterPanel?.classList.remove("hidden");
+          resultPanel?.classList.add("hidden");
+        }
+      };
+
+      resultTabBtn?.addEventListener("click", () => activateTab("result"));
+      rosterTabBtn?.addEventListener("click", () => activateTab("roster"));
+      switchToRosterBtn?.addEventListener("click", () => activateTab("roster"));
+
+      // 2. Direct AKTU Result Form Handler
+      const resultForm = document.getElementById("college-result-form");
+      const rollInput = document.getElementById("college-roll-input");
+      const resultLoader = document.getElementById("college-result-loader");
+      const resultOutput = document.getElementById("college-result-output");
+      const resultError = document.getElementById("college-result-error");
+      const errorTitle = document.getElementById("college-error-title");
+      const errorDesc = document.getElementById("college-error-desc");
+      const resultRetryBtn = document.getElementById("college-result-retry-btn");
+
+      resultRetryBtn?.addEventListener("click", () => {
+        resultError?.classList.add("hidden");
+        resultForm?.classList.remove("hidden");
+        if (rollInput) rollInput.focus();
+      });
+
+      const handleResultSearch = async (roll) => {
+        if (!roll) return;
+
+        resultForm?.classList.add("hidden");
+        resultOutput?.classList.add("hidden");
+        resultError?.classList.add("hidden");
+        resultLoader?.classList.remove("hidden");
+
+        const loadingTitle = document.getElementById("college-result-loading-title");
+        const loadingSub = document.getElementById("college-result-loading-sub");
+
+        const stages = [
+          { title: "Connecting to AKTU Gateway...", sub: "Querying university records database..." },
+          { title: "Resolving Student Ledger...", sub: "Verifying enrollment & academic credentials..." },
+          { title: "Loading Semester Scorecard...", sub: "Compiling grades, SGPA & OneView ledger..." }
+        ];
+        let stageIndex = 0;
+        const interval = setInterval(() => {
+          stageIndex++;
+          if (stageIndex < stages.length && loadingTitle && loadingSub) {
+            loadingTitle.textContent = stages[stageIndex].title;
+            loadingSub.textContent = stages[stageIndex].sub;
+          }
+        }, 600);
+
+        try {
+          const res = await fetch("/api/search", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ rollNumber: roll })
+          });
+
+          clearInterval(interval);
+          resultLoader?.classList.add("hidden");
+
+          const data = await res.json();
+
+          if (data && data.success) {
+            const studentName = data.name || data.student?.name || "Verified Student";
+            const enrollmentNo = data.enrollmentNumber || data.student?.enrollmentNo || "--";
+            const fatherName = data.fatherName || data.student?.fatherName || "--";
+            const course = data.course || data.student?.course || "--";
+            const institute = data.institute || data.student?.college || "--";
+            const botUrl = data.telegramBotUrl || `https://t.me/akturesultwithoutdobbot?start=${encodeURIComponent(roll)}`;
+
+            resultOutput.innerHTML = `
+              <div class="p-5 rounded-2xl border border-emerald-500/30 light:border-emerald-200 bg-gradient-to-b from-emerald-500/10 via-black/60 to-black/80 light:bg-gradient-to-b light:from-emerald-50/80 light:via-white light:to-gray-50/60 space-y-4 text-left shadow-xl backdrop-blur-xl">
+                
+                <div class="flex items-center justify-between pb-3 border-b border-emerald-500/20 light:border-emerald-200">
+                  <div class="flex items-center gap-2">
+                    <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 light:bg-emerald-600 animate-pulse"></span>
+                    <span class="text-xs font-bold text-emerald-400 light:text-emerald-700 uppercase tracking-wider">Record Verified ✅</span>
+                  </div>
+                  <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/20 light:bg-emerald-100 text-emerald-300 light:text-emerald-800 border border-emerald-500/30 light:border-emerald-200">
+                    AKTU Result
+                  </span>
+                </div>
+
+                <div class="space-y-1.5">
+                  <div class="text-[10px] text-gray-400 light:text-gray-500 uppercase font-medium">Student Name:</div>
+                  <div class="text-lg font-black text-white light:text-ink tracking-tight">${studentName}</div>
+                  <div class="grid grid-cols-1 sm:grid-cols-2 gap-1.5 pt-2 border-t border-white/5 light:border-gray-200 font-mono text-xs">
+                    <div class="text-gray-400 light:text-gray-500">Roll No: <span class="font-bold text-white light:text-ink">${roll}</span></div>
+                    <div class="text-gray-400 light:text-gray-500">Enrollment: <span class="font-bold text-white light:text-ink">${enrollmentNo}</span></div>
+                    <div class="text-gray-400 light:text-gray-500">Course: <span class="text-gray-200 light:text-gray-800">${course}</span></div>
+                    <div class="text-gray-400 light:text-gray-500">Institute: <span class="text-gray-200 light:text-gray-800">${institute}</span></div>
+                  </div>
+                </div>
+
+                <!-- Telegram Bot Promotion Box -->
+                <div class="p-3.5 rounded-xl bg-gradient-to-r from-blue-600/20 to-purple-600/20 light:bg-gradient-to-r light:from-blue-50 light:to-purple-50 border border-blue-500/30 light:border-blue-200 space-y-2.5">
+                  <div class="flex items-center gap-2.5">
+                    <img src="/images/gemini-svg.webp" alt="AKTU Result Bot Logo" class="w-8 h-8 rounded-full object-cover shrink-0" />
+                    <div>
+                      <span class="text-xs font-bold text-white light:text-ink block">Access Full Marksheet &amp; PDF</span>
+                      <span class="text-[10px] text-brand-blue font-mono">@akturesultwithoutdobbot</span>
+                    </div>
+                  </div>
+                  <p class="text-[11px] text-gray-300 light:text-gray-600 leading-relaxed">
+                    View complete semester grades, subject-wise marks, SGPA/CGPA, and download official PDF scorecards without Date of Birth.
+                  </p>
+                  <a 
+                    href="${botUrl}" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    class="w-full py-3 bg-gradient-to-r from-brand-blue to-purple-600 hover:from-brand-blue-hover hover:to-purple-700 text-white text-xs font-bold rounded-xl transition-all shadow-md flex items-center justify-center gap-2 text-center cursor-pointer"
+                  >
+                    <span>👉 Get Marksheet on Telegram</span>
+                  </a>
+                </div>
+
+                <div class="flex gap-2 pt-1">
+                  <a 
+                    href="/aktu-result-without-date-of-birth?roll=${encodeURIComponent(roll)}"
+                    class="flex-1 py-2.5 bg-brand-blue hover:bg-brand-blue-hover text-white text-xs font-semibold rounded-xl transition-all text-center"
+                  >
+                    Open Full OneView
+                  </a>
+                  <button 
+                    type="button" 
+                    id="college-check-another-btn" 
+                    class="flex-1 py-2.5 bg-white/10 light:bg-gray-100 hover:bg-white/15 light:hover:bg-gray-200 text-white light:text-gray-800 text-xs font-semibold rounded-xl border border-white/10 light:border-gray-200 transition-all cursor-pointer text-center"
+                  >
+                    Check Another
+                  </button>
+                </div>
+              </div>
+            `;
+
+            resultOutput.classList.remove("hidden");
+
+            document.getElementById("college-check-another-btn")?.addEventListener("click", () => {
+              resultOutput.classList.add("hidden");
+              resultForm.classList.remove("hidden");
+              if (rollInput) {
+                rollInput.value = "";
+                rollInput.focus();
+              }
+            });
+
+          } else {
+            resultError?.classList.remove("hidden");
+            if (errorTitle) errorTitle.textContent = "Result Lookup Failed";
+            if (errorDesc) errorDesc.textContent = data?.error || "We could not locate this roll number in AKTU records. Confirm the roll number and try again.";
+          }
+        } catch (err) {
+          clearInterval(interval);
+          resultLoader?.classList.add("hidden");
+          resultError?.classList.remove("hidden");
+          if (errorTitle) errorTitle.textContent = "Network Gateway Error";
+          if (errorDesc) errorDesc.textContent = "Could not communicate with the AKTU server. Please check your internet connection.";
+        }
+      };
+
+      resultForm?.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const roll = rollInput?.value.trim();
+        handleResultSearch(roll);
+      });
+
+      // 3. Class Roster Combobox Dropdown Helper
       const setupCombobox = (comboboxId, searchInputId, hiddenInputId, dropdownId, listId, isSearchable) => {
         const combobox = document.getElementById(comboboxId);
         const searchInput = document.getElementById(searchInputId);
@@ -540,7 +1042,6 @@ const collegeKeywords = `find aktu roll number of ${college.name}, ${college.nam
 
         const items = Array.from(list.querySelectorAll("button"));
 
-        // Click to toggle dropdown
         const openDropdown = () => {
           dropdown.classList.remove("hidden");
           items.forEach(item => item.classList.remove("hidden"));
@@ -548,8 +1049,6 @@ const collegeKeywords = `find aktu roll number of ${college.name}, ${college.nam
         searchInput.addEventListener("focus", openDropdown);
         searchInput.addEventListener("click", openDropdown);
 
-
-        // Filter options as user types
         if (isSearchable) {
           searchInput.addEventListener("input", () => {
             const query = searchInput.value.trim().toLowerCase();
@@ -568,7 +1067,6 @@ const collegeKeywords = `find aktu roll number of ${college.name}, ${college.nam
           });
         }
 
-        // Handle item selection
         list.addEventListener("click", (e) => {
           const itemBtn = e.target.closest("button");
           if (!itemBtn) return;
@@ -582,7 +1080,6 @@ const collegeKeywords = `find aktu roll number of ${college.name}, ${college.nam
           dropdown.classList.add("hidden");
         });
 
-        // Hide dropdown when clicking outside
         document.addEventListener("click", (e) => {
           if (!combobox.contains(e.target)) {
             dropdown.classList.add("hidden");
@@ -602,7 +1099,7 @@ const collegeKeywords = `find aktu roll number of ${college.name}, ${college.nam
       setupCombobox("home-year-combobox", "home-year-search", "home-finder-year", "home-year-dropdown", "home-year-list", false);
       setupCombobox("home-branch-combobox", "home-branch-search", "home-finder-branch", "home-branch-dropdown", "home-branch-list", true);
 
-      // Captcha Generator
+      // Captcha Generator for Roster Search
       const generateHomeFinderCaptcha = () => {
         const num1 = Math.floor(Math.random() * 9) + 1;
         const num2 = Math.floor(Math.random() * 9) + 1;
@@ -617,14 +1114,12 @@ const collegeKeywords = `find aktu roll number of ${college.name}, ${college.nam
       let expectedHomeFinderCaptchaSum = generateHomeFinderCaptcha();
 
       const homeFinderForm = document.getElementById("home-finder-form");
-      const homeFinderSubmitBtn = document.getElementById("home-finder-submit-btn");
       const homeFinderLoader = document.getElementById("home-finder-loader-state");
       const homeFinderOutput = document.getElementById("home-finder-output");
 
       homeFinderForm?.addEventListener("submit", async (e) => {
         e.preventDefault();
         
-        // Verify Captcha
         const captchaAnsInput = document.getElementById("home-finder-captcha-answer");
         const captchaAns = parseInt(captchaAnsInput?.value.trim(), 10);
         if (captchaAns !== expectedHomeFinderCaptchaSum) {
@@ -644,7 +1139,6 @@ const collegeKeywords = `find aktu roll number of ${college.name}, ${college.nam
           return;
         }
 
-        // Show loader
         homeFinderForm.classList.add("hidden");
         homeFinderLoader.classList.remove("hidden");
         homeFinderOutput.classList.add("hidden");
@@ -707,13 +1201,13 @@ const collegeKeywords = `find aktu roll number of ${college.name}, ${college.nam
 
           // Display Roll Range
           html += `
-            <div class="p-4 rounded-xl border border-white/[0.08] bg-white/[0.03] space-y-2 text-left">
-              <div class="text-[10px] uppercase font-bold text-gray-400 tracking-wider">Class Roll Range</div>
+            <div class="p-4 rounded-xl border border-white/[0.08] light:border-gray-200 bg-white/[0.03] light:bg-gray-50 space-y-2 text-left">
+              <div class="text-[10px] uppercase font-bold text-gray-400 light:text-gray-500 tracking-wider">Class Roll Range</div>
               <div class="flex justify-between items-center text-xs">
-                <div>Start: <span class="font-mono font-bold text-white">${data.rangeStart}</span></div>
-                <div>End: <span class="font-mono font-bold text-white">${data.rangeEnd}</span></div>
+                <div>Start: <span class="font-mono font-bold text-white light:text-ink">${data.rangeStart}</span></div>
+                <div>End: <span class="font-mono font-bold text-white light:text-ink">${data.rangeEnd}</span></div>
               </div>
-              <p class="text-[10px] text-gray-405 leading-relaxed mt-1">Found ${data.matches ? data.matches.length : 0} matching students.</p>
+              <p class="text-[10px] text-gray-400 light:text-gray-600 leading-relaxed mt-1">Found ${data.matches ? data.matches.length : 0} matching students.</p>
             </div>
           `;
 
@@ -721,23 +1215,32 @@ const collegeKeywords = `find aktu roll number of ${college.name}, ${college.nam
           if (data.matches && data.matches.length > 0) {
             html += `
               <div class="space-y-2 text-left">
-                <div class="text-[10px] uppercase font-bold text-gray-400 tracking-wider">Matched Students</div>
-                <div class="max-h-60 overflow-y-auto border border-white/[0.08] rounded-xl divide-y divide-white/[0.05] bg-black/20">
+                <div class="text-[10px] uppercase font-bold text-gray-400 light:text-gray-500 tracking-wider">Matched Students</div>
+                <div class="max-h-60 overflow-y-auto border border-white/[0.08] light:border-gray-200 rounded-xl divide-y divide-white/[0.05] light:divide-gray-100 bg-black/20 light:bg-white">
             `;
             data.matches.forEach((m) => {
               html += `
-                <div class="p-3 flex justify-between items-center hover:bg-white/[0.02] transition-all">
+                <div class="p-3 flex justify-between items-center hover:bg-white/[0.02] light:hover:bg-gray-50 transition-all">
                   <div class="space-y-0.5">
-                    <div class="text-xs font-bold text-white">${m.name}</div>
-                    <div class="text-[10px] text-gray-500 font-mono">${m.rollNumber}</div>
+                    <div class="text-xs font-bold text-white light:text-ink">${m.name}</div>
+                    <div class="text-[10px] text-gray-400 light:text-gray-500 font-mono">${m.rollNumber}</div>
                   </div>
-                  <button 
-                    type="button" 
-                    class="copy-roll-btn px-2 py-1 bg-brand-blue hover:bg-brand-blue-hover text-white text-[9px] font-bold rounded cursor-pointer transition-colors"
-                    data-roll="${m.rollNumber}"
-                  >
-                    Copy
-                  </button>
+                  <div class="flex items-center gap-1.5">
+                    <button 
+                      type="button" 
+                      class="check-roster-result-btn px-2.5 py-1 bg-emerald-600 hover:bg-emerald-500 text-white text-[9px] font-bold rounded cursor-pointer transition-colors"
+                      data-roll="${m.rollNumber}"
+                    >
+                      ⚡ Check Result
+                    </button>
+                    <button 
+                      type="button" 
+                      class="copy-roll-btn px-2 py-1 bg-white/10 light:bg-gray-100 hover:bg-white/20 light:hover:bg-gray-200 text-white light:text-gray-800 text-[9px] font-bold rounded cursor-pointer transition-colors"
+                      data-roll="${m.rollNumber}"
+                    >
+                      Copy
+                    </button>
+                  </div>
                 </div>
               `;
             });
@@ -748,7 +1251,7 @@ const collegeKeywords = `find aktu roll number of ${college.name}, ${college.nam
           }
 
           html += `
-            <button type="button" id="home-finder-new-search-btn" class="w-full py-3 bg-white/[0.05] hover:bg-white/[0.1] text-white text-xs font-semibold rounded-xl transition-all cursor-pointer">Start New Search</button>
+            <button type="button" id="home-finder-new-search-btn" class="w-full py-3 bg-white/[0.05] hover:bg-white/[0.1] light:bg-gray-100 light:hover:bg-gray-200 text-white light:text-gray-800 text-xs font-semibold rounded-xl transition-all cursor-pointer">Start New Search</button>
           `;
 
           homeFinderOutput.innerHTML = html;
@@ -761,12 +1264,27 @@ const collegeKeywords = `find aktu roll number of ${college.name}, ${college.nam
               if (roll) {
                 navigator.clipboard.writeText(roll).then(() => {
                   btn.textContent = "Copied!";
-                  btn.classList.replace("bg-brand-blue", "bg-emerald-600");
+                  btn.classList.add("bg-emerald-600", "text-white");
                   setTimeout(() => {
                     btn.textContent = "Copy";
-                    btn.classList.replace("bg-emerald-600", "bg-brand-blue");
+                    btn.classList.remove("bg-emerald-600");
                   }, 1500);
                 });
+              }
+            });
+          });
+
+          // Check Result from roster listener
+          const checkButtons = homeFinderOutput.querySelectorAll(".check-roster-result-btn");
+          checkButtons.forEach((btn) => {
+            btn.addEventListener("click", () => {
+              const roll = btn.getAttribute("data-roll");
+              if (roll) {
+                activateTab("result");
+                if (rollInput) {
+                  rollInput.value = roll;
+                }
+                handleResultSearch(roll);
               }
             });
           });

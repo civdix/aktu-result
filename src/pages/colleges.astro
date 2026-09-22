@@ -165,7 +165,9 @@ const collegeKeywords = "aktu affiliated colleges, aktu affiliated colleges list
                 <span class="text-[10px] text-gray-500 font-medium uppercase">Affiliated College</span>
               </div>
               <h3 class="text-xs sm:text-sm font-bold text-white light:text-ink line-clamp-2 leading-snug">
-                {c.name}
+                <a href={`/college/${slugifyCollege(c.name, c.code)}`} class="hover:text-brand-blue transition-colors">
+                  {c.name}
+                </a>
               </h3>
             </div>
             
@@ -174,7 +176,7 @@ const collegeKeywords = "aktu affiliated colleges, aktu affiliated colleges list
                 href={`/college/${slugifyCollege(c.name, c.code)}`}
                 class="text-[10px] font-bold text-brand-blue hover:underline cursor-pointer"
               >
-                Scan class rolls &rarr;
+                Check Result &amp; Details &rarr;
               </a>
               <span class="text-[9px] text-gray-500 font-medium">B.Tech / B.Pharm / MBA / MCA</span>
             </div>
@@ -193,11 +195,17 @@ const collegeKeywords = "aktu affiliated colleges, aktu affiliated colleges list
           <div class="mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 text-[10px] sm:text-xs text-gray-500 border border-canvas-dark-border/40 light:border-canvas-light-border/60 bg-black/40 light:bg-gray-50 rounded-2xl p-6 select-text cursor-default">
             {sortedColleges.map((c) => (
               <div class="space-y-1.5 p-3 rounded-lg border border-canvas-dark-border/10 light:border-canvas-light-border/20 bg-black/25 light:bg-white">
-                <h4 class="font-bold text-white light:text-ink text-[11px]">{c.name} (Code {c.code})</h4>
+                <h4 class="font-bold text-white light:text-ink text-[11px]">
+                  <a href={`/college/${slugifyCollege(c.name, c.code)}`} class="hover:text-brand-blue transition-colors">
+                    {c.name} (Code {c.code})
+                  </a>
+                </h4>
                 <div class="space-y-1 text-gray-500 font-mono">
                   <div class="flex items-center gap-1.5">
                     <span class="w-1.5 h-1.5 rounded-full bg-brand-blue"></span>
-                    <span class="font-semibold text-gray-400 light:text-gray-600">{c.name} Result</span>
+                    <a href={`/college/${slugifyCollege(c.name, c.code)}`} class="font-semibold text-gray-400 light:text-gray-600 hover:underline">
+                      {c.name} Result
+                    </a>
                   </div>
                   <div class="flex items-center gap-1.5">
                     <span class="w-1 h-1 rounded-full bg-brand-blue/60"></span>
