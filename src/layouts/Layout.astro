@@ -845,5 +845,52 @@ const isActive = (path: string) => {
         <span class="font-bold text-xs tracking-wide">WhatsApp Alerts</span>
       </a>
     </aside>
+
+    <!-- WebMCP Tool Registration (for AI Browser Agents) -->
+    <script is:inline>
+      (function() {
+        if (typeof navigator !== 'undefined' && 'modelContext' in navigator && typeof navigator.modelContext?.registerTool === 'function') {
+          try {
+            navigator.modelContext.registerTool({
+              name: 'query_aktu_result',
+              description: 'Fetch student marksheet, semester scores, and pass status by AKTU roll number without requiring DOB.',
+              inputSchema: {
+                type: 'object',
+                properties: {
+                  rollNumber: {
+                    type: 'string',
+                    description: '10 to 14-digit AKTU university roll number'
+                  }
+                },
+                required: ['rollNumber']
+              },
+              execute: async function(params) {
+                const res = await fetch('/api/search', {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify({ rollNumber: params.rollNumber })
+                });
+                return await res.json();
+              }
+            });
+
+            navigator.modelContext.registerTool({
+              name: 'list_aktu_colleges',
+              description: 'Retrieve affiliated AKTU technical colleges and engineering institutions.',
+              inputSchema: {
+                type: 'object',
+                properties: {}
+              },
+              execute: async function() {
+                const res = await fetch('/api/colleges');
+                return await res.json();
+              }
+            });
+          } catch (e) {
+            console.warn('[WebMCP] Tool registration notice:', e);
+          }
+        }
+      })();
+    </script>
   </body>
 </html>

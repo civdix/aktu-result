@@ -15,12 +15,23 @@
       "description": "Production Server"
     }
   ],
+  "x-service-info": {
+    "categories": ["education", "academic-verification", "utilities"],
+    "provider": "AKTU Result"
+  },
   "paths": {
     "/api/search": {
       "post": {
         "summary": "Query Student Academic Result",
         "description": "Fetch student academic profile, semester grades, and result status by roll number without requiring date of birth.",
         "operationId": "searchResult",
+        "x-payment-info": {
+          "intent": "charge",
+          "method": "stripe",
+          "amount": 0,
+          "currency": "INR",
+          "description": "Student academic result verification"
+        },
         "requestBody": {
           "required": true,
           "content": {

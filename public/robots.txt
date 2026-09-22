@@ -4,5 +4,7 @@ Allow: /
 User-agent: Googlebot-Image
 Allow: /
 
+Content-Signal: ai-train=no, search=yes, ai-input=no
+
 Sitemap: https://akturesult.bond/sitemap.xml
 Sitemap: https://akturesult.bond/sitemap-colleges.xml
