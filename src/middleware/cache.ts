@@ -10,6 +10,14 @@ export const cacheControlMiddleware = defineMiddleware(async (context, next) => 
     response.headers.set('content-type', `${contentType}; charset=utf-8`);
   }
 
+  // Advertise RFC 9727 API Catalog via Link header
+  const existingLink = response.headers.get('link');
+  if (!existingLink) {
+    response.headers.set('link', '</.well-known/api-catalog>; rel="api-catalog"');
+  } else if (!existingLink.includes('rel="api-catalog"')) {
+    response.headers.set('link', `${existingLink}, </.well-known/api-catalog>; rel="api-catalog"`);
+  }
+
   if (response.headers.has('Cache-Control')) {
     return response;
   }

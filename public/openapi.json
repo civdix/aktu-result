@@ -1,0 +1,144 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "AKTU Result & Student Verification API",
+    "version": "1.0.0",
+    "description": "Automated student verification and academic result query APIs for Dr. A.P.J. Abdul Kalam Technical University (AKTU) affiliated students and colleges.",
+    "contact": {
+      "name": "AKTU Result Support",
+      "url": "https://akturesult.bond/contact"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://akturesult.bond",
+      "description": "Production Server"
+    }
+  ],
+  "paths": {
+    "/api/search": {
+      "post": {
+        "summary": "Query Student Academic Result",
+        "description": "Fetch student academic profile, semester grades, and result status by roll number without requiring date of birth.",
+        "operationId": "searchResult",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["rollNumber"],
+                "properties": {
+                  "rollNumber": {
+                    "type": "string",
+                    "description": "Student AKTU Roll Number",
+                    "example": "2400650100001"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Student marksheet and result data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": { "type": "boolean" },
+                    "student": { "type": "object" },
+                    "semesters": { "type": "array" },
+                    "overallStatus": { "type": "string" },
+                    "division": { "type": "string" }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid roll number format"
+          },
+          "404": {
+            "description": "Result record not found"
+          }
+        }
+      }
+    },
+    "/api/app-status": {
+      "get": {
+        "summary": "Service Health and App Status",
+        "description": "Returns system health, maintenance alerts, and active server status.",
+        "operationId": "getAppStatus",
+        "responses": {
+          "200": {
+            "description": "System status and health metrics",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "activeMode": { "type": "string" },
+                    "maintenance": { "type": "object" },
+                    "update": { "type": "object" },
+                    "timestamp": { "type": "number" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/colleges": {
+      "get": {
+        "summary": "List AKTU Affiliated Colleges",
+        "description": "Returns directory of affiliated colleges with codes, names, and slugs.",
+        "operationId": "getColleges",
+        "responses": {
+          "200": {
+            "description": "List of colleges",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": { "type": "object" }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/college/{slug}": {
+      "get": {
+        "summary": "Get College Profile",
+        "description": "Returns college details, branch options, and student roster.",
+        "operationId": "getCollegeBySlug",
+        "parameters": [
+          {
+            "name": "slug",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": { "description": "College details" },
+          "404": { "description": "College not found" }
+        }
+      }
+    },
+    "/api/branches": {
+      "get": {
+        "summary": "List Academic Branches",
+        "description": "Returns available engineering and management branches.",
+        "operationId": "getBranches",
+        "responses": {
+          "200": { "description": "List of academic branches" }
+        }
+      }
+    }
+  }
+}
