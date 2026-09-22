@@ -3,6 +3,23 @@ import type { APIRoute } from 'astro';
 export const prerender = false;
 
 const ucp = {
+  ucp: {
+    version: '2026-04-08',
+    services: {
+      'dev.ucp.shopping': {
+        version: '2026-04-08',
+        rest: {
+          endpoint: 'https://akturesult.bond/api'
+        }
+      }
+    },
+    capabilities: [
+      {
+        version: '2026-04-08',
+        spec: 'https://ucp.dev/2026-04-08/specification/shopping/checkout'
+      }
+    ]
+  },
   protocol_version: '1.0.0',
   services: [
     {

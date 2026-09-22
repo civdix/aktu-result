@@ -7,14 +7,17 @@ const ardManifest = {
   host: {
     domain: 'akturesult.bond',
     name: 'AKTU Result',
+    displayName: 'AKTU Result',
+    identifier: 'urn:ai:akturesult.bond',
     description: 'Dr. A.P.J. Abdul Kalam Technical University Examination Result & Student Verification System'
   },
   entries: [
     {
-      id: 'urn:air:akturesult.bond:api:result-search',
+      identifier: 'urn:ai:akturesult.bond:api:result-search',
+      id: 'urn:ai:akturesult.bond:api:result-search',
       displayName: 'AKTU Result Search API',
-      type: 'application/json',
-      url: 'https://akturesult.bond/api/search',
+      type: 'application/openapi+json',
+      url: 'https://akturesult.bond/openapi.json',
       description: 'Fetch student semester results and marksheet by roll number.',
       representativeQueries: [
         'Check AKTU semester result',
@@ -24,10 +27,11 @@ const ardManifest = {
       ]
     },
     {
-      id: 'urn:air:akturesult.bond:mcp:server',
+      identifier: 'urn:ai:akturesult.bond:mcp:server',
+      id: 'urn:ai:akturesult.bond:mcp:server',
       displayName: 'AKTU Result MCP Server',
-      type: 'application/json',
-      url: 'https://akturesult.bond/mcp',
+      type: 'application/mcp-server+json',
+      url: 'https://akturesult.bond/.well-known/mcp/server-card.json',
       description: 'Model Context Protocol (MCP) server for querying AKTU academic data.',
       representativeQueries: [
         'Query student results with AI agent',

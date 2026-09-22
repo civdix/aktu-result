@@ -12,18 +12,30 @@ const agentCard = {
   },
   supportedInterfaces: [
     {
+      url: 'https://akturesult.bond/a2a',
       serviceUrl: 'https://akturesult.bond/a2a',
+      protocolBinding: 'HTTP+JSON',
       transport: 'https'
     },
     {
+      url: 'https://akturesult.bond/api/search',
       serviceUrl: 'https://akturesult.bond/api/search',
+      protocolBinding: 'HTTP+JSON',
       transport: 'http'
     }
   ],
   capabilities: {
     streaming: false,
     tools: true,
-    pushNotifications: false
+    pushNotifications: false,
+    extensions: [
+      {
+        uri: 'https://ap2-protocol.org/',
+        required: false,
+        role: 'credentials-provider',
+        description: 'AP2 agent payments and credentials verification protocol.'
+      }
+    ]
   },
   skills: [
     {

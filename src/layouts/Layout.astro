@@ -58,6 +58,8 @@ const isActive = (path: string) => {
     <meta name="description" content={description} />
     <meta name="keywords" content={keywords} />
     <link rel="canonical" href={resolvedCanonical} />
+    <link rel="ai-catalog" href="/.well-known/ai-catalog.json" />
+    <link rel="api-catalog" href="/.well-known/api-catalog" />
     <meta name="generator" content={Astro.generator} />
     <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
     <meta name="googlebot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />

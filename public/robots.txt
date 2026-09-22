@@ -8,3 +8,4 @@ Content-Signal: ai-train=no, search=yes, ai-input=no
 
 Sitemap: https://akturesult.bond/sitemap.xml
 Sitemap: https://akturesult.bond/sitemap-colleges.xml
+Agentmap: https://akturesult.bond/.well-known/ai-catalog.json
