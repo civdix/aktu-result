@@ -1215,27 +1215,27 @@ const collegeKeywords = `${college.name} aktu result, aktu result for ${college.
           if (data.matches && data.matches.length > 0) {
             html += `
               <div class="space-y-2 text-left">
-                <div class="text-[10px] uppercase font-bold text-gray-400 light:text-gray-500 tracking-wider">Matched Students</div>
-                <div class="max-h-60 overflow-y-auto border border-white/[0.08] light:border-gray-200 rounded-xl divide-y divide-white/[0.05] light:divide-gray-100 bg-black/20 light:bg-white">
+                <div class="text-[10px] uppercase font-bold text-gray-400 light:text-gray-500 tracking-wider">Matched Students (${data.matches.length})</div>
+                <div class="space-y-2 max-h-[380px] sm:max-h-[460px] overflow-y-auto pr-1">
             `;
             data.matches.forEach((m) => {
               html += `
-                <div class="p-3 flex justify-between items-center hover:bg-white/[0.02] light:hover:bg-gray-50 transition-all">
+                <div class="p-3 sm:p-3.5 bg-black/40 light:bg-white hover:bg-brand-blue/5 light:hover:bg-blue-50/70 border border-white/[0.08] light:border-gray-200 hover:border-brand-blue/30 light:hover:border-brand-blue/40 rounded-xl flex justify-between items-center transition-all light:shadow-xs">
                   <div class="space-y-0.5">
-                    <div class="text-xs font-bold text-white light:text-ink">${m.name}</div>
-                    <div class="text-[10px] text-gray-400 light:text-gray-500 font-mono">${m.rollNumber}</div>
+                    <div class="font-extrabold text-xs sm:text-sm text-white light:text-ink tracking-tight">${m.name}</div>
+                    <div class="text-[11px] font-mono text-gray-400 light:text-gray-600 font-semibold">${m.rollNumber}</div>
                   </div>
-                  <div class="flex items-center gap-1.5">
+                  <div class="flex items-center gap-2 shrink-0">
                     <button 
                       type="button" 
-                      class="check-roster-result-btn px-2.5 py-1 bg-emerald-600 hover:bg-emerald-500 text-white text-[9px] font-bold rounded cursor-pointer transition-colors"
+                      class="check-roster-result-btn px-3.5 py-1.5 bg-brand-blue hover:bg-brand-blue-hover text-white text-xs font-bold rounded-lg cursor-pointer transition-all shadow-sm hover:scale-105 active:scale-95 flex items-center gap-1"
                       data-roll="${m.rollNumber}"
                     >
-                      ⚡ Check Result
+                      <span>⚡ Get Result</span>
                     </button>
                     <button 
                       type="button" 
-                      class="copy-roll-btn px-2 py-1 bg-white/10 light:bg-gray-100 hover:bg-white/20 light:hover:bg-gray-200 text-white light:text-gray-800 text-[9px] font-bold rounded cursor-pointer transition-colors"
+                      class="copy-roll-btn px-2.5 py-1.5 bg-white/10 light:bg-gray-100 hover:bg-white/20 light:hover:bg-gray-200 text-white light:text-gray-800 text-xs font-semibold rounded-lg cursor-pointer transition-all border border-transparent light:border-gray-200"
                       data-roll="${m.rollNumber}"
                     >
                       Copy

@@ -2289,13 +2289,13 @@ const homeKeywords = `aktu result without date of birth, aktu result without dob
 
         // Display Roll Range
         html += `
-          <div class="p-4 rounded-xl border border-white/[0.08] bg-white/[0.03] space-y-2 text-left">
-            <div class="text-[10px] uppercase font-bold text-gray-400 tracking-wider">Class Roll Range</div>
+          <div class="p-4 rounded-xl border border-white/[0.08] light:border-gray-200 bg-white/[0.03] light:bg-gray-50 space-y-2 text-left light:shadow-xs">
+            <div class="text-[10px] uppercase font-bold text-gray-400 light:text-gray-500 tracking-wider">Class Roll Range</div>
             <div class="flex justify-between items-center text-xs">
-              <div>Start: <span class="font-mono font-bold text-white">${data.rangeStart}</span></div>
-              <div>End: <span class="font-mono font-bold text-white">${data.rangeEnd}</span></div>
+              <div>Start: <span class="font-mono font-bold text-white light:text-ink">${data.rangeStart}</span></div>
+              <div>End: <span class="font-mono font-bold text-white light:text-ink">${data.rangeEnd}</span></div>
             </div>
-            <p class="text-[10px] text-gray-450 leading-relaxed mt-1">Found ${data.matches ? data.matches.length : 0} matching students.</p>
+            <p class="text-[10px] text-gray-400 light:text-gray-600 leading-relaxed mt-1">Found ${data.matches ? data.matches.length : 0} matching students.</p>
           </div>
         `;
 
@@ -2303,23 +2303,23 @@ const homeKeywords = `aktu result without date of birth, aktu result without dob
         if (data.matches && data.matches.length > 0) {
           html += `
             <div class="space-y-2 text-left">
-              <div class="text-[10px] uppercase font-bold text-gray-400 tracking-wider">Matches List</div>
-              <div class="space-y-1.5 max-h-56 overflow-y-auto pr-1">
+              <div class="text-[10px] uppercase font-bold text-gray-400 light:text-gray-500 tracking-wider">Matched Students (${data.matches.length})</div>
+              <div class="space-y-2 max-h-[380px] sm:max-h-[460px] overflow-y-auto pr-1">
           `;
           data.matches.forEach((student) => {
             html += `
-              <div class="p-3 bg-black/45 hover:bg-brand-blue/5 border border-white/[0.06] hover:border-brand-blue/30 rounded-xl flex justify-between items-center transition-all">
-                <div>
-                  <div class="font-bold text-xs text-white">${student.name}</div>
-                  <div class="text-[10px] font-mono text-gray-500 mt-0.5">${student.rollNumber}</div>
+              <div class="p-3 sm:p-3.5 bg-black/45 light:bg-white hover:bg-brand-blue/5 light:hover:bg-blue-50/70 border border-white/[0.08] light:border-gray-200 hover:border-brand-blue/30 light:hover:border-brand-blue/40 rounded-xl flex justify-between items-center transition-all light:shadow-xs">
+                <div class="space-y-0.5">
+                  <div class="font-extrabold text-xs sm:text-sm text-white light:text-ink tracking-tight">${student.name}</div>
+                  <div class="text-[11px] font-mono text-gray-400 light:text-gray-600 font-semibold mt-0.5">${student.rollNumber}</div>
                 </div>
                 <button 
                   type="button" 
-                  class="home-select-student-btn px-3 py-1 bg-brand-blue/20 hover:bg-brand-blue text-brand-blue hover:text-white rounded-lg text-[10px] font-bold transition-all cursor-pointer"
+                  class="home-select-student-btn px-3.5 py-1.5 bg-brand-blue hover:bg-brand-blue-hover text-white rounded-lg text-xs font-bold transition-all shadow-sm hover:scale-105 active:scale-95 cursor-pointer flex items-center gap-1 shrink-0"
                   data-roll="${student.rollNumber}"
                   data-name="${student.name}"
                 >
-                  Get Result
+                  <span>⚡ Get Result</span>
                 </button>
               </div>
             `;
@@ -2330,14 +2330,14 @@ const homeKeywords = `aktu result without date of birth, aktu result without dob
           `;
         } else {
           html += `
-            <div class="p-4 rounded-xl border border-white/[0.06] text-center text-xs text-gray-500">
+            <div class="p-4 rounded-xl border border-white/[0.06] light:border-gray-200 text-center text-xs text-gray-500 light:text-gray-600 bg-black/20 light:bg-gray-50">
               No specific matching students found. Try selecting the base range from above.
             </div>
           `;
         }
 
         html += `
-          <button type="button" id="home-finder-back-btn" class="w-full py-2.5 bg-white/[0.05] hover:bg-white/[0.1] text-white text-xs font-semibold rounded-lg mt-2 cursor-pointer transition-all">New Search</button>
+          <button type="button" id="home-finder-back-btn" class="w-full py-2.5 bg-white/[0.05] hover:bg-white/[0.1] light:bg-gray-100 light:hover:bg-gray-200 text-white light:text-gray-800 text-xs font-semibold rounded-lg mt-2 cursor-pointer transition-all border border-transparent light:border-gray-200">New Search</button>
         `;
 
         homeFinderOutput.innerHTML = html;

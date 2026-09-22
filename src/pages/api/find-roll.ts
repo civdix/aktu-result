@@ -309,8 +309,7 @@ export const POST: APIRoute = async ({ request }) => {
       });
     }
 
-    // Limit output count to prevent frontend clutter
-    finalMatches = finalMatches.slice(0, 15);
+    // Return all discovered class students without slicing or limiting output count
 
     const rangeStart = maxValidSerial > 0
       ? `${prefix}${String(minValidSerial).padStart(4, '0')}`
