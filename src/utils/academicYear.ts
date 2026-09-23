@@ -31,13 +31,13 @@ export function getAcademicYearInfo(date = new Date()) {
     session,              // e.g. "2026-2027"
     sessionFormatted,     // e.g. "2026–2027"
     primaryYear: `${currentYear}`,
-    homeTitle: `AKTU Result ${session} One View Portal (Fast & Direct) - Check Result Without DOB`,
-    homeDescription: `Check AKTU Result without Date of Birth (DOB) online for session ${sessionFormatted}. Access your OneView AKTU marksheet, AKTU ERP result, and semester score cards instantly by Roll Number.`,
-    withoutDobTitle: `AKTU Result Without Date of Birth | Check OneView Marksheet Online`,
-    withoutDobDescription: `Check AKTU Result without Date of Birth (DOB) online. Enter your AKTU Roll Number to view complete OneView marksheet, semester scorecards, SGPA, CGPA, and ERP result instantly.`,
+    homeTitle: `AKTU Result ${session} | OneView Marksheet Without DOB`,
+    homeDescription: `Check AKTU Result without Date of Birth for session ${sessionFormatted}. Access your OneView marksheet, ERP scorecards, SGPA, and back papers by Roll Number.`,
+    withoutDobTitle: `AKTU Result Without DOB | Check OneView Marksheet Online`,
+    withoutDobDescription: `Check AKTU Result without Date of Birth online. Enter Roll Number to view complete OneView marksheet, SGPA, CGPA, and semester grades instantly.`,
     oneviewTitle: `OneView AKTU Result ${session} | Check Marksheet Online`,
-    oneviewDescription: `Check OneView AKTU Result ${session} online. View full semester marks, SGPA, CGPA, back papers, and marksheet without Date of Birth using your AKTU Roll Number.`,
-    erpTitle: `AKTU ERP Result ${session} | AKTU ERP Login & Student Portal Guide`,
-    erpDescription: `Check AKTU ERP Result ${session} online. Learn how to access erp.aktu.ac.in student portal, view semester marks, exam circulars, and marksheet verification.`
+    oneviewDescription: `Check OneView AKTU Result ${sessionFormatted} online. View semester marks, SGPA, CGPA, back papers, and marksheet without Date of Birth using Roll Number.`,
+    erpTitle: `AKTU ERP Result ${session} | Student Login & Portal Guide`,
+    erpDescription: `Check AKTU ERP Result ${session} online. Student login guide for erp.aktu.ac.in, marksheet verification, scrutiny results, and semester exam grades.`
   };
 }

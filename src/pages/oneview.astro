@@ -11,10 +11,10 @@ const hideDob = Astro.url.searchParams.get("hide") !== "0";
 const siteUrl = "https://akturesult.bond";
 const pageUrl = `${siteUrl}/oneview`;
 const pageTitle = roll 
-  ? `OneView AKTU Result ${yearInfo.session} - Marksheet for Roll ${roll}` 
-  : `OneView AKTU Result ${yearInfo.session} - Check AKTU One View Marksheet Online`;
+  ? `OneView AKTU Result ${yearInfo.session} | Roll ${roll}` 
+  : `OneView AKTU Result ${yearInfo.session} | Check Marksheet Online`;
 
-const pageDescription = `Access AKTU OneView Result ${yearInfo.sessionFormatted} online. View semester marks, SGPA, CGPA, back papers, and marksheet without Date of Birth using your AKTU Roll Number.`;
+const pageDescription = `Check AKTU OneView Result ${yearInfo.sessionFormatted} online. View semester marks, SGPA, CGPA, back papers, and marksheet without Date of Birth using Roll Number.`;
 
 const oneviewKeywords = `oneview aktu, aktu oneview, aktu one view, aktu oneview result ${yearInfo.session}, aktu result ${yearInfo.session}, oneview.aktu.ac.in, aktu one view result, aktu oneview marksheet, check aktu oneview result, aktu result one view, aktu oneview login, aktu result without dob`;
 

@@ -64,6 +64,10 @@ const sortedBranches = [...branches].sort((a, b) => a.name.localeCompare(b.name)
 const siteUrl = "https://akturesult.bond";
 const pageUrl = `${siteUrl}/college/${canonicalSlug}`;
 
+const shortCollegeName = college.name.length > 35 ? college.name.slice(0, 32) + '...' : college.name;
+const pageTitle = `${shortCollegeName} AKTU Result (Code ${college.code})`;
+const pageDescription = `Check ${shortCollegeName} (Code ${college.code}) AKTU semester results online without DOB. View OneView scorecards, ERP links, and roll lookup.`;
+
 const jsonLd = {
   "@context": "https://schema.org",
   "@graph": [
@@ -97,8 +101,8 @@ const jsonLd = {
       "@type": "WebPage",
       "@id": pageUrl,
       "url": pageUrl,
-      "name": `${college.name} AKTU Result 2026 - Check Marksheet Without DOB`,
-      "description": `Check official AKTU semester results, marksheet, official college website (${websiteInfo.displayUrl}), and student roll numbers for ${college.name} (Code: ${college.code}).`,
+      "name": pageTitle,
+      "description": pageDescription,
       "isPartOf": {
         "@type": "WebSite",
         "@id": `${siteUrl}#website`,
@@ -182,8 +186,8 @@ const collegeKeywords = `${college.name} aktu result, aktu result for ${college.
 ---
 
 <Layout 
-  title={`${college.name} AKTU Result 2026 - Check Online Without DOB (Code ${college.code})`}
-  description={`Check ${college.name} (Code ${college.code}) AKTU results online without Date of Birth. View One View semester scorecards, official college website (${websiteInfo.displayUrl}), and student roll number finder.`}
+  title={pageTitle}
+  description={pageDescription}
   keywords={collegeKeywords}
   jsonLd={jsonLd}
 >
