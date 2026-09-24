@@ -3343,15 +3343,7 @@ const homeKeywords = `aktu result without date of birth, aktu result without dob
           } catch (e) {}
 
           completeProgress(() => {
-            if (!isOk || !resData || !resData.success) {
-              const errorText = resData?.error || "Could not fetch result now. You can open the live OneView portal directly below.";
-              document.getElementById("error-title").textContent = resData?.notFound ? "Record Not Found In Database" : "Search Failed";
-              document.getElementById("error-desc").textContent = errorText;
-              errorState.classList.remove("hidden");
-              return;
-            }
-
-            if (resData.success) {
+            if (resData && resData.success) {
               if (resData.totalSearches) {
                 updateCounterUI(resData.totalSearches);
               }
@@ -3362,11 +3354,12 @@ const homeKeywords = `aktu result without date of birth, aktu result without dob
                   renderSearchVerifiedProfile(resData);
                 }
               });
-            } else if (resData.needsManualCaptcha && resData.captchaImage) {
+            } else if (resData && resData.needsManualCaptcha && resData.captchaImage) {
               renderSearchManualCaptcha(resData, enteredRoll);
             } else {
-              document.getElementById("error-title").textContent = "Search Failed";
-              document.getElementById("error-desc").textContent = resData.error || "Could not fetch result now.";
+              const errorText = resData?.error || "Could not retrieve records for this roll number. Please verify the roll number.";
+              document.getElementById("error-title").textContent = resData?.notFound ? "Record Not Found In Database" : "Search Failed";
+              document.getElementById("error-desc").textContent = errorText;
               errorState.classList.remove("hidden");
             }
           });

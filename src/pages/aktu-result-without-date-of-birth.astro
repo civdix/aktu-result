@@ -1399,20 +1399,15 @@ const jsonLd = {
             }
 
             completeProgress(() => {
-              if (!isOk || !resData || !resData.success) {
-                const errorText = resData?.error || "Could not fetch result now. You can open the live OneView portal directly below.";
-                showError(resData?.notFound ? "Record Not Found In Database" : "Result Search Failed", errorText);
-                return;
-              }
-
-              if (resData.success) {
+              if (resData && resData.success) {
                 showWithoutDobAdInterstitialThen(resData, () => {
                   renderVerifiedProfile(resData);
                 });
-              } else if (resData.needsManualCaptcha && resData.captchaImage) {
+              } else if (resData && resData.needsManualCaptcha && resData.captchaImage) {
                 renderManualCaptcha(resData, enteredRoll);
               } else {
-                showError("Search Failed", resData.error || "Could not retrieve records for this roll number.");
+                const errorText = resData?.error || "Could not retrieve records for this roll number. Please verify the roll number.";
+                showError(resData?.notFound ? "Record Not Found In Database" : "Result Search Failed", errorText);
               }
             });
           })

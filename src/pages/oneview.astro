@@ -1304,23 +1304,16 @@ const jsonLd = {
             } catch (e) {}
 
             completeProgress(() => {
-              if (!isOk || !resData || !resData.success) {
-                const errorText = resData?.error || "Could not fetch result now. You can open the live OneView portal directly below.";
-                if (errorTitle) errorTitle.textContent = resData?.notFound ? "Record Not Found In Database" : "OneView Search Failed";
-                if (errorDesc) errorDesc.textContent = errorText;
-                errorState?.classList.remove("hidden");
-                return;
-              }
-
-              if (resData.success) {
+              if (resData && resData.success) {
                 showOneViewAdInterstitialThen(resData, () => {
                   renderOneViewVerifiedProfile(resData);
                 });
-              } else if (resData.needsManualCaptcha && resData.captchaImage) {
+              } else if (resData && resData.needsManualCaptcha && resData.captchaImage) {
                 renderOneViewManualCaptcha(resData, enteredRoll);
               } else {
-                if (errorTitle) errorTitle.textContent = "Search Failed";
-                if (errorDesc) errorDesc.textContent = resData.error || "Could not retrieve records for this roll number.";
+                const errorText = resData?.error || "Could not retrieve records for this roll number. Please verify the roll number.";
+                if (errorTitle) errorTitle.textContent = resData?.notFound ? "Record Not Found In Database" : "OneView Search Failed";
+                if (errorDesc) errorDesc.textContent = errorText;
                 errorState?.classList.remove("hidden");
               }
             });
