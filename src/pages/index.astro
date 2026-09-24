@@ -3046,8 +3046,8 @@ const homeKeywords = `aktu result without date of birth, aktu result without dob
       `;
 
       document.getElementById("search-open-oneview-modal-btn")?.addEventListener("click", () => {
-        if (typeof (window as any).openOneViewModal === "function") {
-          (window as any).openOneViewModal(rollNumber, data.dob || data.student?.dob || "");
+        if (typeof window.openOneViewModal === "function") {
+          window.openOneViewModal(rollNumber, data.dob || data.student?.dob || "");
         } else {
           window.open("https://oneview.aktu.ac.in/WebPages/aktu/OneView.aspx", "_blank");
         }
@@ -3326,8 +3326,8 @@ const homeKeywords = `aktu result without date of birth, aktu result without dob
     });
 
     document.getElementById("open-live-oneview-btn")?.addEventListener("click", () => {
-      if (typeof (window as any).openOneViewModal === "function") {
-        (window as any).openOneViewModal(currentResultData?.rollNumber || "", currentResultData?.dob || "");
+      if (typeof window.openOneViewModal === "function") {
+        window.openOneViewModal(currentResultData?.rollNumber || "", currentResultData?.dob || "");
       } else {
         window.open("https://oneview.aktu.ac.in/WebPages/aktu/OneView.aspx", "_blank");
       }

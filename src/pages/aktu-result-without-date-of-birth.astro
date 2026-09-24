@@ -1096,8 +1096,8 @@ const jsonLd = {
         } catch (e) {}
 
         document.getElementById("without-dob-open-oneview-btn")?.addEventListener("click", () => {
-          if (typeof (window as any).openOneViewModal === "function") {
-            (window as any).openOneViewModal(rollNumber, resolvedDob || "");
+          if (typeof window.openOneViewModal === "function") {
+            window.openOneViewModal(rollNumber, resolvedDob || "");
           } else {
             window.open("https://oneview.aktu.ac.in/WebPages/aktu/OneView.aspx", "_blank");
           }

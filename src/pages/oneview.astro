@@ -998,8 +998,8 @@ const jsonLd = {
 
         // Common Events: Launch Live OneView with modal or fallback
         document.getElementById("oneview-launch-official-btn")?.addEventListener("click", () => {
-          if (typeof (window as any).openOneViewModal === "function") {
-            (window as any).openOneViewModal(rollNumber, resolvedDob);
+          if (typeof window.openOneViewModal === "function") {
+            window.openOneViewModal(rollNumber, resolvedDob);
           } else {
             if (resolvedDob) {
               navigator.clipboard.writeText(resolvedDob).catch(() => {});
