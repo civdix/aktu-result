@@ -190,6 +190,57 @@ const jsonLd = {
         <!-- 3. Manual Security Verification Code Container -->
         <div id="oneview-manual-captcha-container" class="hidden space-y-4"></div>
 
+        <!-- 3.5 Pre-Result Ad Interstitial -->
+        <div id="oneview-ad-interstitial-state" class="hidden space-y-4 animate-fade-in text-left">
+          <div class="flex items-center justify-between pb-3 border-b border-brand-blue/20 light:border-brand-blue/30">
+            <div class="flex items-center gap-2">
+              <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 light:bg-emerald-600 animate-pulse"></span>
+              <span class="text-xs font-bold text-emerald-400 light:text-emerald-700 uppercase tracking-wider">OneView Marksheet Authenticated ✅</span>
+            </div>
+            <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-brand-blue/20 light:bg-blue-100 text-brand-blue border border-brand-blue/30 light:border-blue-200">
+              Ready To View
+            </span>
+          </div>
+
+          <!-- Sponsored Advertisement Container -->
+          <div class="p-4 rounded-xl border border-white/10 light:border-black/10 bg-white/[0.03] light:bg-black/[0.02] text-center overflow-hidden">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-[9px] uppercase font-bold text-gray-400 light:text-gray-500 tracking-widest">Sponsored Advertisement</span>
+              <span class="text-[9px] text-gray-500 font-mono">Ad</span>
+            </div>
+            <div class="min-h-[160px] flex items-center justify-center">
+              <ins class="adsbygoogle"
+                   style="display:block; min-height: 160px; width: 100%;"
+                   data-ad-client="ca-pub-5590747238948130"
+                   data-ad-slot="default"
+                   data-ad-format="auto"
+                   data-full-width-responsive="true"></ins>
+            </div>
+          </div>
+
+          <!-- Countdown & View Result CTA -->
+          <div class="space-y-3 pt-1">
+            <div class="flex items-center justify-between text-xs text-gray-400 light:text-gray-600">
+              <span class="font-medium">Unlocking your OneView marksheet...</span>
+              <span class="font-bold text-brand-blue font-mono" id="oneview-ad-countdown-text">5s</span>
+            </div>
+            <div class="w-full bg-white/10 light:bg-gray-200 h-1.5 rounded-full overflow-hidden">
+              <div id="oneview-ad-progress-bar" class="bg-gradient-to-r from-brand-blue to-emerald-400 h-full w-0 transition-all duration-1000 ease-linear"></div>
+            </div>
+
+            <button 
+              type="button" 
+              id="oneview-ad-view-result-btn" 
+              class="w-full py-3.5 bg-gradient-to-r from-emerald-500 via-teal-500 to-brand-blue hover:from-emerald-600 hover:to-brand-blue-hover text-white text-xs sm:text-sm font-bold rounded-xl shadow-lg transition-all flex items-center justify-center gap-2 cursor-pointer btn-press-active"
+            >
+              <span>⚡ View Verified OneView Marksheet</span>
+              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+              </svg>
+            </button>
+          </div>
+        </div>
+
         <!-- 4. Verified Academic Profile Container -->
         <div id="oneview-verified-profile-container" class="hidden space-y-4"></div>
 
@@ -457,6 +508,13 @@ const jsonLd = {
           cardWrapper.classList.remove("max-w-4xl");
           cardWrapper.classList.add("max-w-lg");
         }
+        if (adCountdownInterval) {
+          clearInterval(adCountdownInterval);
+          adCountdownInterval = null;
+        }
+        const adInterstitial = document.getElementById("oneview-ad-interstitial-state");
+        if (adInterstitial) adInterstitial.classList.add("hidden");
+
         searchForm?.classList.remove("hidden");
         loaderState?.classList.add("hidden");
         if (captchaContainer) {
@@ -481,6 +539,74 @@ const jsonLd = {
       }
 
       retryBtn?.addEventListener("click", resetUI);
+
+      let adCountdownInterval = null;
+
+      function showOneViewAdInterstitialThen(data, onProceed) {
+        loaderState?.classList.add("hidden");
+        searchForm?.classList.add("hidden");
+        errorState?.classList.add("hidden");
+        if (captchaContainer) {
+          captchaContainer.classList.add("hidden");
+          captchaContainer.innerHTML = "";
+        }
+        if (profileContainer) {
+          profileContainer.classList.add("hidden");
+          profileContainer.innerHTML = "";
+        }
+
+        const interstitial = document.getElementById("oneview-ad-interstitial-state");
+        if (!interstitial) {
+          onProceed();
+          return;
+        }
+
+        interstitial.classList.remove("hidden");
+        try {
+          (window.adsbygoogle = window.adsbygoogle || []).push({});
+        } catch (e) {}
+
+        let timeLeft = 5;
+        const countdownText = document.getElementById("oneview-ad-countdown-text");
+        const progressBar = document.getElementById("oneview-ad-progress-bar");
+        if (countdownText) countdownText.textContent = `${timeLeft}s`;
+        if (progressBar) progressBar.style.width = "0%";
+
+        if (adCountdownInterval) clearInterval(adCountdownInterval);
+
+        let finished = false;
+        const finishAndShow = () => {
+          if (finished) return;
+          finished = true;
+          if (adCountdownInterval) {
+            clearInterval(adCountdownInterval);
+            adCountdownInterval = null;
+          }
+          interstitial.classList.add("hidden");
+          onProceed();
+          try {
+            (window.adsbygoogle = window.adsbygoogle || []).push({});
+          } catch (e) {}
+        };
+
+        adCountdownInterval = setInterval(() => {
+          timeLeft--;
+          const pct = Math.min(100, Math.round(((5 - timeLeft) / 5) * 100));
+          if (progressBar) progressBar.style.width = `${pct}%`;
+          if (countdownText) countdownText.textContent = `${timeLeft}s`;
+          if (timeLeft <= 0) {
+            finishAndShow();
+          }
+        }, 1000);
+
+        const viewBtn = document.getElementById("oneview-ad-view-result-btn");
+        if (viewBtn) {
+          viewBtn.onclick = (e) => {
+            e.preventDefault();
+            finishAndShow();
+          };
+        }
+      }
 
       // Render Verified Academic Profile & OneView Marksheet
       function renderOneViewVerifiedProfile(data) {
@@ -601,6 +727,17 @@ const jsonLd = {
                 </div>
               </div>
 
+              <!-- In-Card Sponsored Ad Unit -->
+              <div class="p-3 rounded-xl border border-white/5 light:border-black/5 bg-white/[0.02] light:bg-black/[0.01] text-center overflow-hidden">
+                <span class="text-[8px] uppercase font-bold text-gray-400 light:text-gray-500 tracking-wider block mb-1">Sponsored Advertisement</span>
+                <ins class="adsbygoogle"
+                     style="display:block; min-height: 90px;"
+                     data-ad-client="ca-pub-5590747238948130"
+                     data-ad-slot="default"
+                     data-ad-format="auto"
+                     data-full-width-responsive="true"></ins>
+              </div>
+
               <!-- Semesters Accordion Section -->
               <div class="space-y-2.5 pt-1">
                 <div class="flex items-center justify-between">
@@ -664,6 +801,17 @@ const jsonLd = {
               </div>
             </div>
 
+            <!-- Below Scorecard Sponsored Ad Unit -->
+            <div class="p-3 rounded-xl border border-white/5 light:border-black/5 bg-white/[0.02] light:bg-black/[0.01] text-center overflow-hidden mt-3">
+              <span class="text-[8px] uppercase font-bold text-gray-400 light:text-gray-500 tracking-wider block mb-1">Sponsored Advertisement</span>
+              <ins class="adsbygoogle"
+                   style="display:block; min-height: 90px;"
+                   data-ad-client="ca-pub-5590747238948130"
+                   data-ad-slot="default"
+                   data-ad-format="auto"
+                   data-full-width-responsive="true"></ins>
+            </div>
+
             <button 
               type="button" 
               id="oneview-check-another-btn" 
@@ -672,6 +820,10 @@ const jsonLd = {
               ← Check Another Roll Number
             </button>
           `;
+
+          try {
+            (window.adsbygoogle = window.adsbygoogle || []).push({});
+          } catch (e) {}
 
           // Bind Accordion expand / collapse
           profileContainer.querySelectorAll(".oneview-sem-toggle").forEach(btn => {
@@ -759,6 +911,17 @@ const jsonLd = {
                   </div>
                 </div>
               ` : ''}
+
+              <!-- Sponsored Ad Unit -->
+              <div class="p-3 rounded-xl border border-white/5 light:border-black/5 bg-white/[0.02] light:bg-black/[0.01] text-center overflow-hidden">
+                <span class="text-[8px] uppercase font-bold text-gray-400 light:text-gray-500 tracking-wider block mb-1">Sponsored Advertisement</span>
+                <ins class="adsbygoogle"
+                     style="display:block; min-height: 90px;"
+                     data-ad-client="ca-pub-5590747238948130"
+                     data-ad-slot="default"
+                     data-ad-format="auto"
+                     data-full-width-responsive="true"></ins>
+              </div>
 
               <!-- OneView Launch Actions -->
               <div class="space-y-2.5 pt-1">
@@ -982,7 +1145,9 @@ const jsonLd = {
             });
             const vData = await vRes.json();
             if (vData && vData.success) {
-              renderOneViewVerifiedProfile(vData);
+              showOneViewAdInterstitialThen(vData, () => {
+                renderOneViewVerifiedProfile(vData);
+              });
             } else if (vData && vData.needsManualCaptcha && vData.captchaImage) {
               currentSession = vData.session || currentSession;
               updateModal(vData.captchaImage, vData.error || "Incorrect code. Please enter the new characters shown.");
@@ -1073,7 +1238,9 @@ const jsonLd = {
 
             const data = await res.json();
             if (data.success) {
-              renderOneViewVerifiedProfile(data);
+              showOneViewAdInterstitialThen(data, () => {
+                renderOneViewVerifiedProfile(data);
+              });
             } else if (data.needsManualCaptcha && data.captchaImage) {
               renderOneViewManualCaptcha(data, enteredRoll);
             } else {

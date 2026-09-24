@@ -598,7 +598,19 @@ export class ScrapingService {
   static async fetchResultWithDob(rollNumber: string, dob: string, gRecaptchaResponse = ''): Promise<Student | null> {
     const headers = getRandomHeaders();
     try {
-      console.log(`[Result] Fetching result for roll ${rollNumber} with DOB ${dob}...`);
+      const cleanDob = (dob || '').trim();
+      let normalizedDob = cleanDob;
+      const ymdMatch = cleanDob.match(/^(\d{4})[-/](\d{1,2})[-/](\d{1,2})$/);
+      if (ymdMatch) {
+        normalizedDob = `${ymdMatch[3].padStart(2, '0')}/${ymdMatch[2].padStart(2, '0')}/${ymdMatch[1]}`;
+      } else {
+        const dmyMatch = cleanDob.match(/^(\d{1,2})[-/](\d{1,2})[-/](\d{4})$/);
+        if (dmyMatch) {
+          normalizedDob = `${dmyMatch[1].padStart(2, '0')}/${dmyMatch[2].padStart(2, '0')}/${dmyMatch[3]}`;
+        }
+      }
+
+      console.log(`[Result] Fetching result for roll ${rollNumber} with DOB ${normalizedDob}...`);
       const validationSession = await ScrapingService.validateRollNumber(rollNumber, true);
       if (!validationSession || typeof validationSession !== 'object' || !('cookieHeader' in validationSession)) {
         console.error('[Result] Failed to validate roll number and obtain session');
@@ -622,7 +634,7 @@ export class ScrapingService {
         '__EVENTTARGET': '',
         '__EVENTARGUMENT': '',
         'txtRollNo': rollNumber,
-        'txtDOB': dob,
+        'txtDOB': normalizedDob,
         'btnSearch': 'खोजें',
         '__VIEWSTATE': session.viewStateParams.viewState,
         '__VIEWSTATEGENERATOR': session.viewStateParams.viewStateGenerator,

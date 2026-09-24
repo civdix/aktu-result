@@ -490,6 +490,58 @@ const homeKeywords = `aktu result without date of birth, aktu result without dob
               </div>
             </div>
 
+            <!-- Pre-Result Ad Interstitial (Shown Before Revealing Result) -->
+            <div id="ad-interstitial-state" class="hidden space-y-4 animate-fade-in text-left">
+              <div class="flex items-center justify-between pb-3 border-b border-brand-blue/20 light:border-brand-blue/30">
+                <div class="flex items-center gap-2">
+                  <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 light:bg-emerald-600 animate-pulse"></span>
+                  <span class="text-xs font-bold text-emerald-400 light:text-emerald-700 uppercase tracking-wider">Official Marksheet Authenticated ✅</span>
+                </div>
+                <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-brand-blue/20 light:bg-blue-100 text-brand-blue border border-brand-blue/30 light:border-blue-200">
+                  Ready To View
+                </span>
+              </div>
+
+              <!-- Sponsored Advertisement Container -->
+              <div class="p-4 rounded-xl border border-white/10 light:border-black/10 bg-white/[0.03] light:bg-black/[0.02] text-center overflow-hidden">
+                <div class="flex items-center justify-between mb-2">
+                  <span class="text-[9px] uppercase font-bold text-gray-400 light:text-gray-500 tracking-widest">Sponsored Advertisement</span>
+                  <span class="text-[9px] text-gray-500 font-mono">Ad</span>
+                </div>
+                <div class="min-h-[160px] flex items-center justify-center">
+                  <ins class="adsbygoogle"
+                       style="display:block; min-height: 160px; width: 100%;"
+                       data-ad-client="ca-pub-5590747238948130"
+                       data-ad-slot="default"
+                       data-ad-format="auto"
+                       data-full-width-responsive="true"></ins>
+                </div>
+              </div>
+
+              <!-- Countdown & View Result CTA -->
+              <div class="space-y-3 pt-1">
+                <div class="flex items-center justify-between text-xs text-gray-400 light:text-gray-600">
+                  <span class="font-medium">Unlocking your academic scorecard...</span>
+                  <span class="font-bold text-brand-blue font-mono" id="ad-countdown-text">5s</span>
+                </div>
+                <!-- Animated Progress Bar -->
+                <div class="w-full bg-white/10 light:bg-gray-200 h-1.5 rounded-full overflow-hidden">
+                  <div id="ad-progress-bar" class="bg-gradient-to-r from-brand-blue to-emerald-400 h-full w-0 transition-all duration-1000 ease-linear"></div>
+                </div>
+
+                <button 
+                  type="button" 
+                  id="ad-view-result-btn" 
+                  class="w-full py-3.5 bg-gradient-to-r from-emerald-500 via-teal-500 to-brand-blue hover:from-emerald-600 hover:to-brand-blue-hover text-white text-xs sm:text-sm font-bold rounded-xl shadow-lg transition-all flex items-center justify-center gap-2 cursor-pointer btn-press-active"
+                >
+                  <span>⚡ View Full Marksheet Now</span>
+                  <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+
             <!-- Result Box Card -->
             <div id="result-state" class="hidden space-y-5 animate-fade-in">
               <div class="p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-center">
@@ -541,6 +593,17 @@ const homeKeywords = `aktu result without date of birth, aktu result without dob
                   </div>
                 </div>
 
+                <!-- In-Result Sponsored Ad Unit -->
+                <div class="my-3 p-3 rounded-xl border border-white/5 light:border-black/5 bg-white/[0.02] light:bg-black/[0.01] text-center overflow-hidden">
+                  <span class="text-[8px] uppercase font-bold text-gray-400 light:text-gray-500 tracking-wider block mb-1">Sponsored Advertisement</span>
+                  <ins class="adsbygoogle"
+                       style="display:block; min-height: 90px;"
+                       data-ad-client="ca-pub-5590747238948130"
+                       data-ad-slot="default"
+                       data-ad-format="auto"
+                       data-full-width-responsive="true"></ins>
+                </div>
+
                 <!-- Semesters Accordion -->
                 <div class="space-y-2.5 pt-2">
                   <span class="text-gray-500 block font-semibold mb-1 text-[10px] uppercase tracking-wider">Semester Reports (Click to Expand)</span>
@@ -556,6 +619,17 @@ const homeKeywords = `aktu result without date of birth, aktu result without dob
                     <!-- Dynamic HTML content injected here -->
                   </div>
                 </div>
+              </div>
+
+              <!-- Below Result Sponsored Ad Unit -->
+              <div class="p-3 rounded-xl border border-white/5 light:border-black/5 bg-white/[0.02] light:bg-black/[0.01] text-center overflow-hidden">
+                <span class="text-[8px] uppercase font-bold text-gray-400 light:text-gray-500 tracking-wider block mb-1">Sponsored Advertisement</span>
+                <ins class="adsbygoogle"
+                     style="display:block; min-height: 90px;"
+                     data-ad-client="ca-pub-5590747238948130"
+                     data-ad-slot="default"
+                     data-ad-format="auto"
+                     data-full-width-responsive="true"></ins>
               </div>
 
               <!-- Ko-fi Donation Banner -->
@@ -1687,6 +1761,14 @@ const homeKeywords = `aktu result without date of birth, aktu result without dob
       loaderState.classList.add("hidden");
       resultState.classList.add("hidden");
       errorState.classList.add("hidden");
+      if (adCountdownInterval) {
+        clearInterval(adCountdownInterval);
+        adCountdownInterval = null;
+      }
+      const adInterstitialState = document.getElementById("ad-interstitial-state");
+      if (adInterstitialState) {
+        adInterstitialState.classList.add("hidden");
+      }
       const verifiedProfileContainer = document.getElementById("search-verified-profile-container");
       if (verifiedProfileContainer) {
         verifiedProfileContainer.classList.add("hidden");
@@ -2760,6 +2842,71 @@ const homeKeywords = `aktu result without date of birth, aktu result without dob
       resultState.classList.remove("hidden");
     }
 
+    let adCountdownInterval = null;
+
+    function showAdInterstitialThen(data, onProceed) {
+      loaderState.classList.add("hidden");
+      searchForm.classList.add("hidden");
+      resultState.classList.add("hidden");
+      errorState.classList.add("hidden");
+      const mcc = document.getElementById("search-manual-captcha-container");
+      if (mcc) mcc.classList.add("hidden");
+      const vpc = document.getElementById("search-verified-profile-container");
+      if (vpc) vpc.classList.add("hidden");
+
+      const interstitial = document.getElementById("ad-interstitial-state");
+      if (!interstitial) {
+        onProceed();
+        return;
+      }
+
+      interstitial.classList.remove("hidden");
+      try {
+        (window.adsbygoogle = window.adsbygoogle || []).push({});
+      } catch (e) {}
+
+      let timeLeft = 5;
+      const countdownText = document.getElementById("ad-countdown-text");
+      const progressBar = document.getElementById("ad-progress-bar");
+      if (countdownText) countdownText.textContent = `${timeLeft}s`;
+      if (progressBar) progressBar.style.width = "0%";
+
+      if (adCountdownInterval) clearInterval(adCountdownInterval);
+
+      let finished = false;
+      const finishAndShow = () => {
+        if (finished) return;
+        finished = true;
+        if (adCountdownInterval) {
+          clearInterval(adCountdownInterval);
+          adCountdownInterval = null;
+        }
+        interstitial.classList.add("hidden");
+        onProceed();
+        try {
+          (window.adsbygoogle = window.adsbygoogle || []).push({});
+        } catch (e) {}
+      };
+
+      adCountdownInterval = setInterval(() => {
+        timeLeft--;
+        const pct = Math.min(100, Math.round(((5 - timeLeft) / 5) * 100));
+        if (progressBar) progressBar.style.width = `${pct}%`;
+        if (countdownText) countdownText.textContent = `${timeLeft}s`;
+        if (timeLeft <= 0) {
+          finishAndShow();
+        }
+      }, 1000);
+
+      const viewBtn = document.getElementById("ad-view-result-btn");
+      if (viewBtn) {
+        viewBtn.onclick = (e) => {
+          e.preventDefault();
+          finishAndShow();
+        };
+      }
+    }
+
     function renderSearchVerifiedProfile(data) {
       loaderState.classList.add("hidden");
       searchForm.classList.add("hidden");
@@ -2795,8 +2942,6 @@ const homeKeywords = `aktu result without date of birth, aktu result without dob
         ? `<div class="text-xs text-gray-400 light:text-gray-500">Institute: <span class="text-gray-200 light:text-gray-800">${institute}</span></div>` 
         : '';
 
-      const botUrl = data.telegramBotUrl || `https://t.me/akturesultwithoutdobbot?start=${encodeURIComponent(rollNumber)}`;
-
       container.innerHTML = `
         <div class="p-5 sm:p-6 rounded-2xl border border-emerald-500/30 light:border-emerald-200 bg-gradient-to-b from-emerald-500/10 via-black/60 to-black/80 light:bg-gradient-to-b light:from-emerald-50/80 light:via-white light:to-gray-50/60 space-y-5 text-left shadow-2xl light:shadow-xl backdrop-blur-xl">
           <!-- Status Banner -->
@@ -2823,58 +2968,52 @@ const homeKeywords = `aktu result without date of birth, aktu result without dob
             </div>
           </div>
 
-          <!-- Telegram Bot Promotion Box -->
-          <div class="p-4 rounded-xl bg-gradient-to-r from-blue-600/20 to-purple-600/20 light:bg-gradient-to-r light:from-blue-50 light:via-sky-50/40 light:to-purple-50 border border-blue-500/30 light:border-blue-200 space-y-3 light:shadow-xs">
-            <div class="flex items-center gap-3">
-              <img src="/images/gemini-svg.webp" alt="AKTU Result Bot Logo" class="w-10 h-10 rounded-full object-cover shadow-md border border-white/10 shrink-0" />
-              <div>
-                <span class="text-xs font-bold text-white light:text-ink uppercase tracking-wider block">Access Your Result On Telegram</span>
-                <span class="text-[11px] text-brand-blue font-mono">@akturesultwithoutdobbot</span>
-              </div>
-            </div>
-            <p class="text-xs text-gray-300 light:text-gray-700 leading-relaxed">
-              Your academic file has been successfully verified! You can access your <b>complete semester marksheet</b>, <b>all subject grades & SGPA</b>, and download your <b>official PDF marksheet</b> without needing your Date of Birth on our Telegram Bot.
-            </p>
-
-            <div class="grid grid-cols-2 gap-2 text-[11px] text-gray-300 light:text-gray-700 pt-1">
-              <div class="flex items-center gap-1.5">
-                <span class="text-emerald-400 light:text-emerald-600 font-bold">✓</span> No DOB Required
-              </div>
-              <div class="flex items-center gap-1.5">
-                <span class="text-emerald-400 light:text-emerald-600 font-bold">✓</span> Official PDF Marksheet
-              </div>
-              <div class="flex items-center gap-1.5">
-                <span class="text-emerald-400 light:text-emerald-600 font-bold">✓</span> Full Web Page View
-              </div>
-              <div class="flex items-center gap-1.5">
-                <span class="text-emerald-400 light:text-emerald-600 font-bold">✓</span> Instant Delivery
-              </div>
-            </div>
+          <!-- In-Profile Sponsored Ad Unit -->
+          <div class="p-3 rounded-xl border border-white/5 light:border-black/5 bg-white/[0.02] light:bg-black/[0.01] text-center overflow-hidden">
+            <span class="text-[8px] uppercase font-bold text-gray-400 light:text-gray-500 tracking-wider block mb-1">Sponsored Advertisement</span>
+            <ins class="adsbygoogle"
+                 style="display:block; min-height: 90px;"
+                 data-ad-client="ca-pub-5590747238948130"
+                 data-ad-slot="default"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
           </div>
 
-          <!-- Primary Telegram Bot Button -->
-          <div class="space-y-2 pt-1">
-            <a 
-              href="${botUrl}" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              class="w-full py-4 bg-gradient-to-r from-brand-blue via-blue-500 to-purple-600 hover:from-brand-blue-hover hover:to-purple-700 text-white text-sm font-bold rounded-xl transition-all shadow-xl hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2 text-center cursor-pointer"
-            >
-              <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
-                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.75-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z"/>
-              </svg>
-              <span>Access Marksheet on Telegram (@akturesultwithoutdobbot)</span>
-            </a>
-            <p class="text-[11px] text-gray-400 light:text-gray-600 text-center">
-              Direct Telegram Bot: <a href="https://t.me/akturesultwithoutdobbot" target="_blank" class="text-brand-blue underline font-mono">@akturesultwithoutdobbot</a>
+          <!-- Academic Record Status Summary -->
+          <div class="p-4 rounded-xl bg-gradient-to-r from-emerald-500/10 to-teal-500/10 light:bg-emerald-50 border border-emerald-500/20 light:border-emerald-200 space-y-2">
+            <div class="flex items-center gap-2">
+              <span class="text-emerald-400 font-bold">✓</span>
+              <span class="text-xs font-bold text-white light:text-ink">University Record Verified & Authenticated</span>
+            </div>
+            <p class="text-xs text-gray-300 light:text-gray-700 leading-relaxed">
+              Your official academic enrollment and credentials have been verified with Dr. A.P.J. Abdul Kalam Technical University records.
             </p>
+          </div>
+
+          <!-- Action Buttons -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1">
+            <button 
+              type="button" 
+              onclick="window.print()" 
+              class="w-full py-3 bg-brand-blue hover:bg-brand-blue-hover text-white text-xs font-bold rounded-xl transition-all flex items-center justify-center gap-1.5 shadow-md cursor-pointer"
+            >
+              <span>🖨️ Print Academic Record</span>
+            </button>
+            <a 
+              href="https://oneview.aktu.ac.in/WebPages/aktu/OneView.aspx" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              class="w-full py-3 bg-white/10 light:bg-gray-100 hover:bg-white/15 light:hover:bg-gray-200 text-white light:text-ink text-xs font-bold rounded-xl transition-all flex items-center justify-center gap-1.5 border border-white/10 light:border-gray-200 cursor-pointer text-center"
+            >
+              <span>🚀 Open OneView Portal</span>
+            </a>
           </div>
         </div>
 
         <button 
           type="button" 
           id="search-check-another-btn" 
-          class="w-full py-2.5 bg-white/[0.05] light:bg-gray-100 hover:bg-white/[0.1] light:hover:bg-gray-200 text-white light:text-gray-800 text-xs font-semibold rounded-xl border border-white/10 light:border-gray-300 cursor-pointer transition-all text-center"
+          class="w-full py-2.5 bg-white/[0.05] light:bg-gray-100 hover:bg-white/[0.1] light:hover:bg-gray-200 text-white light:text-gray-800 text-xs font-semibold rounded-xl border border-white/10 light:border-gray-300 cursor-pointer transition-all text-center mt-3"
         >
           ← Check Another Roll Number
         </button>
@@ -3007,11 +3146,13 @@ const homeKeywords = `aktu result without date of birth, aktu result without dob
           });
           const vData = await vRes.json();
           if (vData && vData.success) {
-            if (vData.semesters && vData.semesters.length > 0) {
-              displayFullResult(vData);
-            } else {
-              renderSearchVerifiedProfile(vData);
-            }
+            showAdInterstitialThen(vData, () => {
+              if (vData.semesters && vData.semesters.length > 0) {
+                displayFullResult(vData);
+              } else {
+                renderSearchVerifiedProfile(vData);
+              }
+            });
           } else if (vData && vData.needsManualCaptcha && vData.captchaImage) {
             currentSession = vData.session || currentSession;
             updateModal(vData.captchaImage, vData.error || "Incorrect code. Please enter the new characters shown.");
@@ -3111,11 +3252,13 @@ const homeKeywords = `aktu result without date of birth, aktu result without dob
             if (data.totalSearches) {
               updateCounterUI(data.totalSearches);
             }
-            if (data.semesters && data.semesters.length > 0) {
-              displayFullResult(data);
-            } else {
-              renderSearchVerifiedProfile(data);
-            }
+            showAdInterstitialThen(data, () => {
+              if (data.semesters && data.semesters.length > 0) {
+                displayFullResult(data);
+              } else {
+                renderSearchVerifiedProfile(data);
+              }
+            });
           } else if (data.needsManualCaptcha && data.captchaImage) {
             renderSearchManualCaptcha(data, enteredRoll);
           } else {
