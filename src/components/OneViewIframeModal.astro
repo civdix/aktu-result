@@ -94,7 +94,6 @@
       <ins class="adsbygoogle"
            style="display:block; min-height: 50px; max-height: 60px;"
            data-ad-client="ca-pub-5590747238948130"
-           data-ad-slot="default"
            data-ad-format="horizontal"
            data-full-width-responsive="true"></ins>
     </div>
@@ -165,9 +164,21 @@
       if (rollText) rollText.textContent = currentRoll || "--";
       if (dobText) dobText.textContent = currentDob || "--";
 
-      // Auto-copy DOB to clipboard for seamless user experience
-      if (currentDob && navigator.clipboard) {
-        navigator.clipboard.writeText(currentDob).catch(() => {});
+      if (copyDobBtn) {
+        if (currentDob) {
+          copyDobBtn.classList.remove("hidden");
+        } else {
+          copyDobBtn.classList.add("hidden");
+        }
+      }
+
+      // Auto-copy DOB (or Roll Number if DOB not available) to clipboard for seamless user experience
+      if (navigator.clipboard) {
+        if (currentDob) {
+          navigator.clipboard.writeText(currentDob).catch(() => {});
+        } else if (currentRoll) {
+          navigator.clipboard.writeText(currentRoll).catch(() => {});
+        }
       }
 
       if (spinner) {

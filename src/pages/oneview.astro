@@ -161,21 +161,35 @@ const jsonLd = {
             id="oneview-search-btn"
             class="w-full py-3.5 bg-gradient-to-r from-brand-blue via-blue-500 to-purple-600 hover:from-brand-blue-hover hover:to-purple-700 text-white text-sm font-bold rounded-xl shadow-lg transition-all transform hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2 cursor-pointer"
           >
-            <span>ÔÜí Check OneView Result</span>
+            <span>⚡ Check OneView Result</span>
             <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
             </svg>
           </button>
+
+          <button 
+            type="button" 
+            id="oneview-direct-gateway-btn" 
+            class="w-full py-2.5 bg-white/[0.04] hover:bg-white/[0.08] light:bg-gray-100 light:hover:bg-gray-200 border border-white/10 light:border-gray-300 text-xs font-semibold rounded-xl text-gray-300 light:text-gray-800 transition-all flex items-center justify-center gap-1.5 cursor-pointer"
+          >
+            <span>🖥️ Open Live OneView Gateway Directly</span>
+          </button>
         </form>
 
-        <!-- 2. Multi-Stage Background Process Loader -->
+        <!-- 2. Multi-Stage Background Process Loader with Live Percentage -->
         <div id="oneview-loader-state" class="hidden py-6 space-y-5">
           <div class="flex flex-col items-center justify-center text-center">
-            <div class="relative w-12 h-12 mb-3">
-              <div class="w-12 h-12 rounded-full border-4 border-brand-blue/20 animate-spin border-t-brand-blue"></div>
+            <div class="relative w-16 h-16 mb-3 flex items-center justify-center">
+              <div class="w-16 h-16 rounded-full border-4 border-brand-blue/20 animate-spin border-t-brand-blue"></div>
+              <span id="oneview-loading-percentage" class="absolute font-mono font-black text-sm text-white light:text-ink">0%</span>
             </div>
             <h3 class="text-sm font-semibold text-white light:text-ink mb-1" id="oneview-loading-status">Connecting to AKTU OneView Gateway...</h3>
             <p class="text-xs text-gray-500" id="oneview-loading-substatus">Locating session token...</p>
+            
+            <!-- Animated Progress Bar -->
+            <div class="w-full bg-white/10 light:bg-gray-200 h-2 rounded-full overflow-hidden max-w-xs mx-auto mt-2">
+              <div id="oneview-progress-bar" class="bg-gradient-to-r from-brand-blue via-cyan-400 to-emerald-400 h-full w-0 transition-all duration-200 ease-out"></div>
+            </div>
           </div>
           
           <!-- Animated Scraping Terminal Logs -->
@@ -213,7 +227,6 @@ const jsonLd = {
               <ins class="adsbygoogle"
                    style="display:block; min-height: 160px; width: 100%;"
                    data-ad-client="ca-pub-5590747238948130"
-                   data-ad-slot="default"
                    data-ad-format="auto"
                    data-full-width-responsive="true"></ins>
             </div>
@@ -248,14 +261,34 @@ const jsonLd = {
         <!-- 5. Error State Card -->
         <div id="oneview-error-state" class="hidden space-y-4 animate-fade-in">
           <div class="p-4 rounded-xl bg-red-500/10 border border-red-500/20 text-center">
-            <div class="w-10 h-10 rounded-full bg-red-500/20 text-red-400 flex items-center justify-center mx-auto mb-2 text-lg">Ô£ò</div>
+            <div class="w-10 h-10 rounded-full bg-red-500/20 text-red-400 flex items-center justify-center mx-auto mb-2 text-lg">✕</div>
             <h3 class="text-sm font-semibold text-red-400" id="oneview-error-title">Result Search Failed</h3>
             <p class="text-xs text-gray-400 mt-1" id="oneview-error-desc">We couldn't locate a match for the specified parameters. Please confirm the roll number.</p>
           </div>
+
+          <!-- In-Page OneView Live Gateway Alternative -->
+          <div class="p-4 bg-gradient-to-r from-brand-blue/15 to-purple-500/15 border border-brand-blue/30 rounded-xl space-y-2 text-left">
+            <div class="flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+              <span class="text-brand-blue font-bold text-xs uppercase tracking-wider">Direct Live Portal Access</span>
+            </div>
+            <p class="text-[11px] text-gray-300 light:text-gray-600 leading-relaxed">
+              Automated records were not found for this roll number. Open the official OneView portal directly in this window with your roll number pre-copied!
+            </p>
+            <button 
+              type="button" 
+              id="oneview-error-open-portal-btn" 
+              class="w-full py-3 bg-gradient-to-r from-brand-blue via-blue-500 to-purple-600 hover:from-brand-blue-hover hover:to-purple-700 text-white text-xs font-bold rounded-xl transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer btn-press-active"
+            >
+              <span>🖥️ Open In Official OneView Portal (In-Page)</span>
+              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+            </button>
+          </div>
+
           <button 
             type="button" 
             id="oneview-error-retry-btn" 
-            class="w-full py-3 bg-gray-900 light:bg-gray-100 hover:bg-gray-800 light:hover:bg-gray-200 border border-canvas-dark-border light:border-canvas-light-border text-xs font-semibold rounded-xl text-white light:text-ink transition-colors cursor-pointer"
+            class="w-full py-2.5 bg-gray-900 light:bg-gray-100 hover:bg-gray-800 light:hover:bg-gray-200 border border-canvas-dark-border light:border-canvas-light-border text-xs font-semibold rounded-xl text-white light:text-ink transition-colors cursor-pointer"
           >
             Retry Search
           </button>
@@ -734,8 +767,7 @@ const jsonLd = {
                 <ins class="adsbygoogle"
                      style="display:block; min-height: 90px;"
                      data-ad-client="ca-pub-5590747238948130"
-                     data-ad-slot="default"
-                     data-ad-format="auto"
+                      data-ad-format="auto"
                      data-full-width-responsive="true"></ins>
               </div>
 
@@ -808,7 +840,6 @@ const jsonLd = {
               <ins class="adsbygoogle"
                    style="display:block; min-height: 90px;"
                    data-ad-client="ca-pub-5590747238948130"
-                   data-ad-slot="default"
                    data-ad-format="auto"
                    data-full-width-responsive="true"></ins>
             </div>
@@ -919,8 +950,7 @@ const jsonLd = {
                 <ins class="adsbygoogle"
                      style="display:block; min-height: 90px;"
                      data-ad-client="ca-pub-5590747238948130"
-                     data-ad-slot="default"
-                     data-ad-format="auto"
+                      data-ad-format="auto"
                      data-full-width-responsive="true"></ins>
               </div>
 
@@ -1076,8 +1106,7 @@ const jsonLd = {
                 <ins class="adsbygoogle"
                      style="display:block; min-height: 90px;"
                      data-ad-client="ca-pub-5590747238948130"
-                     data-ad-slot="default"
-                     data-ad-format="auto"
+                      data-ad-format="auto"
                      data-full-width-responsive="true"></ins>
               </div>
 
@@ -1203,14 +1232,40 @@ const jsonLd = {
         errorState?.classList.add("hidden");
         loaderState?.classList.remove("hidden");
 
-        // Reset logs
+        // Reset logs & progress
         log1?.classList.add("hidden");
         log2?.classList.add("hidden");
         log3?.classList.add("hidden");
         log4?.classList.add("hidden");
 
+        let searchPercent = 5;
+        const pctEl = document.getElementById("oneview-loading-percentage");
+        const barEl = document.getElementById("oneview-progress-bar");
+        if (pctEl) pctEl.textContent = "5%";
+        if (barEl) barEl.style.width = "5%";
+
+        const progressTimer = setInterval(() => {
+          if (searchPercent < 92) {
+            const step = searchPercent < 35 ? 6 : (searchPercent < 70 ? 3 : 1);
+            searchPercent = Math.min(92, searchPercent + step);
+            if (pctEl) pctEl.textContent = `${searchPercent}%`;
+            if (barEl) barEl.style.width = `${searchPercent}%`;
+          }
+        }, 80);
+
+        const completeProgress = (callback) => {
+          clearInterval(progressTimer);
+          searchPercent = 100;
+          if (pctEl) pctEl.textContent = "100%";
+          if (barEl) barEl.style.width = "100%";
+          setTimeout(() => {
+            loaderState?.classList.add("hidden");
+            callback();
+          }, 300);
+        };
+
         if (loadingStatus) loadingStatus.textContent = "Connecting to AKTU OneView Gateway...";
-        if (loadingSubstatus) loadingSubstatus.textContent = "Querying academic database & authenticating session...";
+        if (loadingSubstatus) loadingSubstatus.textContent = "Negotiating secure session handshake...";
 
         // Stage-based animation
         setTimeout(() => {
@@ -1242,41 +1297,63 @@ const jsonLd = {
 
         Promise.all([fetchPromise, delayPromise])
           .then(async ([res]) => {
-            loaderState?.classList.add("hidden");
+            let resData = null;
+            let isOk = res.ok;
+            try {
+              resData = await res.json();
+            } catch (e) {}
 
-            if (!res.ok) {
-              let errorText = "Could not fetch result right now. Please try again.";
-              try {
-                const errData = await res.json();
-                if (errData?.error) errorText = errData.error;
-              } catch (e) {}
-              if (errorTitle) errorTitle.textContent = "OneView Search Failed";
-              if (errorDesc) errorDesc.textContent = errorText;
-              errorState?.classList.remove("hidden");
-              return;
-            }
+            completeProgress(() => {
+              if (!isOk || !resData || !resData.success) {
+                const errorText = resData?.error || "Could not fetch result now. You can open the live OneView portal directly below.";
+                if (errorTitle) errorTitle.textContent = resData?.notFound ? "Record Not Found In Database" : "OneView Search Failed";
+                if (errorDesc) errorDesc.textContent = errorText;
+                errorState?.classList.remove("hidden");
+                return;
+              }
 
-            const data = await res.json();
-            if (data.success) {
-              showOneViewAdInterstitialThen(data, () => {
-                renderOneViewVerifiedProfile(data);
-              });
-            } else if (data.needsManualCaptcha && data.captchaImage) {
-              renderOneViewManualCaptcha(data, enteredRoll);
-            } else {
-              if (errorTitle) errorTitle.textContent = "Search Failed";
-              if (errorDesc) errorDesc.textContent = data.error || "Could not retrieve records for this roll number.";
-              errorState?.classList.remove("hidden");
-            }
+              if (resData.success) {
+                showOneViewAdInterstitialThen(resData, () => {
+                  renderOneViewVerifiedProfile(resData);
+                });
+              } else if (resData.needsManualCaptcha && resData.captchaImage) {
+                renderOneViewManualCaptcha(resData, enteredRoll);
+              } else {
+                if (errorTitle) errorTitle.textContent = "Search Failed";
+                if (errorDesc) errorDesc.textContent = resData.error || "Could not retrieve records for this roll number.";
+                errorState?.classList.remove("hidden");
+              }
+            });
           })
           .catch(err => {
             console.error("OneView API Error:", err);
+            clearInterval(progressTimer);
             loaderState?.classList.add("hidden");
             if (errorTitle) errorTitle.textContent = "Network Error";
-            if (errorDesc) errorDesc.textContent = "Failed to connect to gateway. Please check your internet connection.";
+            if (errorDesc) errorDesc.textContent = "Failed to connect to gateway. You can still open the live portal below directly.";
             errorState?.classList.remove("hidden");
           });
       }
+
+      // Wire Direct Gateway Button on Search Form
+      document.getElementById("oneview-direct-gateway-btn")?.addEventListener("click", () => {
+        const enteredRoll = rollInput ? rollInput.value.trim() : "";
+        if (typeof window.openOneViewModal === "function") {
+          window.openOneViewModal(enteredRoll, "");
+        } else {
+          window.open("https://oneview.aktu.ac.in/WebPages/aktu/OneView.aspx", "_blank");
+        }
+      });
+
+      // Wire Error State Fallback Button
+      document.getElementById("oneview-error-open-portal-btn")?.addEventListener("click", () => {
+        const enteredRoll = rollInput ? rollInput.value.trim() : "";
+        if (typeof window.openOneViewModal === "function") {
+          window.openOneViewModal(enteredRoll, "");
+        } else {
+          window.open("https://oneview.aktu.ac.in/WebPages/aktu/OneView.aspx", "_blank");
+        }
+      });
 
       searchForm?.addEventListener("submit", (e) => {
         e.preventDefault();

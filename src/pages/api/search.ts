@@ -435,11 +435,14 @@ export const POST: APIRoute = async ({ request }) => {
     return new Response(
       JSON.stringify({
         success: false,
-        error: engineResult.error || "Could not retrieve student details for this roll number. Please verify the roll number and try again.",
+        error: engineResult.error || "Enrollment number was not found in university portal records. Please verify the roll number or open official OneView directly.",
+        notFound: true,
+        canOpenOneView: true,
+        rollNumber: trimmedRoll,
         code: 404
       }),
       {
-        status: 404,
+        status: 200,
         headers: { 'Content-Type': 'application/json' }
       }
     );

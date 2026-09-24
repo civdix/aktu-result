@@ -410,6 +410,15 @@ const homeKeywords = `aktu result without date of birth, aktu result without dob
                     <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
                   </svg>
                 </button>
+
+                <button 
+                  type="button" 
+                  id="home-direct-portal-btn" 
+                  class="w-full py-2.5 bg-white/[0.04] hover:bg-white/[0.08] light:bg-gray-100 light:hover:bg-gray-200 border border-white/10 light:border-gray-300 text-xs font-semibold rounded-xl text-gray-300 light:text-gray-800 transition-all flex items-center justify-center gap-1.5 cursor-pointer"
+                  title="Open official AKTU OneView portal directly in an embedded window"
+                >
+                  <span>🖥️ Open Live OneView Gateway</span>
+                </button>
               </form>
 
               <!-- Search Manual Security Code Modal Container -->
@@ -470,15 +479,21 @@ const homeKeywords = `aktu result without date of birth, aktu result without dob
             </div>
 
 
-            <!-- Loading State Card (Skeleton Loader) -->
-            <div id="loader-state" class="hidden py-8 space-y-6">
+            <!-- Loading State Card (Skeleton Loader with Animated Percentage) -->
+            <div id="loader-state" class="hidden py-6 space-y-5">
               <div class="flex flex-col items-center justify-center text-center">
-                <!-- Spinner -->
-                <div class="relative w-12 h-12 mb-4">
-                  <div class="w-12 h-12 rounded-full border-4 border-brand-blue/20 animate-spin border-t-brand-blue"></div>
+                <!-- Circular Percentage Display -->
+                <div class="relative w-16 h-16 mb-3 flex items-center justify-center">
+                  <div class="w-16 h-16 rounded-full border-4 border-brand-blue/20 animate-spin border-t-brand-blue"></div>
+                  <span id="loading-percentage" class="absolute font-mono font-black text-sm text-white light:text-ink">0%</span>
                 </div>
                 <h3 class="text-sm font-semibold text-white light:text-ink mb-1" id="loading-status">Connecting to AKTU Portal...</h3>
                 <p class="text-xs text-gray-500" id="loading-substatus">Locating session token...</p>
+                
+                <!-- Animated Progress Bar -->
+                <div class="w-full bg-white/10 light:bg-gray-200 h-2 rounded-full overflow-hidden max-w-xs mx-auto mt-2">
+                  <div id="loading-progress-bar" class="bg-gradient-to-r from-brand-blue via-cyan-400 to-emerald-400 h-full w-0 transition-all duration-200 ease-out"></div>
+                </div>
               </div>
               
               <!-- Mocking Console Log Steps -->
@@ -513,7 +528,6 @@ const homeKeywords = `aktu result without date of birth, aktu result without dob
                   <ins class="adsbygoogle"
                        style="display:block; min-height: 160px; width: 100%;"
                        data-ad-client="ca-pub-5590747238948130"
-                       data-ad-slot="default"
                        data-ad-format="auto"
                        data-full-width-responsive="true"></ins>
                 </div>
@@ -600,7 +614,6 @@ const homeKeywords = `aktu result without date of birth, aktu result without dob
                   <ins class="adsbygoogle"
                        style="display:block; min-height: 90px;"
                        data-ad-client="ca-pub-5590747238948130"
-                       data-ad-slot="default"
                        data-ad-format="auto"
                        data-full-width-responsive="true"></ins>
                 </div>
@@ -628,7 +641,6 @@ const homeKeywords = `aktu result without date of birth, aktu result without dob
                 <ins class="adsbygoogle"
                      style="display:block; min-height: 90px;"
                      data-ad-client="ca-pub-5590747238948130"
-                     data-ad-slot="default"
                      data-ad-format="auto"
                      data-full-width-responsive="true"></ins>
               </div>
@@ -674,9 +686,28 @@ const homeKeywords = `aktu result without date of birth, aktu result without dob
                 <p class="text-xs text-gray-500 mt-1" id="error-desc">We couldn't locate a match for the specified parameters. Please confirm the roll number.</p>
               </div>
 
+              <!-- In-Page OneView Live Gateway Alternative -->
+              <div class="p-4 bg-gradient-to-r from-brand-blue/15 to-purple-500/15 border border-brand-blue/30 rounded-xl space-y-2 text-left">
+                <div class="flex items-center gap-2">
+                  <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                  <span class="text-brand-blue font-bold text-xs uppercase tracking-wider">Direct Live Portal Access</span>
+                </div>
+                <p class="text-[11px] text-gray-300 light:text-gray-600 leading-relaxed">
+                  Automated records were not found for this roll number. Open the official OneView portal directly in this window with your roll number pre-copied!
+                </p>
+                <button 
+                  type="button" 
+                  id="error-open-oneview-btn" 
+                  class="w-full py-3 bg-gradient-to-r from-brand-blue via-blue-500 to-purple-600 hover:from-brand-blue-hover hover:to-purple-700 text-white text-xs font-bold rounded-xl transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer btn-press-active"
+                >
+                  <span>🖥️ Open In Official OneView Portal (In-Page)</span>
+                  <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+                </button>
+              </div>
+
               <button 
                 id="error-retry-btn" 
-                class="w-full py-3 bg-gray-900 light:bg-gray-100 hover:bg-gray-800 light:hover:bg-gray-200 border border-canvas-dark-border light:border-canvas-light-border text-sm font-semibold rounded-xl text-white light:text-ink transition-colors btn-press-active"
+                class="w-full py-2.5 bg-gray-900 light:bg-gray-100 hover:bg-gray-800 light:hover:bg-gray-200 border border-canvas-dark-border light:border-canvas-light-border text-xs font-semibold rounded-xl text-white light:text-ink transition-colors btn-press-active cursor-pointer"
               >
                 Retry Search
               </button>
@@ -2661,7 +2692,6 @@ const homeKeywords = `aktu result without date of birth, aktu result without dob
                 <ins class="adsbygoogle"
                      style="display:block; min-height: 90px;"
                      data-ad-client="ca-pub-5590747238948130"
-                     data-ad-slot="default"
                      data-ad-format="auto"
                      data-full-width-responsive="true"></ins>
               </div>
@@ -3001,7 +3031,6 @@ const homeKeywords = `aktu result without date of birth, aktu result without dob
             <ins class="adsbygoogle"
                  style="display:block; min-height: 90px;"
                  data-ad-client="ca-pub-5590747238948130"
-                 data-ad-slot="default"
                  data-ad-format="auto"
                  data-full-width-responsive="true"></ins>
           </div>
@@ -3106,7 +3135,6 @@ const homeKeywords = `aktu result without date of birth, aktu result without dob
               <ins class="adsbygoogle"
                    style="display:block; min-height: 90px;"
                    data-ad-client="ca-pub-5590747238948130"
-                   data-ad-slot="default"
                    data-ad-format="auto"
                    data-full-width-responsive="true"></ins>
             </div>
@@ -3238,14 +3266,40 @@ const homeKeywords = `aktu result without date of birth, aktu result without dob
       errorState.classList.add("hidden");
       loaderState.classList.remove("hidden");
 
-      // Reset logs
+      // Reset logs & progress
       log1.classList.add("hidden");
       log2.classList.add("hidden");
       log3.classList.add("hidden");
       log4.classList.add("hidden");
 
-      loadingStatus.textContent = "Connecting to AKTU Database...";
-      loadingSubstatus.textContent = "Querying student records and verifying credentials...";
+      let searchPercent = 5;
+      const pctEl = document.getElementById("loading-percentage");
+      const barEl = document.getElementById("loading-progress-bar");
+      if (pctEl) pctEl.textContent = "5%";
+      if (barEl) barEl.style.width = "5%";
+
+      const progressTimer = setInterval(() => {
+        if (searchPercent < 92) {
+          const step = searchPercent < 35 ? 6 : (searchPercent < 70 ? 3 : 1);
+          searchPercent = Math.min(92, searchPercent + step);
+          if (pctEl) pctEl.textContent = `${searchPercent}%`;
+          if (barEl) barEl.style.width = `${searchPercent}%`;
+        }
+      }, 80);
+
+      const completeProgress = (callback) => {
+        clearInterval(progressTimer);
+        searchPercent = 100;
+        if (pctEl) pctEl.textContent = "100%";
+        if (barEl) barEl.style.width = "100%";
+        setTimeout(() => {
+          loaderState.classList.add("hidden");
+          callback();
+        }, 300);
+      };
+
+      loadingStatus.textContent = "Connecting to AKTU Gateway...";
+      loadingSubstatus.textContent = "Negotiating secure session handshake...";
 
       // Stage-based Loader Updates
       setTimeout(() => {
@@ -3256,13 +3310,13 @@ const homeKeywords = `aktu result without date of birth, aktu result without dob
 
       setTimeout(() => {
         loadingStatus.textContent = "Querying University Portal...";
-        loadingSubstatus.textContent = "Authenticating student profile...";
+        loadingSubstatus.textContent = "Authenticating student profile credentials...";
         log2.classList.remove("hidden");
       }, 900);
 
       setTimeout(() => {
         loadingStatus.textContent = "Resolving Student Record...";
-        loadingSubstatus.textContent = "Verifying enrollment & academic credentials...";
+        loadingSubstatus.textContent = "Assembling semester grades & credits ledger...";
         log3.classList.remove("hidden");
       }, 1500);
 
@@ -3282,47 +3336,69 @@ const homeKeywords = `aktu result without date of birth, aktu result without dob
 
       Promise.all([fetchPromise, delayPromise])
         .then(async ([res]) => {
-          loaderState.classList.add("hidden");
+          let resData = null;
+          let isOk = res.ok;
+          try {
+            resData = await res.json();
+          } catch (e) {}
 
-          if (!res.ok) {
-            let errorText = "Could not fetch result now. Please try again.";
-            try {
-              const errData = await res.json();
-              if (errData?.error) errorText = errData.error;
-            } catch (e) {}
-            document.getElementById("error-title").textContent = "Search Failed";
-            document.getElementById("error-desc").textContent = errorText;
-            errorState.classList.remove("hidden");
-            return;
-          }
-
-          const data = await res.json();
-          if (data.success) {
-            if (data.totalSearches) {
-              updateCounterUI(data.totalSearches);
+          completeProgress(() => {
+            if (!isOk || !resData || !resData.success) {
+              const errorText = resData?.error || "Could not fetch result now. You can open the live OneView portal directly below.";
+              document.getElementById("error-title").textContent = resData?.notFound ? "Record Not Found In Database" : "Search Failed";
+              document.getElementById("error-desc").textContent = errorText;
+              errorState.classList.remove("hidden");
+              return;
             }
-            showAdInterstitialThen(data, () => {
-              if (data.semesters && data.semesters.length > 0) {
-                displayFullResult(data);
-              } else {
-                renderSearchVerifiedProfile(data);
+
+            if (resData.success) {
+              if (resData.totalSearches) {
+                updateCounterUI(resData.totalSearches);
               }
-            });
-          } else if (data.needsManualCaptcha && data.captchaImage) {
-            renderSearchManualCaptcha(data, enteredRoll);
-          } else {
-            document.getElementById("error-title").textContent = "Search Failed";
-            document.getElementById("error-desc").textContent = data.error || "Could not fetch result now. Please try again.";
-            errorState.classList.remove("hidden");
-          }
+              showAdInterstitialThen(resData, () => {
+                if (resData.semesters && resData.semesters.length > 0) {
+                  displayFullResult(resData);
+                } else {
+                  renderSearchVerifiedProfile(resData);
+                }
+              });
+            } else if (resData.needsManualCaptcha && resData.captchaImage) {
+              renderSearchManualCaptcha(resData, enteredRoll);
+            } else {
+              document.getElementById("error-title").textContent = "Search Failed";
+              document.getElementById("error-desc").textContent = resData.error || "Could not fetch result now.";
+              errorState.classList.remove("hidden");
+            }
+          });
         })
         .catch(error => {
           console.error("API Error:", error);
+          clearInterval(progressTimer);
           loaderState.classList.add("hidden");
           document.getElementById("error-title").textContent = "Fetch Failed";
-          document.getElementById("error-desc").textContent = "Connection error. Please check your connection and try again.";
+          document.getElementById("error-desc").textContent = "Connection error. You can still open the official portal below directly.";
           errorState.classList.remove("hidden");
       });
+    });
+
+    // Wire Direct Live Portal Button on Search Form
+    document.getElementById("home-direct-portal-btn")?.addEventListener("click", () => {
+      const enteredRoll = rollInput ? rollInput.value.trim() : "";
+      if (typeof window.openOneViewModal === "function") {
+        window.openOneViewModal(enteredRoll, "");
+      } else {
+        window.open("https://oneview.aktu.ac.in/WebPages/aktu/OneView.aspx", "_blank");
+      }
+    });
+
+    // Wire Error State Fallback Button to Open OneView Modal
+    document.getElementById("error-open-oneview-btn")?.addEventListener("click", () => {
+      const enteredRoll = rollInput ? rollInput.value.trim() : "";
+      if (typeof window.openOneViewModal === "function") {
+        window.openOneViewModal(enteredRoll, "");
+      } else {
+        window.open("https://oneview.aktu.ac.in/WebPages/aktu/OneView.aspx", "_blank");
+      }
     });
 
     document.getElementById("open-live-oneview-btn")?.addEventListener("click", () => {
