@@ -229,14 +229,14 @@ const jsonLd = {
             <div class="w-12 h-12 border-3 border-brand-blue/20 border-t-brand-blue rounded-full animate-spin mx-auto"></div>
             <div class="space-y-1">
               <h3 class="text-sm font-bold text-white light:text-ink" id="without-dob-loading-status">Connecting to AKTU Gateway...</h3>
-              <p class="text-xs text-gray-400 light:text-gray-500" id="without-dob-loading-substatus">Authenticating session &amp; bypassing DOB requirement...</p>
+              <p class="text-xs text-gray-400 light:text-gray-500" id="without-dob-loading-substatus">Authenticating session &amp; synchronizing student record...</p>
             </div>
 
             <!-- Animated Log Lines -->
             <div class="font-mono text-[10px] text-gray-600 light:text-gray-500 bg-black/80 light:bg-gray-100 rounded-lg p-3 space-y-1 overflow-hidden h-24 border border-canvas-dark-border light:border-gray-200 text-left">
               <div class="text-gray-400">&gt; Starting OneView handshake protocol...</div>
               <div id="without-dob-log-1" class="hidden text-gray-500">&gt; Initializing session tokens... [OK]</div>
-              <div id="without-dob-log-2" class="hidden text-gray-500">&gt; Bypassing Date of Birth parameter... [OK]</div>
+              <div id="without-dob-log-2" class="hidden text-gray-500">&gt; Resolving registered enrollment record... [OK]</div>
               <div id="without-dob-log-3" class="hidden text-brand-blue">&gt; Querying semester marks database... [OK]</div>
               <div id="without-dob-log-4" class="hidden text-emerald-400">&gt; Assembling student marksheet ledger... [OK]</div>
             </div>
@@ -1140,6 +1140,17 @@ const jsonLd = {
                 class="w-full px-3 py-2.5 bg-white/5 border border-white/20 light:bg-gray-50 light:border-gray-300 rounded-lg text-white light:text-ink light:placeholder-gray-400 font-mono text-center tracking-widest text-base uppercase placeholder-gray-500 focus:outline-none focus:border-brand-blue"
               />
 
+              <!-- Sponsored Ad Unit Inside Security Step -->
+              <div class="p-2.5 rounded-xl border border-white/5 light:border-black/5 bg-white/[0.02] light:bg-black/[0.01] text-center overflow-hidden">
+                <span class="text-[8px] uppercase font-bold text-gray-400 light:text-gray-500 tracking-wider block mb-1">Sponsored Advertisement</span>
+                <ins class="adsbygoogle"
+                     style="display:block; min-height: 90px;"
+                     data-ad-client="ca-pub-5590747238948130"
+                     data-ad-slot="default"
+                     data-ad-format="auto"
+                     data-full-width-responsive="true"></ins>
+              </div>
+
               <div class="flex gap-2 pt-1">
                 <button 
                   type="button" 
@@ -1158,6 +1169,10 @@ const jsonLd = {
               </div>
             </div>
           `;
+
+          try {
+            (window.adsbygoogle = window.adsbygoogle || []).push({});
+          } catch (e) {}
 
           const codeInput = document.getElementById("without-dob-security-code-input");
           if (codeInput) {
@@ -1263,7 +1278,7 @@ const jsonLd = {
         log4?.classList.add("hidden");
 
         if (loadingStatus) loadingStatus.textContent = "Connecting to AKTU Gateway...";
-        if (loadingSubstatus) loadingSubstatus.textContent = "Authenticating session & bypassing DOB requirement...";
+        if (loadingSubstatus) loadingSubstatus.textContent = "Authenticating session & synchronizing student record...";
 
         setTimeout(() => {
           if (loadingStatus) loadingStatus.textContent = "Negotiating University Gateway...";
@@ -1273,7 +1288,7 @@ const jsonLd = {
 
         setTimeout(() => {
           if (loadingStatus) loadingStatus.textContent = "Accessing OneView Archives...";
-          if (loadingSubstatus) loadingSubstatus.textContent = "Bypassing DOB requirement check...";
+          if (loadingSubstatus) loadingSubstatus.textContent = "Resolving student enrollment record...";
           log2?.classList.remove("hidden");
         }, 900);
 

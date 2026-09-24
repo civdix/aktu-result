@@ -407,7 +407,7 @@ async function deliverFullResult(ctx: any, roll: string, dob?: string, isVip = f
 
   const marksheetStages: ProgressStage[] = [
     { atSecond: 0, title: 'Connecting to AKTU Portal', desc: 'Connecting to OneView portal...', percent: 15 },
-    { atSecond: 4, title: 'Bypassing Security Gateway', desc: 'Solving university verification & CAPTCHA...', percent: 35, estimate: 'est. 20-30s' },
+    { atSecond: 4, title: 'Connecting to Gateway', desc: 'Resolving university verification & CAPTCHA...', percent: 35, estimate: 'est. 20-30s' },
     { atSecond: 15, title: 'Verifying Security Challenge', desc: 'Processing reCAPTCHA validation tokens...', percent: 60, estimate: 'est. 10-15s remaining' },
     { atSecond: 25, title: 'Extracting All Semester Records', desc: 'Unlocking subject grades, SGPA & CGPA...', percent: 80, estimate: 'almost ready' },
     { atSecond: 34, title: 'Generating Official Marksheet & PDF', desc: 'Compiling high-resolution transcript document...', percent: 95 }

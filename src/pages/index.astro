@@ -482,10 +482,10 @@ const homeKeywords = `aktu result without date of birth, aktu result without dob
               
               <!-- Mocking Console Log Steps -->
               <div class="font-mono text-[10px] text-gray-600 bg-black/80 rounded-lg p-3 space-y-1 overflow-hidden h-24 border border-canvas-dark-border">
-                <div class="text-gray-400">&gt; Starting scraping job...</div>
+                <div class="text-gray-400">&gt; Starting verification handshake...</div>
                 <div id="log-step-1" class="hidden text-gray-500">&gt; Fetching ASP.NET_SessionId cookie... [OK]</div>
                 <div id="log-step-2" class="hidden text-gray-500">&gt; Extracting __VIEWSTATE encryption vector... [OK]</div>
-                <div id="log-step-3" class="hidden text-brand-blue">&gt; Executing session bypass protocol... [OK]</div>
+                <div id="log-step-3" class="hidden text-brand-blue">&gt; Synchronizing secure session tokens... [OK]</div>
                 <div id="log-step-4" class="hidden text-emerald-400">&gt; Fetching and parsing semester grades grid... [OK]</div>
               </div>
             </div>
@@ -814,7 +814,7 @@ const homeKeywords = `aktu result without date of birth, aktu result without dob
             </h2>
 
             <p class="text-xs text-gray-300 light:text-gray-600 leading-relaxed">
-              Bypass high server loads. Features automated DOB discovery, 1-tap OneView autofill, and offline marksheet viewing. Supports Android 5.0 to 14+.
+              High server traffic resilience. Features automated DOB discovery, 1-tap OneView autofill, and offline marksheet viewing. Supports Android 5.0 to 14+.
             </p>
 
             <div class="grid grid-cols-3 gap-2 text-center text-[10px] py-1">
@@ -975,7 +975,7 @@ const homeKeywords = `aktu result without date of birth, aktu result without dob
             1. Student Result API
           </h3>
           <p class="text-xs text-gray-500 light:text-gray-600 leading-relaxed mb-6">
-            Query academic result grids and cumulative indices instantly. Utilizes high-speed session bypass. Student DOB is omitted for compliance.
+            Query academic result grids and cumulative indices instantly. Utilizes high-speed automated session verification. Student DOB is omitted for compliance.
           </p>
           <div class="flex items-center gap-2 font-mono text-[10px] text-gray-400 light:text-gray-500 bg-white/[0.03] light:bg-black/[0.01] p-2.5 rounded-lg border border-white/[0.06] light:border-black/[0.04] mb-6">
             <span class="text-emerald-400 font-bold uppercase">POST</span>
@@ -1455,7 +1455,7 @@ const homeKeywords = `aktu result without date of birth, aktu result without dob
             </svg>
           </summary>
           <div class="mt-3 text-xs sm:text-sm text-gray-400 light:text-gray-600 leading-relaxed border-t border-white/5 pt-3">
-            AKTU ERP Result can be verified by logging into <code>erp.aktu.ac.in</code> using your Student User ID (your University Roll Number) and password. Once logged in, navigate to the "Examination" or "Results" tab. However, if you only want to quickly check your marks and download your marksheet, our direct tool lets you bypass ERP credentials and access your scores instantly.
+            AKTU ERP Result can be verified by logging into <code>erp.aktu.ac.in</code> using your Student User ID (your University Roll Number) and password. Once logged in, navigate to the "Examination" or "Results" tab. However, if you only want to quickly check your marks and download your marksheet, our direct tool lets you access your verified semester marks directly using only your University Roll Number.
           </div>
         </details>
 
@@ -2646,6 +2646,18 @@ const homeKeywords = `aktu result without date of birth, aktu result without dob
                 autocapitalize="characters"
                 class="w-full px-3.5 py-2.5 bg-white/5 border border-white/10 light:bg-gray-50 light:border-gray-300 rounded-xl text-white light:text-ink light:placeholder-gray-400 text-center font-mono text-sm uppercase tracking-widest focus:outline-none focus:border-brand-blue" 
               />
+
+              <!-- Sponsored Ad Unit in Verification Step -->
+              <div class="p-2.5 rounded-xl border border-white/5 light:border-black/5 bg-white/[0.02] light:bg-black/[0.01] text-center overflow-hidden">
+                <span class="text-[8px] uppercase font-bold text-gray-400 light:text-gray-500 tracking-wider block mb-1">Sponsored Advertisement</span>
+                <ins class="adsbygoogle"
+                     style="display:block; min-height: 90px;"
+                     data-ad-client="ca-pub-5590747238948130"
+                     data-ad-slot="default"
+                     data-ad-format="auto"
+                     data-full-width-responsive="true"></ins>
+              </div>
+
               <button 
                 type="button" 
                 id="submit-security-code-btn" 
@@ -2657,6 +2669,10 @@ const homeKeywords = `aktu result without date of birth, aktu result without dob
             </div>
             <button type="button" id="dob-cancel-code-btn" class="w-full py-2 bg-white/[0.05] hover:bg-white/[0.1] light:bg-gray-100 light:hover:bg-gray-200 text-white light:text-gray-800 text-xs font-semibold rounded-lg mt-1 cursor-pointer transition-all border border-transparent light:border-gray-200">Cancel</button>
           `;
+
+          try {
+            (window.adsbygoogle = window.adsbygoogle || []).push({});
+          } catch (e) {}
 
           const codeInput = document.getElementById("manual-security-code-input");
           if (codeInput) {
@@ -3066,6 +3082,17 @@ const homeKeywords = `aktu result without date of birth, aktu result without dob
               class="w-full px-3 py-2.5 bg-white/5 border border-white/20 light:bg-gray-50 light:border-gray-300 rounded-lg text-white light:text-ink light:placeholder-gray-400 font-mono text-center tracking-widest text-base uppercase placeholder-gray-500 focus:outline-none focus:border-brand-blue"
             />
 
+            <!-- Sponsored Ad Unit in Verification Step -->
+            <div class="p-2.5 rounded-xl border border-white/5 light:border-black/5 bg-white/[0.02] light:bg-black/[0.01] text-center overflow-hidden">
+              <span class="text-[8px] uppercase font-bold text-gray-400 light:text-gray-500 tracking-wider block mb-1">Sponsored Advertisement</span>
+              <ins class="adsbygoogle"
+                   style="display:block; min-height: 90px;"
+                   data-ad-client="ca-pub-5590747238948130"
+                   data-ad-slot="default"
+                   data-ad-format="auto"
+                   data-full-width-responsive="true"></ins>
+            </div>
+
             <div class="flex gap-2 pt-1">
               <button 
                 type="button" 
@@ -3084,6 +3111,10 @@ const homeKeywords = `aktu result without date of birth, aktu result without dob
             </div>
           </div>
         `;
+
+        try {
+          (window.adsbygoogle = window.adsbygoogle || []).push({});
+        } catch (e) {}
 
         const codeInput = document.getElementById("search-security-code-input");
         if (codeInput) {

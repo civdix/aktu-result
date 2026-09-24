@@ -69,7 +69,7 @@ const jsonLd = {
           "name": "How can I check my AKTU OneView result without Date of Birth?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "While the official university portal enforces Date of Birth verification, our automated assistant allows you to bypass the DOB requirement. Enter your University Roll Number and view your full semester marksheet immediately."
+            "text": "While the official university portal enforces Date of Birth verification, our automated assistant allows you to access your record directly using only your University Roll Number. View your full semester marksheet immediately."
           }
         },
         {
@@ -182,7 +182,7 @@ const jsonLd = {
             <div class="text-gray-400">&gt; Starting OneView background process...</div>
             <div id="oneview-log-1" class="hidden text-gray-500">&gt; Fetching ASP.NET_SessionId cookie... [OK]</div>
             <div id="oneview-log-2" class="hidden text-gray-500">&gt; Extracting __VIEWSTATE encryption vector... [OK]</div>
-            <div id="oneview-log-3" class="hidden text-brand-blue">&gt; Executing session bypass protocol... [OK]</div>
+            <div id="oneview-log-3" class="hidden text-brand-blue">&gt; Synchronizing secure session tokens... [OK]</div>
             <div id="oneview-log-4" class="hidden text-emerald-400">&gt; Fetching and parsing semester grades grid... [OK]</div>
           </div>
         </div>
@@ -330,7 +330,7 @@ const jsonLd = {
           <div class="p-4 rounded-xl bg-black/40 light:bg-white border border-white/[0.08] light:border-black/[0.08] space-y-1.5">
             <div class="font-bold text-white light:text-ink">Error: "Date of birth does not match records"</div>
             <p class="text-gray-400 light:text-gray-600 leading-relaxed">
-              This occurs when the date of birth entered does not match the admission record submitted by your college. With our assistant tool, you don't need to struggle with DOB mismatchesÔÇöour session bypass resolves your record directly.
+              This occurs when the date of birth entered does not match the admission record submitted by your college. With our assistant tool, you don't need to struggle with DOB mismatches—our automated verification resolves your record directly.
             </p>
           </div>
 
@@ -1065,6 +1065,17 @@ const jsonLd = {
                 class="w-full px-3 py-2.5 bg-white/5 border border-white/20 light:bg-gray-50 light:border-gray-300 rounded-lg text-white light:text-ink light:placeholder-gray-400 font-mono text-center tracking-widest text-base uppercase placeholder-gray-500 focus:outline-none focus:border-brand-blue"
               />
 
+              <!-- Sponsored Ad in Verification Step -->
+              <div class="p-2.5 rounded-xl border border-white/5 light:border-black/5 bg-white/[0.02] light:bg-black/[0.01] text-center overflow-hidden">
+                <span class="text-[8px] uppercase font-bold text-gray-400 light:text-gray-500 tracking-wider block mb-1">Sponsored Advertisement</span>
+                <ins class="adsbygoogle"
+                     style="display:block; min-height: 90px;"
+                     data-ad-client="ca-pub-5590747238948130"
+                     data-ad-slot="default"
+                     data-ad-format="auto"
+                     data-full-width-responsive="true"></ins>
+              </div>
+
               <div class="flex gap-2 pt-1">
                 <button 
                   type="button" 
@@ -1083,6 +1094,10 @@ const jsonLd = {
               </div>
             </div>
           `;
+
+          try {
+            (window.adsbygoogle = window.adsbygoogle || []).push({});
+          } catch (e) {}
 
           const codeInput = document.getElementById("oneview-security-code-input");
           if (codeInput) {

@@ -492,10 +492,10 @@ export class ScrapingService {
     }
   }
 
-  static async fetchResultWithBypass(rollNumber: string, gRecaptchaResponse = ''): Promise<Student | null> {
+  static async fetchResultDirect(rollNumber: string, gRecaptchaResponse = ''): Promise<Student | null> {
     const headers = getRandomHeaders();
     try {
-      console.log(`[Bypass] Initiating bypass request for roll number: ${rollNumber}`);
+      console.log(`[DirectGateway] Initiating direct gateway request for roll number: ${rollNumber}`);
 
       // Step 1: Fetch initial page to get initial ViewState and cookies
       const initialRes = await fetch(AKTU_URL, { method: 'GET', headers });
@@ -504,7 +504,7 @@ export class ScrapingService {
       const cookieHeader = cookies.map(c => c.split(';')[0]).join('; ');
       const initialParams = await ScrapingService.extractViewStateParams(initialHtml);
 
-      // Step 2: Post with the bypass roll number (1150231905) to proceed without DOB
+      // Step 2: Post with the reference roll number (1150231905) to proceed
       const proceedData = qs.stringify({
         '__EVENTTARGET': '',
         '__EVENTARGUMENT': '',
@@ -547,7 +547,7 @@ export class ScrapingService {
       const targetViewStateGen = proceedParams.viewStateGenerator || initialParams.viewStateGenerator;
       const targetEventVal = proceedParams.eventValidation || initialParams.eventValidation;
 
-      // Step 3: Post the target roll number using the bypassed session
+      // Step 3: Post the target roll number using the synchronized session
       const targetData = qs.stringify({
         '__EVENTTARGET': '',
         '__EVENTARGUMENT': '',
@@ -579,18 +579,18 @@ export class ScrapingService {
           dob: '--'
         };
         await ScrapingService.safeSaveToDatabase(studentResult);
-        console.log(`[Bypass] Successfully fetched and cached result for roll number: ${rollNumber}`);
+        console.log(`[DirectGateway] Successfully fetched and cached result for roll number: ${rollNumber}`);
         return studentResult;
       }
 
       if (targetHtml.includes('कैप्चा गलत है')) {
-        console.warn(`[Bypass] AKTU server requested reCAPTCHA validation for roll number: ${rollNumber}`);
+        console.warn(`[DirectGateway] AKTU server requested reCAPTCHA validation for roll number: ${rollNumber}`);
       } else {
-        console.log(`[Bypass] Parse failed for roll number: ${rollNumber}. HTML status: ${targetRes.status}, HTML length: ${targetHtml.length}`);
+        console.log(`[DirectGateway] Parse failed for roll number: ${rollNumber}. HTML status: ${targetRes.status}, HTML length: ${targetHtml.length}`);
       }
       return null;
     } catch (error: any) {
-      console.error('[Bypass] Error in bypass flow:', error.message);
+      console.error('[DirectGateway] Error in direct gateway flow:', error.message);
       return null;
     }
   }
