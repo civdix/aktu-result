@@ -1,6 +1,7 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import { getAcademicYearInfo } from "../utils/academicYear";
+import OneViewIframeModal from "../components/OneViewIframeModal.astro";
 
 const yearInfo = getAcademicYearInfo();
 
@@ -1072,6 +1073,13 @@ const jsonLd = {
               <div class="flex flex-col gap-2 pt-1">
                 <button 
                   type="button" 
+                  id="without-dob-open-oneview-btn" 
+                  class="w-full py-3 bg-gradient-to-r from-brand-blue via-blue-500 to-purple-600 hover:from-brand-blue-hover hover:to-purple-700 text-white rounded-xl text-xs font-bold transition-all shadow-md flex items-center justify-center gap-1.5 cursor-pointer"
+                >
+                  <span>🖥️ View Inside Official Live OneView Portal</span>
+                </button>
+                <button 
+                  type="button" 
                   id="without-dob-check-another-btn" 
                   class="w-full py-2.5 bg-white/10 light:bg-gray-100 hover:bg-white/15 light:hover:bg-gray-200 text-white light:text-gray-800 rounded-xl text-xs font-semibold border border-white/10 light:border-gray-300 transition-all cursor-pointer text-center"
                 >
@@ -1086,6 +1094,15 @@ const jsonLd = {
         try {
           (window.adsbygoogle = window.adsbygoogle || []).push({});
         } catch (e) {}
+
+        document.getElementById("without-dob-open-oneview-btn")?.addEventListener("click", () => {
+          if (typeof (window as any).openOneViewModal === "function") {
+            (window as any).openOneViewModal(rollNumber, resolvedDob || "");
+          } else {
+            window.open("https://oneview.aktu.ac.in/WebPages/aktu/OneView.aspx", "_blank");
+          }
+        });
+
         document.getElementById("without-dob-check-another-btn")?.addEventListener("click", resetUI);
       }
 
@@ -1377,4 +1394,6 @@ const jsonLd = {
       initWithoutDob();
     }
   </script>
+
+  <OneViewIframeModal />
 </Layout>

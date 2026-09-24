@@ -1,0 +1,252 @@
+---
+// OneView Live Embedded Gateway Modal
+// Provides a zero-cost, high-speed direct portal view allowing students to solve reCAPTCHA themselves.
+---
+
+<!-- OneView Live Embedded Modal -->
+<div 
+  id="oneview-live-modal" 
+  class="hidden fixed inset-0 z-[999999] bg-black/80 backdrop-blur-md flex items-center justify-center p-2 sm:p-4 transition-all duration-300"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="oneview-modal-title"
+>
+  <div class="bg-black light:bg-white border border-white/15 light:border-gray-300 w-full max-w-4xl h-[92vh] max-h-[880px] rounded-2xl shadow-2xl flex flex-col overflow-hidden animate-fade-in text-white light:text-ink">
+    
+    <!-- Modal Header -->
+    <div class="px-4 py-3 border-b border-white/10 light:border-gray-200 bg-white/[0.04] light:bg-gray-50 flex items-center justify-between shrink-0">
+      <div class="flex items-center gap-2.5">
+        <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
+        <div>
+          <h2 id="oneview-modal-title" class="font-bold text-xs sm:text-sm text-white light:text-ink flex items-center gap-1.5">
+            <span>Official AKTU OneView Portal</span>
+            <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/20 text-emerald-300 light:text-emerald-800 border border-emerald-500/30">
+              Live Gateway
+            </span>
+          </h2>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2">
+        <a 
+          id="oneview-modal-new-tab-btn" 
+          href="https://oneview.aktu.ac.in/WebPages/aktu/OneView.aspx" 
+          target="_blank" 
+          rel="noopener noreferrer" 
+          class="px-2.5 py-1 text-xs bg-white/10 hover:bg-white/20 light:bg-gray-200 light:hover:bg-gray-300 text-gray-200 light:text-gray-800 rounded-lg transition-all flex items-center gap-1 font-medium cursor-pointer"
+          title="Open official portal in new tab"
+        >
+          <span>↗ Open Fullscreen</span>
+        </a>
+        <button 
+          id="oneview-modal-close-btn" 
+          type="button" 
+          class="w-7 h-7 rounded-lg hover:bg-white/10 light:hover:bg-gray-200 text-gray-400 hover:text-white light:hover:text-ink text-base flex items-center justify-center cursor-pointer transition-all"
+          title="Close modal"
+        >
+          ✕
+        </button>
+      </div>
+    </div>
+
+    <!-- Credentials Auto-Helper Bar -->
+    <div class="px-4 py-2 bg-gradient-to-r from-blue-500/10 via-purple-500/10 to-emerald-500/10 light:from-blue-50 light:via-purple-50/50 light:to-emerald-50/50 border-b border-white/5 light:border-gray-200 flex flex-wrap items-center justify-between gap-2 shrink-0 text-xs">
+      <div class="flex items-center gap-2 flex-wrap">
+        <span class="text-gray-400 light:text-gray-600 text-[11px] font-medium">Your Credentials:</span>
+        <button 
+          id="oneview-modal-copy-roll-btn" 
+          type="button" 
+          class="px-2.5 py-1 bg-white/10 light:bg-white hover:bg-white/15 light:hover:bg-gray-100 rounded-md font-mono text-[11px] text-white light:text-ink border border-white/10 light:border-gray-300 flex items-center gap-1 cursor-pointer transition-all"
+          title="Click to copy Roll Number"
+        >
+          <span>Roll: <b id="oneview-modal-roll-text">--</b></span>
+          <span class="text-gray-400 text-[10px]">📋</span>
+        </button>
+        <button 
+          id="oneview-modal-copy-dob-btn" 
+          type="button" 
+          class="px-2.5 py-1 bg-emerald-500/20 light:bg-emerald-100 hover:bg-emerald-500/30 rounded-md font-mono text-[11px] text-emerald-300 light:text-emerald-800 border border-emerald-500/30 flex items-center gap-1 cursor-pointer transition-all"
+          title="Click to copy Date of Birth"
+        >
+          <span>DOB: <b id="oneview-modal-dob-text">--</b></span>
+          <span class="text-emerald-400 text-[10px]">📋 Copy</span>
+        </button>
+      </div>
+
+      <div class="flex items-center gap-2">
+        <span class="text-[11px] text-amber-300 light:text-amber-800 font-medium hidden sm:inline">
+          💡 Paste into OneView below &amp; solve the reCAPTCHA box
+        </span>
+        <button 
+          id="oneview-modal-copy-autofill-btn"
+          type="button"
+          class="px-2 py-0.5 bg-amber-500/20 light:bg-amber-100 hover:bg-amber-500/30 text-amber-300 light:text-amber-800 text-[10px] font-bold rounded border border-amber-500/30 transition-all cursor-pointer"
+          title="Copy 1-click autofill bookmarklet"
+        >
+          ⚡ Copy Auto-Fill Script
+        </button>
+      </div>
+    </div>
+
+    <!-- Sponsored Top Ad Unit in Modal -->
+    <div class="px-3 py-1.5 bg-black/40 light:bg-gray-50 border-b border-white/5 light:border-gray-200 text-center shrink-0">
+      <span class="text-[8px] uppercase font-bold text-gray-500 tracking-wider block mb-0.5">Sponsored Advertisement</span>
+      <ins class="adsbygoogle"
+           style="display:block; min-height: 50px; max-height: 60px;"
+           data-ad-client="ca-pub-5590747238948130"
+           data-ad-slot="default"
+           data-ad-format="horizontal"
+           data-full-width-responsive="true"></ins>
+    </div>
+
+    <!-- Iframe Container -->
+    <div class="flex-1 relative bg-white overflow-hidden">
+      <!-- Loading Spinner -->
+      <div 
+        id="oneview-iframe-spinner" 
+        class="absolute inset-0 bg-gray-900/90 light:bg-gray-100 flex flex-col items-center justify-center gap-3 z-10 transition-opacity duration-300"
+      >
+        <div class="w-9 h-9 border-3 border-brand-blue/30 border-t-brand-blue rounded-full animate-spin"></div>
+        <div class="text-center space-y-1">
+          <p class="text-xs font-semibold text-white light:text-ink">Connecting to AKTU OneView...</p>
+          <p class="text-[10px] text-gray-400 light:text-gray-500">Loading secure university portal...</p>
+        </div>
+      </div>
+
+      <!-- Iframe -->
+      <iframe 
+        id="oneview-portal-iframe" 
+        src="about:blank" 
+        class="w-full h-full border-0" 
+        title="AKTU OneView Portal"
+        sandbox="allow-scripts allow-forms allow-same-origin allow-popups"
+      ></iframe>
+    </div>
+
+    <!-- Modal Footer -->
+    <div class="px-4 py-2 border-t border-white/10 light:border-gray-200 bg-white/[0.02] light:bg-gray-50 flex items-center justify-between shrink-0 text-[11px] text-gray-400 light:text-gray-500">
+      <span class="truncate">🔒 Official Dr. A.P.J. Abdul Kalam Technical University OneView Service</span>
+      <button 
+        type="button" 
+        id="oneview-modal-footer-close" 
+        class="px-3 py-1 bg-white/10 hover:bg-white/15 light:bg-gray-200 light:hover:bg-gray-300 text-white light:text-ink rounded-lg font-medium cursor-pointer"
+      >
+        Close
+      </button>
+    </div>
+
+  </div>
+</div>
+
+<script is:inline>
+  (() => {
+    const modal = document.getElementById("oneview-live-modal");
+    const iframe = document.getElementById("oneview-portal-iframe");
+    const spinner = document.getElementById("oneview-iframe-spinner");
+    const rollText = document.getElementById("oneview-modal-roll-text");
+    const dobText = document.getElementById("oneview-modal-dob-text");
+    const copyRollBtn = document.getElementById("oneview-modal-copy-roll-btn");
+    const copyDobBtn = document.getElementById("oneview-modal-copy-dob-btn");
+    const copyAutofillBtn = document.getElementById("oneview-modal-copy-autofill-btn");
+    const closeBtn = document.getElementById("oneview-modal-close-btn");
+    const footerCloseBtn = document.getElementById("oneview-modal-footer-close");
+    const newTabBtn = document.getElementById("oneview-modal-new-tab-btn");
+
+    let currentRoll = "";
+    let currentDob = "";
+
+    const TARGET_URL = "https://oneview.aktu.ac.in/WebPages/aktu/OneView.aspx";
+
+    window.openOneViewModal = function(rollNumber, dob) {
+      currentRoll = (rollNumber || "").trim();
+      currentDob = (dob || "").trim();
+
+      if (rollText) rollText.textContent = currentRoll || "--";
+      if (dobText) dobText.textContent = currentDob || "--";
+
+      // Auto-copy DOB to clipboard for seamless user experience
+      if (currentDob && navigator.clipboard) {
+        navigator.clipboard.writeText(currentDob).catch(() => {});
+      }
+
+      if (spinner) {
+        spinner.classList.remove("hidden");
+        spinner.style.opacity = "1";
+      }
+
+      if (iframe) {
+        iframe.onload = () => {
+          if (spinner) {
+            spinner.style.opacity = "0";
+            setTimeout(() => spinner.classList.add("hidden"), 300);
+          }
+        };
+        // Load official portal
+        iframe.src = TARGET_URL;
+      }
+
+      if (modal) {
+        modal.classList.remove("hidden");
+        document.body.style.overflow = "hidden";
+      }
+
+      // Trigger ad
+      try {
+        (window.adsbygoogle = window.adsbygoogle || []).push({});
+      } catch (e) {}
+    };
+
+    window.closeOneViewModal = function() {
+      if (modal) {
+        modal.classList.add("hidden");
+        document.body.style.overflow = "";
+      }
+      if (iframe) {
+        iframe.src = "about:blank";
+      }
+    };
+
+    closeBtn?.addEventListener("click", window.closeOneViewModal);
+    footerCloseBtn?.addEventListener("click", window.closeOneViewModal);
+
+    modal?.addEventListener("click", (e) => {
+      if (e.target === modal) {
+        window.closeOneViewModal();
+      }
+    });
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && modal && !modal.classList.contains("hidden")) {
+        window.closeOneViewModal();
+      }
+    });
+
+    copyRollBtn?.addEventListener("click", () => {
+      if (!currentRoll) return;
+      navigator.clipboard.writeText(currentRoll).then(() => {
+        const orig = copyRollBtn.innerHTML;
+        copyRollBtn.innerHTML = `<span>✓ Roll Copied!</span>`;
+        setTimeout(() => copyRollBtn.innerHTML = orig, 2000);
+      });
+    });
+
+    copyDobBtn?.addEventListener("click", () => {
+      if (!currentDob) return;
+      navigator.clipboard.writeText(currentDob).then(() => {
+        const orig = copyDobBtn.innerHTML;
+        copyDobBtn.innerHTML = `<span>✓ DOB Copied!</span>`;
+        setTimeout(() => copyDobBtn.innerHTML = orig, 2000);
+      });
+    });
+
+    copyAutofillBtn?.addEventListener("click", () => {
+      const script = `javascript:(function(){var r='${currentRoll}',d='${currentDob}';var ro=document.getElementById('txtRollNo');var b=document.getElementById('btnProceed');if(ro&&b){ro.value=r;b.click();}if(d){var c=setInterval(function(){var di=document.getElementById('txtDOB');if(di&&di.offsetParent!==null){di.value=d;clearInterval(c);}},200);}})();`;
+      navigator.clipboard.writeText(script).then(() => {
+        const orig = copyAutofillBtn.innerHTML;
+        copyAutofillBtn.innerHTML = `<span>✓ Script Copied!</span>`;
+        setTimeout(() => copyAutofillBtn.innerHTML = orig, 2000);
+      });
+    });
+
+  })();
+</script>
