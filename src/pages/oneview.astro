@@ -536,6 +536,8 @@ const jsonLd = {
         }).join('');
       }
 
+      let oneviewDobTimerInterval = null;
+
       // Reset to search form
       function resetUI() {
         if (cardWrapper) {
@@ -545,6 +547,10 @@ const jsonLd = {
         if (adCountdownInterval) {
           clearInterval(adCountdownInterval);
           adCountdownInterval = null;
+        }
+        if (oneviewDobTimerInterval) {
+          clearInterval(oneviewDobTimerInterval);
+          oneviewDobTimerInterval = null;
         }
         const adInterstitial = document.getElementById("oneview-ad-interstitial-state");
         if (adInterstitial) adInterstitial.classList.add("hidden");
@@ -644,6 +650,11 @@ const jsonLd = {
 
       // Render Verified Academic Profile & OneView Marksheet
       function renderOneViewVerifiedProfile(data) {
+        if (oneviewDobTimerInterval) {
+          clearInterval(oneviewDobTimerInterval);
+          oneviewDobTimerInterval = null;
+        }
+
         loaderState?.classList.add("hidden");
         searchForm?.classList.add("hidden");
         errorState?.classList.add("hidden");
@@ -674,7 +685,7 @@ const jsonLd = {
           : '';
 
         let resolvedDob = data.dob || data.student?.dob || (new URLSearchParams(window.location.search)).get('dob') || '';
-        let isDobHidden = true;
+        let isDobHidden = false;
 
         const botUrl = data.telegramBotUrl || `https://t.me/akturesultwithoutdobbot?start=${encodeURIComponent(rollNumber)}`;
         const semesters = data.semesters || data.student?.semesters || [];
@@ -888,6 +899,72 @@ const jsonLd = {
             cardWrapper.classList.add("max-w-lg");
           }
 
+          const dobCardHtml = resolvedDob ? `
+            <!-- Prominent Registered DOB Display Island with Timed Countdown -->
+            <div class="p-4 sm:p-5 rounded-2xl bg-gradient-to-br from-emerald-500/15 via-teal-500/10 to-blue-500/10 light:bg-emerald-50 border-2 border-emerald-500/40 light:border-emerald-300 space-y-3.5 shadow-xl">
+              <div class="flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                  <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                  <span class="text-xs font-black text-emerald-400 light:text-emerald-700 uppercase tracking-wider">
+                    Student Verified • Date of Birth Found
+                  </span>
+                </div>
+                <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-amber-500/20 text-amber-300 light:text-amber-800 border border-amber-500/30">
+                  Marksheet Pending
+                </span>
+              </div>
+
+              <p class="text-xs text-gray-300 light:text-gray-700 leading-relaxed">
+                Semester marksheet is not generated on university servers yet. Your official registered Date of Birth has been retrieved below:
+              </p>
+
+              <!-- Large High-Visibility DOB Value Island -->
+              <div class="p-4 bg-black/60 light:bg-white rounded-xl border border-emerald-500/40 light:border-emerald-200 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-inner">
+                <div>
+                  <span class="text-[10px] uppercase font-bold text-gray-400 light:text-gray-500 block mb-0.5">Official Registered Date of Birth (DOB)</span>
+                  <div id="oneview-verified-dob-val" class="text-2xl sm:text-3xl font-mono font-black text-emerald-400 light:text-emerald-600 tracking-wider">
+                    ${resolvedDob}
+                  </div>
+                </div>
+                <div class="flex items-center gap-2">
+                  <button 
+                    type="button" 
+                    id="oneview-copy-dob-btn" 
+                    class="px-4 py-2.5 bg-emerald-500 hover:bg-emerald-600 active:scale-95 text-white font-bold text-xs rounded-xl shadow-lg transition-all flex items-center gap-1.5 cursor-pointer"
+                    title="Copy Date of Birth"
+                  >
+                    <span>📋 Copy DOB</span>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Timed Countdown Banner -->
+              <div class="p-3 bg-white/5 light:bg-gray-100/80 rounded-xl border border-white/10 light:border-gray-200 space-y-2">
+                <div class="flex items-center justify-between text-xs">
+                  <span class="text-gray-300 light:text-gray-700 font-medium flex items-center gap-1.5">
+                    <span>⏱️</span>
+                    <span id="oneview-dob-timer-label">Showing DOB on screen for:</span>
+                  </span>
+                  <span id="oneview-dob-timer-seconds" class="font-mono font-bold text-brand-blue light:text-brand-blue-hover text-sm">15s</span>
+                </div>
+                <!-- Animated Countdown Bar -->
+                <div class="w-full bg-white/10 light:bg-gray-200 h-1.5 rounded-full overflow-hidden">
+                  <div id="oneview-dob-timer-bar" class="h-full bg-gradient-to-r from-emerald-400 to-brand-blue rounded-full transition-all duration-1000 ease-linear" style="width: 100%;"></div>
+                </div>
+                <div class="flex items-center justify-between pt-1 text-[11px]">
+                  <span class="text-[10px] text-gray-400 light:text-gray-500">Auto-launches Live Portal with your DOB</span>
+                  <button 
+                    type="button" 
+                    id="oneview-dob-pause-timer-btn" 
+                    class="text-[11px] text-brand-blue light:text-brand-blue-hover hover:underline font-semibold cursor-pointer"
+                  >
+                    ⏸️ Pause Timer
+                  </button>
+                </div>
+              </div>
+            </div>
+          ` : '';
+
           profileContainer.innerHTML = `
             <div class="p-5 sm:p-6 rounded-2xl border border-emerald-500/30 light:border-emerald-200 bg-gradient-to-b from-emerald-500/10 via-black/60 to-black/80 light:bg-gradient-to-b light:from-emerald-50/80 light:via-white light:to-gray-50/60 space-y-5 text-left shadow-2xl light:shadow-xl backdrop-blur-xl">
               <!-- Status Header -->
@@ -900,6 +977,8 @@ const jsonLd = {
                   Official Gateway
                 </span>
               </div>
+
+              ${dobCardHtml}
 
               <!-- Student Profile Information -->
               <div class="space-y-2">
@@ -914,43 +993,13 @@ const jsonLd = {
                 </div>
               </div>
 
-              <!-- Date of Birth Island -->
-              ${resolvedDob ? `
-                <div class="p-3.5 bg-white/5 light:bg-emerald-50/60 border border-emerald-500/25 light:border-emerald-200 rounded-xl flex items-center justify-between">
-                  <div>
-                    <span class="text-[10px] uppercase font-bold text-gray-400 light:text-gray-600 block mb-0.5">Registered Date of Birth:</span>
-                    <div class="text-sm font-mono font-extrabold text-emerald-400 light:text-emerald-700 tracking-wider">
-                      <span id="oneview-dob-display">${isDobHidden ? '••••••••' : resolvedDob}</span>
-                    </div>
-                  </div>
-                  <div class="flex items-center gap-1.5">
-                    <button 
-                      type="button" 
-                      id="oneview-toggle-dob-btn" 
-                      class="px-2.5 py-1.5 bg-white/10 light:bg-gray-100 hover:bg-white/15 light:hover:bg-gray-200 text-xs text-gray-300 light:text-gray-700 hover:text-white light:hover:text-ink rounded-lg transition-all cursor-pointer select-none font-medium flex items-center gap-1 border border-transparent light:border-gray-200"
-                      title="Toggle DOB display"
-                    >
-                      <span>👁️ Toggle</span>
-                    </button>
-                    <button 
-                      type="button" 
-                      id="oneview-copy-dob-btn" 
-                      class="px-2.5 py-1.5 bg-emerald-500/20 light:bg-emerald-100 hover:bg-emerald-500/30 text-xs text-emerald-300 light:text-emerald-800 font-semibold rounded-lg transition-all cursor-pointer select-none flex items-center gap-1 border border-transparent light:border-emerald-200"
-                      title="Copy DOB to clipboard"
-                    >
-                      <span>📋 Copy</span>
-                    </button>
-                  </div>
-                </div>
-              ` : ''}
-
               <!-- Sponsored Ad Unit -->
               <div class="p-3 rounded-xl border border-white/5 light:border-black/5 bg-white/[0.02] light:bg-black/[0.01] text-center overflow-hidden">
                 <span class="text-[8px] uppercase font-bold text-gray-400 light:text-gray-500 tracking-wider block mb-1">Sponsored Advertisement</span>
                 <ins class="adsbygoogle"
                      style="display:block; min-height: 90px;"
                      data-ad-client="ca-pub-5590747238948130"
-                      data-ad-format="auto"
+                     data-ad-format="auto"
                      data-full-width-responsive="true"></ins>
               </div>
 
@@ -961,7 +1010,7 @@ const jsonLd = {
                   id="oneview-launch-official-btn" 
                   class="w-full py-3.5 bg-gradient-to-r from-brand-blue via-blue-500 to-purple-600 hover:from-brand-blue-hover hover:to-purple-700 text-white text-xs sm:text-sm font-bold rounded-xl shadow-lg transition-all transform hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2 cursor-pointer"
                 >
-                  <span>🖥️ View Inside Live OneView Portal (In-Page Gateway)</span>
+                  <span>🖥️ Open Live Portal (DOB Copied)</span>
                   <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                   </svg>
@@ -997,6 +1046,48 @@ const jsonLd = {
               ← Check Another Roll Number
             </button>
           `;
+
+          // Countdown Timer for DOB Display on OneView page
+          if (resolvedDob) {
+            let dobSeconds = 15;
+            let isPaused = false;
+            const secondsEl = document.getElementById("oneview-dob-timer-seconds");
+            const barEl = document.getElementById("oneview-dob-timer-bar");
+            const labelEl = document.getElementById("oneview-dob-timer-label");
+            const pauseBtn = document.getElementById("oneview-dob-pause-timer-btn");
+
+            pauseBtn?.addEventListener("click", () => {
+              isPaused = !isPaused;
+              if (isPaused) {
+                pauseBtn.textContent = "▶️ Resume Timer";
+                if (labelEl) labelEl.textContent = "DOB Display Paused:";
+              } else {
+                pauseBtn.textContent = "⏸️ Pause Timer";
+                if (labelEl) labelEl.textContent = "Showing DOB on screen for:";
+              }
+            });
+
+            oneviewDobTimerInterval = setInterval(() => {
+              if (isPaused) return;
+              dobSeconds--;
+              if (secondsEl) secondsEl.textContent = `${dobSeconds}s`;
+              if (barEl) {
+                const pct = Math.max(0, Math.round((dobSeconds / 15) * 100));
+                barEl.style.width = `${pct}%`;
+              }
+              if (dobSeconds <= 0) {
+                clearInterval(oneviewDobTimerInterval);
+                oneviewDobTimerInterval = null;
+                if (labelEl) labelEl.textContent = "Live Portal Ready:";
+                if (secondsEl) secondsEl.textContent = "Launched";
+                if (barEl) barEl.style.width = "0%";
+                if (pauseBtn) pauseBtn.classList.add("hidden");
+                if (typeof window.openOneViewModal === "function") {
+                  window.openOneViewModal(rollNumber, resolvedDob);
+                }
+              }
+            }, 1000);
+          }
         }
 
         // Common Events: Toggle DOB
@@ -1028,14 +1119,16 @@ const jsonLd = {
 
         // Common Events: Launch Live OneView with modal or fallback
         document.getElementById("oneview-launch-official-btn")?.addEventListener("click", () => {
+          if (oneviewDobTimerInterval) {
+            clearInterval(oneviewDobTimerInterval);
+            oneviewDobTimerInterval = null;
+          }
+          if (resolvedDob) {
+            navigator.clipboard.writeText(resolvedDob).catch(() => {});
+          }
           if (typeof window.openOneViewModal === "function") {
             window.openOneViewModal(rollNumber, resolvedDob);
           } else {
-            if (resolvedDob) {
-              navigator.clipboard.writeText(resolvedDob).catch(() => {});
-            } else if (rollNumber) {
-              navigator.clipboard.writeText(rollNumber).catch(() => {});
-            }
             window.open("https://oneview.aktu.ac.in/WebPages/aktu/OneView.aspx", "_blank");
           }
         });

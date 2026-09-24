@@ -1804,6 +1804,10 @@ const homeKeywords = `aktu result without date of birth, aktu result without dob
         clearInterval(adCountdownInterval);
         adCountdownInterval = null;
       }
+      if (dobTimerInterval) {
+        clearInterval(dobTimerInterval);
+        dobTimerInterval = null;
+      }
       const adInterstitialState = document.getElementById("ad-interstitial-state");
       if (adInterstitialState) {
         adInterstitialState.classList.add("hidden");
@@ -2964,7 +2968,14 @@ const homeKeywords = `aktu result without date of birth, aktu result without dob
       }
     }
 
+    let dobTimerInterval = null;
+
     function renderSearchVerifiedProfile(data) {
+      if (dobTimerInterval) {
+        clearInterval(dobTimerInterval);
+        dobTimerInterval = null;
+      }
+
       loaderState.classList.add("hidden");
       searchForm.classList.add("hidden");
       resultState.classList.add("hidden");
@@ -2982,6 +2993,7 @@ const homeKeywords = `aktu result without date of birth, aktu result without dob
 
       const studentName = data.name || data.student?.name || "Verified Student";
       const rollNumber = data.rollNumber || "";
+      const resolvedDob = data.dob || data.student?.dob || "";
       const enrollmentNo = data.enrollmentNumber || data.student?.enrollmentNo;
       const enrollmentHtml = (enrollmentNo && enrollmentNo !== '--') 
         ? `<div class="text-xs text-gray-400 light:text-gray-500">Enrollment: <span class="font-bold text-white light:text-ink">${enrollmentNo}</span></div>` 
@@ -2999,6 +3011,72 @@ const homeKeywords = `aktu result without date of birth, aktu result without dob
         ? `<div class="text-xs text-gray-400 light:text-gray-500">Institute: <span class="text-gray-200 light:text-gray-800">${institute}</span></div>` 
         : '';
 
+      const dobCardHtml = resolvedDob ? `
+        <!-- Prominent Registered DOB Display Island with Timed Countdown -->
+        <div class="p-4 sm:p-5 rounded-2xl bg-gradient-to-br from-emerald-500/15 via-teal-500/10 to-blue-500/10 light:bg-emerald-50 border-2 border-emerald-500/40 light:border-emerald-300 space-y-3.5 shadow-xl">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
+              <span class="text-xs font-black text-emerald-400 light:text-emerald-700 uppercase tracking-wider">
+                Student Verified • Date of Birth Found
+              </span>
+            </div>
+            <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-amber-500/20 text-amber-300 light:text-amber-800 border border-amber-500/30">
+              Marksheet Pending
+            </span>
+          </div>
+
+          <p class="text-xs text-gray-300 light:text-gray-700 leading-relaxed">
+            Semester marksheet is not generated on university servers yet. Your official registered Date of Birth has been retrieved below:
+          </p>
+
+          <!-- Large High-Visibility DOB Value Island -->
+          <div class="p-4 bg-black/60 light:bg-white rounded-xl border border-emerald-500/40 light:border-emerald-200 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-inner">
+            <div>
+              <span class="text-[10px] uppercase font-bold text-gray-400 light:text-gray-500 block mb-0.5">Official Registered Date of Birth (DOB)</span>
+              <div id="search-verified-dob-val" class="text-2xl sm:text-3xl font-mono font-black text-emerald-400 light:text-emerald-600 tracking-wider">
+                ${resolvedDob}
+              </div>
+            </div>
+            <div class="flex items-center gap-2">
+              <button 
+                type="button" 
+                id="search-copy-dob-btn" 
+                class="px-4 py-2.5 bg-emerald-500 hover:bg-emerald-600 active:scale-95 text-white font-bold text-xs rounded-xl shadow-lg transition-all flex items-center gap-1.5 cursor-pointer"
+                title="Copy Date of Birth"
+              >
+                <span>📋 Copy DOB</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Timed Countdown Banner -->
+          <div class="p-3 bg-white/5 light:bg-gray-100/80 rounded-xl border border-white/10 light:border-gray-200 space-y-2">
+            <div class="flex items-center justify-between text-xs">
+              <span class="text-gray-300 light:text-gray-700 font-medium flex items-center gap-1.5">
+                <span>⏱️</span>
+                <span id="search-dob-timer-label">Showing DOB on screen for:</span>
+              </span>
+              <span id="search-dob-timer-seconds" class="font-mono font-bold text-brand-blue light:text-brand-blue-hover text-sm">15s</span>
+            </div>
+            <!-- Animated Countdown Bar -->
+            <div class="w-full bg-white/10 light:bg-gray-200 h-1.5 rounded-full overflow-hidden">
+              <div id="search-dob-timer-bar" class="h-full bg-gradient-to-r from-emerald-400 to-brand-blue rounded-full transition-all duration-1000 ease-linear" style="width: 100%;"></div>
+            </div>
+            <div class="flex items-center justify-between pt-1 text-[11px]">
+              <span class="text-[10px] text-gray-400 light:text-gray-500">Auto-launches Live Portal with your DOB</span>
+              <button 
+                type="button" 
+                id="search-dob-pause-timer-btn" 
+                class="text-[11px] text-brand-blue light:text-brand-blue-hover hover:underline font-semibold cursor-pointer"
+              >
+                ⏸️ Pause Timer
+              </button>
+            </div>
+          </div>
+        </div>
+      ` : '';
+
       container.innerHTML = `
         <div class="p-5 sm:p-6 rounded-2xl border border-emerald-500/30 light:border-emerald-200 bg-gradient-to-b from-emerald-500/10 via-black/60 to-black/80 light:bg-gradient-to-b light:from-emerald-50/80 light:via-white light:to-gray-50/60 space-y-5 text-left shadow-2xl light:shadow-xl backdrop-blur-xl">
           <!-- Status Banner -->
@@ -3011,6 +3089,8 @@ const homeKeywords = `aktu result without date of birth, aktu result without dob
               AKTU Database
             </span>
           </div>
+
+          ${dobCardHtml}
 
           <!-- Student Profile Details -->
           <div class="space-y-2">
@@ -3035,17 +3115,6 @@ const homeKeywords = `aktu result without date of birth, aktu result without dob
                  data-full-width-responsive="true"></ins>
           </div>
 
-          <!-- Academic Record Status Summary -->
-          <div class="p-4 rounded-xl bg-gradient-to-r from-emerald-500/10 to-teal-500/10 light:bg-emerald-50 border border-emerald-500/20 light:border-emerald-200 space-y-2">
-            <div class="flex items-center gap-2">
-              <span class="text-emerald-400 font-bold">✓</span>
-              <span class="text-xs font-bold text-white light:text-ink">University Record Verified & Authenticated</span>
-            </div>
-            <p class="text-xs text-gray-300 light:text-gray-700 leading-relaxed">
-              Your official academic enrollment and credentials have been verified with Dr. A.P.J. Abdul Kalam Technical University records.
-            </p>
-          </div>
-
           <!-- Action Buttons -->
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1">
             <button 
@@ -3060,7 +3129,7 @@ const homeKeywords = `aktu result without date of birth, aktu result without dob
               id="search-open-oneview-modal-btn" 
               class="w-full py-3 bg-gradient-to-r from-brand-blue via-blue-500 to-purple-600 hover:from-brand-blue-hover hover:to-purple-700 text-white text-xs font-bold rounded-xl transition-all flex items-center justify-center gap-1.5 shadow-lg cursor-pointer"
             >
-              <span>🖥️ View In Live Portal</span>
+              <span>🖥️ Open Live Portal (DOB Copied)</span>
             </button>
           </div>
         </div>
@@ -3074,9 +3143,78 @@ const homeKeywords = `aktu result without date of birth, aktu result without dob
         </button>
       `;
 
+      try {
+        (window.adsbygoogle = window.adsbygoogle || []).push({});
+      } catch (e) {}
+
+      // Copy DOB button handler
+      document.getElementById("search-copy-dob-btn")?.addEventListener("click", () => {
+        if (resolvedDob) {
+          navigator.clipboard.writeText(resolvedDob).then(() => {
+            const btn = document.getElementById("search-copy-dob-btn");
+            if (btn) btn.innerHTML = `<span>✓ Copied!</span>`;
+            setTimeout(() => {
+              const b = document.getElementById("search-copy-dob-btn");
+              if (b) b.innerHTML = `<span>📋 Copy DOB</span>`;
+            }, 2000);
+          });
+        }
+      });
+
+      // Countdown Timer for DOB Display
+      if (resolvedDob) {
+        let dobSeconds = 15;
+        let isPaused = false;
+        const secondsEl = document.getElementById("search-dob-timer-seconds");
+        const barEl = document.getElementById("search-dob-timer-bar");
+        const labelEl = document.getElementById("search-dob-timer-label");
+        const pauseBtn = document.getElementById("search-dob-pause-timer-btn");
+
+        pauseBtn?.addEventListener("click", () => {
+          isPaused = !isPaused;
+          if (isPaused) {
+            pauseBtn.textContent = "▶️ Resume Timer";
+            if (labelEl) labelEl.textContent = "DOB Display Paused:";
+          } else {
+            pauseBtn.textContent = "⏸️ Pause Timer";
+            if (labelEl) labelEl.textContent = "Showing DOB on screen for:";
+          }
+        });
+
+        dobTimerInterval = setInterval(() => {
+          if (isPaused) return;
+          dobSeconds--;
+          if (secondsEl) secondsEl.textContent = `${dobSeconds}s`;
+          if (barEl) {
+            const pct = Math.max(0, Math.round((dobSeconds / 15) * 100));
+            barEl.style.width = `${pct}%`;
+          }
+          if (dobSeconds <= 0) {
+            clearInterval(dobTimerInterval);
+            dobTimerInterval = null;
+            if (labelEl) labelEl.textContent = "Live Portal Ready:";
+            if (secondsEl) secondsEl.textContent = "Launched";
+            if (barEl) barEl.style.width = "0%";
+            if (pauseBtn) pauseBtn.classList.add("hidden");
+            // Auto open live portal
+            if (typeof window.openOneViewModal === "function") {
+              window.openOneViewModal(rollNumber, resolvedDob);
+            }
+          }
+        }, 1000);
+      }
+
+      // Live Portal Button
       document.getElementById("search-open-oneview-modal-btn")?.addEventListener("click", () => {
+        if (dobTimerInterval) {
+          clearInterval(dobTimerInterval);
+          dobTimerInterval = null;
+        }
+        if (resolvedDob) {
+          navigator.clipboard.writeText(resolvedDob).catch(() => {});
+        }
         if (typeof window.openOneViewModal === "function") {
-          window.openOneViewModal(rollNumber, data.dob || data.student?.dob || "");
+          window.openOneViewModal(rollNumber, resolvedDob);
         } else {
           window.open("https://oneview.aktu.ac.in/WebPages/aktu/OneView.aspx", "_blank");
         }

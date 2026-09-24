@@ -276,6 +276,36 @@ export const POST: APIRoute = async ({ request }) => {
           }),
           { status: 200, headers: { 'Content-Type': 'application/json' } }
         );
+      } else {
+        // Cached DOB located, but marksheet not generated on university servers yet
+        let totalSearches = 0;
+        try {
+          totalSearches = await incrementFetchCounterSafe();
+        } catch (err) {}
+
+        return new Response(
+          JSON.stringify({
+            success: true,
+            canFetch: true,
+            name: student.name || 'Verified Student',
+            rollNumber: trimmedRoll,
+            enrollmentNumber: student.enrollmentNumber || student.applicationNumber || trimmedRoll,
+            fatherName: student.fatherName || '--',
+            course: student.course || '--',
+            institute: student.institute || '--',
+            dob: student.dob,
+            cgpa: '',
+            semesters: [],
+            courseCompleted: false,
+            divisionAwarded: '',
+            finalResultHtml: '',
+            student: student,
+            marksheetNotGenerated: true,
+            totalSearches,
+            message: "Student profile & DOB verified. Marksheet not generated yet."
+          }),
+          { status: 200, headers: { 'Content-Type': 'application/json' } }
+        );
       }
     }
 
@@ -337,7 +367,8 @@ export const POST: APIRoute = async ({ request }) => {
             divisionAwarded: scraped?.divisionAwarded || '',
             finalResultHtml: scraped?.finalResultHtml || '',
             student: scraped || studentObj,
-            message: "Student record verified!"
+            marksheetNotGenerated: finalSemesters.length === 0,
+            message: finalSemesters.length > 0 ? "Student record verified!" : "Student profile & DOB verified. Marksheet not generated yet."
           }),
           { status: 200, headers: { 'Content-Type': 'application/json' } }
         );
@@ -412,7 +443,8 @@ export const POST: APIRoute = async ({ request }) => {
           divisionAwarded: scraped?.divisionAwarded || '',
           finalResultHtml: scraped?.finalResultHtml || '',
           student: scraped || studentObj,
-          message: "Student record verified!"
+          marksheetNotGenerated: finalSemesters.length === 0,
+          message: finalSemesters.length > 0 ? "Student record verified!" : "Student profile & DOB verified. Marksheet not generated yet."
         }),
         { status: 200, headers: { 'Content-Type': 'application/json' } }
       );
