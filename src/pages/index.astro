@@ -3388,8 +3388,9 @@ const homeKeywords = `aktu result without date of birth, aktu result without dob
       const enteredRoll = rollInput.value.trim();
       if (!enteredRoll) return;
 
-      // Hide Form & Show Loader
-      searchForm.classList.add("hidden");
+      const proceedWithSearch = () => {
+        // Hide Form & Show Loader
+        searchForm.classList.add("hidden");
       const vpc = document.getElementById("search-verified-profile-container");
       if (vpc) {
         vpc.classList.add("hidden");
@@ -3509,16 +3510,31 @@ const homeKeywords = `aktu result without date of birth, aktu result without dob
           document.getElementById("error-title").textContent = "Fetch Failed";
           document.getElementById("error-desc").textContent = "Connection error. You can still open the official portal below directly.";
           errorState.classList.remove("hidden");
-      });
+        });
+      };
+
+      if (typeof (window as any).ensureCookieConsent === "function") {
+        (window as any).ensureCookieConsent(proceedWithSearch);
+      } else {
+        proceedWithSearch();
+      }
     });
 
     // Wire Direct Live Portal Button on Search Form
     document.getElementById("home-direct-portal-btn")?.addEventListener("click", () => {
       const enteredRoll = rollInput ? rollInput.value.trim() : "";
-      if (typeof window.openOneViewModal === "function") {
-        window.openOneViewModal(enteredRoll, "");
+      const proceedWithPortal = () => {
+        if (typeof (window as any).openOneViewModal === "function") {
+          (window as any).openOneViewModal(enteredRoll, "");
+        } else {
+          window.open("https://oneview.aktu.ac.in/WebPages/aktu/OneView.aspx", "_blank");
+        }
+      };
+
+      if (typeof (window as any).ensureCookieConsent === "function") {
+        (window as any).ensureCookieConsent(proceedWithPortal);
       } else {
-        window.open("https://oneview.aktu.ac.in/WebPages/aktu/OneView.aspx", "_blank");
+        proceedWithPortal();
       }
     });
 
