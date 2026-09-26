@@ -1,0 +1,332 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { ArticleService } from '../../services/article.service';
+
+export const prerender = false;
+
+const { slug } = Astro.params;
+
+if (!slug) {
+  return Astro.redirect('/news');
+}
+
+const article = await ArticleService.getArticleBySlug(slug);
+
+if (!article) {
+  return Astro.redirect('/404');
+}
+
+// Increment view counter
+await ArticleService.incrementViews(slug);
+
+// Fetch recent related articles
+const { articles: relatedArticles } = await ArticleService.getRecentArticles(4, 0, article.category);
+const filteredRelated = relatedArticles.filter(a => a.slug !== article.slug).slice(0, 3);
+
+const domain = "https://akturesult.bond";
+const articleUrl = `${domain}/news/${article.slug}`;
+
+// Format publish date
+const publishedFormatted = new Date(article.publishedAt).toLocaleDateString('en-IN', {
+  day: 'numeric',
+  month: 'long',
+  year: 'numeric'
+});
+
+// JSON-LD NewsArticle Structured Data
+const jsonLd: Record<string, any> = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "NewsArticle",
+      "headline": article.title,
+      "description": article.excerpt,
+      "url": articleUrl,
+      "mainEntityOfPage": articleUrl,
+      "datePublished": article.publishedAt,
+      "dateModified": article.updatedAt || article.publishedAt,
+      "articleSection": article.category,
+      "keywords": article.tags.join(', '),
+      "author": {
+        "@type": "Organization",
+        "name": article.author,
+        "url": domain
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "AKTU Student Portal",
+        "url": domain,
+        "logo": {
+          "@type": "ImageObject",
+          "url": `${domain}/images/gemini-svg.webp`
+        }
+      },
+      "image": [
+        article.sourceVideoId 
+          ? `https://i.ytimg.com/vi/${article.sourceVideoId}/hqdefault.jpg` 
+          : `${domain}/og-image.png`
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": domain
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "News",
+          "item": `${domain}/news`
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": article.title,
+          "item": articleUrl
+        }
+      ]
+    }
+  ]
+};
+
+// Add FAQPage schema if faqs exist
+if (article.faqs && article.faqs.length > 0) {
+  jsonLd["@graph"].push({
+    "@type": "FAQPage",
+    "mainEntity": article.faqs.map(faq => ({
+      "@type": "Question",
+      "name": faq.question,
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": faq.answer
+      }
+    }))
+  });
+}
+
+// Convert markdown elements to rich semantic HTML
+function renderMarkdown(content: string): string {
+  let html = content;
+
+  // Horizontal rules
+  html = html.replace(/---/g, '<hr class="my-8 border-white/10 light:border-black/10" />');
+
+  // Headings
+  html = html.replace(/^### (.*$)/gim, '<h3 class="text-base sm:text-lg font-bold text-brand-blue light:text-brand-blue mt-6 mb-3">$1</h3>');
+  html = html.replace(/^## (.*$)/gim, '<h2 class="text-lg sm:text-2xl font-black text-white light:text-ink mt-8 mb-4 border-b border-white/10 light:border-black/10 pb-2">$1</h2>');
+
+  // Blockquotes
+  html = html.replace(/^\> (.*$)/gim, '<blockquote class="p-4 rounded-2xl bg-white/[0.03] light:bg-black/[0.03] border-l-4 border-brand-blue text-xs sm:text-sm text-gray-300 light:text-gray-700 italic my-4">$1</blockquote>');
+
+  // Bold & Italics
+  html = html.replace(/\*\*(.*?)\*\*/g, '<strong class="font-bold text-white light:text-ink">$1</strong>');
+  html = html.replace(/\*(.*?)\*/g, '<em class="italic text-gray-300 light:text-gray-700">$1</em>');
+
+  // Inline links
+  html = html.replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2" class="text-brand-blue hover:text-brand-blue-hover underline font-medium">$1</a>');
+
+  // Inline code
+  html = html.replace(/\`([^`]+)\`/g, '<code class="px-1.5 py-0.5 rounded bg-white/10 light:bg-black/10 font-mono text-[11px] text-amber-300 light:text-amber-800">$1</code>');
+
+  // Bullet points
+  html = html.replace(/^\* (.*$)/gim, '<li class="ml-4 list-disc text-gray-300 light:text-gray-700 my-1">$1</li>');
+
+  // Tables
+  const tableRegex = /\|(.+)\|\n\|(?:\s*[-:]+[-| :]*)\|\n((?:\|.+\|\n?)+)/g;
+  html = html.replace(tableRegex, (match, header, rows) => {
+    const headers = header.split('|').filter((c: string) => c.trim().length > 0).map((c: string) => `<th class="px-4 py-2 bg-white/5 light:bg-black/5 font-bold text-left border-b border-white/10 light:border-black/10">${c.trim()}</th>`).join('');
+    const rowLines = rows.trim().split('\n');
+    const tableRows = rowLines.map((row: string) => {
+      const cells = row.split('|').filter((c: string) => c.trim().length > 0).map((c: string) => `<td class="px-4 py-2 border-b border-white/5 light:border-black/5">${c.trim()}</td>`).join('');
+      return `<tr class="hover:bg-white/[0.02] light:hover:bg-black/[0.02] transition-colors">${cells}</tr>`;
+    }).join('');
+
+    return `<div class="overflow-x-auto my-6 rounded-2xl border border-white/10 light:border-black/10"><table class="w-full text-xs text-left">${headers ? `<thead><tr>${headers}</tr></thead>` : ''}<tbody>${tableRows}</tbody></table></div>`;
+  });
+
+  // Paragraphs
+  html = html.split('\n\n').map(p => {
+    p = p.trim();
+    if (!p) return '';
+    if (p.startsWith('<h') || p.startsWith('<block') || p.startsWith('<div') || p.startsWith('<hr') || p.startsWith('<li')) {
+      return p;
+    }
+    return `<p class="text-xs sm:text-sm text-gray-300 light:text-gray-700 leading-relaxed my-3">${p}</p>`;
+  }).join('\n');
+
+  return html;
+}
+
+const renderedHtml = renderMarkdown(article.content);
+---
+
+<Layout
+  title={`${article.title} | AKTU News 2026`}
+  description={article.excerpt}
+  keywords={article.tags.join(', ')}
+  canonicalUrl={articleUrl}
+  ogType="article"
+  jsonLd={jsonLd}
+>
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 space-y-8 text-left">
+    
+    <!-- Breadcrumb Navigation -->
+    <nav aria-label="Breadcrumb" class="text-xs text-gray-400 light:text-gray-500 flex items-center gap-1.5 flex-wrap">
+      <a href="/" class="hover:text-white light:hover:text-ink transition-colors">Home</a>
+      <span>/</span>
+      <a href="/news" class="hover:text-white light:hover:text-ink transition-colors">News</a>
+      <span>/</span>
+      <span class="text-gray-500 light:text-gray-400 truncate max-w-[200px] sm:max-w-md">{article.title}</span>
+    </nav>
+
+    <!-- Article Header -->
+    <header class="space-y-4">
+      <div class="flex items-center gap-2 flex-wrap">
+        <span class="px-3 py-1 rounded-full text-xs font-bold bg-brand-blue/20 text-brand-blue border border-brand-blue/30">
+          {article.category}
+        </span>
+        <span class="text-xs text-gray-400 light:text-gray-500 flex items-center gap-1">
+          <span>📅</span>
+          <span>{publishedFormatted}</span>
+        </span>
+        <span class="text-xs text-gray-400 light:text-gray-500 flex items-center gap-1">
+          <span>⏱️</span>
+          <span>{article.readingTime} min read</span>
+        </span>
+        <span class="text-xs text-gray-400 light:text-gray-500 flex items-center gap-1">
+          <span>✍️</span>
+          <span>{article.author}</span>
+        </span>
+      </div>
+
+      <h1 class="text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight text-white light:text-ink leading-tight">
+        {article.title}
+      </h1>
+
+      <p class="text-xs sm:text-sm text-gray-300 light:text-gray-600 leading-relaxed font-medium">
+        {article.excerpt}
+      </p>
+    </header>
+
+    <!-- Top In-Article AdSense Banner -->
+    <div class="p-3 rounded-2xl border border-white/10 light:border-gray-200 bg-black/40 light:bg-white overflow-hidden text-center min-h-[90px] flex flex-col justify-center items-center">
+      <span class="text-[9px] uppercase font-bold text-gray-400 light:text-gray-500 tracking-wider mb-1 block">Sponsored Advertisement</span>
+      <ins class="adsbygoogle"
+           style="display:block; width:100%; min-height: 90px;"
+           data-ad-client="ca-pub-5590747238948130"
+           data-ad-format="auto"
+           data-full-width-responsive="true"></ins>
+    </div>
+
+    <!-- Embedded YouTube Video (If available from original report) -->
+    {article.sourceVideoId && (
+      <div class="space-y-2">
+        <div class="rounded-3xl overflow-hidden border border-white/10 light:border-black/10 aspect-video shadow-2xl bg-black">
+          <iframe 
+            src={`https://www.youtube-nocookie.com/embed/${article.sourceVideoId}`} 
+            title={article.title}
+            class="w-full h-full border-0" 
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+            allowfullscreen
+            loading="lazy"
+          ></iframe>
+        </div>
+        <p class="text-[11px] text-gray-500 light:text-gray-400 text-center">
+          📺 Video Source: <strong>{article.sourceChannel || 'University Education Desk'}</strong> via YouTube.
+        </p>
+      </div>
+    )}
+
+    <!-- Main Article Body -->
+    <main class="space-y-6 article-content prose prose-invert max-w-none">
+      <div set:html={renderedHtml} />
+    </main>
+
+    <!-- Mid-Article AdSense Unit -->
+    <div class="p-3 rounded-2xl border border-white/10 light:border-gray-200 bg-black/40 light:bg-white overflow-hidden text-center min-h-[250px] flex flex-col justify-center items-center my-6">
+      <span class="text-[9px] uppercase font-bold text-gray-400 light:text-gray-500 tracking-wider mb-1 block">Sponsored Advertisement</span>
+      <ins class="adsbygoogle"
+           style="display:block; width:100%; min-height: 250px;"
+           data-ad-client="ca-pub-5590747238948130"
+           data-ad-format="auto"
+           data-full-width-responsive="true"></ins>
+    </div>
+
+    <!-- Interactive CTA Island: Check Result Without DOB -->
+    <section class="p-6 sm:p-8 rounded-3xl bg-gradient-to-r from-blue-900/40 via-purple-900/40 to-slate-900/40 light:from-blue-50 light:via-purple-50 light:to-slate-100 border border-brand-blue/30 space-y-4">
+      <div class="flex items-center gap-2">
+        <span class="text-2xl">⚡</span>
+        <h3 class="text-base sm:text-lg font-bold text-white light:text-ink">
+          Verify Your AKTU Semester Marksheet Instantly
+        </h3>
+      </div>
+      <p class="text-xs sm:text-sm text-gray-300 light:text-gray-600 leading-relaxed">
+        Need to verify your semester results, SGPA ledger, or backlog status mentioned in this notice? You can query the live AKTU OneView repository without entering your registered Date of Birth.
+      </p>
+      <div class="flex flex-wrap items-center gap-3 pt-2">
+        <a 
+          href="/" 
+          class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-brand-blue to-purple-600 hover:from-brand-blue-hover hover:to-purple-700 text-white font-bold text-xs shadow-lg shadow-brand-blue/25 transition-all transform hover:scale-105 active:scale-95"
+        >
+          Check Result Online
+        </a>
+        <a 
+          href="/roll-number-finder" 
+          class="px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 light:bg-black/5 light:hover:bg-black/10 text-white light:text-ink font-semibold text-xs border border-white/10 light:border-black/10 transition-all"
+        >
+          Forgot Roll Number?
+        </a>
+        <a 
+          href="/oneview" 
+          class="px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 light:bg-black/5 light:hover:bg-black/10 text-white light:text-ink font-semibold text-xs border border-white/10 light:border-black/10 transition-all"
+        >
+          OneView Portal
+        </a>
+      </div>
+    </section>
+
+    <!-- Tags Row -->
+    {article.tags && article.tags.length > 0 && (
+      <div class="pt-4 border-t border-white/10 light:border-black/10">
+        <span class="text-xs font-semibold text-gray-400 light:text-gray-500 block mb-2">Related Topics:</span>
+        <div class="flex items-center gap-2 flex-wrap">
+          {article.tags.map(t => (
+            <span class="px-3 py-1 rounded-xl bg-white/5 light:bg-black/5 text-gray-300 light:text-gray-700 text-xs font-medium border border-white/10 light:border-black/10">
+              #{t}
+            </span>
+          ))}
+        </div>
+      </div>
+    )}
+
+    <!-- Related Articles -->
+    {filteredRelated.length > 0 && (
+      <section class="pt-8 space-y-4 border-t border-white/10 light:border-black/10">
+        <h3 class="text-lg font-bold text-white light:text-ink flex items-center gap-2">
+          <span>📰 Related News &amp; Circulars</span>
+        </h3>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          {filteredRelated.map(rel => (
+            <a 
+              href={`/news/${rel.slug}`} 
+              class="p-4 rounded-2xl border border-white/10 light:border-black/10 bg-white/[0.02] light:bg-white hover:border-brand-blue/40 transition-all block group"
+            >
+              <span class="text-[10px] font-bold text-brand-blue block mb-1">{rel.category}</span>
+              <h4 class="text-xs font-bold text-white light:text-ink group-hover:text-brand-blue transition-colors line-clamp-2 leading-snug">
+                {rel.title}
+              </h4>
+              <span class="text-[10px] text-gray-500 light:text-gray-400 mt-2 block">
+                {new Date(rel.publishedAt).toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })}
+              </span>
+            </a>
+          ))}
+        </div>
+      </section>
+    )}
+
+  </div>
+</Layout>

@@ -1,0 +1,190 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { ArticleService } from '../../services/article.service';
+
+export const prerender = false;
+
+const currentUrl = Astro.url;
+const selectedCategory = currentUrl.searchParams.get('category') || 'All';
+const page = parseInt(currentUrl.searchParams.get('page') || '1', 10);
+const limit = 12;
+const skip = (page - 1) * limit;
+
+const { articles, total } = await ArticleService.getRecentArticles(limit, skip, selectedCategory);
+const totalPages = Math.ceil(total / limit);
+
+const categories = [
+  'All',
+  'Results & Marksheets',
+  'Circulars & Updates',
+  'Exam Schedule',
+  'Student Services'
+];
+
+const pageTitle = "AKTU News & Latest Circulars 2026 | Result Alerts & Exam Updates";
+const pageDescription = "Stay informed with daily AKTU circular breakdowns, odd/even semester results, carry over (COP) exam schedules, marksheet updates, and official university notices.";
+const pageKeywords = "aktu news today, aktu circular 2026, aktu latest news, aktu result date, aktu cop exam form, aktu oneview update, aktu btech syllabus, aktu exam center list";
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "name": pageTitle,
+  "description": pageDescription,
+  "url": "https://akturesult.bond/news",
+  "publisher": {
+    "@type": "Organization",
+    "name": "AKTU Student Portal",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://akturesult.bond/images/gemini-svg.webp"
+    }
+  }
+};
+---
+
+<Layout
+  title={pageTitle}
+  description={pageDescription}
+  keywords={pageKeywords}
+  canonicalUrl="https://akturesult.bond/news"
+  jsonLd={jsonLd}
+>
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14 space-y-10 text-left">
+    
+    <!-- Hero Header -->
+    <header class="text-center space-y-3.5 max-w-2xl mx-auto">
+      <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full border border-purple-500/20 bg-purple-500/10 text-xs text-purple-400 font-semibold">
+        <span class="w-2 h-2 rounded-full bg-purple-400 animate-pulse"></span>
+        <span>Daily University Feed &amp; Circular Updates</span>
+      </div>
+      <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight bg-gradient-to-r from-white via-gray-200 to-gray-400 dark:from-white dark:via-gray-200 dark:to-gray-400 light:from-ink light:via-gray-800 light:to-gray-900 bg-clip-text text-transparent">
+        AKTU News &amp; Circular Desk
+      </h1>
+      <p class="text-xs sm:text-sm text-gray-400 light:text-gray-600 leading-relaxed">
+        Real-time breakdowns of official AKTU notifications, exam guidelines, carry-over forms, marksheet releases, and degree distributions.
+      </p>
+    </header>
+
+    <!-- Top Sponsored AdSense Unit -->
+    <div class="p-3 rounded-2xl border border-white/10 light:border-gray-200 bg-black/40 light:bg-white overflow-hidden text-center min-h-[90px] flex flex-col justify-center items-center">
+      <span class="text-[9px] uppercase font-bold text-gray-400 light:text-gray-500 tracking-wider mb-1 block">Sponsored Advertisement</span>
+      <ins class="adsbygoogle"
+           style="display:block; width:100%; min-height: 90px;"
+           data-ad-client="ca-pub-5590747238948130"
+           data-ad-format="auto"
+           data-full-width-responsive="true"></ins>
+    </div>
+
+    <!-- Category Filter Tabs -->
+    <div class="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none justify-start sm:justify-center">
+      {categories.map((cat) => {
+        const isSelected = selectedCategory === cat;
+        const href = cat === 'All' ? '/news' : `/news?category=${encodeURIComponent(cat)}`;
+        return (
+          <a
+            href={href}
+            class={`px-4 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all duration-200 border ${
+              isSelected
+                ? 'bg-brand-blue text-white border-brand-blue shadow-lg shadow-brand-blue/20'
+                : 'bg-white/[0.03] light:bg-black/[0.03] text-gray-400 light:text-gray-600 border-white/10 light:border-black/10 hover:text-white light:hover:text-ink'
+            }`}
+          >
+            {cat}
+          </a>
+        );
+      })}
+    </div>
+
+    <!-- Articles Grid -->
+    {articles.length === 0 ? (
+      <div class="text-center py-16 space-y-4 rounded-3xl border border-white/10 light:border-black/10 bg-white/[0.02] light:bg-black/[0.02]">
+        <div class="w-16 h-16 rounded-full bg-brand-blue/10 text-brand-blue flex items-center justify-center mx-auto text-2xl">
+          📰
+        </div>
+        <h3 class="text-lg font-bold text-white light:text-ink">No Articles Found</h3>
+        <p class="text-xs text-gray-400 light:text-gray-600 max-w-sm mx-auto">
+          No news articles matching the selected category. New articles are automatically generated every day from university broadcasts!
+        </p>
+        <a href="/news" class="inline-block px-4 py-2 text-xs font-semibold rounded-xl bg-brand-blue text-white">
+          View All Updates
+        </a>
+      </div>
+    ) : (
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {articles.map((art) => (
+          <article class="flex flex-col justify-between p-6 rounded-3xl border border-white/10 light:border-black/10 bg-white/[0.02] light:bg-white hover:border-brand-blue/40 light:hover:border-brand-blue/40 transition-all duration-300 hover:scale-[1.01] shadow-xl group">
+            <div class="space-y-3">
+              <!-- Meta Badges -->
+              <div class="flex items-center justify-between gap-2 text-[11px]">
+                <span class="px-2.5 py-0.5 rounded-full font-bold bg-brand-blue/15 text-brand-blue border border-brand-blue/25">
+                  {art.category}
+                </span>
+                <span class="text-gray-500 light:text-gray-400">
+                  {new Date(art.publishedAt).toLocaleDateString('en-IN', {
+                    day: 'numeric',
+                    month: 'short',
+                    year: 'numeric'
+                  })}
+                </span>
+              </div>
+
+              <!-- Title -->
+              <h2 class="text-base font-bold text-white light:text-ink group-hover:text-brand-blue transition-colors line-clamp-2 leading-snug">
+                <a href={`/news/${art.slug}`}>
+                  {art.title}
+                </a>
+              </h2>
+
+              <!-- Excerpt -->
+              <p class="text-xs text-gray-400 light:text-gray-600 line-clamp-3 leading-relaxed">
+                {art.excerpt}
+              </p>
+            </div>
+
+            <!-- Footer Meta -->
+            <div class="pt-5 mt-4 border-t border-white/5 light:border-black/5 flex items-center justify-between text-xs text-gray-400 light:text-gray-500">
+              <span class="flex items-center gap-1.5">
+                <span>⏱️</span>
+                <span>{art.readingTime} min read</span>
+              </span>
+              <a
+                href={`/news/${art.slug}`}
+                class="font-semibold text-brand-blue hover:text-brand-blue-hover flex items-center gap-1 group-hover:translate-x-0.5 transition-transform"
+              >
+                <span>Read Full Update</span>
+                <span>&rarr;</span>
+              </a>
+            </div>
+          </article>
+        ))}
+      </div>
+    )}
+
+    <!-- Direct Tool Access Banner -->
+    <section class="p-6 sm:p-8 rounded-3xl bg-gradient-to-r from-blue-900/30 via-purple-900/30 to-indigo-900/30 light:from-blue-50 light:via-purple-50 light:to-indigo-50 border border-brand-blue/30 light:border-brand-blue/20 flex flex-col md:flex-row items-center justify-between gap-6">
+      <div class="space-y-1.5 text-center md:text-left">
+        <h3 class="text-base sm:text-lg font-bold text-white light:text-ink">
+          Need to Check Your Live Semester Scorecard?
+        </h3>
+        <p class="text-xs text-gray-300 light:text-gray-600 max-w-xl">
+          Don't let a missing or forgotten Date of Birth stop you. Use our direct handshake recovery tool to view your genuine AKTU OneView marksheet by University Roll Number alone.
+        </p>
+      </div>
+      <div class="flex items-center gap-3 shrink-0">
+        <a
+          href="/"
+          class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-brand-blue to-purple-600 hover:from-brand-blue-hover hover:to-purple-700 text-white font-bold text-xs shadow-lg shadow-brand-blue/25 transition-all transform hover:scale-105 active:scale-95"
+        >
+          ⚡ Check Result Online
+        </a>
+        <a
+          href="/oneview"
+          class="px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 light:bg-black/5 light:hover:bg-black/10 text-white light:text-ink font-semibold text-xs border border-white/10 light:border-black/10 transition-all"
+        >
+          Open OneView
+        </a>
+      </div>
+    </section>
+
+  </div>
+</Layout>
