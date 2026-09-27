@@ -223,7 +223,7 @@ Return your response strictly as valid, raw JSON (no surrounding markdown codebl
   "content": "Full markdown content with ## headings, bolding, lists, and links."
 }`;
 
-    const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`, {
+    let res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -235,7 +235,29 @@ Return your response strictly as valid, raw JSON (no surrounding markdown codebl
       })
     });
 
-    const json = await res.json();
+    let json;
+    if (res.ok) {
+      json = await res.json();
+    } else {
+      console.warn(`gemini-2.5-flash returned status ${res.status}, falling back to gemini-3.8-flash...`);
+      const fallbackRes = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent?key=${apiKey}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          contents: [{ parts: [{ text: prompt }] }],
+          generationConfig: {
+            temperature: 0.4,
+            maxOutputTokens: 3500
+          }
+        })
+      });
+
+      if (!fallbackRes.ok) {
+        throw new Error(`Gemini API failed (2.5: ${res.status}, 3.8: ${fallbackRes.status})`);
+      }
+      json = await fallbackRes.json();
+    }
+
     let text = json?.candidates?.[0]?.content?.parts?.[0]?.text || '';
     text = text.replace(/^```json\s*/i, '').replace(/```\s*$/i, '').trim();
 
