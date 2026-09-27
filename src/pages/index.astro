@@ -2,8 +2,18 @@
 import Layout from "../layouts/Layout.astro";
 import { getAcademicYearInfo } from "../utils/academicYear";
 import OneViewIframeModal from "../components/OneViewIframeModal.astro";
+import { ArticleService } from "../services/article.service";
 
 const yearInfo = getAcademicYearInfo();
+
+// Fetch latest news articles for homepage showcase
+let latestNews: any[] = [];
+try {
+  const newsRes = await ArticleService.getRecentArticles(3, 0);
+  latestNews = newsRes.articles;
+} catch (e) {
+  // fallback
+}
 
 // JSON-LD Structured Data for index page with comprehensive @graph
 const siteUrl = "https://akturesult.bond";
@@ -786,6 +796,69 @@ const homeKeywords = `aktu result without date of birth, aktu result without dob
             </button>
           </div>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Latest AKTU News, Circulars & Examination Announcements -->
+  <section class="py-12 border-b border-canvas-dark-border light:border-canvas-light-border bg-black/40 light:bg-gray-50/50">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+      <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+        <div class="space-y-2">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-blue/15 text-brand-blue border border-brand-blue/25 text-xs font-semibold">
+            <span class="w-2 h-2 rounded-full bg-brand-blue animate-pulse"></span>
+            <span>Daily University Circular Feed • Updated 2026</span>
+          </div>
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-white light:text-ink tracking-tight">
+            Latest AKTU News &amp; Official Circulars
+          </h2>
+          <p class="text-xs sm:text-sm text-gray-400 light:text-gray-600">
+            Real-time verified breakdowns of university notifications, marksheet updates, and COP examination schedules.
+          </p>
+        </div>
+        <a 
+          href="/news" 
+          class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-brand-blue/20 hover:bg-brand-blue/30 text-brand-blue text-xs font-bold border border-brand-blue/30 transition-all hover:scale-105 shrink-0"
+        >
+          <span>Explore All News</span>
+          <span>&rarr;</span>
+        </a>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {latestNews && latestNews.length > 0 ? (
+          latestNews.map(item => (
+            <a 
+              href={`/news/${item.slug}`} 
+              class="flex flex-col justify-between p-5 rounded-2xl border border-white/10 light:border-black/10 bg-white/[0.02] light:bg-white hover:border-brand-blue/40 light:hover:border-brand-blue/40 transition-all duration-300 hover:scale-[1.01] shadow-lg group text-left"
+            >
+              <div class="space-y-2.5">
+                <div class="flex items-center justify-between text-[11px]">
+                  <span class="px-2.5 py-0.5 rounded-full font-bold bg-brand-blue/15 text-brand-blue border border-brand-blue/25">
+                    {item.category}
+                  </span>
+                  <span class="text-gray-500 light:text-gray-400">
+                    {new Date(item.publishedAt).toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })}
+                  </span>
+                </div>
+                <h3 class="text-sm font-bold text-white light:text-ink group-hover:text-brand-blue transition-colors line-clamp-2 leading-snug">
+                  {item.title}
+                </h3>
+                <p class="text-xs text-gray-400 light:text-gray-600 line-clamp-2 leading-relaxed">
+                  {item.excerpt}
+                </p>
+              </div>
+              <div class="pt-4 mt-3 border-t border-white/5 light:border-black/5 flex items-center justify-between text-xs text-brand-blue font-semibold">
+                <span>Read Circular Breakdown</span>
+                <span class="group-hover:translate-x-1 transition-transform">&rarr;</span>
+              </div>
+            </a>
+          ))
+        ) : (
+          <div class="col-span-3 text-center py-6 text-xs text-gray-500">
+            <a href="/news" class="text-brand-blue underline">Browse all current AKTU news &amp; circular updates</a>
+          </div>
+        )}
       </div>
     </div>
   </section>
