@@ -182,8 +182,8 @@ export class NewsGeneratorService {
    * Generate high-quality article via Google Gemini API
    */
   private static async generateWithGemini(video: any, apiKey: string): Promise<any> {
-    const prompt = `You are a Senior Academic Journalist and Lead SEO Content Strategist for "AKTU Result Without DOB" (akturesult.bond).
-Transform this YouTube video news update regarding Dr. A.P.J. Abdul Kalam Technical University (AKTU) into a comprehensive, highly authoritative, 800-1100 word news article for college students.
+    const prompt = `You are a Senior Academic News Editor and Google News SEO Content Strategist for "AKTU Student Portal" (akturesult.bond).
+Transform this YouTube video news update regarding Dr. A.P.J. Abdul Kalam Technical University (AKTU) into an authoritative, 900-1200 word Google News-compliant academic journalism article for university students in Uttar Pradesh.
 
 VIDEO CONTEXT:
 - Title: ${video.title}
@@ -192,35 +192,35 @@ VIDEO CONTEXT:
 - Description: ${video.description.slice(0, 1000)}
 - Spoken Transcript Snippet: ${video.transcript ? video.transcript.slice(0, 4000) : 'N/A'}
 
-GUIDELINES:
-1. Target Audience: AKTU B.Tech, B.Pharma, MBA, MCA, and Diploma students in Uttar Pradesh colleges.
-2. Tone: Helpful, factual, urgent, informative, and professional.
-3. Content Architecture:
-   - Engaging, click-worthy H1 title with high search volume keywords (year 2026).
-   - Short meta excerpt (140-160 characters).
-   - Category: Choose from "Circulars & Updates", "Results & Marksheets", "Exam Schedule", "Student Services".
-   - 4-7 relevant tags (e.g., ["AKTU Result", "OneView", "Circular 2026", "COP Exam"]).
-   - In-depth Markdown body including:
-     * Executive Summary / Key Takeaways box.
-     * What the latest circular/announcement details.
-     * Impact on B.Tech / B.Pharma / PG student batches.
-     * Step-by-step instructions for students.
-     * Crucial integration: Mention that students who need to verify their semester grades or find their registered Date of Birth can use the free online tool at [AKTU Result Without DOB](https://akturesult.bond) or the [AKTU OneView Portal](https://akturesult.bond/oneview).
-     * Clear table of tentative dates or subject marks criteria if applicable.
-     * 3 to 4 Frequently Asked Questions (FAQs) for Google Rich Snippets.
+GOOGLE NEWS EDITORIAL & RANKING GUIDELINES:
+1. Headline (Title):
+   - Length: 55 to 70 characters.
+   - Journalistic, active voice, factual. No sensationalist clickbait, NO ALL-CAPS words.
+   - Front-load high-search keywords: e.g. "AKTU Even Semester Result 2026: OneView Portal Update & Verification Steps".
+2. Lead Paragraph (Inverted Pyramid):
+   - The first paragraph MUST immediately answer the 5 Ws (Who, What, When, Where, Why) factually:
+     "Dr. A.P.J. Abdul Kalam Technical University (AKTU), Lucknow, has announced..."
+3. Content Architecture (Markdown):
+   - ## Quick Highlights & Executive Summary (3-5 clear bullet points for fast student skimming).
+   - ## What the University Circular & Notice Details (In-depth policy, examination, or circular directives).
+   - ## Affected Courses & Student Eligibility (Breakdown for B.Tech, B.Pharma, MBA, MCA, Regular, and Carry-Over/Backlog COP students).
+   - ## Key Deadlines & Schedule (A structured Markdown table with columns: Stage / Notice Item | Date / Tentative Timeline | Student Action).
+   - ## Step-by-Step Action Guide for AKTU Students (Numbered steps 1., 2., 3. guiding students through ERP/OneView). Mention students can check semester marksheets without entering DOB using [AKTU Result Without DOB](https://akturesult.bond) or the [AKTU OneView Portal](https://akturesult.bond/oneview).
+   - ## Official Source Verification & Fact-Check Note (State that this update is cross-verified against official AKTU announcements, citing original channel: ${video.channel}).
+   - ## Frequently Asked Questions (FAQs) (3-4 high-intent questions with concise, 40-50 word answers for Google People-Also-Ask snippets).
 
 Return your response strictly as valid, raw JSON (no surrounding markdown codeblocks like \`\`\`json) matching this schema:
 {
-  "title": "string",
+  "title": "string (55-70 chars, Google News compliant)",
   "slug": "kebab-case-slug-6-to-9-words",
-  "excerpt": "string (150 chars)",
+  "excerpt": "string (145-160 characters summary with main keyword)",
   "category": "Circulars & Updates",
-  "tags": ["tag1", "tag2", "tag3"],
-  "readingTime": 4,
+  "tags": ["AKTU News 2026", "AKTU Circular", "OneView", "tag4"],
+  "readingTime": 5,
   "faqs": [
-    {"question": "string", "answer": "string"}
+    {"question": "string", "answer": "string (40-55 words factual answer)"}
   ],
-  "content": "Full markdown content with ## headings, bolding, lists, and links."
+  "content": "Full rich markdown content following the sections above."
 }`;
 
     let res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`, {

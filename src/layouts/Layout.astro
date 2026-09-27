@@ -6,6 +6,7 @@ interface Props {
   keywords?: string;
   canonicalUrl?: string;
   ogType?: string;
+  ogImage?: string;
   jsonLd?: Record<string, any>;
 }
 
@@ -15,10 +16,12 @@ const {
   keywords = "aktu result without date of birth, aktu result without dob, aktu result, aktu result 2026, oneview aktu, erp aktu result, aktu erp result, aktu oneview, check aktu result, check aktu result without date of birth, aktu roll number finder, aktu marksheet online, oneview.aktu.ac.in, dr apj abdul kalam technical university result",
   canonicalUrl,
   ogType = "website",
+  ogImage,
   jsonLd
 } = Astro.props;
 
 const brandUrl = "https://akturesult.bond";
+const resolvedOgImage = ogImage || `${brandUrl}/og-image.png`;
 const authorName = "AKTU Student Portal";
 const authorWebsite = "https://akturesult.bond";
 
@@ -75,8 +78,8 @@ const isActive = (path: string) => {
     <meta property="og:description" content={description} />
     <meta property="og:url" content={resolvedCanonical} />
     <meta property="og:site_name" content="AKTU Result & OneView Portal" />
-    <meta property="og:image" content={`${brandUrl}/og-image.png`} />
-    <meta property="og:image:alt" content="AKTU Result, OneView AKTU and ERP Result Portal" />
+    <meta property="og:image" content={resolvedOgImage} />
+    <meta property="og:image:alt" content={title} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
 
@@ -84,7 +87,7 @@ const isActive = (path: string) => {
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content={`${brandUrl}/og-image.png`} />
+    <meta name="twitter:image" content={resolvedOgImage} />
     <meta name="twitter:image:alt" content="AKTU Result, OneView AKTU and ERP Result Portal" />
     <meta name="twitter:creator" content="@akturesult" />
 
