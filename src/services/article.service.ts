@@ -182,22 +182,24 @@ export class ArticleService {
   }
 
   /**
-   * Get all published article slugs and modification timestamps (for XML Sitemap)
+   * Get all published article metadata (slug, title, publishedAt, updatedAt) for XML Sitemaps
    */
-  static async getAllArticleSlugs(): Promise<Array<{ slug: string; updatedAt: string }>> {
+  static async getAllArticleSlugs(): Promise<Array<{ slug: string; title: string; publishedAt: string; updatedAt: string }>> {
     // 1. Try DB
     try {
       const db = await DatabaseService.connectToDatabase();
       if (db) {
         const docs = await db
           .collection<Article>('articles')
-          .find({ status: 'published' }, { projection: { slug: 1, updatedAt: 1, publishedAt: 1 } })
+          .find({ status: 'published' }, { projection: { slug: 1, title: 1, updatedAt: 1, publishedAt: 1 } })
           .sort({ publishedAt: -1 })
           .toArray();
 
         if (docs.length > 0) {
           return docs.map(d => ({
             slug: d.slug,
+            title: d.title || 'AKTU News Update',
+            publishedAt: d.publishedAt || d.updatedAt || new Date().toISOString(),
             updatedAt: d.updatedAt || d.publishedAt || new Date().toISOString()
           }));
         }
@@ -211,7 +213,7 @@ export class ArticleService {
     try {
       if (fs.existsSync(DATA_DIR)) {
         const files = fs.readdirSync(DATA_DIR).filter(f => f.endsWith('.json'));
-        const slugs: Array<{ slug: string; updatedAt: string }> = [];
+        const slugs: Array<{ slug: string; title: string; publishedAt: string; updatedAt: string }> = [];
 
         for (const file of files) {
           try {
@@ -220,6 +222,8 @@ export class ArticleService {
             if (art.status === 'published' && art.slug) {
               slugs.push({
                 slug: art.slug,
+                title: art.title || 'AKTU News Update',
+                publishedAt: art.publishedAt || art.updatedAt || new Date().toISOString(),
                 updatedAt: art.updatedAt || art.publishedAt || new Date().toISOString()
               });
             }

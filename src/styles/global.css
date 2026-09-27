@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@plugin "@tailwindcss/typography";
 
 @theme {
   --color-brand-blue: #0066cc;
@@ -519,4 +520,81 @@
 
 .light #semesters-accordion-container table tr td:nth-child(2) {
   color: #1d1d1f !important;
+}
+
+/* Fail-safe typography and responsive layout rules for dynamic news articles */
+.article-content {
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  word-break: break-word;
+}
+
+.article-content table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.article-content img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 1rem;
+}
+
+.article-content iframe {
+  max-width: 100%;
+}
+
+.article-content pre {
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+.article-content a {
+  word-break: break-word;
+}
+
+/* Light mode overrides for article content to maintain high contrast */
+.light .article-content h1,
+.light .article-content h2,
+.light .article-content h4,
+.light .article-content h5,
+.light .article-content h6 {
+  color: #1d1d1f !important;
+}
+
+.light .article-content p,
+.light .article-content li {
+  color: #374151 !important;
+}
+
+.light .article-content strong {
+  color: #111827 !important;
+}
+
+.light .article-content blockquote {
+  background-color: rgba(0, 0, 0, 0.03) !important;
+  color: #4b5563 !important;
+  border-left-color: #0066cc !important;
+}
+
+.light .article-content table th {
+  background-color: rgba(0, 0, 0, 0.04) !important;
+  color: #111827 !important;
+  border-color: #e5e7eb !important;
+}
+
+.light .article-content table td {
+  color: #374151 !important;
+  border-color: #f3f4f6 !important;
+}
+
+.light .article-content code:not(pre code) {
+  background-color: rgba(0, 0, 0, 0.06) !important;
+  color: #92400e !important;
+}
+
+.light .article-content pre {
+  background-color: #f8fafc !important;
+  border-color: #e2e8f0 !important;
+  color: #0f172a !important;
 }
