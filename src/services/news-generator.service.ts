@@ -235,8 +235,9 @@ Return your response strictly as valid, raw JSON (no surrounding markdown codebl
       body: JSON.stringify({
         contents: [{ parts: [{ text: prompt }] }],
         generationConfig: {
-          temperature: 0.4,
-          maxOutputTokens: 8192
+          temperature: 0.35,
+          maxOutputTokens: 8192,
+          responseMimeType: 'application/json'
         }
       })
     });
@@ -245,21 +246,22 @@ Return your response strictly as valid, raw JSON (no surrounding markdown codebl
     if (res.ok) {
       json = await res.json();
     } else {
-      console.warn(`gemini-2.5-flash returned status ${res.status}, falling back to gemini-3.8-flash...`);
-      const fallbackRes = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent?key=${apiKey}`, {
+      console.warn(`gemini-2.5-flash returned status ${res.status}, falling back to gemini-2.5-flash-lite...`);
+      const fallbackRes = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite:generateContent?key=${apiKey}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           contents: [{ parts: [{ text: prompt }] }],
           generationConfig: {
-            temperature: 0.4,
-            maxOutputTokens: 8192
+            temperature: 0.35,
+            maxOutputTokens: 8192,
+            responseMimeType: 'application/json'
           }
         })
       });
 
       if (!fallbackRes.ok) {
-        throw new Error(`Gemini API failed (2.5: ${res.status}, 3.8: ${fallbackRes.status})`);
+        throw new Error(`Gemini API failed (2.5: ${res.status}, lite: ${fallbackRes.status})`);
       }
       json = await fallbackRes.json();
     }
@@ -267,7 +269,28 @@ Return your response strictly as valid, raw JSON (no surrounding markdown codebl
     let text = json?.candidates?.[0]?.content?.parts?.[0]?.text || '';
     text = text.replace(/^```json\s*/i, '').replace(/```\s*$/i, '').trim();
 
-    return JSON.parse(text);
+    try {
+      return JSON.parse(text);
+    } catch (parseError) {
+      // Robust JSON recovery fallback if text had edge character issues
+      const firstBrace = text.indexOf('{');
+      const lastBrace = text.lastIndexOf('}');
+      if (firstBrace !== -1 && lastBrace !== -1 && lastBrace > firstBrace) {
+        const sliced = text.substring(firstBrace, lastBrace + 1);
+        try {
+          return JSON.parse(sliced);
+        } catch {
+          const sanitized = sliced.replace(/[\u0000-\u001F]+/g, (match) => {
+            if (match === '\n') return '\\n';
+            if (match === '\r') return '\\r';
+            if (match === '\t') return '\\t';
+            return '';
+          });
+          return JSON.parse(sanitized);
+        }
+      }
+      throw parseError;
+    }
   }
 
   /**
