@@ -137,14 +137,55 @@ const renderedHtml = MarkdownService.render(article.content);
 >
   <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 space-y-8 text-left">
     
-    <!-- Breadcrumb Navigation -->
-    <nav aria-label="Breadcrumb" class="text-xs text-gray-400 light:text-gray-500 flex items-center gap-1.5 flex-wrap">
-      <a href="/" class="hover:text-white light:hover:text-ink transition-colors">Home</a>
-      <span>/</span>
-      <a href="/news" class="hover:text-white light:hover:text-ink transition-colors">News</a>
-      <span>/</span>
-      <span class="text-gray-500 light:text-gray-400 truncate max-w-[200px] sm:max-w-md">{article.title}</span>
-    </nav>
+    <!-- Breadcrumb Navigation & Admin Controls Bar -->
+    <div class="flex items-center justify-between gap-3 flex-wrap">
+      <nav aria-label="Breadcrumb" class="text-xs text-gray-400 light:text-gray-500 flex items-center gap-1.5 flex-wrap">
+        <a href="/" class="hover:text-white light:hover:text-ink transition-colors">Home</a>
+        <span>/</span>
+        <a href="/news" class="hover:text-white light:hover:text-ink transition-colors">News</a>
+        <span>/</span>
+        <span class="text-gray-500 light:text-gray-400 truncate max-w-[180px] sm:max-w-md">{article.title}</span>
+      </nav>
+
+      <!-- Admin Status & Action Controls -->
+      <div id="admin-actions-bar" class="flex items-center gap-2">
+        <button 
+          id="admin-login-trigger-btn" 
+          type="button" 
+          class="text-[11px] px-2.5 py-1 rounded-xl border border-white/10 light:border-black/10 text-gray-400 hover:text-white light:hover:text-ink hover:bg-white/5 light:hover:bg-black/5 transition-all flex items-center gap-1 cursor-pointer"
+          title="Admin Access"
+        >
+          <span>🔒</span>
+          <span>Admin</span>
+        </button>
+
+        <div id="admin-controls-panel" class="hidden items-center gap-2">
+          <span class="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-md bg-emerald-500/15 text-emerald-400 border border-emerald-500/25 flex items-center gap-1">
+            <span>🛡️</span>
+            <span>Admin</span>
+          </span>
+          <button 
+            id="admin-delete-trigger-btn" 
+            type="button" 
+            class="text-xs px-3 py-1.5 rounded-xl bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-500 hover:to-rose-500 text-white font-bold transition-all shadow-lg shadow-red-600/25 flex items-center gap-1.5 cursor-pointer active:scale-95"
+            title="Permanently delete this article"
+          >
+            <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
+              <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
+            </svg>
+            <span>Delete Article</span>
+          </button>
+          <button 
+            id="admin-logout-trigger-btn" 
+            type="button" 
+            class="text-[11px] px-2 py-1 rounded-xl border border-white/10 light:border-black/10 text-gray-400 hover:text-white light:hover:text-ink transition-all cursor-pointer"
+            title="Logout Admin"
+          >
+            Logout
+          </button>
+        </div>
+      </div>
+    </div>
 
     <!-- Article Header -->
     <header class="space-y-4">
@@ -358,4 +399,234 @@ const renderedHtml = MarkdownService.render(article.content);
     )}
 
   </div>
+
+  <!-- Admin Login Modal -->
+  <div id="admin-login-modal" class="fixed inset-0 z-50 flex items-center justify-center hidden p-4">
+    <div id="admin-login-backdrop" class="absolute inset-0 bg-black/75 backdrop-blur-md cursor-pointer"></div>
+    <div class="relative w-full max-w-sm bg-[#0e1117] light:bg-white border border-white/15 light:border-gray-200 rounded-3xl p-6 shadow-2xl z-10 space-y-4 text-left">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <span class="text-xl">🔐</span>
+          <h3 class="text-base font-bold text-white light:text-ink">Admin Login</h3>
+        </div>
+        <button id="admin-login-close-btn" class="text-gray-400 hover:text-white light:hover:text-ink cursor-pointer text-sm">✕</button>
+      </div>
+      <p class="text-xs text-gray-400 light:text-gray-500">
+        Enter the administrative passcode configured in the backend to manage and delete articles.
+      </p>
+      <div class="space-y-3">
+        <div>
+          <label class="block text-[11px] font-semibold text-gray-300 light:text-gray-700 mb-1">Admin Password</label>
+          <input 
+            id="admin-password-input" 
+            type="password" 
+            placeholder="Enter admin password" 
+            class="w-full px-3.5 py-2.5 rounded-xl bg-black/40 light:bg-gray-50 border border-white/15 light:border-gray-300 text-white light:text-ink text-xs focus:outline-none focus:ring-2 focus:ring-brand-blue" 
+          />
+        </div>
+        <div id="admin-login-error" class="hidden text-xs text-rose-400 font-medium"></div>
+        <button 
+          id="admin-login-submit-btn" 
+          type="button" 
+          class="w-full py-2.5 rounded-xl bg-brand-blue hover:bg-brand-blue-hover text-white text-xs font-bold transition-all shadow-lg cursor-pointer text-center"
+        >
+          Authenticate &amp; Unlock
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Admin Delete Confirmation Modal -->
+  <div id="admin-delete-modal" class="fixed inset-0 z-50 flex items-center justify-center hidden p-4">
+    <div id="admin-delete-backdrop" class="absolute inset-0 bg-black/80 backdrop-blur-md cursor-pointer"></div>
+    <div class="relative w-full max-w-md bg-[#0e1117] light:bg-white border border-red-500/30 rounded-3xl p-6 shadow-2xl z-10 space-y-4 text-left">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-2xl bg-red-500/15 text-red-400 flex items-center justify-center text-xl shrink-0">
+          🗑️
+        </div>
+        <div>
+          <h3 class="text-base font-bold text-white light:text-ink">Delete Article?</h3>
+          <p class="text-xs text-gray-400 light:text-gray-500">This action is permanent and cannot be undone.</p>
+        </div>
+      </div>
+      <p class="text-xs text-gray-300 light:text-gray-600 leading-relaxed">
+        Are you sure you want to permanently delete:
+        <br />
+        <strong class="text-white light:text-ink block mt-1">"{article.title}"</strong>
+        <br />
+        This will delete the article file from disk and database, remove it from Google search sitemaps, and clear edge caches.
+      </p>
+      <div id="admin-delete-error" class="hidden text-xs text-rose-400 font-medium"></div>
+      <div class="flex items-center justify-end gap-2.5 pt-2">
+        <button 
+          id="admin-delete-cancel-btn" 
+          type="button" 
+          class="px-4 py-2 rounded-xl border border-white/15 light:border-gray-300 text-xs font-semibold text-gray-300 light:text-gray-700 hover:bg-white/5 cursor-pointer"
+        >
+          Cancel
+        </button>
+        <button 
+          id="admin-delete-confirm-btn" 
+          type="button" 
+          class="px-4 py-2 rounded-xl bg-red-600 hover:bg-red-500 text-white text-xs font-bold transition-all shadow-lg shadow-red-600/30 cursor-pointer flex items-center gap-1.5"
+        >
+          <span>Confirm Delete</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script define:vars={{ articleSlug: article.slug }}>
+    const loginTriggerBtn = document.getElementById("admin-login-trigger-btn");
+    const controlsPanel = document.getElementById("admin-controls-panel");
+    const logoutTriggerBtn = document.getElementById("admin-logout-trigger-btn");
+    const deleteTriggerBtn = document.getElementById("admin-delete-trigger-btn");
+
+    const loginModal = document.getElementById("admin-login-modal");
+    const loginBackdrop = document.getElementById("admin-login-backdrop");
+    const loginCloseBtn = document.getElementById("admin-login-close-btn");
+    const passwordInput = document.getElementById("admin-password-input");
+    const loginSubmitBtn = document.getElementById("admin-login-submit-btn");
+    const loginError = document.getElementById("admin-login-error");
+
+    const deleteModal = document.getElementById("admin-delete-modal");
+    const deleteBackdrop = document.getElementById("admin-delete-backdrop");
+    const deleteCancelBtn = document.getElementById("admin-delete-cancel-btn");
+    const deleteConfirmBtn = document.getElementById("admin-delete-confirm-btn");
+    const deleteError = document.getElementById("admin-delete-error");
+
+    // Check admin authentication status
+    const checkAdminStatus = async () => {
+      try {
+        const res = await fetch('/api/admin/status');
+        const data = await res.json();
+        if (data.authenticated) {
+          loginTriggerBtn?.classList.add("hidden");
+          controlsPanel?.classList.remove("hidden");
+          controlsPanel?.classList.add("flex");
+        } else {
+          loginTriggerBtn?.classList.remove("hidden");
+          controlsPanel?.classList.add("hidden");
+          controlsPanel?.classList.remove("flex");
+        }
+      } catch {
+        // ignore
+      }
+    };
+
+    checkAdminStatus();
+
+    // Open/close login modal
+    loginTriggerBtn?.addEventListener("click", () => {
+      loginModal?.classList.remove("hidden");
+      loginError?.classList.add("hidden");
+      if (passwordInput) {
+        passwordInput.value = "";
+        passwordInput.focus();
+      }
+    });
+
+    const closeLoginModal = () => {
+      loginModal?.classList.add("hidden");
+    };
+
+    loginBackdrop?.addEventListener("click", closeLoginModal);
+    loginCloseBtn?.addEventListener("click", closeLoginModal);
+
+    // Handle login submit
+    const handleLogin = async () => {
+      const pass = passwordInput?.value?.trim() || "";
+      if (!pass) return;
+
+      loginSubmitBtn.disabled = true;
+      loginSubmitBtn.textContent = "Verifying...";
+      loginError?.classList.add("hidden");
+
+      try {
+        const res = await fetch('/api/admin/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ password: pass })
+        });
+        const data = await res.json();
+        if (res.ok && data.success) {
+          closeLoginModal();
+          checkAdminStatus();
+        } else {
+          if (loginError) {
+            loginError.textContent = data.message || "Incorrect admin password";
+            loginError.classList.remove("hidden");
+          }
+        }
+      } catch (err) {
+        if (loginError) {
+          loginError.textContent = "Authentication request failed";
+          loginError.classList.remove("hidden");
+        }
+      } finally {
+        loginSubmitBtn.disabled = false;
+        loginSubmitBtn.textContent = "Authenticate & Unlock";
+      }
+    };
+
+    loginSubmitBtn?.addEventListener("click", handleLogin);
+    passwordInput?.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") handleLogin();
+    });
+
+    // Handle logout
+    logoutTriggerBtn?.addEventListener("click", async () => {
+      await fetch('/api/admin/logout', { method: 'POST' });
+      checkAdminStatus();
+    });
+
+    // Open/close delete modal
+    deleteTriggerBtn?.addEventListener("click", () => {
+      deleteModal?.classList.remove("hidden");
+      deleteError?.classList.add("hidden");
+    });
+
+    const closeDeleteModal = () => {
+      deleteModal?.classList.add("hidden");
+    };
+
+    deleteBackdrop?.addEventListener("click", closeDeleteModal);
+    deleteCancelBtn?.addEventListener("click", closeDeleteModal);
+
+    // Confirm delete action
+    deleteConfirmBtn?.addEventListener("click", async () => {
+      deleteConfirmBtn.disabled = true;
+      deleteConfirmBtn.textContent = "Deleting...";
+
+      try {
+        const res = await fetch('/api/admin/delete-article', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ slug: articleSlug })
+        });
+
+        const data = await res.json();
+        if (res.ok && data.success) {
+          deleteConfirmBtn.textContent = "Deleted!";
+          setTimeout(() => {
+            window.location.href = "/news";
+          }, 600);
+        } else {
+          if (deleteError) {
+            deleteError.textContent = data.message || "Failed to delete article";
+            deleteError.classList.remove("hidden");
+          }
+          deleteConfirmBtn.disabled = false;
+          deleteConfirmBtn.textContent = "Confirm Delete";
+        }
+      } catch (err) {
+        if (deleteError) {
+          deleteError.textContent = "Network error while deleting";
+          deleteError.classList.remove("hidden");
+        }
+        deleteConfirmBtn.disabled = false;
+        deleteConfirmBtn.textContent = "Confirm Delete";
+      }
+    });
+  </script>
 </Layout>

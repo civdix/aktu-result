@@ -256,4 +256,39 @@ export class ArticleService {
       // ignore
     }
   }
+
+  /**
+   * Delete an article by its slug from MongoDB and local storage
+   */
+  static async deleteArticle(slug: string): Promise<boolean> {
+    let deleted = false;
+    ensureDataDir();
+
+    // 1. Delete local JSON file backup
+    try {
+      const filePath = path.join(DATA_DIR, `${slug}.json`);
+      if (fs.existsSync(filePath)) {
+        fs.unlinkSync(filePath);
+        deleted = true;
+      }
+    } catch (fsErr) {
+      console.warn(`Failed to delete local article ${slug}:`, fsErr);
+    }
+
+    // 2. Delete from MongoDB
+    try {
+      const db = await DatabaseService.connectToDatabase();
+      if (db) {
+        const res = await db.collection<Article>('articles').deleteOne({ slug });
+        if (res.deletedCount && res.deletedCount > 0) {
+          deleted = true;
+        }
+      }
+    } catch (dbErr) {
+      console.warn(`MongoDB delete failed for article ${slug}:`, dbErr);
+    }
+
+    return deleted;
+  }
 }
+
