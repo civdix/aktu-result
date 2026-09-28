@@ -51,8 +51,8 @@ AKTU Result provides autonomous AI agents, developers, and students instantaneou
     response.headers.set('link', `${existingLink}, </.well-known/api-catalog>; rel="api-catalog"`);
   }
 
-  // Admin API calls: never cache under any circumstances
-  if (pathname.startsWith('/api/admin')) {
+  // Admin dashboard and API calls: never cache under any circumstances
+  if (pathname.startsWith('/admin') || pathname.startsWith('/api/admin')) {
     response.headers.set('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0, s-maxage=0');
     response.headers.set('CDN-Cache-Control', 'no-store');
     response.headers.set('Cloudflare-CDN-Cache-Control', 'no-store');
