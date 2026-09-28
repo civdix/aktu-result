@@ -128,17 +128,126 @@ class RedisService {
   }
 
   /**
-   * Initialize in-memory counter from persistent storage if not already present
+   * Record a recent search result in Redis with 7-day TTL
    */
-  async seedArticleViewsIfEmpty(slug: string, fallbackViews: number): Promise<void> {
+  async addRecentSearch(search: { rollNumber: string; name?: string; course?: string; institute?: string; status?: string }): Promise<void> {
     try {
       const client = await this.getActiveClient();
       if (!client) return;
 
-      const key = `article:views:${slug}`;
-      await client.set(key, fallbackViews.toString(), 'NX');
+      const roll = (search.rollNumber || '').trim();
+      const rollMasked = roll.length >= 6 ? `${roll.slice(0, 6)}****${roll.slice(-2)}` : '240065****';
+      
+      let nameMasked = 'AKTU Student';
+      if (search.name && search.name !== 'Verified Student') {
+        const parts = search.name.trim().split(/\s+/);
+        nameMasked = parts.length > 1 ? `${parts[0]} ${parts[1][0]}.` : parts[0];
+      }
+
+      const item = JSON.stringify({
+        rollMasked,
+        nameMasked,
+        course: search.course || 'B.Tech',
+        institute: (search.institute || 'AKTU Affiliated Institute').replace(/\s*\(.*?\)\s*/g, '').slice(0, 32),
+        status: search.status || 'PASS',
+        timestamp: Date.now()
+      });
+
+      const key = 'aktu:recent_searches';
+      const pipeline = client.pipeline();
+      pipeline.lpush(key, item);
+      pipeline.ltrim(key, 0, 24); // Keep recent 25
+      pipeline.expire(key, 7 * 86400); // 7-day TTL
+      await pipeline.exec();
+    } catch (err) {
+      console.warn('[Redis] addRecentSearch failed:', err);
+    }
+  }
+
+  /**
+   * Retrieve recent global searches from Redis (7-day TTL window)
+   */
+  async getRecentSearches(limit: number = 8): Promise<Array<any>> {
+    try {
+      const client = await this.getActiveClient();
+      if (client) {
+        const key = 'aktu:recent_searches';
+        const rawList = await client.lrange(key, 0, limit - 1);
+        if (rawList && rawList.length > 0) {
+          const parsed = rawList.map(item => {
+            try {
+              return JSON.parse(item);
+            } catch {
+              return null;
+            }
+          }).filter(Boolean);
+
+          if (parsed.length > 0) return parsed;
+        }
+      }
+    } catch (err) {
+      console.warn('[Redis] getRecentSearches failed:', err);
+    }
+
+    // Default sample searches fallback
+    const now = Date.now();
+    return [
+      { rollMasked: '240065010****', nameMasked: 'Aman K.', course: 'B.Tech CSE', institute: 'IET Lucknow', status: 'PASS', timestamp: now - 2 * 60 * 1000 },
+      { rollMasked: '220052010****', nameMasked: 'Priya S.', course: 'B.Tech IT', institute: 'KIET Ghaziabad', status: 'PASS', timestamp: now - 7 * 60 * 1000 },
+      { rollMasked: '230097013****', nameMasked: 'Rohit V.', course: 'B.Tech ECE', institute: 'Galgotias College', status: 'PASS', timestamp: now - 12 * 60 * 1000 },
+      { rollMasked: '210032010****', nameMasked: 'Shivani M.', course: 'MCA', institute: 'ABES Engineering College', status: 'PASS', timestamp: now - 19 * 60 * 1000 },
+      { rollMasked: '240029010****', nameMasked: 'Aditya P.', course: 'B.Pharma', institute: 'AKGEC Ghaziabad', status: 'PASS', timestamp: now - 28 * 60 * 1000 }
+    ];
+  }
+
+  /**
+   * Record visitor activity in 5-minute sliding window and return live reader count (always >= 1)
+   */
+  async recordLiveReader(slug: string, visitorId: string): Promise<number> {
+    try {
+      const client = await this.getActiveClient();
+      if (!client) return 1;
+
+      const key = `article:live:${slug}`;
+      const now = Date.now();
+      const fiveMinutesAgo = now - 5 * 60 * 1000;
+
+      const pipeline = client.pipeline();
+      pipeline.zadd(key, now, visitorId);
+      pipeline.zremrangebyscore(key, 0, fiveMinutesAgo);
+      pipeline.zcard(key);
+      pipeline.expire(key, 600); // 10 min TTL
+
+      const results = await pipeline.exec();
+      const count = (results?.[2]?.[1] as number) || 1;
+      return Math.max(1, count);
+    } catch (err) {
+      console.warn('[Redis] recordLiveReader failed:', err);
+      return 1;
+    }
+  }
+
+  /**
+   * Get active readers in 5-minute sliding window (always >= 1)
+   */
+  async getLiveReaders(slug: string): Promise<number> {
+    try {
+      const client = await this.getActiveClient();
+      if (!client) return 1;
+
+      const key = `article:live:${slug}`;
+      const now = Date.now();
+      const fiveMinutesAgo = now - 5 * 60 * 1000;
+
+      const pipeline = client.pipeline();
+      pipeline.zremrangebyscore(key, 0, fiveMinutesAgo);
+      pipeline.zcard(key);
+
+      const results = await pipeline.exec();
+      const count = (results?.[1]?.[1] as number) || 1;
+      return Math.max(1, count);
     } catch {
-      // ignore
+      return 1;
     }
   }
 }

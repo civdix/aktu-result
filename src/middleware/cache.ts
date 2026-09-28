@@ -71,7 +71,9 @@ AKTU Result provides autonomous AI agents, developers, and students instantaneou
     pathname.startsWith('/api/dob') ||
     pathname.startsWith('/api/find-roll') ||
     pathname.startsWith('/api/contact') ||
-    pathname.startsWith('/api/articles/view')
+    pathname.startsWith('/api/articles/view') ||
+    pathname.startsWith('/api/articles/live') ||
+    pathname.startsWith('/api/recent-searches')
   ) {
     response.headers.set('Cache-Control', 'no-store, no-cache, must-revalidate');
     return response;

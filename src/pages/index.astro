@@ -727,6 +727,30 @@ const homeKeywords = `aktu result without date of birth, aktu result without dob
         </div>
       </div>
 
+      <!-- Recent Global Searches Ticker Section (Zero SEO/Perf Impact, Client-Side API Driven) -->
+      <div id="recent-searches-section" class="mt-10 pt-6 border-t border-white/[0.06] light:border-black/[0.06]">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
+          <div class="flex items-center gap-2.5">
+            <span class="relative flex h-2.5 w-2.5">
+              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+              <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
+            </span>
+            <span class="text-xs font-bold text-gray-200 light:text-gray-900 tracking-wide flex items-center gap-1.5">
+              Live Global Lookups
+              <span class="px-1.5 py-0.5 text-[9px] rounded-md bg-white/[0.06] light:bg-black/[0.05] text-gray-400 light:text-gray-600 font-normal">Real-time</span>
+            </span>
+          </div>
+          <span class="text-[11px] text-gray-500 light:text-gray-400">
+            Recently verified student records across AKTU colleges (Masked for Privacy)
+          </span>
+        </div>
+
+        <!-- Ticker / Pills Grid -->
+        <div id="recent-searches-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 text-left">
+          <!-- Populated client-side via fetch('/api/recent-searches') -->
+        </div>
+      </div>
+
       <!-- Social Share Section -->
       <div class="mt-12 pt-8 border-t border-white/[0.08] light:border-black/[0.08]">
         <div class="flex flex-col md:flex-row items-center justify-between gap-4">
@@ -3628,6 +3652,52 @@ const homeKeywords = `aktu result without date of birth, aktu result without dob
         window.open("https://oneview.aktu.ac.in/WebPages/aktu/OneView.aspx", "_blank");
       }
     });
+
+    // Initialize Recent Searches (Client-side, async, zero SEO or render-blocking penalty)
+    const loadRecentSearches = async () => {
+      try {
+        const container = document.getElementById("recent-searches-container");
+        if (!container) return;
+
+        const res = await fetch("/api/recent-searches", { cache: "no-store" });
+        if (!res.ok) return;
+        const data = await res.json();
+        if (!data || !data.searches || data.searches.length === 0) return;
+
+        const formatTimeAgo = (ts) => {
+          if (!ts) return "Just now";
+          const diffSec = Math.floor((Date.now() - ts) / 1000);
+          if (diffSec < 60) return "Just now";
+          if (diffSec < 3600) return `${Math.floor(diffSec / 60)}m ago`;
+          if (diffSec < 86400) return `${Math.floor(diffSec / 3600)}h ago`;
+          return `${Math.floor(diffSec / 86400)}d ago`;
+        };
+
+        container.innerHTML = data.searches.slice(0, 8).map((s) => `
+          <div class="p-3 rounded-xl border border-white/[0.08] light:border-black/[0.08] bg-white/[0.02] light:bg-black/[0.02] hover:border-brand-blue/30 hover:bg-brand-blue/5 transition-all duration-200">
+            <div class="flex items-center justify-between mb-1.5">
+              <span class="font-mono text-xs font-bold text-brand-blue tracking-tight">${s.rollMasked || '240065****'}</span>
+              <span class="px-1.5 py-0.5 rounded text-[9px] font-bold ${s.status === 'FAIL' ? 'bg-rose-500/10 text-rose-400 border border-rose-500/20' : 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20'}">
+                ${s.status || 'PASS'}
+              </span>
+            </div>
+            <div class="text-[11px] font-medium text-gray-300 light:text-gray-800 truncate">${s.nameMasked || 'AKTU Student'}</div>
+            <div class="flex items-center justify-between text-[10px] text-gray-500 light:text-gray-400 mt-1">
+              <span class="truncate max-w-[140px]">${s.course || 'B.Tech'} • ${s.institute || 'AKTU'}</span>
+              <span class="font-mono text-[9px] shrink-0">${formatTimeAgo(s.timestamp)}</span>
+            </div>
+          </div>
+        `).join('');
+      } catch (e) {
+        // Silent fail - never break UI
+      }
+    };
+
+    if ('requestIdleCallback' in window) {
+      (window as any).requestIdleCallback(() => loadRecentSearches());
+    } else {
+      setTimeout(loadRecentSearches, 400);
+    }
 
   };
 

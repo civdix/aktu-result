@@ -74,6 +74,18 @@ async function saveDobSafe(data: any): Promise<void> {
   }
 }
 
+function logRecentSearchSafe(roll: string, name?: string, course?: string, institute?: string, status?: string): void {
+  import('../../services/redis.service').then(({ redisService }) => {
+    redisService.addRecentSearch({
+      rollNumber: roll,
+      name,
+      course,
+      institute,
+      status: status || 'PASS'
+    }).catch(() => {});
+  }).catch(() => {});
+}
+
 export const GET: APIRoute = async () => {
   return new Response(
     JSON.stringify({
@@ -213,6 +225,8 @@ export const POST: APIRoute = async ({ request }) => {
         ? student.cgpa
         : computeAverageCgpa(student.semesters);
 
+      logRecentSearchSafe(trimmedRoll, finalName, student.course, student.institute, 'PASS');
+
       return new Response(
         JSON.stringify({
           success: true,
@@ -254,6 +268,8 @@ export const POST: APIRoute = async ({ request }) => {
           ? scraped.cgpa
           : computeAverageCgpa(scraped.semesters);
 
+        logRecentSearchSafe(trimmedRoll, scraped.name || student.name, scraped.course || student.course, scraped.institute || student.institute, 'PASS');
+
         return new Response(
           JSON.stringify({
             success: true,
@@ -282,6 +298,8 @@ export const POST: APIRoute = async ({ request }) => {
         try {
           totalSearches = await incrementFetchCounterSafe();
         } catch (err) {}
+
+        logRecentSearchSafe(trimmedRoll, student.name, student.course, student.institute, 'PASS');
 
         return new Response(
           JSON.stringify({
@@ -349,6 +367,8 @@ export const POST: APIRoute = async ({ request }) => {
         const finalCgpa = (scraped && scraped.cgpa && scraped.cgpa !== '0.00' && scraped.cgpa !== '--') 
           ? scraped.cgpa 
           : computeAverageCgpa(finalSemesters);
+
+        logRecentSearchSafe(trimmedRoll, scraped?.name || studentObj.name, scraped?.course || studentObj.course, scraped?.institute || studentObj.institute, 'PASS');
 
         return new Response(
           JSON.stringify({
@@ -425,6 +445,8 @@ export const POST: APIRoute = async ({ request }) => {
       const finalCgpa = (scraped && scraped.cgpa && scraped.cgpa !== '0.00' && scraped.cgpa !== '--') 
         ? scraped.cgpa 
         : computeAverageCgpa(finalSemesters);
+
+      logRecentSearchSafe(trimmedRoll, scraped?.name || studentObj.name, scraped?.course || studentObj.course, scraped?.institute || studentObj.institute, 'PASS');
 
       return new Response(
         JSON.stringify({

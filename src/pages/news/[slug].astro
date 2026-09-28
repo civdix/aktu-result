@@ -178,6 +178,20 @@ const renderedHtml = MarkdownService.render(article.content);
         {article.title}
       </h1>
 
+      <!-- Live Reading Box (Real-time Redis Sliding Window, Dynamic Edge-Bypass) -->
+      <div id="live-reading-box" class="flex items-center justify-between px-3.5 py-2 rounded-xl bg-emerald-500/[0.08] border border-emerald-500/20 text-emerald-400 light:text-emerald-700 text-xs">
+        <div class="flex items-center gap-2">
+          <span class="relative flex h-2 w-2">
+            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+            <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+          </span>
+          <span class="font-medium text-[11px] sm:text-xs">
+            <strong id="live-reader-count" class="font-bold text-emerald-400 light:text-emerald-800">1</strong> <span id="live-reader-label">student reading this circular right now</span>
+          </span>
+        </div>
+        <span class="text-[10px] text-gray-400 light:text-gray-500 font-mono hidden sm:inline">Active in last 5m</span>
+      </div>
+
       <div class="p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-blue-950/30 via-slate-900/40 to-black/30 light:from-blue-50/70 light:via-slate-50 light:to-white border border-brand-blue/25 space-y-1.5">
         <span class="text-[10px] font-bold uppercase tracking-wider text-brand-blue block">Key Takeaway &amp; Summary</span>
         <p class="text-xs sm:text-sm text-gray-300 light:text-gray-700 leading-relaxed font-medium">
@@ -410,6 +424,48 @@ const renderedHtml = MarkdownService.render(article.content);
       } catch {
         // Fail-safe: zero user impact
       }
+    })();
+
+    // Real-time Live Reader tracker (5-minute sliding window via Redis)
+    (function() {
+      try {
+        const countEl = document.getElementById('live-reader-count');
+        const labelEl = document.getElementById('live-reader-label');
+        if (!countEl) return;
+
+        // Stable per-session visitor ID (prevents incrementing on tab refresh)
+        let vid = sessionStorage.getItem('aktu_live_vid');
+        if (!vid) {
+          vid = 'v_' + Math.random().toString(36).slice(2, 9) + Date.now().toString(36);
+          try { sessionStorage.setItem('aktu_live_vid', vid); } catch {}
+        }
+
+        const syncLiveReaders = async () => {
+          try {
+            const res = await fetch(`/api/articles/live?slug=${encodeURIComponent(articleSlug)}&vid=${encodeURIComponent(vid)}`, {
+              cache: 'no-store'
+            });
+            if (!res.ok) return;
+            const data = await res.json();
+            if (data && data.success && typeof data.count === 'number') {
+              const liveCount = Math.max(1, data.count);
+              countEl.textContent = String(liveCount);
+              if (labelEl) {
+                labelEl.textContent = liveCount === 1 
+                  ? 'student reading this circular right now' 
+                  : 'students reading this circular right now';
+              }
+            }
+          } catch {}
+        };
+
+        // Immediate fetch
+        syncLiveReaders();
+
+        // Refresh every 60 seconds while reader remains on page
+        const interval = setInterval(syncLiveReaders, 60000);
+        window.addEventListener('beforeunload', () => clearInterval(interval));
+      } catch {}
     })();
   </script>
 </Layout>
