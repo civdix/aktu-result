@@ -1,5 +1,4 @@
 import type { APIRoute } from 'astro';
-import { ArticleService } from '../services/article.service';
 
 export const prerender = false;
 
@@ -8,15 +7,7 @@ export const GET: APIRoute = async () => {
   const now = new Date();
   const today = now.toISOString().split('T')[0];
 
-  // 1. Fetch dynamic news articles
-  let newsArticles: Array<{ slug: string; updatedAt: string }> = [];
-  try {
-    newsArticles = await ArticleService.getAllArticleSlugs();
-  } catch (err) {
-    console.warn('[Sitemap] Failed to fetch article slugs:', err);
-  }
-
-  // 2. Core High-Priority Pages (Daily & Weekly change frequency)
+  // Core Pages (News articles are kept separately in /sitemap-news.xml)
   const coreUrls = [
     { loc: `${domain}/`, priority: '1.0', changefreq: 'daily', lastmod: today },
     { loc: `${domain}/news`, priority: '0.95', changefreq: 'daily', lastmod: today },
@@ -46,17 +37,6 @@ export const GET: APIRoute = async () => {
   </url>`
   );
 
-  // 3. Append dynamic news articles
-  for (const item of newsArticles) {
-    const lastMod = (item.updatedAt || today).split('T')[0];
-    xmlUrls.push(`  <url>
-    <loc>${domain}/news/${item.slug}</loc>
-    <lastmod>${lastMod}</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.85</priority>
-  </url>`);
-  }
-
   const sitemapXml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${xmlUrls.join('\n')}
@@ -66,7 +46,7 @@ ${xmlUrls.join('\n')}
     status: 200,
     headers: {
       'Content-Type': 'application/xml; charset=utf-8',
-      'Cache-Control': 'public, max-age=600, s-maxage=1200'
+      'Cache-Control': 'public, max-age=3600, s-maxage=7200'
     }
   });
 };
