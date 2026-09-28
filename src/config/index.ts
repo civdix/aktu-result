@@ -14,6 +14,17 @@ export const getMongoUri = () => {
 };
 
 export const MONGO_DB_URI = getMongoUri();
+export const getRedisUri = () => {
+  if (typeof process !== 'undefined' && process.env?.REDIS_URL) {
+    return process.env.REDIS_URL;
+  }
+  if (typeof import.meta !== 'undefined' && (import.meta as any).env?.REDIS_URL) {
+    return (import.meta as any).env.REDIS_URL;
+  }
+  return 'rediss://default:Fa9u0yZtbWcLtW69yhI6xFrE@akturesult-hemp-port.ovh2.cloud.layerbase.dev';
+};
+
+export const REDIS_URL = getRedisUri();
 export const AKTU_URL = 'https://oneview.aktu.ac.in/WebPages/aktu/OneView.aspx';
 
 export const USER_AGENTS = [
