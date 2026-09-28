@@ -61,13 +61,13 @@ class MainActivity : AppCompatActivity() {
             binding.btnSubmit.isEnabled = true
 
             if (res.success && !res.dob.isNullOrEmpty()) {
-                binding.statusMessage.text = "✓ DOB Found: ${res.dob}! Launching OneView..."
+                binding.statusMessage.text = "✓ DOB Found: ${res.dob}! Opening Automatic Result View..."
                 binding.statusMessage.setTextColor(ContextCompat.getColor(this, R.color.brand_accent))
 
                 launchOneView(rollNumber, res.dob, res.name ?: "Student")
             } else {
-                // If automated DOB discovery is temporarily busy, ask user for DOB or proceed to manual
-                binding.statusMessage.text = "Automated DOB lookup unavailable. Opening OneView directly..."
+                // If automated DOB discovery is temporarily busy, proceed to OneView automatic result view
+                binding.statusMessage.text = "Opening OneView Automatic Result View..."
                 launchOneView(rollNumber, "", "")
             }
         }

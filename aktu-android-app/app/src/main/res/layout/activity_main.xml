@@ -171,7 +171,7 @@
         android:layout_marginTop="24dp"
         android:layout_marginBottom="16dp"
         android:gravity="center"
-        android:text="⚡ Auto-fills Roll No &amp; DOB on AKTU OneView. Auto-submits upon tapping reCAPTCHA."
+        android:text="⚡ Auto-fills credentials, auto-submits on 1-tap reCAPTCHA &amp; renders full automatic result view with all semesters expanded."
         android:textColor="@color/text_dim"
         android:textSize="11sp"
         app:layout_constraintTop_toBottomOf="@id/communityLayout"
