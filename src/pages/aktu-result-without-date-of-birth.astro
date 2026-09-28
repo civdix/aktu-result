@@ -1421,7 +1421,7 @@ const jsonLd = {
             const vRes = await fetch("/api/search", {
               method: "POST",
               headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ rollNumber: rollVal, manualCaptcha: code, session: currentSession })
+              body: JSON.stringify({ rollNumber: rollVal, manualCaptcha: code, session: currentSession, engineSession: currentSession })
             });
             const vData = await vRes.json();
             if (vData && vData.success) {

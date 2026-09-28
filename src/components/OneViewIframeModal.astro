@@ -121,6 +121,25 @@
         loading="lazy"
         referrerpolicy="no-referrer-when-downgrade"
       ></iframe>
+
+      <!-- Fallback helper if iframe is blocked by X-Frame-Options or slow -->
+      <div 
+        id="oneview-iframe-fallback" 
+        class="hidden absolute bottom-3 left-3 right-3 p-3 bg-amber-500/15 border border-amber-500/30 rounded-xl text-amber-200 light:text-amber-900 text-xs flex items-center justify-between gap-2 z-20 backdrop-blur-md shadow-lg"
+      >
+        <div class="flex items-center gap-2">
+          <span>⚠️</span>
+          <span>Portal blocked or taking long to load inside frame?</span>
+        </div>
+        <a 
+          href="https://oneview.aktu.ac.in/WebPages/aktu/OneView.aspx" 
+          target="_blank" 
+          rel="noopener noreferrer" 
+          class="px-3 py-1.5 bg-amber-400 hover:bg-amber-300 text-black font-bold text-xs rounded-lg transition-all shrink-0"
+        >
+          Open Directly in New Tab ↗
+        </a>
+      </div>
     </div>
 
     <!-- Modal Footer -->
@@ -143,6 +162,7 @@
     const modal = document.getElementById("oneview-live-modal");
     const iframe = document.getElementById("oneview-portal-iframe");
     const spinner = document.getElementById("oneview-iframe-spinner");
+    const fallbackEl = document.getElementById("oneview-iframe-fallback");
     const rollText = document.getElementById("oneview-modal-roll-text");
     const dobText = document.getElementById("oneview-modal-dob-text");
     const copyRollBtn = document.getElementById("oneview-modal-copy-roll-btn");
@@ -154,6 +174,7 @@
 
     let currentRoll = "";
     let currentDob = "";
+    let iframeWatchdog = null;
 
     const TARGET_URL = "https://oneview.aktu.ac.in/WebPages/aktu/OneView.aspx";
 
@@ -185,9 +206,24 @@
         spinner.classList.remove("hidden");
         spinner.style.opacity = "1";
       }
+      if (fallbackEl) {
+        fallbackEl.classList.add("hidden");
+      }
+
+      if (iframeWatchdog) clearTimeout(iframeWatchdog);
+      iframeWatchdog = setTimeout(() => {
+        if (spinner) {
+          spinner.style.opacity = "0";
+          setTimeout(() => spinner.classList.add("hidden"), 300);
+        }
+        if (fallbackEl) {
+          fallbackEl.classList.remove("hidden");
+        }
+      }, 5000);
 
       if (iframe) {
         iframe.onload = () => {
+          if (iframeWatchdog) clearTimeout(iframeWatchdog);
           if (spinner) {
             spinner.style.opacity = "0";
             setTimeout(() => spinner.classList.add("hidden"), 300);
@@ -209,9 +245,13 @@
     };
 
     window.closeOneViewModal = function() {
+      if (iframeWatchdog) clearTimeout(iframeWatchdog);
       if (modal) {
         modal.classList.add("hidden");
         document.body.style.overflow = "";
+      }
+      if (fallbackEl) {
+        fallbackEl.classList.add("hidden");
       }
       if (iframe) {
         iframe.src = "about:blank";

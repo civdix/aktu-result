@@ -3699,6 +3699,22 @@ const homeKeywords = `aktu result without date of birth, aktu result without dob
       setTimeout(loadRecentSearches, 400);
     }
 
+    // Auto-trigger search if roll parameter present in URL (e.g. from roll-number-finder)
+    const urlParams = new URLSearchParams(window.location.search);
+    const paramRoll = urlParams.get('roll') || urlParams.get('rollNumber');
+    if (paramRoll && rollInput) {
+      rollInput.value = paramRoll;
+      setTimeout(() => {
+        if (typeof (window as any).ensureCookieConsent === "function") {
+          (window as any).ensureCookieConsent(() => {
+            searchForm.dispatchEvent(new Event("submit"));
+          });
+        } else {
+          searchForm.dispatchEvent(new Event("submit"));
+        }
+      }, 250);
+    }
+
   };
 
   if (document.readyState === "loading") {

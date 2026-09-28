@@ -1,6 +1,7 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import { getAcademicYearInfo } from "../utils/academicYear";
+import OneViewIframeModal from "../components/OneViewIframeModal.astro";
 
 const yearInfo = getAcademicYearInfo();
 const roll = Astro.url.searchParams.get("roll") || Astro.url.searchParams.get("rollNumber") || "";
@@ -1191,7 +1192,7 @@ const jsonLd = {
             const vRes = await fetch("/api/search", {
               method: "POST",
               headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ rollNumber: rollVal, manualCaptcha: code, session: currentSession })
+              body: JSON.stringify({ rollNumber: rollVal, manualCaptcha: code, session: currentSession, engineSession: currentSession })
             });
             const vData = await vRes.json();
             if (vData && vData.success) {
@@ -1353,5 +1354,6 @@ const jsonLd = {
       initErp();
     }
   </script>
+  <OneViewIframeModal />
 </Layout>
 
