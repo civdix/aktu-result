@@ -163,26 +163,82 @@ export class NewsGeneratorService {
     readingTime: number;
     faqs: ArticleFaq[];
   }> {
-    const geminiKey = process.env.GEMINI_API_KEY || (import.meta as any).env?.GEMINI_API_KEY;
-
-    if (geminiKey) {
+    // 1. Primary AI Engine: Groq (Ultra-fast, Llama 3 / GPT-OSS 120B)
+    const groqKey = process.env.GROQ_API_KEY || (import.meta as any).env?.GROQ_API_KEY;
+    if (groqKey) {
       try {
-        const aiArticle = await this.generateWithGemini(video, geminiKey);
-        if (aiArticle) return aiArticle;
+        const aiArticle = await this.generateWithGroq(video, groqKey);
+        if (aiArticle) {
+          console.log('[NewsPipeline] Successfully synthesized article using Groq AI');
+          return aiArticle;
+        }
       } catch (err) {
-        console.warn('Gemini generation failed, falling back to built-in synthesis:', err);
+        console.warn('[NewsPipeline] Groq generation failed, checking Gemini fallback:', err);
       }
     }
 
-    // Built-in intelligent NLP Synthesizer
+    // 2. Secondary AI Engine: Google Gemini
+    const geminiKey = process.env.GEMINI_API_KEY || (import.meta as any).env?.GEMINI_API_KEY;
+    if (geminiKey) {
+      try {
+        const aiArticle = await this.generateWithGemini(video, geminiKey);
+        if (aiArticle) {
+          console.log('[NewsPipeline] Successfully synthesized article using Gemini AI');
+          return aiArticle;
+        }
+      } catch (err) {
+        console.warn('[NewsPipeline] Gemini generation failed, falling back to built-in synthesis:', err);
+      }
+    }
+
+    // 3. Fallback: Built-in intelligent NLP Synthesizer
     return this.generateWithBuiltInNLP(video);
   }
 
   /**
-   * Generate high-quality article via Google Gemini API
+   * Helper to parse and repair JSON safely from LLM outputs
    */
-  private static async generateWithGemini(video: any, apiKey: string): Promise<any> {
-    const prompt = `You are a Senior Academic News Editor and Google News SEO Content Strategist for "AKTU Student Portal" (akturesult.bond).
+  private static parseAndRepairJson(rawText: string): any {
+    if (!rawText) return null;
+    let text = rawText.replace(/^```json\s*/i, '').replace(/```\s*$/i, '').trim();
+    if (!text || text.length < 50 || !text.includes('{')) return null;
+
+    // 1. Direct JSON parse
+    try {
+      const parsed = JSON.parse(text);
+      if (parsed && parsed.title && parsed.content) return parsed;
+    } catch {}
+
+    // 2. Outermost JSON object extraction
+    const firstBrace = text.indexOf('{');
+    const lastBrace = text.lastIndexOf('}');
+    if (firstBrace !== -1 && lastBrace !== -1 && lastBrace > firstBrace) {
+      const sliced = text.substring(firstBrace, lastBrace + 1);
+      try {
+        const repaired = JSON.parse(sliced);
+        if (repaired && repaired.title && repaired.content) return repaired;
+      } catch {
+        // 3. Sanitize raw control characters in string literals
+        try {
+          const sanitized = sliced.replace(/[\u0000-\u001F]+/g, (match) => {
+            if (match === '\n') return '\\n';
+            if (match === '\r') return '\\r';
+            if (match === '\t') return '\\t';
+            return '';
+          });
+          const repaired2 = JSON.parse(sanitized);
+          if (repaired2 && repaired2.title && repaired2.content) return repaired2;
+        } catch {}
+      }
+    }
+    return null;
+  }
+
+  /**
+   * Unified article prompt adhering to Google News and Discover editorial standards
+   */
+  private static buildArticlePrompt(video: any): string {
+    return `You are a Senior Academic News Editor and Google News SEO Content Strategist for "AKTU Student Portal" (akturesult.bond).
 Transform this YouTube video news update regarding Dr. A.P.J. Abdul Kalam Technical University (AKTU) into an exhaustive, highly detailed, 1300 to 1800+ word academic journalism news article for university students across Uttar Pradesh.
 
 VIDEO CONTEXT:
@@ -228,8 +284,64 @@ Return your response strictly as valid, raw JSON (no surrounding markdown codebl
   ],
   "content": "Full rich markdown content following the sections above (1300-1800+ words)."
 }`;
+  }
 
-    const models = ['gemini-2.5-flash', 'gemini-2.5-flash-lite'];
+  /**
+   * Generate high-quality article via Groq API (Ultra-fast, Llama 3 / GPT-OSS models)
+   */
+  private static async generateWithGroq(video: any, apiKey: string): Promise<any> {
+    const prompt = this.buildArticlePrompt(video);
+    const models = ['openai/gpt-oss-120b', 'openai/gpt-oss-20b', 'qwen/qwen3.8-27b'];
+
+    for (const model of models) {
+      try {
+        const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${apiKey}`,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            model: model,
+            messages: [
+              {
+                role: 'system',
+                content: 'You are a Senior Academic News Editor and Google News SEO Content Strategist for AKTU Student Portal (akturesult.bond). Always return strictly valid, raw JSON.'
+              },
+              {
+                role: 'user',
+                content: prompt
+              }
+            ],
+            temperature: 0.35,
+            max_tokens: 8192,
+            response_format: { type: 'json_object' }
+          })
+        });
+
+        if (!res.ok) {
+          console.warn(`[Groq] ${model} returned HTTP ${res.status}`);
+          continue;
+        }
+
+        const data = await res.json();
+        const text = data?.choices?.[0]?.message?.content || '';
+        const parsed = this.parseAndRepairJson(text);
+        if (parsed) return parsed;
+      } catch (err: any) {
+        console.warn(`[Groq] Attempt with ${model} error:`, err?.message || err);
+      }
+    }
+
+    return null;
+  }
+
+  /**
+   * Generate high-quality article via Google Gemini API
+   */
+  private static async generateWithGemini(video: any, apiKey: string): Promise<any> {
+    const prompt = this.buildArticlePrompt(video);
+    const models = ['gemini-2.5-flash', 'gemini-flash-latest'];
 
     for (const model of models) {
       try {
@@ -258,50 +370,9 @@ Return your response strictly as valid, raw JSON (no surrounding markdown codebl
         }
 
         const data = await res.json();
-        let text = data?.candidates?.[0]?.content?.parts?.[0]?.text || '';
-        text = text.replace(/^```json\s*/i, '').replace(/```\s*$/i, '').trim();
-
-        if (!text || text.length < 50 || !text.includes('{')) {
-          console.warn(`[Gemini] ${model} returned empty or incomplete text (length: ${text.length})`);
-          continue;
-        }
-
-        // 1. Direct JSON parse
-        try {
-          const parsed = JSON.parse(text);
-          if (parsed && parsed.title && parsed.content) {
-            return parsed;
-          }
-        } catch {
-          // 2. Outermost JSON object extraction
-          const firstBrace = text.indexOf('{');
-          const lastBrace = text.lastIndexOf('}');
-          if (firstBrace !== -1 && lastBrace > firstBrace) {
-            const sliced = text.substring(firstBrace, lastBrace + 1);
-            try {
-              const repaired = JSON.parse(sliced);
-              if (repaired && repaired.title && repaired.content) {
-                return repaired;
-              }
-            } catch {
-              // 3. Sanitize raw control characters in string literals
-              try {
-                const sanitized = sliced.replace(/[\u0000-\u001F]+/g, (match) => {
-                  if (match === '\n') return '\\n';
-                  if (match === '\r') return '\\r';
-                  if (match === '\t') return '\\t';
-                  return '';
-                });
-                const repaired2 = JSON.parse(sanitized);
-                if (repaired2 && repaired2.title && repaired2.content) {
-                  return repaired2;
-                }
-              } catch {
-                // Sliced repair failed, try next model
-              }
-            }
-          }
-        }
+        const text = data?.candidates?.[0]?.content?.parts?.[0]?.text || '';
+        const parsed = this.parseAndRepairJson(text);
+        if (parsed) return parsed;
       } catch (err: any) {
         console.warn(`[Gemini] Attempt with ${model} error:`, err?.message || err);
       }
