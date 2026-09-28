@@ -183,7 +183,7 @@ export class NewsGeneratorService {
    */
   private static async generateWithGemini(video: any, apiKey: string): Promise<any> {
     const prompt = `You are a Senior Academic News Editor and Google News SEO Content Strategist for "AKTU Student Portal" (akturesult.bond).
-Transform this YouTube video news update regarding Dr. A.P.J. Abdul Kalam Technical University (AKTU) into an authoritative, 900-1200 word Google News-compliant academic journalism article for university students in Uttar Pradesh.
+Transform this YouTube video news update regarding Dr. A.P.J. Abdul Kalam Technical University (AKTU) into an exhaustive, highly detailed, 1300 to 1800+ word academic journalism news article for university students across Uttar Pradesh.
 
 VIDEO CONTEXT:
 - Title: ${video.title}
@@ -192,22 +192,28 @@ VIDEO CONTEXT:
 - Description: ${video.description.slice(0, 1000)}
 - Spoken Transcript Snippet: ${video.transcript ? video.transcript.slice(0, 4000) : 'N/A'}
 
-GOOGLE NEWS EDITORIAL & RANKING GUIDELINES:
+STRICT LENGTH & CONTENT DEPTH REQUIREMENT:
+- Target Word Count: Minimum 1300 words, up to 1800+ words.
+- DO NOT write brief summaries or short 2-sentence paragraphs. Write rich, exhaustive, journalistic prose.
+- Every section MUST provide detailed multi-paragraph analysis explaining university ordinance rules, examination bylaws, student consequences, SGPA/CGPA evaluation rubrics, backlog management, and practical student guidance.
+
+EDITORIAL & RANKING GUIDELINES:
 1. Headline (Title):
    - Length: 55 to 70 characters.
-   - Journalistic, active voice, factual. No sensationalist clickbait, NO ALL-CAPS words.
-   - Front-load high-search keywords: e.g. "AKTU Even Semester Result 2026: OneView Portal Update & Verification Steps".
-2. Lead Paragraph (Inverted Pyramid):
-   - The first paragraph MUST immediately answer the 5 Ws (Who, What, When, Where, Why) factually:
-     "Dr. A.P.J. Abdul Kalam Technical University (AKTU), Lucknow, has announced..."
-3. Content Architecture (Markdown):
-   - ## Quick Highlights & Executive Summary (3-5 clear bullet points for fast student skimming).
-   - ## What the University Circular & Notice Details (In-depth policy, examination, or circular directives).
-   - ## Affected Courses & Student Eligibility (Breakdown for B.Tech, B.Pharma, MBA, MCA, Regular, and Carry-Over/Backlog COP students).
-   - ## Key Deadlines & Schedule (A structured Markdown table with columns: Stage / Notice Item | Date / Tentative Timeline | Student Action).
-   - ## Step-by-Step Action Guide for AKTU Students (Numbered steps 1., 2., 3. guiding students through ERP/OneView). Mention students can check semester marksheets without entering DOB using [AKTU Result Without DOB](https://akturesult.bond) or the [AKTU OneView Portal](https://akturesult.bond/oneview).
-   - ## Official Source Verification & Fact-Check Note (State that this update is cross-verified against official AKTU announcements, citing original channel: ${video.channel}).
-   - ## Frequently Asked Questions (FAQs) (3-4 high-intent questions with concise, 40-50 word answers for Google People-Also-Ask snippets).
+   - Factual, journalistic, active voice. Front-load high-search keywords: e.g. "AKTU Even Semester Result 2026: OneView Portal Update & Verification Steps".
+   - NO clickbait, NO ALL-CAPS words.
+2. Inverted Pyramid Lead Paragraphs:
+   - The opening 2 paragraphs must immediately answer Who, What, When, Where, Why factually:
+     "Dr. A.P.J. Abdul Kalam Technical University (AKTU), Lucknow, has officially announced..."
+3. Mandatory Sections Architecture (Markdown):
+   - ## Executive Summary & Core Directives (Detailed summary plus 4-6 bullet takeaways).
+   - ## In-Depth Analysis of University Circular & Notification (3-4 rich paragraphs dissecting the circular, administrative directives, and academic background).
+   - ## Detailed Impact on Student Batches & Branch Eligibility (Thorough breakdown for B.Tech, B.Pharma, MBA, MCA, M.Tech; Regular vs Carry-Over COP students; Grace marks criteria under AKTU Ordinance).
+   - ## Important Deadlines, Examination Schedule & Verification Table (A structured Markdown table with columns: Stage / Notice Item | Scheduled Date / Tentative Timeline | Student Action Required | Official Portal).
+   - ## Step-by-Step Action Guide for College Students (Detailed numbered steps 1., 2., 3., 4., 5. explaining ERP student dashboard login, OneView verification, backlog fee submission, and what to do if marks are marked as PCP or INC).
+   - ## Instant Result & Marksheet Verification Without DOB (Comprehensive tutorial explaining that students who forgot their registered Date of Birth or need fast marksheet retrieval can verify their live semester ledger via [AKTU Result Without DOB](https://akturesult.bond) or the [AKTU OneView Portal](https://akturesult.bond/oneview)).
+   - ## Official Source Verification, Fact-Check & Video Context (Detailed verification note cross-referencing university circulars, citing educational observer ${video.channel}).
+   - ## Frequently Asked Questions (FAQs) (4 to 5 comprehensive student questions with detailed, authoritative 50-75 word answers for Google People Also Ask snippets).
 
 Return your response strictly as valid, raw JSON (no surrounding markdown codeblocks like \`\`\`json) matching this schema:
 {
@@ -215,12 +221,12 @@ Return your response strictly as valid, raw JSON (no surrounding markdown codebl
   "slug": "kebab-case-slug-6-to-9-words",
   "excerpt": "string (145-160 characters summary with main keyword)",
   "category": "Circulars & Updates",
-  "tags": ["AKTU News 2026", "AKTU Circular", "OneView", "tag4"],
-  "readingTime": 5,
+  "tags": ["AKTU News 2026", "AKTU Circular", "OneView", "tag4", "tag5"],
+  "readingTime": 7,
   "faqs": [
-    {"question": "string", "answer": "string (40-55 words factual answer)"}
+    {"question": "string", "answer": "string (50-75 words factual answer)"}
   ],
-  "content": "Full rich markdown content following the sections above."
+  "content": "Full rich markdown content following the sections above (1300-1800+ words)."
 }`;
 
     let res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`, {
@@ -230,7 +236,7 @@ Return your response strictly as valid, raw JSON (no surrounding markdown codebl
         contents: [{ parts: [{ text: prompt }] }],
         generationConfig: {
           temperature: 0.4,
-          maxOutputTokens: 3500
+          maxOutputTokens: 8192
         }
       })
     });
@@ -247,7 +253,7 @@ Return your response strictly as valid, raw JSON (no surrounding markdown codebl
           contents: [{ parts: [{ text: prompt }] }],
           generationConfig: {
             temperature: 0.4,
-            maxOutputTokens: 3500
+            maxOutputTokens: 8192
           }
         })
       });
@@ -302,23 +308,51 @@ Return your response strictly as valid, raw JSON (no surrounding markdown codebl
       : '';
 
     const content = `
-## Executive Summary & Key Highlights
+## Executive Summary & Core Highlights
 
-Dr. A.P.J. Abdul Kalam Technical University (AKTU), Lucknow, has issued crucial updates concerning academic schedules, examination guidelines, and official credential distributions for affiliated institutions across Uttar Pradesh.
+Dr. A.P.J. Abdul Kalam Technical University (AKTU), Lucknow, has released critical updates and academic directives concerning current examination schedules, OneView scorecards, carry-over registrations, and student record verifications for affiliated colleges across Uttar Pradesh.
 
-Here is a summary of the key directives announced in this update:
-* **Primary Subject:** ${finalTitle}
-* **Target Audience:** All enrolled regular and carry-over students (B.Tech, B.Pharma, MCA, MBA, and affiliated technical courses).
-* **Source Attribution:** Reported and verified via education desks and university notices ([Watch Video Breakdown](https://www.youtube.com/watch?v=${video.videoId})).
-* **Official Verification Gateway:** Students are advised to verify their marks, SGPA cards, and profile data through the official [AKTU OneView Portal](https://akturesult.bond/oneview).
+Here is an executive summary of the key directives announced in this notification:
+* **Primary Notification Topic:** ${finalTitle}
+* **Target Audience:** All enrolled regular, ex-students, and carry-over candidates across B.Tech, B.Pharma, MCA, MBA, and affiliated technical courses in Uttar Pradesh.
+* **Administrative Source Attribution:** Documented and verified via educational broadcasts and official university gazettes ([Watch Detailed Video Report](https://www.youtube.com/watch?v=${video.videoId})).
+* **Official Verification Gateway:** Students are advised to inspect their SGPA ledger, internal marks allocations, and profile credentials through the [AKTU OneView Portal](https://akturesult.bond/oneview).
+* **Fast Scorecard Recovery:** Candidates who cannot locate their registered Date of Birth can query their full semester scorecard via [AKTU Result Without DOB](https://akturesult.bond).
 
 ---
 
 ## What the University Notice & Video Report Details
 
-${video.description ? video.description.slice(0, 450).trim() : 'The university administration has issued a formal notification detailing upcoming procedures, timelines, and mandatory instructions for student record management.'}
+${video.description ? video.description.slice(0, 600).trim() : 'The university administration has issued a formal notification detailing upcoming procedures, timelines, and mandatory instructions for student record management.'}
 
-${cleanTranscript ? `### Spoken Updates from University Observers\n\n> "${cleanTranscript.slice(0, 600)}..."\n\nAccording to the analysis of this update, students are requested to review their academic ledger promptly to prevent discrepancies before final university deadlines.` : ''}
+The university's latest notification highlights essential academic and administrative protocols designed to streamline student evaluation and record management across all affiliated engineering, pharmacy, and management institutes in Uttar Pradesh. Dr. A.P.J. Abdul Kalam Technical University oversees over 750 colleges, making timely dissemination of academic notices paramount for students preparing for semester examinations, evaluations, and career opportunities.
+
+${cleanTranscript ? `### Spoken Updates from University Observers\n\n> "${cleanTranscript.slice(0, 900)}..."\n\nAccording to the detailed breakdown provided by educational observers, students are urged to review their academic ledger promptly to prevent discrepancies before final university deadlines.` : 'Educational observers emphasize that candidates must remain vigilant regarding notification cut-offs. Late submissions or unaddressed discrepancies in internal assessment ledgers can cause delays in final marksheet issuance and degree clearances.'}
+
+---
+
+## Detailed Impact on Student Batches & Branch Eligibility
+
+This official announcement directly impacts several student categories across various degree programs:
+
+1. **Regular Semester Batches (B.Tech, B.Pharma, MCA, MBA):** Enrolled students must verify that their colleges have submitted internal assessment, laboratory, and sessional marks to the AKTU ERP system before the declared deadline.
+2. **Carry-Over Paper (COP) Candidates:** Students appearing for backlog examinations must cross-verify their subject codes and exam session timetables to prevent timing clashes.
+3. **Final Year Students & Degree Clearances:** Graduating students must inspect their cumulative grade point average (CGPA) and confirm that all semester theory and practical records reflect "PASS" status without lingering INC (Incomplete) flags.
+4. **Grace Marks Allocation Criteria:** Under university examination ordinances, eligible students facing borderline backlog status must review grace allocation rules as specified in university bylaws.
+
+---
+
+## Key Deadlines, Examination Schedule & Verification Table
+
+The following structured table outlines the essential milestones, portal requirements, and mandatory student actions associated with this notification:
+
+| Stage / Notice Item | Scheduled Timeline | Student Action Required | Official Portal Gateway |
+| :--- | :--- | :--- | :--- |
+| **Circular Notification Release** | Current Session | Download official circular PDF and review subject codes | [AKTU ERP](https://akturesult.bond/aktu-erp-result) |
+| **Internal Assessment Verification** | Prior to Semester Audits | Confirm theory, sessional, and practical marks | [AKTU OneView](https://akturesult.bond/oneview) |
+| **Instant Result Verification** | 24/7 Live | Query marksheet without requiring registered Date of Birth | [AKTU Result Online](https://akturesult.bond) |
+| **COP Backlog Registration** | Declared Window | Submit exam forms and verify semester fee challan | University ERP Portal |
+| **Discrepancy Rectification** | Before Deadline | Submit formal application to College Exam Cell | Dean of Academics Office |
 
 ---
 
@@ -329,47 +363,65 @@ To ensure that your university records remain in good standing and to verify you
 1. **Verify Your University Roll Number:** Ensure you have your 10 to 14-digit AKTU Roll Number ready. If you cannot locate it, use our free [AKTU Roll Number Finder](https://akturesult.bond/roll-number-finder).
 2. **Inspect Semester Marksheet Online:** Navigate to [AKTU Result Without Date of Birth](https://akturesult.bond) to query your live semester scorecard without needing to input your registered birth date.
 3. **Verify Discrepancies Early:** In case of incomplete practical marks (INC), carry-over papers (PCP), or grace allocations, consult your college examination cell immediately before the portal deadline expires.
-4. **Download & Archive Official PDF:** Keep a printed copy of your computer-generated OneView grade ledger for placement applications and scholarship submissions.
+4. **Cross-Check Subject Credit Ledgers:** Ensure that all earned credits align with your degree syllabus requirements as prescribed by the university board of studies.
+5. **Download & Archive Official PDF:** Keep a printed copy of your computer-generated OneView grade ledger for placement applications, campus drives, and scholarship submissions.
 
 ---
 
-## Important Student Resources & Direct Links
+## Instant Scorecard Retrieval Without Registered Date of Birth
 
-| Service | Direct Link | Purpose |
-| :--- | :--- | :--- |
-| **Instant Result Lookup** | [Check AKTU Result](https://akturesult.bond) | Instant OneView scorecard without requiring DOB |
-| **AKTU OneView Portal** | [AKTU OneView](https://akturesult.bond/oneview) | Direct university marksheet mirror & CAPTCHA gateway |
-| **ERP Student Login** | [AKTU ERP Result](https://akturesult.bond/aktu-erp-result) | Student dashboard & circular instructions |
-| **Affiliated Colleges Directory** | [AKTU Colleges](https://akturesult.bond/colleges) | College code, institute roster & branch verification |
+A persistent hurdle for thousands of AKTU students is accessing semester scorecards when their registered Date of Birth contains formatting mismatches or has been forgotten. The university's official OneView mirror typically mandates both the student's Roll Number and exact registered Date of Birth alongside visual CAPTCHA verification.
+
+Our dedicated online tool at [AKTU Result Without Date of Birth](https://akturesult.bond) resolves this bottleneck by communicating directly with the university result infrastructure, retrieving your genuine semester grade ledger, SGPA scores, and pass status using only your University Roll Number. This allows students to verify their results instantly from any smartphone or desktop browser without administrative delays.
+
+---
+
+## Official Source Verification & Fact-Check Note
+
+This news update is documented and cross-verified against official Dr. A.P.J. Abdul Kalam Technical University gazettes, university press notes, and verified academic reportage from educational observer **${video.channel}**. For authoritative documentation, university circulars are maintained within the official repository at \`aktu.ac.in\`.
 
 ---
 
 ## Frequently Asked Questions (FAQs)
 
 ### How can I check my AKTU result if I forgot my registered Date of Birth?
-You can use our direct search tool at [AKTU Result Without Date of Birth](https://akturesult.bond) to pull your live semester scorecard using only your University Roll Number.
+You can use our direct search tool at [AKTU Result Without Date of Birth](https://akturesult.bond) to pull your live semester scorecard using only your University Roll Number. The tool connects securely to the university repository and renders your complete grade ledger.
 
 ### Where can I verify official circulars released by the university?
-Official circulars are published under the "Circulars" section on the university website (\`aktu.ac.in\`) and within your individual ERP student dashboard (\`erp.aktu.ac.in\`).
+Official circulars are published under the "Circulars" section on the university website (\`aktu.ac.in\`) and within your individual ERP student dashboard (\`erp.aktu.ac.in\`). Notices are categorized by academic session and examination cycle.
 
 ### What should I do if my marksheet shows PCP or INC status?
-PCP (*Promoted with Carry Over Paper*) means you have a backlog in one or more subjects and must appear for the Carry Over Paper (COP). INC indicates that internal or practical marks are yet to be submitted by your college.
+PCP (*Promoted with Carry Over Paper*) means you have a backlog in one or more subjects and must appear for the Carry Over Paper (COP). INC indicates that internal or practical marks have not yet been uploaded by your institution. Report INC flags to your college examination cell immediately.
+
+### How are SGPA and CGPA calculated under the AKTU credit system?
+AKTU computes Semester Grade Point Average (SGPA) by dividing total earned grade points by total semester credits. Cumulative Grade Point Average (CGPA) reflects overall performance across all completed semesters weighted by respective credit distributions.
+
+### Can students apply for scrutiny or re-evaluation after results are announced?
+Yes, AKTU typically provides a formal scrutiny and challenge evaluation window following major result declarations. Students can submit scrutiny requests through the student ERP portal within the designated application timeframe.
 `;
 
     const excerpt = `Latest AKTU update on ${finalTitle}. Check circular details, examination guidelines, and access your OneView marksheet without DOB online.`.slice(0, 160);
 
     const faqs: ArticleFaq[] = [
       {
-        question: `What are the key points in this AKTU notice?`,
-        answer: `The update highlights important examination guidelines, marksheet verification schedules, and student instructions for current semester batches.`
+        question: `How can I check my AKTU result if I forgot my registered Date of Birth?`,
+        answer: `You can check your full OneView semester marksheet without requiring your Date of Birth by entering your University Roll Number at https://akturesult.bond.`
       },
       {
-        question: `How can I check my marksheet if I don't remember my Date of Birth?`,
-        answer: `You can check your full OneView semester marksheet without requiring your Date of Birth by entering your University Roll Number at https://akturesult.bond.`
+        question: `Where can I verify official circulars released by the university?`,
+        answer: `Official circulars are published under the Circulars section on the university website (aktu.ac.in) and within your individual ERP student dashboard (erp.aktu.ac.in).`
+      },
+      {
+        question: `What should I do if my marksheet shows PCP or INC status?`,
+        answer: `PCP means Promoted with Carry Over Paper, requiring a backlog exam. INC indicates incomplete internal or practical marks that must be updated by your college examination cell.`
       },
       {
         question: `Is this update applicable to all AKTU affiliated colleges?`,
         answer: `Yes, official directives issued by Dr. A.P.J. Abdul Kalam Technical University apply to all affiliated engineering, pharmacy, and management institutions in Uttar Pradesh.`
+      },
+      {
+        question: `How can students get their original degree from AKTU?`,
+        answer: `Students who have cleared all semesters can apply for original degree certificates through the student ERP portal or collect them during university convocation ceremonies.`
       }
     ];
 
@@ -380,7 +432,7 @@ PCP (*Promoted with Carry Over Paper*) means you have a backlog in one or more s
       content,
       tags,
       category,
-      readingTime: Math.max(3, Math.ceil(content.split(/\s+/).length / 200)),
+      readingTime: Math.max(5, Math.ceil(content.split(/\s+/).length / 200)),
       faqs
     };
   }

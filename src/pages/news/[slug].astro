@@ -192,22 +192,55 @@ const renderedHtml = MarkdownService.render(article.content);
            data-full-width-responsive="true"></ins>
     </div>
 
-    <!-- Embedded YouTube Video (If available from original report) -->
+    <!-- Lead Article Image from YouTube Video Thumbnail (Direct CDN URL - Zero Disk Storage) -->
     {article.sourceVideoId && (
-      <div class="space-y-2">
-        <div class="rounded-3xl overflow-hidden border border-white/10 light:border-black/10 aspect-video shadow-2xl bg-black">
-          <iframe 
-            src={`https://www.youtube-nocookie.com/embed/${article.sourceVideoId}`} 
-            title={article.title}
-            class="w-full h-full border-0" 
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-            allowfullscreen
-            loading="lazy"
-          ></iframe>
+      <div class="space-y-3">
+        <a 
+          href={`https://www.youtube.com/watch?v=${article.sourceVideoId}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="block rounded-3xl overflow-hidden border border-white/10 dark:border-white/10 light:border-black/10 aspect-video shadow-2xl bg-black relative group cursor-pointer"
+          title="Click to watch full video on YouTube"
+        >
+          <img 
+            src={`https://i.ytimg.com/vi/${article.sourceVideoId}/maxresdefault.jpg`}
+            onerror={`this.onerror=null;this.src='https://i.ytimg.com/vi/${article.sourceVideoId}/hqdefault.jpg';`}
+            alt={article.title} 
+            class="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-500"
+            loading="eager"
+            decoding="async"
+          />
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/25 to-transparent flex items-center justify-center opacity-90 group-hover:opacity-100 transition-opacity">
+            <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-red-600/90 text-white flex items-center justify-center shadow-2xl group-hover:scale-110 group-hover:bg-red-600 transition-all duration-300">
+              <svg class="w-8 h-8 sm:w-10 sm:h-10 fill-current ml-1" viewBox="0 0 24 24">
+                <path d="M8 5v14l11-7z"/>
+              </svg>
+            </div>
+          </div>
+          <div class="absolute bottom-3 left-4 right-4 flex items-center justify-between text-xs text-white/90 drop-shadow">
+            <span class="truncate max-w-[85%] font-medium">📺 {article.sourceVideoTitle || article.title}</span>
+            <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-black/60 backdrop-blur-md">HD</span>
+          </div>
+        </a>
+
+        <!-- Below Thumbnail Action: See Video for Details Button -->
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3.5 sm:p-4 rounded-2xl border border-white/10 dark:border-white/10 light:border-black/10 bg-white/[0.02] dark:bg-white/[0.02] light:bg-black/[0.02]">
+          <div class="flex items-center gap-2 text-xs text-gray-400 light:text-gray-600">
+            <span class="w-2 h-2 rounded-full bg-red-500 animate-pulse"></span>
+            <span>Broadcast Source: <strong class="text-white dark:text-white light:text-ink font-semibold">{article.sourceChannel || 'University Education Desk'}</strong></span>
+          </div>
+          <a 
+            href={`https://www.youtube.com/watch?v=${article.sourceVideoId}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-red-600 via-rose-600 to-red-700 hover:from-red-500 hover:to-rose-500 text-white font-bold text-xs shadow-lg shadow-red-600/25 transition-all transform hover:scale-105 active:scale-95 cursor-pointer shrink-0"
+          >
+            <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24">
+              <path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"/>
+            </svg>
+            <span>See Video for Details</span>
+          </a>
         </div>
-        <p class="text-[11px] text-gray-500 light:text-gray-400 text-center">
-          📺 Video Source: <strong>{article.sourceChannel || 'University Education Desk'}</strong> via YouTube.
-        </p>
       </div>
     )}
 
