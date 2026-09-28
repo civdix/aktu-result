@@ -2,6 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import { DatabaseService } from '../database/database.service';
 import type { Article } from '../interfaces/article.interface';
+import { redisService } from './redis.service';
 
 const DATA_DIR = path.resolve(process.cwd(), 'data', 'articles');
 
@@ -241,20 +242,81 @@ export class ArticleService {
   }
 
   /**
-   * Increment view counter for an article
+   * Increment view counter for an article using in-memory Redis and background DB persistence
    */
-  static async incrementViews(slug: string): Promise<void> {
+  static async incrementViews(slug: string): Promise<number> {
+    let currentViews = 0;
+
+    // 1. Fast in-memory Redis increment
+    try {
+      currentViews = await redisService.incrementArticleViews(slug);
+    } catch {}
+
+    // 2. Persistent MongoDB update (background)
     try {
       const db = await DatabaseService.connectToDatabase();
       if (db) {
-        await db.collection('articles').updateOne(
+        const res = await db.collection('articles').findOneAndUpdate(
           { slug },
-          { $inc: { views: 1 } }
+          { $inc: { views: 1 } },
+          { returnDocument: 'after' }
         );
+        if (res?.value?.views) {
+          currentViews = res.value.views;
+        }
       }
     } catch (e) {
       // ignore
     }
+
+    // 3. Sync to local JSON backup if exists
+    try {
+      const filePath = path.join(DATA_DIR, `${slug}.json`);
+      if (fs.existsSync(filePath)) {
+        const raw = fs.readFileSync(filePath, 'utf-8');
+        const art = JSON.parse(raw);
+        art.views = (art.views || 0) + 1;
+        fs.writeFileSync(filePath, JSON.stringify(art, null, 2), 'utf-8');
+        if (!currentViews) currentViews = art.views;
+      }
+    } catch {}
+
+    return currentViews;
+  }
+
+  /**
+   * Retrieve current views for an article (Redis cache first, then MongoDB)
+   */
+  static async getArticleViews(slug: string): Promise<number> {
+    // 1. Check in-memory Redis
+    try {
+      const redisViews = await redisService.getArticleViews(slug);
+      if (redisViews !== null) return redisViews;
+    } catch {}
+
+    // 2. Check MongoDB
+    try {
+      const db = await DatabaseService.connectToDatabase();
+      if (db) {
+        const doc = await db.collection<Article>('articles').findOne({ slug }, { projection: { views: 1 } });
+        if (doc && typeof doc.views === 'number') {
+          await redisService.seedArticleViewsIfEmpty(slug, doc.views);
+          return doc.views;
+        }
+      }
+    } catch {}
+
+    // 3. Fallback to local file
+    try {
+      const filePath = path.join(DATA_DIR, `${slug}.json`);
+      if (fs.existsSync(filePath)) {
+        const raw = fs.readFileSync(filePath, 'utf-8');
+        const art = JSON.parse(raw);
+        return art.views || 0;
+      }
+    } catch {}
+
+    return 0;
   }
 
   /**

@@ -168,6 +168,10 @@ const renderedHtml = MarkdownService.render(article.content);
           <span>✍️</span>
           <span class="text-white light:text-ink font-semibold">{article.author}</span>
         </span>
+        <span class="flex items-center gap-1">
+          <span>👁️</span>
+          <span id="article-view-count" class="text-white light:text-ink font-semibold">{article.views || 0} views</span>
+        </span>
       </div>
 
       <h1 class="text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight text-white light:text-ink leading-tight">
@@ -359,4 +363,53 @@ const renderedHtml = MarkdownService.render(article.content);
 
   </div>
 
+  <script define:vars={{ articleSlug: article.slug }}>
+    (function() {
+      try {
+        const STORAGE_KEY = 'article-seen-last-hours';
+        const TWENTY_FOUR_HOURS = 24 * 60 * 60 * 1000;
+        const now = Date.now();
+
+        let seenMap = {};
+        try {
+          seenMap = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+        } catch {
+          seenMap = {};
+        }
+
+        const lastSeen = seenMap[articleSlug];
+
+        // Deduplicate locally: only record if first visit or viewed more than 24 hours ago
+        if (!lastSeen || (now - lastSeen) > TWENTY_FOUR_HOURS) {
+          seenMap[articleSlug] = now;
+          try {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(seenMap));
+          } catch {}
+
+          const recordView = () => {
+            const payload = JSON.stringify({ slug: articleSlug });
+            if (navigator.sendBeacon) {
+              navigator.sendBeacon('/api/articles/view', payload);
+            } else {
+              fetch('/api/articles/view', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: payload,
+                keepalive: true
+              }).catch(() => {});
+            }
+          };
+
+          // Idle dispatch: never delays page delivery or main thread
+          if ('requestIdleCallback' in window) {
+            window.requestIdleCallback(recordView, { timeout: 2000 });
+          } else {
+            setTimeout(recordView, 600);
+          }
+        }
+      } catch {
+        // Fail-safe: zero user impact
+      }
+    })();
+  </script>
 </Layout>

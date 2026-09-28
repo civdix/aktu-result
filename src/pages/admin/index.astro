@@ -129,6 +129,11 @@ const pageDescription = "Administrative content management portal for Dr. A.P.J.
         </div>
 
         <div class="p-5 rounded-2xl bg-white/[0.02] light:bg-white border border-white/10 light:border-black/10 space-y-1">
+          <span class="text-[11px] font-semibold text-gray-400 light:text-gray-500 uppercase tracking-wider block">Total Views</span>
+          <div id="stat-total-views" class="text-2xl font-black text-emerald-400">--</div>
+        </div>
+
+        <div class="p-5 rounded-2xl bg-white/[0.02] light:bg-white border border-white/10 light:border-black/10 space-y-1">
           <span class="text-[11px] font-semibold text-gray-400 light:text-gray-500 uppercase tracking-wider block">Categories</span>
           <div id="stat-categories" class="text-2xl font-black text-brand-blue">--</div>
         </div>
@@ -136,14 +141,6 @@ const pageDescription = "Administrative content management portal for Dr. A.P.J.
         <div class="p-5 rounded-2xl bg-white/[0.02] light:bg-white border border-white/10 light:border-black/10 space-y-1">
           <span class="text-[11px] font-semibold text-gray-400 light:text-gray-500 uppercase tracking-wider block">Filtered Count</span>
           <div id="stat-filtered-articles" class="text-2xl font-black text-purple-400">--</div>
-        </div>
-
-        <div class="p-5 rounded-2xl bg-white/[0.02] light:bg-white border border-white/10 light:border-black/10 space-y-1">
-          <span class="text-[11px] font-semibold text-gray-400 light:text-gray-500 uppercase tracking-wider block">Edge Caching</span>
-          <div class="text-xs font-bold text-emerald-400 flex items-center gap-1.5 pt-1">
-            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-            <span>Cloudflare Purge Active</span>
-          </div>
         </div>
       </div>
 
@@ -206,6 +203,7 @@ const pageDescription = "Administrative content management portal for Dr. A.P.J.
               <tr class="border-b border-white/10 light:border-black/10 bg-white/[0.03] light:bg-black/[0.02] text-gray-400 light:text-gray-500 font-bold uppercase tracking-wider text-[10px]">
                 <th class="py-3.5 px-4">Article</th>
                 <th class="py-3.5 px-4">Category</th>
+                <th class="py-3.5 px-4">Views</th>
                 <th class="py-3.5 px-4">Published</th>
                 <th class="py-3.5 px-4">Source Video</th>
                 <th class="py-3.5 px-4 text-right">Actions</th>
@@ -275,6 +273,7 @@ const pageDescription = "Administrative content management portal for Dr. A.P.J.
       category: string;
       publishedAt: string;
       readingTime?: number;
+      views?: number;
       sourceVideoId?: string;
       sourceChannel?: string;
     }
@@ -298,6 +297,7 @@ const pageDescription = "Administrative content management portal for Dr. A.P.J.
     const toastEl = document.getElementById("admin-toast");
 
     const statTotal = document.getElementById("stat-total-articles");
+    const statTotalViews = document.getElementById("stat-total-views");
     const statCategories = document.getElementById("stat-categories");
     const statFiltered = document.getElementById("stat-filtered-articles");
 
@@ -407,6 +407,12 @@ const pageDescription = "Administrative content management portal for Dr. A.P.J.
                 ${art.category}
               </span>
             </td>
+            <td class="py-3.5 px-4 whitespace-nowrap">
+              <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-white/5 light:bg-black/5 border border-white/10 light:border-black/10 text-white light:text-ink font-bold text-xs">
+                <span>👁️</span>
+                <span>${(art.views || 0).toLocaleString()}</span>
+              </span>
+            </td>
             <td class="py-3.5 px-4 whitespace-nowrap text-gray-400 light:text-gray-500 text-[11px]">
               ${dateStr}
             </td>
@@ -484,6 +490,9 @@ const pageDescription = "Administrative content management portal for Dr. A.P.J.
         if (data.success && Array.isArray(data.articles)) {
           allArticles = data.articles;
           if (statTotal) statTotal.textContent = allArticles.length.toString();
+
+          const totalViews = allArticles.reduce((acc, a) => acc + (a.views || 0), 0);
+          if (statTotalViews) statTotalViews.textContent = totalViews.toLocaleString();
           
           const uniqueCats = new Set(allArticles.map(a => a.category).filter(Boolean));
           if (statCategories) statCategories.textContent = uniqueCats.size.toString();
@@ -668,6 +677,8 @@ const pageDescription = "Administrative content management portal for Dr. A.P.J.
           // Remove from local array
           allArticles = allArticles.filter(a => a.slug !== pendingDeleteSlug);
           if (statTotal) statTotal.textContent = allArticles.length.toString();
+          const totalViews = allArticles.reduce((acc, a) => acc + (a.views || 0), 0);
+          if (statTotalViews) statTotalViews.textContent = totalViews.toLocaleString();
           
           // Animate away
           const row = document.getElementById(`row-${pendingDeleteSlug}`);
