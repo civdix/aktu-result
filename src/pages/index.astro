@@ -1688,7 +1688,13 @@ const homeKeywords = `aktu result without date of birth, aktu result without dob
         pageRollInput.classList.add("ring-2", "ring-brand-blue/50");
         const searchFormEl = document.getElementById("search-form");
         if (searchFormEl) {
-          searchFormEl.dispatchEvent(new Event("submit"));
+          if (typeof window.ensureCookieConsent === "function") {
+            window.ensureCookieConsent(() => {
+              searchFormEl.dispatchEvent(new Event("submit", { cancelable: true }));
+            });
+          } else {
+            searchFormEl.dispatchEvent(new Event("submit", { cancelable: true }));
+          }
         }
       }, 300);
     }
@@ -3610,8 +3616,8 @@ const homeKeywords = `aktu result without date of birth, aktu result without dob
         });
       };
 
-      if (typeof (window as any).ensureCookieConsent === "function") {
-        (window as any).ensureCookieConsent(proceedWithSearch);
+      if (typeof window.ensureCookieConsent === "function") {
+        window.ensureCookieConsent(proceedWithSearch);
       } else {
         proceedWithSearch();
       }
@@ -3621,15 +3627,15 @@ const homeKeywords = `aktu result without date of birth, aktu result without dob
     document.getElementById("home-direct-portal-btn")?.addEventListener("click", () => {
       const enteredRoll = rollInput ? rollInput.value.trim() : "";
       const proceedWithPortal = () => {
-        if (typeof (window as any).openOneViewModal === "function") {
-          (window as any).openOneViewModal(enteredRoll, "");
+        if (typeof window.openOneViewModal === "function") {
+          window.openOneViewModal(enteredRoll, "");
         } else {
           window.open("https://oneview.aktu.ac.in/WebPages/aktu/OneView.aspx", "_blank");
         }
       };
 
-      if (typeof (window as any).ensureCookieConsent === "function") {
-        (window as any).ensureCookieConsent(proceedWithPortal);
+      if (typeof window.ensureCookieConsent === "function") {
+        window.ensureCookieConsent(proceedWithPortal);
       } else {
         proceedWithPortal();
       }
@@ -3694,25 +3700,9 @@ const homeKeywords = `aktu result without date of birth, aktu result without dob
     };
 
     if ('requestIdleCallback' in window) {
-      (window as any).requestIdleCallback(() => loadRecentSearches());
+      window.requestIdleCallback(() => loadRecentSearches());
     } else {
       setTimeout(loadRecentSearches, 400);
-    }
-
-    // Auto-trigger search if roll parameter present in URL (e.g. from roll-number-finder)
-    const urlParams = new URLSearchParams(window.location.search);
-    const paramRoll = urlParams.get('roll') || urlParams.get('rollNumber');
-    if (paramRoll && rollInput) {
-      rollInput.value = paramRoll;
-      setTimeout(() => {
-        if (typeof (window as any).ensureCookieConsent === "function") {
-          (window as any).ensureCookieConsent(() => {
-            searchForm.dispatchEvent(new Event("submit"));
-          });
-        } else {
-          searchForm.dispatchEvent(new Event("submit"));
-        }
-      }, 250);
     }
 
   };

@@ -1312,8 +1312,8 @@ const jsonLd = {
       searchForm?.addEventListener("submit", (e) => {
         e.preventDefault();
         const enteredRoll = rollInput ? rollInput.value.trim() : "";
-        if (typeof (window as any).ensureCookieConsent === "function") {
-          (window as any).ensureCookieConsent(() => {
+        if (typeof window.ensureCookieConsent === "function") {
+          window.ensureCookieConsent(() => {
             executeSearch(enteredRoll);
           });
         } else {
@@ -1323,9 +1323,9 @@ const jsonLd = {
 
       // Wire official ERP portal link to respect cookie consent
       document.getElementById("erp-official-portal-link")?.addEventListener("click", (e) => {
-        if (typeof (window as any).hasCookieConsent === "function" && !(window as any).hasCookieConsent()) {
+        if (typeof window.hasCookieConsent === "function" && !window.hasCookieConsent()) {
           e.preventDefault();
-          (window as any).ensureCookieConsent(() => {
+          window.ensureCookieConsent(() => {
             window.open("https://erp.aktu.ac.in/WebPages/OneView/OneView.aspx", "_blank");
           });
         }
@@ -1337,8 +1337,8 @@ const jsonLd = {
       if (paramRoll && rollInput) {
         rollInput.value = paramRoll;
         setTimeout(() => {
-          if (typeof (window as any).ensureCookieConsent === "function") {
-            (window as any).ensureCookieConsent(() => {
+          if (typeof window.ensureCookieConsent === "function") {
+            window.ensureCookieConsent(() => {
               executeSearch(paramRoll);
             });
           } else {

@@ -1572,15 +1572,15 @@ const jsonLd = {
       document.getElementById("without-dob-direct-portal-btn")?.addEventListener("click", () => {
         const enteredRoll = rollInput ? rollInput.value.trim() : "";
         const proceedWithPortal = () => {
-          if (typeof (window as any).openOneViewModal === "function") {
-            (window as any).openOneViewModal(enteredRoll, "");
+          if (typeof window.openOneViewModal === "function") {
+            window.openOneViewModal(enteredRoll, "");
           } else {
             window.open("https://oneview.aktu.ac.in/WebPages/aktu/OneView.aspx", "_blank");
           }
         };
 
-        if (typeof (window as any).ensureCookieConsent === "function") {
-          (window as any).ensureCookieConsent(proceedWithPortal);
+        if (typeof window.ensureCookieConsent === "function") {
+          window.ensureCookieConsent(proceedWithPortal);
         } else {
           proceedWithPortal();
         }
@@ -1589,8 +1589,8 @@ const jsonLd = {
       // Wire Error State Fallback Button
       document.getElementById("without-dob-error-open-portal-btn")?.addEventListener("click", () => {
         const enteredRoll = rollInput ? rollInput.value.trim() : "";
-        if (typeof (window as any).openOneViewModal === "function") {
-          (window as any).openOneViewModal(enteredRoll, "");
+        if (typeof window.openOneViewModal === "function") {
+          window.openOneViewModal(enteredRoll, "");
         } else {
           window.open("https://oneview.aktu.ac.in/WebPages/aktu/OneView.aspx", "_blank");
         }
@@ -1599,8 +1599,8 @@ const jsonLd = {
       searchForm?.addEventListener("submit", (e) => {
         e.preventDefault();
         const enteredRoll = rollInput ? rollInput.value.trim() : "";
-        if (typeof (window as any).ensureCookieConsent === "function") {
-          (window as any).ensureCookieConsent(() => {
+        if (typeof window.ensureCookieConsent === "function") {
+          window.ensureCookieConsent(() => {
             executeSearch(enteredRoll);
           });
         } else {
@@ -1614,8 +1614,8 @@ const jsonLd = {
       if (paramRoll && rollInput) {
         rollInput.value = paramRoll;
         setTimeout(() => {
-          if (typeof (window as any).ensureCookieConsent === "function") {
-            (window as any).ensureCookieConsent(() => {
+          if (typeof window.ensureCookieConsent === "function") {
+            window.ensureCookieConsent(() => {
               executeSearch(paramRoll);
             });
           } else {
