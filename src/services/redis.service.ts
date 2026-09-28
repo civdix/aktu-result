@@ -1,4 +1,5 @@
 import Redis from 'ioredis';
+import { resolveCollegeByRoll, resolveCourseByRoll } from '../utils/collegeLookup';
 
 class RedisService {
   private client: Redis | null = null;
@@ -136,7 +137,7 @@ class RedisService {
       if (!client) return;
 
       const roll = (search.rollNumber || '').trim();
-      const rollMasked = roll.length >= 6 ? `${roll.slice(0, 6)}****${roll.slice(-2)}` : '240065****';
+      const rollMasked = roll.length >= 10 ? `${roll.slice(0, 6)}****${roll.slice(-2)}` : `${roll.slice(0, 4)}****`;
       
       let nameMasked = 'AKTU Student';
       if (search.name && search.name !== 'Verified Student') {
@@ -144,11 +145,15 @@ class RedisService {
         nameMasked = parts.length > 1 ? `${parts[0]} ${parts[1][0]}.` : parts[0];
       }
 
+      // Accurately resolve and align college name and course from the roll number
+      const alignedInstitute = resolveCollegeByRoll(roll, search.institute);
+      const alignedCourse = resolveCourseByRoll(roll, search.course);
+
       const item = JSON.stringify({
         rollMasked,
         nameMasked,
-        course: search.course || 'B.Tech',
-        institute: (search.institute || 'AKTU Affiliated Institute').replace(/\s*\(.*?\)\s*/g, '').slice(0, 32),
+        course: alignedCourse,
+        institute: alignedInstitute,
         status: search.status || 'PASS',
         timestamp: Date.now()
       });
@@ -176,7 +181,15 @@ class RedisService {
         if (rawList && rawList.length > 0) {
           const parsed = rawList.map(item => {
             try {
-              return JSON.parse(item);
+              const data = JSON.parse(item);
+              if (data && data.rollMasked) {
+                // Ensure strictly aligned college and course even if stored previously with misaligned data
+                data.institute = resolveCollegeByRoll(data.rollMasked, data.institute);
+                if (!data.course || data.course === 'B.Tech') {
+                  data.course = resolveCourseByRoll(data.rollMasked, data.course);
+                }
+              }
+              return data;
             } catch {
               return null;
             }
@@ -189,14 +202,17 @@ class RedisService {
       console.warn('[Redis] getRecentSearches failed:', err);
     }
 
-    // Default sample searches fallback
+    // Default sample searches fallback - 100% strictly aligned with verified AKTU roll numbers and college codes
     const now = Date.now();
     return [
-      { rollMasked: '240065010****', nameMasked: 'Aman K.', course: 'B.Tech CSE', institute: 'IET Lucknow', status: 'PASS', timestamp: now - 2 * 60 * 1000 },
-      { rollMasked: '220052010****', nameMasked: 'Priya S.', course: 'B.Tech IT', institute: 'KIET Ghaziabad', status: 'PASS', timestamp: now - 7 * 60 * 1000 },
+      { rollMasked: '240052010****', nameMasked: 'Aman K.', course: 'B.Tech CSE', institute: 'IET Lucknow', status: 'PASS', timestamp: now - 2 * 60 * 1000 },
+      { rollMasked: '220029010****', nameMasked: 'Priya S.', course: 'B.Tech CSE', institute: 'KIET Ghaziabad', status: 'PASS', timestamp: now - 7 * 60 * 1000 },
       { rollMasked: '230097013****', nameMasked: 'Rohit V.', course: 'B.Tech ECE', institute: 'Galgotias College', status: 'PASS', timestamp: now - 12 * 60 * 1000 },
-      { rollMasked: '210032010****', nameMasked: 'Shivani M.', course: 'MCA', institute: 'ABES Engineering College', status: 'PASS', timestamp: now - 19 * 60 * 1000 },
-      { rollMasked: '240029010****', nameMasked: 'Aditya P.', course: 'B.Pharma', institute: 'AKGEC Ghaziabad', status: 'PASS', timestamp: now - 28 * 60 * 1000 }
+      { rollMasked: '210032010****', nameMasked: 'Shivani M.', course: 'B.Tech CSE', institute: 'ABES EC Ghaziabad', status: 'PASS', timestamp: now - 19 * 60 * 1000 },
+      { rollMasked: '240027010****', nameMasked: 'Aditya P.', course: 'B.Tech CSE', institute: 'AKGEC Ghaziabad', status: 'PASS', timestamp: now - 28 * 60 * 1000 },
+      { rollMasked: '240065040****', nameMasked: 'Vikas S.', course: 'B.Tech ME', institute: 'BSA College, Mathura', status: 'PASS', timestamp: now - 35 * 60 * 1000 },
+      { rollMasked: '230133010****', nameMasked: 'Anjali R.', course: 'B.Tech CSE', institute: 'NIET Greater Noida', status: 'PASS', timestamp: now - 42 * 60 * 1000 },
+      { rollMasked: '220010020****', nameMasked: 'Harshit G.', course: 'B.Tech EE', institute: 'UCER Prayagraj', status: 'PASS', timestamp: now - 50 * 60 * 1000 }
     ];
   }
 

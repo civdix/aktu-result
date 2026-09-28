@@ -3682,15 +3682,15 @@ const homeKeywords = `aktu result without date of birth, aktu result without dob
         container.innerHTML = data.searches.slice(0, 8).map((s) => `
           <div class="p-3 rounded-xl border border-white/[0.08] light:border-black/[0.08] bg-white/[0.02] light:bg-black/[0.02] hover:border-brand-blue/30 hover:bg-brand-blue/5 transition-all duration-200">
             <div class="flex items-center justify-between mb-1.5">
-              <span class="font-mono text-xs font-bold text-brand-blue tracking-tight">${s.rollMasked || '240065****'}</span>
+              <span class="font-mono text-xs font-bold text-brand-blue tracking-tight" title="Masked Roll Number">${s.rollMasked || '240052****'}</span>
               <span class="px-1.5 py-0.5 rounded text-[9px] font-bold ${s.status === 'FAIL' ? 'bg-rose-500/10 text-rose-400 border border-rose-500/20' : 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20'}">
                 ${s.status || 'PASS'}
               </span>
             </div>
             <div class="text-[11px] font-medium text-gray-300 light:text-gray-800 truncate">${s.nameMasked || 'AKTU Student'}</div>
-            <div class="flex items-center justify-between text-[10px] text-gray-500 light:text-gray-400 mt-1">
-              <span class="truncate max-w-[140px]">${s.course || 'B.Tech'} • ${s.institute || 'AKTU'}</span>
-              <span class="font-mono text-[9px] shrink-0">${formatTimeAgo(s.timestamp)}</span>
+            <div class="flex items-center justify-between text-[10px] text-gray-500 light:text-gray-400 mt-1 min-w-0">
+              <span class="truncate pr-1" title="${s.institute || 'AKTU'}">${s.course || 'B.Tech'} • <strong class="font-medium text-gray-300 light:text-gray-700">${s.institute || 'AKTU'}</strong></span>
+              <span class="font-mono text-[9px] shrink-0 text-gray-500">${formatTimeAgo(s.timestamp)}</span>
             </div>
           </div>
         `).join('');
