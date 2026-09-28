@@ -330,29 +330,65 @@ const jsonLd = {
     const deleteError = document.getElementById("admin-delete-error");
     const deleteTitleEl = document.getElementById("admin-delete-article-title");
 
-    // Check admin authentication status
+    const getLocalToken = (): string => {
+      try {
+        return localStorage.getItem("aktu_admin_token") || "";
+      } catch {
+        return "";
+      }
+    };
+
+    const setLocalToken = (token: string): void => {
+      try {
+        if (token) localStorage.setItem("aktu_admin_token", token);
+        else localStorage.removeItem("aktu_admin_token");
+      } catch {}
+    };
+
+    const updateAdminUI = (authenticated: boolean): void => {
+      const deleteButtons = document.querySelectorAll('.admin-card-delete-btn');
+      if (authenticated) {
+        loginTriggerBtn?.classList.add("hidden");
+        controlsPanel?.classList.remove("hidden");
+        controlsPanel?.classList.add("flex");
+        deleteButtons.forEach(btn => {
+          btn.classList.remove('hidden');
+          btn.classList.add('inline-flex');
+        });
+      } else {
+        loginTriggerBtn?.classList.remove("hidden");
+        controlsPanel?.classList.add("hidden");
+        controlsPanel?.classList.remove("flex");
+        deleteButtons.forEach(btn => {
+          btn.classList.add('hidden');
+          btn.classList.remove('inline-flex');
+        });
+      }
+    };
+
+    // Instant optimistic unlock if local token exists (works regardless of CDN caching)
+    if (getLocalToken()) {
+      updateAdminUI(true);
+    }
+
+    // Check admin authentication status with cache-busting
     const checkAdminStatus = async () => {
       try {
-        const res = await fetch('/api/admin/status');
+        const token = getLocalToken();
+        const headers: Record<string, string> = {};
+        if (token) headers["Authorization"] = `Bearer ${token}`;
+
+        const res = await fetch(`/api/admin/status?_t=${Date.now()}`, {
+          headers,
+          cache: "no-store"
+        });
         const data = await res.json();
-        const deleteButtons = document.querySelectorAll('.admin-card-delete-btn');
 
         if (data.authenticated) {
-          loginTriggerBtn?.classList.add("hidden");
-          controlsPanel?.classList.remove("hidden");
-          controlsPanel?.classList.add("flex");
-          deleteButtons.forEach(btn => {
-            btn.classList.remove('hidden');
-            btn.classList.add('inline-flex');
-          });
+          updateAdminUI(true);
         } else {
-          loginTriggerBtn?.classList.remove("hidden");
-          controlsPanel?.classList.add("hidden");
-          controlsPanel?.classList.remove("flex");
-          deleteButtons.forEach(btn => {
-            btn.classList.add('hidden');
-            btn.classList.remove('inline-flex');
-          });
+          setLocalToken("");
+          updateAdminUI(false);
         }
       } catch {
         // ignore
@@ -390,14 +426,19 @@ const jsonLd = {
       loginError?.classList.add("hidden");
 
       try {
-        const res = await fetch('/api/admin/login', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ password: pass })
+        const res = await fetch(`/api/admin/login?_t=${Date.now()}`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ password: pass }),
+          cache: "no-store"
         });
         const data = await res.json();
         if (res.ok && data.success) {
+          if (data.token) {
+            setLocalToken(data.token);
+          }
           closeLoginModal();
+          updateAdminUI(true);
           checkAdminStatus();
         } else {
           if (loginError) {
@@ -425,7 +466,12 @@ const jsonLd = {
 
     // Logout
     logoutTriggerBtn?.addEventListener("click", async () => {
-      await fetch('/api/admin/logout', { method: 'POST' });
+      setLocalToken("");
+      updateAdminUI(false);
+      await fetch(`/api/admin/logout?_t=${Date.now()}`, {
+        method: "POST",
+        cache: "no-store"
+      });
       checkAdminStatus();
     });
 
@@ -461,10 +507,15 @@ const jsonLd = {
       deleteConfirmBtn.textContent = "Deleting...";
 
       try {
-        const res = await fetch('/api/admin/delete-article', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ slug: activeDeleteSlug })
+        const token = getLocalToken();
+        const headers: Record<string, string> = { "Content-Type": "application/json" };
+        if (token) headers["Authorization"] = `Bearer ${token}`;
+
+        const res = await fetch(`/api/admin/delete-article?_t=${Date.now()}`, {
+          method: "POST",
+          headers,
+          body: JSON.stringify({ slug: activeDeleteSlug }),
+          cache: "no-store"
         });
 
         const data = await res.json();

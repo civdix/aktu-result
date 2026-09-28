@@ -30,6 +30,15 @@ export const POST: APIRoute = async ({ request, cookies }) => {
       maxAge: 60 * 60 * 24 * 7
     });
 
+    const headers = new Headers();
+    headers.set('Content-Type', 'application/json');
+    headers.set('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0, s-maxage=0');
+    headers.set('CDN-Cache-Control', 'no-store');
+    headers.set('Cloudflare-CDN-Cache-Control', 'no-store');
+    headers.set('Pragma', 'no-cache');
+    headers.set('Expires', '0');
+    headers.append('Set-Cookie', `aktu_admin_token=${token}; Path=/; Max-Age=${60 * 60 * 24 * 7}; SameSite=Lax`);
+
     return new Response(
       JSON.stringify({
         success: true,
@@ -38,7 +47,7 @@ export const POST: APIRoute = async ({ request, cookies }) => {
       }),
       {
         status: 200,
-        headers: { 'Content-Type': 'application/json' }
+        headers
       }
     );
   } catch (err: any) {

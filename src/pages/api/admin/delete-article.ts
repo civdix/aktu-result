@@ -36,12 +36,12 @@ export const POST: APIRoute = async ({ request }) => {
     // Perform deletion from DB and local filesystem
     const deleted = await ArticleService.deleteArticle(slug);
 
-    // Optionally trigger Cloudflare purge for the deleted page
+    // Trigger Cloudflare purge for the deleted page
     try {
       const zoneId = process.env.CLOUDFLARE_ZONE_ID;
       const apiToken = process.env.CLOUDFLARE_API_TOKEN;
       if (zoneId && apiToken) {
-        fetch(`https://api.cloudflare.com/client/v4/zones/${zoneId}/purge_cache`, {
+        await fetch(`https://api.cloudflare.com/client/v4/zones/${zoneId}/purge_cache`, {
           method: 'POST',
           headers: {
             'Authorization': `Bearer ${apiToken}`,
@@ -54,13 +54,21 @@ export const POST: APIRoute = async ({ request }) => {
       }
     } catch {}
 
+    const headers = new Headers();
+    headers.set('Content-Type', 'application/json');
+    headers.set('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0, s-maxage=0');
+    headers.set('CDN-Cache-Control', 'no-store');
+    headers.set('Cloudflare-CDN-Cache-Control', 'no-store');
+    headers.set('Pragma', 'no-cache');
+    headers.set('Expires', '0');
+
     return new Response(
       JSON.stringify({
         success: true,
         message: deleted ? `Article "${slug}" was deleted successfully.` : `Article "${slug}" removed from index.`,
         slug
       }),
-      { status: 200, headers: { 'Content-Type': 'application/json' } }
+      { status: 200, headers }
     );
   } catch (err: any) {
     return new Response(
@@ -68,7 +76,13 @@ export const POST: APIRoute = async ({ request }) => {
         success: false,
         message: err?.message || 'Failed to delete article.'
       }),
-      { status: 500, headers: { 'Content-Type': 'application/json' } }
+      {
+        status: 500,
+        headers: {
+          'Content-Type': 'application/json',
+          'Cache-Control': 'no-store, no-cache, must-revalidate, max-age=0'
+        }
+      }
     );
   }
 };
