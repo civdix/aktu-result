@@ -229,68 +229,85 @@ Return your response strictly as valid, raw JSON (no surrounding markdown codebl
   "content": "Full rich markdown content following the sections above (1300-1800+ words)."
 }`;
 
-    let res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        contents: [{ parts: [{ text: prompt }] }],
-        generationConfig: {
-          temperature: 0.35,
-          maxOutputTokens: 8192,
-          responseMimeType: 'application/json'
+    const models = ['gemini-2.5-flash', 'gemini-2.5-flash-lite'];
+
+    for (const model of models) {
+      try {
+        const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            contents: [{ parts: [{ text: prompt }] }],
+            generationConfig: {
+              temperature: 0.35,
+              maxOutputTokens: 8192,
+              responseMimeType: 'application/json'
+            },
+            safetySettings: [
+              { category: 'HARM_CATEGORY_HARASSMENT', threshold: 'BLOCK_NONE' },
+              { category: 'HARM_CATEGORY_HATE_SPEECH', threshold: 'BLOCK_NONE' },
+              { category: 'HARM_CATEGORY_SEXUALLY_EXPLICIT', threshold: 'BLOCK_NONE' },
+              { category: 'HARM_CATEGORY_DANGEROUS_CONTENT', threshold: 'BLOCK_NONE' }
+            ]
+          })
+        });
+
+        if (!res.ok) {
+          console.warn(`[Gemini] ${model} returned HTTP ${res.status}`);
+          continue;
         }
-      })
-    });
 
-    let json;
-    if (res.ok) {
-      json = await res.json();
-    } else {
-      console.warn(`gemini-2.5-flash returned status ${res.status}, falling back to gemini-2.5-flash-lite...`);
-      const fallbackRes = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite:generateContent?key=${apiKey}`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          contents: [{ parts: [{ text: prompt }] }],
-          generationConfig: {
-            temperature: 0.35,
-            maxOutputTokens: 8192,
-            responseMimeType: 'application/json'
-          }
-        })
-      });
+        const data = await res.json();
+        let text = data?.candidates?.[0]?.content?.parts?.[0]?.text || '';
+        text = text.replace(/^```json\s*/i, '').replace(/```\s*$/i, '').trim();
 
-      if (!fallbackRes.ok) {
-        throw new Error(`Gemini API failed (2.5: ${res.status}, lite: ${fallbackRes.status})`);
-      }
-      json = await fallbackRes.json();
-    }
+        if (!text || text.length < 50 || !text.includes('{')) {
+          console.warn(`[Gemini] ${model} returned empty or incomplete text (length: ${text.length})`);
+          continue;
+        }
 
-    let text = json?.candidates?.[0]?.content?.parts?.[0]?.text || '';
-    text = text.replace(/^```json\s*/i, '').replace(/```\s*$/i, '').trim();
-
-    try {
-      return JSON.parse(text);
-    } catch (parseError) {
-      // Robust JSON recovery fallback if text had edge character issues
-      const firstBrace = text.indexOf('{');
-      const lastBrace = text.lastIndexOf('}');
-      if (firstBrace !== -1 && lastBrace !== -1 && lastBrace > firstBrace) {
-        const sliced = text.substring(firstBrace, lastBrace + 1);
+        // 1. Direct JSON parse
         try {
-          return JSON.parse(sliced);
+          const parsed = JSON.parse(text);
+          if (parsed && parsed.title && parsed.content) {
+            return parsed;
+          }
         } catch {
-          const sanitized = sliced.replace(/[\u0000-\u001F]+/g, (match) => {
-            if (match === '\n') return '\\n';
-            if (match === '\r') return '\\r';
-            if (match === '\t') return '\\t';
-            return '';
-          });
-          return JSON.parse(sanitized);
+          // 2. Outermost JSON object extraction
+          const firstBrace = text.indexOf('{');
+          const lastBrace = text.lastIndexOf('}');
+          if (firstBrace !== -1 && lastBrace > firstBrace) {
+            const sliced = text.substring(firstBrace, lastBrace + 1);
+            try {
+              const repaired = JSON.parse(sliced);
+              if (repaired && repaired.title && repaired.content) {
+                return repaired;
+              }
+            } catch {
+              // 3. Sanitize raw control characters in string literals
+              try {
+                const sanitized = sliced.replace(/[\u0000-\u001F]+/g, (match) => {
+                  if (match === '\n') return '\\n';
+                  if (match === '\r') return '\\r';
+                  if (match === '\t') return '\\t';
+                  return '';
+                });
+                const repaired2 = JSON.parse(sanitized);
+                if (repaired2 && repaired2.title && repaired2.content) {
+                  return repaired2;
+                }
+              } catch {
+                // Sliced repair failed, try next model
+              }
+            }
+          }
         }
+      } catch (err: any) {
+        console.warn(`[Gemini] Attempt with ${model} error:`, err?.message || err);
       }
-      throw parseError;
     }
+
+    return null;
   }
 
   /**
