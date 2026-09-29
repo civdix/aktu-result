@@ -211,7 +211,18 @@ const homeKeywords = `aktu result without date of birth, aktu result without dob
             </div>
 
             <!-- TAB 2: Roll Finder Content -->
-            <div id="home-view-roll-finder" class="hidden space-y-6">
+            <div id="home-view-roll-finder" class="hidden space-y-5">
+              <!-- College & Branch Selection Notice -->
+              <div class="p-3.5 rounded-xl border border-amber-500/30 bg-amber-500/10 light:bg-amber-50/80 text-[11px] text-gray-300 light:text-gray-700 space-y-1.5 text-left shadow-sm">
+                <div class="flex items-center gap-1.5 font-bold text-amber-400 light:text-amber-800 text-[11px] uppercase tracking-wide">
+                  <span>⚠️</span>
+                  <span>Select College Code &amp; Branch Code Attentively</span>
+                </div>
+                <p class="leading-relaxed text-[11px]">
+                  A college can have <strong>multiple college codes</strong> based on course offerings (e.g. Shift 1 vs Shift 2, Engineering vs Pharmacy/MBA). Also, branch names may look similar but have <strong>different branch codes</strong> (e.g. <em>CSE [010]</em> vs <em>CS [012]</em> vs <em>CSE AI/ML [019]</em>). Please check your admit card or fee receipt to pick the exact codes.
+                </p>
+              </div>
+
               <form id="home-finder-form" class="space-y-5">
                 <!-- Admission Year -->
                 <div class="relative" id="home-year-combobox">
@@ -253,9 +264,12 @@ const homeKeywords = `aktu result without date of birth, aktu result without dob
                 </div>
                 <!-- College -->
                 <div class="relative" id="home-college-combobox">
-                  <label class="block text-xs font-semibold text-gray-400 light:text-gray-500 uppercase tracking-wider mb-2">
-                    College / Institute
-                  </label>
+                  <div class="flex items-center justify-between mb-2">
+                    <label class="block text-xs font-semibold text-gray-400 light:text-gray-500 uppercase tracking-wider">
+                      College / Institute
+                    </label>
+                    <span class="text-[9px] text-amber-400/90 light:text-amber-700 font-medium">Check college code</span>
+                  </div>
                   <div class="relative">
                     <input 
                       type="text" 
@@ -287,9 +301,12 @@ const homeKeywords = `aktu result without date of birth, aktu result without dob
 
                 <!-- Branch -->
                 <div class="relative" id="home-branch-combobox">
-                  <label class="block text-xs font-semibold text-gray-400 light:text-gray-500 uppercase tracking-wider mb-2">
-                    Branch / Course
-                  </label>
+                  <div class="flex items-center justify-between mb-2">
+                    <label class="block text-xs font-semibold text-gray-400 light:text-gray-500 uppercase tracking-wider">
+                      Branch / Course
+                    </label>
+                    <span class="text-[9px] text-amber-400/90 light:text-amber-700 font-medium">Verify branch code</span>
+                  </div>
                   <div class="relative">
                     <input 
                       type="text" 

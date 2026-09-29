@@ -718,9 +718,20 @@ const isActive = (path: string) => {
             <span class="text-xl">🔍</span>
             <h3 class="text-base font-bold text-white light:text-ink">Roll Number Assistant</h3>
           </div>
-          <p class="text-[11px] text-gray-400 light:text-gray-500 leading-relaxed mb-4">
+          <p class="text-[11px] text-gray-400 light:text-gray-500 leading-relaxed mb-3">
             If you don't know your roll number, enter your details below to find or generate it.
           </p>
+
+          <!-- College & Branch Selection Notice -->
+          <div class="p-3 rounded-xl border border-amber-500/30 bg-amber-500/10 light:bg-amber-50/80 text-[10.5px] text-gray-300 light:text-gray-700 space-y-1 text-left mb-3.5 shadow-sm">
+            <div class="flex items-center gap-1.5 font-bold text-amber-400 light:text-amber-800 text-[10.5px] uppercase tracking-wide">
+              <span>⚠️</span>
+              <span>Pick College &amp; Branch Attentively</span>
+            </div>
+            <p class="leading-relaxed">
+              A college can have <strong>multiple college codes</strong> for different departments or shifts (e.g. B.Tech vs MBA/Pharmacy). Also, branch names may be identical while <strong>numeric branch codes differ</strong> (e.g. <em>CSE [010]</em> vs <em>CS [012]</em>). Check your admit card or fee receipt to select the exact code.
+            </p>
+          </div>
 
           <form id="roll-assistant-form" class="space-y-3.5" onsubmit="event.preventDefault();">
             <!-- Admission Year -->
@@ -747,9 +758,12 @@ const isActive = (path: string) => {
 
             <!-- College -->
             <div>
-              <label for="assistant-college" class="block text-[9px] font-semibold text-gray-400 light:text-gray-500 uppercase tracking-wider mb-1">
-                College / Institute
-              </label>
+              <div class="flex items-center justify-between mb-1">
+                <label for="assistant-college" class="block text-[9px] font-semibold text-gray-400 light:text-gray-500 uppercase tracking-wider">
+                  College / Institute
+                </label>
+                <span class="text-[8.5px] text-amber-400/90 light:text-amber-700 font-medium">Check college code</span>
+              </div>
               <select 
                 id="assistant-college" 
                 required
@@ -776,9 +790,12 @@ const isActive = (path: string) => {
 
             <!-- Branch -->
             <div>
-              <label for="assistant-branch" class="block text-[9px] font-semibold text-gray-400 light:text-gray-500 uppercase tracking-wider mb-1">
-                Branch / Course
-              </label>
+              <div class="flex items-center justify-between mb-1">
+                <label for="assistant-branch" class="block text-[9px] font-semibold text-gray-400 light:text-gray-500 uppercase tracking-wider">
+                  Branch / Course
+                </label>
+                <span class="text-[8.5px] text-amber-400/90 light:text-amber-700 font-medium">Verify branch code</span>
+              </div>
               <select 
                 id="assistant-branch" 
                 required

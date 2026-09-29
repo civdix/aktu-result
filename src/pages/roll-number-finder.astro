@@ -99,12 +99,36 @@ const finderKeywords = "aktu roll number finder, find aktu roll number, aktu res
 
       <!-- Centered Finder Interface -->
       <div class="w-full max-w-4xl">
-        <!-- Notice Card -->
-        <div class="mb-6 p-4 rounded-xl border border-brand-blue/20 bg-brand-blue/5 text-[11px] sm:text-xs text-gray-300 light:text-gray-600 flex gap-2.5 items-start">
-          <span class="text-brand-blue text-sm mt-0.5">ℹ️</span>
-          <div>
-            <span class="font-bold text-white light:text-ink">One-Time Scan Notice:</span>
-            This utility is designed for responsible, one-time scanning per class. When a search is performed, the system scans the AKTU ERP once to build and save the roll records. Subsequent queries load instantly from the cached database.
+        <!-- Notice Cards -->
+        <div class="space-y-3 mb-6">
+          <!-- College & Branch Selection Notice (High Priority) -->
+          <div class="p-4 rounded-xl border border-amber-500/30 bg-amber-500/10 light:bg-amber-50/80 text-[11px] sm:text-xs text-gray-300 light:text-gray-700 flex gap-3 items-start shadow-sm">
+            <span class="text-amber-400 light:text-amber-600 text-base shrink-0 mt-0.5">⚠️</span>
+            <div class="space-y-1.5 text-left">
+              <div class="font-bold text-amber-400 light:text-amber-800 text-xs uppercase tracking-wide flex items-center gap-1.5">
+                <span>Important: Choose College Code & Branch Code Attentively</span>
+              </div>
+              <p class="leading-relaxed">
+                Please double-check your official codes from your university admit card, fee receipt, or registration slip before searching:
+              </p>
+              <ul class="space-y-1 text-gray-300 light:text-gray-700 list-disc pl-4">
+                <li>
+                  <strong class="text-white light:text-ink">Multiple College Codes:</strong> An institution or campus can have <strong>multiple college codes</strong> based on course offerings (e.g., Engineering vs. Pharmacy vs. MBA, or 1st Shift vs. 2nd Shift). Ensure you pick the exact code assigned to your department.
+                </li>
+                <li>
+                  <strong class="text-white light:text-ink">Branch Name vs. Code:</strong> Branches with identical or similar names often carry <strong>different branch codes</strong> (for example, <em>CSE Core is [010]</em>, <em>CS is [012]</em>, <em>CSE AI/ML is [019]</em>, and <em>CSE Data Science is [085]</em>). Selecting the wrong branch code will search a different class roster.
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- One-Time Scan Notice -->
+          <div class="p-3 sm:p-3.5 rounded-xl border border-brand-blue/20 bg-brand-blue/5 text-[11px] text-gray-400 light:text-gray-600 flex gap-2.5 items-start">
+            <span class="text-brand-blue text-sm mt-0.5 shrink-0">ℹ️</span>
+            <div>
+              <span class="font-bold text-white light:text-ink">One-Time Scan Notice:</span>
+              When a class is searched for the first time, our system verifies AKTU ERP once to assemble and index the records. Subsequent queries for the same batch load instantly from the cached database.
+            </div>
           </div>
         </div>
 
@@ -141,9 +165,12 @@ const finderKeywords = "aktu roll number finder, find aktu roll number, aktu res
 
               <!-- College Select Container (Hidden if preselected) -->
               <div class={isCollegePreselected ? "hidden" : ""}>
-                <label for="finder-college" class="block text-[9px] font-semibold text-gray-400 light:text-gray-500 uppercase tracking-wider mb-1">
-                  College / Institute
-                </label>
+                <div class="flex items-center justify-between mb-1">
+                  <label for="finder-college" class="block text-[9px] font-semibold text-gray-400 light:text-gray-500 uppercase tracking-wider">
+                    College / Institute
+                  </label>
+                  <span class="text-[8.5px] text-amber-400/90 light:text-amber-700 font-medium">Check college code</span>
+                </div>
                 <select 
                   id="finder-college" 
                   required={!isCollegePreselected}
@@ -179,9 +206,12 @@ const finderKeywords = "aktu roll number finder, find aktu roll number, aktu res
 
               <!-- Branch -->
               <div>
-                <label for="finder-branch" class="block text-[9px] font-semibold text-gray-400 light:text-gray-500 uppercase tracking-wider mb-1">
-                  Branch / Course
-                </label>
+                <div class="flex items-center justify-between mb-1">
+                  <label for="finder-branch" class="block text-[9px] font-semibold text-gray-400 light:text-gray-500 uppercase tracking-wider">
+                    Branch / Course
+                  </label>
+                  <span class="text-[8.5px] text-amber-400/90 light:text-amber-700 font-medium">Verify branch code</span>
+                </div>
                 <select 
                   id="finder-branch" 
                   required
