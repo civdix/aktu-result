@@ -62,7 +62,7 @@ class MainActivity : AppCompatActivity() {
 
             if (res.success && !res.dob.isNullOrEmpty()) {
                 binding.statusMessage.text = "✓ DOB Found: ${res.dob}! Opening Automatic Result View..."
-                binding.statusMessage.setTextColor(ContextCompat.getColor(this, R.color.brand_accent))
+                binding.statusMessage.setTextColor(ContextCompat.getColor(this@MainActivity, R.color.brand_accent))
 
                 launchOneView(rollNumber, res.dob, res.name ?: "Student")
             } else {
