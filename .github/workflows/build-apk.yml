@@ -21,19 +21,23 @@ jobs:
 
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
+        with:
+          packages: 'platform-tools'
 
-      - name: Grant execute permission for gradlew
-        run: |
-          cd aktu-android-app
-          chmod +x gradlew || true
-
-      - name: Build Debug APK with Gradle
+      - name: Generate & Grant execute permission for gradlew
         run: |
           cd aktu-android-app
           if [ ! -f gradlew ]; then
             gradle wrapper --gradle-version 8.5
           fi
+          chmod +x gradlew
+
+      - name: Build Debug APK with Gradle
+        run: |
+          cd aktu-android-app
           ./gradlew assembleDebug --stacktrace
+        env:
+          ANDROID_HOME: /usr/local/lib/android/sdk
 
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
