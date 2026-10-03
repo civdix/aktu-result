@@ -86,15 +86,31 @@ function logRecentSearchSafe(roll: string, name?: string, course?: string, insti
   }).catch(() => {});
 }
 
-export const GET: APIRoute = async () => {
+export const GET: APIRoute = async ({ request, url }) => {
+  const rollNumber = url.searchParams.get('rollNumber') || url.searchParams.get('roll');
+  if (rollNumber) {
+    const syntheticReq = new Request(request.url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        rollNumber,
+        action: url.searchParams.get('action') || undefined,
+        manualCaptcha: url.searchParams.get('manualCaptcha') || undefined,
+        cgid: url.searchParams.get('cgid') || undefined
+      })
+    });
+    return POST({ request: syntheticReq } as any);
+  }
+
   return new Response(
     JSON.stringify({
-      success: false,
-      error: "Method Not Allowed. Please send a POST request with a rollNumber parameter in the JSON body.",
-      code: 405
+      success: true,
+      service: "AKTU Result Search API",
+      status: "online",
+      usage: "Send POST with { rollNumber } or GET /api/search?rollNumber=..."
     }),
     {
-      status: 405,
+      status: 200,
       headers: { 'Content-Type': 'application/json' }
     }
   );

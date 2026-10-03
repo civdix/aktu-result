@@ -92,12 +92,13 @@ function logRecentSearchSafe(roll: string, name?: string, course?: string, insti
 export const GET: APIRoute = async () => {
   return new Response(
     JSON.stringify({
-      success: false,
-      error: "Method Not Allowed. Please send a POST request with a rollNumber parameter in the JSON body.",
-      code: 405
+      success: true,
+      service: "AKTU DOB Engine API",
+      status: "online",
+      usage: "Send POST with JSON body containing rollNumber."
     }),
     {
-      status: 405,
+      status: 200,
       headers: { 'Content-Type': 'application/json' }
     }
   );

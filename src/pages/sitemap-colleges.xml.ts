@@ -1,4 +1,4 @@
-﻿import type { APIRoute } from 'astro';
+import type { APIRoute } from 'astro';
 import colleges from '../data/colleges.json';
 import { slugifyCollege } from '../utils/slugify';
 
@@ -6,14 +6,15 @@ export const prerender = false;
 
 export const GET: APIRoute = async ({ site }) => {
   const baseUrl = site ? site.toString().replace(/\/$/, '') : 'https://akturesult.bond';
-  const today = new Date().toISOString().split('T')[0];
+  // Legitimate dataset update timestamp (avoids daily lastmod spoofing penalties on 800+ URLs)
+  const collegeCatalogLastMod = '2026-09-22';
 
   const urls = colleges.map(c => {
     const slug = slugifyCollege(c.name, c.code);
     return `  <url>
     <loc>${baseUrl}/college/${slug}</loc>
-    <lastmod>${today}</lastmod>
-    <changefreq>weekly</changefreq>
+    <lastmod>${collegeCatalogLastMod}</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>`;
   }).join('\n');

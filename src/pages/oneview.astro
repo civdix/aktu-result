@@ -582,6 +582,7 @@ const jsonLd = {
 
       let adCountdownInterval = null;
 
+      // Result Presentation Handler (Instantly renders result without intrusive interstitial delay)
       function showOneViewAdInterstitialThen(data, onProceed) {
         loaderState?.classList.add("hidden");
         searchForm?.classList.add("hidden");
@@ -596,56 +597,14 @@ const jsonLd = {
         }
 
         const interstitial = document.getElementById("oneview-ad-interstitial-state");
-        if (!interstitial) {
-          onProceed();
-          return;
-        }
+        if (interstitial) interstitial.classList.add("hidden");
 
-        interstitial.classList.remove("hidden");
+        // Instantly reveal results without artificial countdown delays
+        // Eliminates Google Intrusive Interstitial penalty & complies with AdSense policies
+        onProceed();
         try {
           (window.adsbygoogle = window.adsbygoogle || []).push({});
         } catch (e) {}
-
-        let timeLeft = 5;
-        const countdownText = document.getElementById("oneview-ad-countdown-text");
-        const progressBar = document.getElementById("oneview-ad-progress-bar");
-        if (countdownText) countdownText.textContent = `${timeLeft}s`;
-        if (progressBar) progressBar.style.width = "0%";
-
-        if (adCountdownInterval) clearInterval(adCountdownInterval);
-
-        let finished = false;
-        const finishAndShow = () => {
-          if (finished) return;
-          finished = true;
-          if (adCountdownInterval) {
-            clearInterval(adCountdownInterval);
-            adCountdownInterval = null;
-          }
-          interstitial.classList.add("hidden");
-          onProceed();
-          try {
-            (window.adsbygoogle = window.adsbygoogle || []).push({});
-          } catch (e) {}
-        };
-
-        adCountdownInterval = setInterval(() => {
-          timeLeft--;
-          const pct = Math.min(100, Math.round(((5 - timeLeft) / 5) * 100));
-          if (progressBar) progressBar.style.width = `${pct}%`;
-          if (countdownText) countdownText.textContent = `${timeLeft}s`;
-          if (timeLeft <= 0) {
-            finishAndShow();
-          }
-        }, 1000);
-
-        const viewBtn = document.getElementById("oneview-ad-view-result-btn");
-        if (viewBtn) {
-          viewBtn.onclick = (e) => {
-            e.preventDefault();
-            finishAndShow();
-          };
-        }
       }
 
       // Render Verified Academic Profile & OneView Marksheet

@@ -23,15 +23,31 @@ function getLevenshteinDistance(a: string, b: string): number {
   return tmp[a.length][b.length];
 }
 
-export const GET: APIRoute = async () => {
+export const GET: APIRoute = async ({ request, url }) => {
+  const name = url.searchParams.get('name');
+  if (name) {
+    const syntheticReq = new Request(request.url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        name,
+        admissionYear: url.searchParams.get('admissionYear') || url.searchParams.get('year') || undefined,
+        collegeCode: url.searchParams.get('collegeCode') || url.searchParams.get('college') || undefined,
+        branchCode: url.searchParams.get('branchCode') || url.searchParams.get('branch') || undefined
+      })
+    });
+    return POST({ request: syntheticReq } as any);
+  }
+
   return new Response(
     JSON.stringify({
-      success: false,
-      error: "Method Not Allowed. Please send a POST request with parameters in the JSON body.",
-      code: 405
+      success: true,
+      service: "AKTU Roll Number Finder API",
+      status: "online",
+      usage: "Send POST with { name, admissionYear, collegeCode, branchCode } or GET with query params."
     }),
     {
-      status: 405,
+      status: 200,
       headers: { 'Content-Type': 'application/json' }
     }
   );

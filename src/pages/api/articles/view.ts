@@ -33,7 +33,7 @@ export const POST: APIRoute = async ({ request, url }) => {
     if (!slug) {
       return new Response(
         JSON.stringify({ success: false, message: 'Article slug is required' }),
-        { status: 400, headers: ANTI_CACHE_HEADERS }
+        { status: 200, headers: ANTI_CACHE_HEADERS }
       );
     }
 

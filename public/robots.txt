@@ -4,9 +4,33 @@ Allow: /
 User-agent: Googlebot-Image
 Allow: /
 
-Content-Signal: ai-train=no, search=yes, ai-input=no
+# Disallow AI scrapers from training on site content (RFC 9309 compliant)
+User-agent: GPTBot
+Disallow: /
 
+User-agent: CCBot
+Disallow: /
+
+User-agent: anthropic-ai
+Disallow: /
+
+User-agent: Claude-Web
+Disallow: /
+
+User-agent: Google-Extended
+Disallow: /
+
+User-agent: PerplexityBot
+Disallow: /
+
+User-agent: Bytespider
+Disallow: /
+
+# Agent & AI Content Directives (Informational metadata)
+# Content-Signal: ai-train=no, search=yes, ai-input=no
+# Agentmap: https://akturesult.bond/.well-known/ai-catalog.json
+
+# XML Sitemaps
 Sitemap: https://akturesult.bond/sitemap.xml
 Sitemap: https://akturesult.bond/sitemap-colleges.xml
 Sitemap: https://akturesult.bond/sitemap-news.xml
-Agentmap: https://akturesult.bond/.well-known/ai-catalog.json
