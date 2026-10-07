@@ -1,18 +1,21 @@
 import crypto from 'crypto';
 
-export const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || '9557030688';
+export const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || '';
 
 export function getAdminToken(): string {
+  if (!ADMIN_PASSWORD) return '';
   return crypto.createHmac('sha256', ADMIN_PASSWORD).update('aktu-admin-session-v1').digest('hex');
 }
 
 export function verifyAdminPassword(providedPassword?: string | null): boolean {
-  if (!providedPassword) return false;
+  if (!ADMIN_PASSWORD || !providedPassword) return false;
   return providedPassword.trim() === ADMIN_PASSWORD;
 }
 
 export function verifyAdminRequest(request: Request): boolean {
+  if (!ADMIN_PASSWORD) return false;
   const expectedToken = getAdminToken();
+  if (!expectedToken) return false;
 
   // 1. Check Authorization Bearer header
   const authHeader = request.headers.get('Authorization') || request.headers.get('authorization');

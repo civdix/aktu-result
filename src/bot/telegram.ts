@@ -36,7 +36,7 @@ interface UserSessionState {
 
 const pendingSessions = new Map<number, UserSessionState>();
 const pendingAdminAuth = new Set<number>();
-const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || '9557030688';
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || '';
 
 // Animated Live Progress & Countdown Tracker
 interface ProgressStage {

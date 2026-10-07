@@ -21,7 +21,7 @@ export const getRedisUri = () => {
   if (typeof import.meta !== 'undefined' && (import.meta as any).env?.REDIS_URL) {
     return (import.meta as any).env.REDIS_URL;
   }
-  return 'rediss://default:Fa9u0yZtbWcLtW69yhI6xFrE@akturesult-hemp-port.ovh2.cloud.layerbase.dev';
+  return '';
 };
 
 export const REDIS_URL = getRedisUri();

@@ -3,9 +3,10 @@ import { NewsGeneratorService } from '../../../services/news-generator.service';
 
 export const prerender = false;
 
-const VALID_SECRET = process.env.CRON_SECRET || (import.meta as any).env?.CRON_SECRET || 'aktu-cron-secret-2026';
+const VALID_SECRET = process.env.CRON_SECRET || (import.meta as any).env?.CRON_SECRET || '';
 
 function isAuthorized(request: Request, url: URL): boolean {
+  if (!VALID_SECRET) return false;
   // 1. Check Bearer token in Authorization header
   const authHeader = request.headers.get('authorization') || '';
   if (authHeader.startsWith('Bearer ')) {

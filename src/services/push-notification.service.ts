@@ -16,30 +16,35 @@ export interface WebPushSubscription {
 const DATA_DIR = path.resolve(process.cwd(), 'data');
 const SUBSCRIPTIONS_FILE = path.join(DATA_DIR, 'push_subscriptions.json');
 
-const DEFAULT_PUBLIC_KEY = 'BHUHDZ1FqmYVCfkEflZQpifpzsbciQuX_7nNc3wqAL0VWrA4dRpXJ6dGe--gx1Hs9oFM4-ZXUngowtaOwg5DoCk';
-const DEFAULT_PRIVATE_KEY = 'mwzjVdtFnx8UCi_rEgNsu-Pacz___J6YfbcfmJuCwls';
 const DEFAULT_SUBJECT = 'mailto:support@akturesult.bond';
 
 export class PushNotificationService {
   private static isConfigured = false;
 
-  private static configureWebPush(): void {
-    if (this.isConfigured) return;
+  private static configureWebPush(): boolean {
+    if (this.isConfigured) return true;
 
-    const publicKey = (typeof process !== 'undefined' && process.env?.VAPID_PUBLIC_KEY) || DEFAULT_PUBLIC_KEY;
-    const privateKey = (typeof process !== 'undefined' && process.env?.VAPID_PRIVATE_KEY) || DEFAULT_PRIVATE_KEY;
-    const subject = (typeof process !== 'undefined' && process.env?.VAPID_SUBJECT) || DEFAULT_SUBJECT;
+    const publicKey = (typeof process !== 'undefined' && process.env?.VAPID_PUBLIC_KEY) || (import.meta as any).env?.VAPID_PUBLIC_KEY || '';
+    const privateKey = (typeof process !== 'undefined' && process.env?.VAPID_PRIVATE_KEY) || (import.meta as any).env?.VAPID_PRIVATE_KEY || '';
+    const subject = (typeof process !== 'undefined' && process.env?.VAPID_SUBJECT) || (import.meta as any).env?.VAPID_SUBJECT || DEFAULT_SUBJECT;
+
+    if (!publicKey || !privateKey) {
+      console.warn('[PushNotification] VAPID_PUBLIC_KEY or VAPID_PRIVATE_KEY missing in environment variables. Web push disabled.');
+      return false;
+    }
 
     try {
       webpush.setVapidDetails(subject, publicKey, privateKey);
       this.isConfigured = true;
+      return true;
     } catch (err: any) {
       console.warn('[PushNotification] Failed to set VAPID details:', err.message);
+      return false;
     }
   }
 
   public static getPublicKey(): string {
-    return (typeof process !== 'undefined' && process.env?.VAPID_PUBLIC_KEY) || DEFAULT_PUBLIC_KEY;
+    return (typeof process !== 'undefined' && process.env?.VAPID_PUBLIC_KEY) || (import.meta as any).env?.VAPID_PUBLIC_KEY || '';
   }
 
   private static ensureDataDir(): void {
@@ -171,7 +176,10 @@ export class PushNotificationService {
     slug: string;
     category?: string;
   }): Promise<{ sent: number; failed: number; cleaned: number }> {
-    this.configureWebPush();
+    const isConfigured = this.configureWebPush();
+    if (!isConfigured) {
+      return { sent: 0, failed: 0, cleaned: 0 };
+    }
 
     const subs = await this.getAllSubscriptions();
     if (subs.length === 0) {

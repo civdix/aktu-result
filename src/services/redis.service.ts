@@ -13,8 +13,13 @@ class RedisService {
   private initClient(): void {
     try {
       const rawRedisUrl = (typeof process !== 'undefined' && process.env?.REDIS_URL)
-        || (import.meta as any).env?.REDIS_URL
-        || 'rediss://default:gQAAAAAAAzjpAAIgcDI4MDM5MzM1YzUwZmY0ZWRlYmIzNTE2ZTJjN2I0YzhiYQ@unique-owl-211177.upstash.io:6379';
+        || (import.meta as any).env?.REDIS_URL;
+
+      if (!rawRedisUrl || !rawRedisUrl.trim()) {
+        console.info('[Redis] No REDIS_URL found in environment variables. In-memory/caching disabled.');
+        this.client = null;
+        return;
+      }
 
       let redisUrl = rawRedisUrl.trim();
       const parsedUrl = new URL(redisUrl);
