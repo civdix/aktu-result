@@ -34,9 +34,11 @@ export const POST: APIRoute = async ({ request, cookies }) => {
     const result = await NewsGeneratorService.publishLatestNewsArticle();
     return new Response(
       JSON.stringify({
-        success: true,
-        ...result,
-        message: 'Article generation triggered successfully!'
+        success: result.success,
+        message: result.message,
+        url: result.url || null,
+        slug: result.slug || null,
+        title: result.title || null
       }),
       { status: 200, headers: ANTI_CACHE_HEADERS }
     );

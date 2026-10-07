@@ -38,8 +38,11 @@ export const GET: APIRoute = async ({ request, url }) => {
     const result = await NewsGeneratorService.publishLatestNewsArticle();
     return new Response(
       JSON.stringify({
-        ...result,
-        sitemapUrl: 'https://akturesult.bond/sitemap-news.xml',
+        success: result.success,
+        message: result.message,
+        url: result.url || null,
+        slug: result.slug || null,
+        title: result.title || null,
         timestamp: new Date().toISOString()
       }),
       { status: 200, headers: { 'Content-Type': 'application/json' } }

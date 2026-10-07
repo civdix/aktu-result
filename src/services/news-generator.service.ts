@@ -687,7 +687,10 @@ Yes, AKTU typically provides a formal scrutiny and challenge evaluation window f
   static async publishLatestNewsArticle(): Promise<{
     success: boolean;
     message: string;
-    article?: Article;
+    url?: string;
+    slug?: string;
+    title?: string;
+    publishedAt?: string;
     candidateCount?: number;
     indexNowPinged?: boolean;
   }> {
@@ -781,7 +784,10 @@ Yes, AKTU typically provides a formal scrutiny and challenge evaluation window f
     return {
       success: true,
       message: `New article generated and published successfully: "${newArticle.title}"`,
-      article: newArticle,
+      url: articleUrl,
+      slug: newArticle.slug,
+      title: newArticle.title,
+      publishedAt: newArticle.publishedAt,
       candidateCount: candidates.length,
       indexNowPinged: pingOk
     };

@@ -623,7 +623,7 @@ const pageDescription = "Administrative content management portal for Dr. A.P.J.
         const data = await res.json();
 
         if (res.ok && data.success) {
-          showToast(`✨ Generated: "${data.article?.title || 'New Article'}"!`);
+          showToast(`✨ Generated: "${data.title || data.article?.title || 'New Article'}"!`);
           fetchArticles();
         } else {
           showToast(data.message || data.error || "Article generation skipped or failed.", true);
