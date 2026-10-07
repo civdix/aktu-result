@@ -1,6 +1,7 @@
 # Compiled files
 dist/
 *.js
+!public/sw.js
 
 # Environment files
 .env

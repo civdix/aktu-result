@@ -12,12 +12,18 @@ class RedisService {
 
   private initClient(): void {
     try {
-      const redisUrl = (typeof process !== 'undefined' && process.env?.REDIS_URL)
+      const rawRedisUrl = (typeof process !== 'undefined' && process.env?.REDIS_URL)
         || (import.meta as any).env?.REDIS_URL
-        || 'rediss://default:Fa9u0yZtbWcLtW69yhI6xFrE@akturesult-hemp-port.ovh2.cloud.layerbase.dev';
+        || 'rediss://default:gQAAAAAAAzjpAAIgcDI4MDM5MzM1YzUwZmY0ZWRlYmIzNTE2ZTJjN2I0YzhiYQ@unique-owl-211177.upstash.io:6379';
 
+      let redisUrl = rawRedisUrl.trim();
       const parsedUrl = new URL(redisUrl);
-      const isTls = redisUrl.startsWith('rediss://') || parsedUrl.protocol === 'rediss:';
+      const isUpstash = parsedUrl.hostname.includes('upstash.io');
+      const isTls = redisUrl.startsWith('rediss://') || parsedUrl.protocol === 'rediss:' || isUpstash;
+
+      if (isUpstash && redisUrl.startsWith('redis://')) {
+        redisUrl = redisUrl.replace(/^redis:\/\//, 'rediss://');
+      }
 
       const options: any = {
         lazyConnect: true,
@@ -29,9 +35,10 @@ class RedisService {
         }
       };
 
-      if (isTls || parsedUrl.hostname.includes('layerbase.dev')) {
+      if (isTls || parsedUrl.protocol === 'rediss:' || parsedUrl.port === '6380' || parsedUrl.searchParams.get('ssl') === 'true' || isUpstash) {
         options.tls = {
-          servername: parsedUrl.hostname
+          servername: parsedUrl.hostname,
+          rejectUnauthorized: false
         };
       }
 

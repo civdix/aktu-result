@@ -1,5 +1,6 @@
 import { YoutubeTranscript } from 'youtube-transcript';
 import { ArticleService } from './article.service';
+import { PushNotificationService } from './push-notification.service';
 import type { Article, ArticleFaq } from '../interfaces/article.interface';
 
 interface CandidateVideo {
@@ -163,6 +164,8 @@ export class NewsGeneratorService {
     readingTime: number;
     faqs: ArticleFaq[];
   }> {
+    let article: any = null;
+
     // 1. Primary AI Engine: Groq (Ultra-fast, Llama 3 / GPT-OSS 120B)
     const groqKey = process.env.GROQ_API_KEY || (import.meta as any).env?.GROQ_API_KEY;
     if (groqKey) {
@@ -170,7 +173,7 @@ export class NewsGeneratorService {
         const aiArticle = await this.generateWithGroq(video, groqKey);
         if (aiArticle) {
           console.log('[NewsPipeline] Successfully synthesized article using Groq AI');
-          return aiArticle;
+          article = aiArticle;
         }
       } catch (err) {
         console.warn('[NewsPipeline] Groq generation failed, checking Gemini fallback:', err);
@@ -178,21 +181,32 @@ export class NewsGeneratorService {
     }
 
     // 2. Secondary AI Engine: Google Gemini
-    const geminiKey = process.env.GEMINI_API_KEY || (import.meta as any).env?.GEMINI_API_KEY;
-    if (geminiKey) {
-      try {
-        const aiArticle = await this.generateWithGemini(video, geminiKey);
-        if (aiArticle) {
-          console.log('[NewsPipeline] Successfully synthesized article using Gemini AI');
-          return aiArticle;
+    if (!article) {
+      const geminiKey = process.env.GEMINI_API_KEY || (import.meta as any).env?.GEMINI_API_KEY;
+      if (geminiKey) {
+        try {
+          const aiArticle = await this.generateWithGemini(video, geminiKey);
+          if (aiArticle) {
+            console.log('[NewsPipeline] Successfully synthesized article using Gemini AI');
+            article = aiArticle;
+          }
+        } catch (err) {
+          console.warn('[NewsPipeline] Gemini generation failed, falling back to built-in synthesis:', err);
         }
-      } catch (err) {
-        console.warn('[NewsPipeline] Gemini generation failed, falling back to built-in synthesis:', err);
       }
     }
 
     // 3. Fallback: Built-in intelligent NLP Synthesizer
-    return this.generateWithBuiltInNLP(video);
+    if (!article) {
+      article = this.generateWithBuiltInNLP(video);
+    }
+
+    // Post-process & sanitize content to ensure strict official portal accuracy
+    if (article && article.content) {
+      article.content = this.sanitizeArticleContent(article.content);
+    }
+
+    return article;
   }
 
   /**
@@ -235,11 +249,87 @@ export class NewsGeneratorService {
   }
 
   /**
+   * Extract official university portals and links from video description and transcript.
+   * Strictly separates official administrative portals (erp.aktu.ac.in, aktu.ac.in)
+   * from the unofficial student result lookup utility (akturesult.bond).
+   */
+  static extractOfficialPortalsAndLinks(video: any): {
+    officialErpUrl: string;
+    officialWebsiteUrl: string;
+    officialOneViewUrl: string;
+    extractedUrls: string[];
+    isCarryOverOrRecordTopic: boolean;
+  } {
+    const combined = `${video.title || ''} ${video.description || ''} ${video.transcript || ''}`.toLowerCase();
+
+    const isCarryOverOrRecordTopic =
+      combined.includes('carry over') ||
+      combined.includes('cop') ||
+      combined.includes('backlog') ||
+      combined.includes('exam form') ||
+      combined.includes('examination form') ||
+      combined.includes('admit card') ||
+      combined.includes('challan') ||
+      combined.includes('fee payment') ||
+      combined.includes('scrutiny') ||
+      combined.includes('challenge evaluation') ||
+      combined.includes('student record') ||
+      combined.includes('erp');
+
+    const rawUrls = (video.description || '').match(/https?:\/\/[^\s)\]>"']+/gi) || [];
+    const extractedUrls = rawUrls.filter((u: string) => !u.includes('youtube.com') && !u.includes('youtu.be'));
+
+    return {
+      officialErpUrl: 'https://erp.aktu.ac.in',
+      officialWebsiteUrl: 'https://aktu.ac.in',
+      officialOneViewUrl: 'https://oneview.aktu.ac.in',
+      extractedUrls,
+      isCarryOverOrRecordTopic
+    };
+  }
+
+  /**
+   * Post-processor to sanitize markdown content:
+   * Guarantees that Carry Over (COP), exam form filing, admit cards, fee payments,
+   * scrutiny, or student record actions NEVER link to akturesult.bond.
+   * Rewrites them to official university portal (erp.aktu.ac.in).
+   */
+  static sanitizeArticleContent(content: string): string {
+    if (!content) return content;
+    let sanitized = content;
+
+    // 1. Fix incorrect markdown links pointing to akturesult.bond for COP / Exam Forms / ERP / Fees / Scrutiny
+    sanitized = sanitized.replace(
+      /\[([^\]]*(?:carry\s*over|cop|backlog|exam\s*form|examination\s*form|admit\s*card|challan|fee\s*payment|scrutiny|challenge\s*eval|student\s*record|erp\s*result|erp\s*portal|aktu\s*erp)[^\]]*)\]\(https?:\/\/akturesult\.bond[^\)]*\)/gi,
+      '[$1](https://erp.aktu.ac.in)'
+    );
+
+    // 2. Fix table rows where Carry Over / COP / Exam Form row gateway points to akturesult.bond
+    sanitized = sanitized.replace(
+      /(\|\s*(?:\*\*)?(?:COP|Carry\s*Over|Exam\s*Form|Backlog|Circular|ERP)[\s\S]*?)\[([^\]]+)\]\(https?:\/\/akturesult\.bond(?:\/[^\)]*)?\)/gi,
+      (match, prefix, linkText) => {
+        if (/result\s*without|dob|scorecard/i.test(prefix)) {
+          return match;
+        }
+        return `${prefix}[AKTU ERP Official Portal](https://erp.aktu.ac.in)`;
+      }
+    );
+
+    // 3. Fix any mistaken link reference claiming akturesult.bond is official ERP
+    sanitized = sanitized.replace(/https?:\/\/akturesult\.bond\/aktu-erp-result/gi, 'https://erp.aktu.ac.in');
+
+    return sanitized;
+  }
+
+  /**
    * Unified article prompt adhering to Google News and Discover editorial standards
+   * with strict official university portal accuracy and Google AI Content Guidelines compliance.
    */
   private static buildArticlePrompt(video: any): string {
-    return `You are a Senior Academic News Editor and Google News SEO Content Strategist for "AKTU Student Portal" (akturesult.bond).
-Transform this YouTube video news update regarding Dr. A.P.J. Abdul Kalam Technical University (AKTU) into an exhaustive, highly detailed, 1300 to 1800+ word academic journalism news article for university students across Uttar Pradesh.
+    const portalInfo = this.extractOfficialPortalsAndLinks(video);
+
+    return `You are a Senior Academic News Editor and Google News Content Strategist for "AKTU Student Portal".
+Transform this YouTube video news update regarding Dr. A.P.J. Abdul Kalam Technical University (AKTU) into an exhaustive, authoritative, 1300 to 1800+ word academic journalism news article for university students across Uttar Pradesh.
 
 VIDEO CONTEXT:
 - Title: ${video.title}
@@ -247,28 +337,44 @@ VIDEO CONTEXT:
 - Keywords: ${video.keywords.join(', ')}
 - Description: ${video.description.slice(0, 1000)}
 - Spoken Transcript Snippet: ${video.transcript ? video.transcript.slice(0, 4000) : 'N/A'}
+${portalInfo.extractedUrls.length > 0 ? `- Links Found in Video Description: ${portalInfo.extractedUrls.join(', ')}` : ''}
 
-STRICT LENGTH & CONTENT DEPTH REQUIREMENT:
-- Target Word Count: Minimum 1300 words, up to 1800+ words.
-- DO NOT write brief summaries or short 2-sentence paragraphs. Write rich, exhaustive, journalistic prose.
-- Every section MUST provide detailed multi-paragraph analysis explaining university ordinance rules, examination bylaws, student consequences, SGPA/CGPA evaluation rubrics, backlog management, and practical student guidance.
+CRITICAL PORTAL ACCURACY & OFFICIAL LINKING RULES (ZERO HALLUCINATION REQUIREMENT):
+1. THE OFFICIAL UNIVERSITY PORTALS:
+   - For Carry-Over Paper (COP) filing, Backlog exam forms, regular examination form submission, admit card downloads, fee payments/challans, scrutiny/challenge evaluation, or student record updates:
+     THE OFFICIAL PORTAL IS STRICTLY AND EXCLUSIVELY AKTU ERP: [AKTU ERP](https://erp.aktu.ac.in).
+   - For official university circulars, notifications, examination center lists, and academic guidelines:
+     THE OFFICIAL PORTAL IS: [AKTU Official Website](https://aktu.ac.in).
+   - For official marksheet viewing:
+     THE OFFICIAL PORTAL IS: [AKTU OneView](https://oneview.aktu.ac.in).
+2. UN-OFFICIAL STUDENT UTILITY (akturesult.bond):
+   - "akturesult.bond" is an independent student utility tool.
+   - It is ONLY for checking semester marksheets without requiring Date of Birth ([AKTU Result Without DOB](https://akturesult.bond) or the [AKTU OneView Mirror](https://akturesult.bond/oneview)) and recovering roll numbers ([Roll Number Finder](https://akturesult.bond/roll-number-finder)).
+   - NEVER, UNDER ANY CIRCUMSTANCES, state or imply that akturesult.bond is the portal for:
+     * Carry-Over Paper (COP) filing or backlog examination registration
+     * Regular exam form submission
+     * Examination fee payment or challan generation
+     * Admit card downloading
+     * Scrutiny or challenge evaluation requests
+     * Student record or profile modifications
+   - In all tables, guides, and procedural instructions regarding the above tasks, ALWAYS link directly to [AKTU ERP](https://erp.aktu.ac.in).
 
-EDITORIAL & RANKING GUIDELINES:
-1. Headline (Title):
-   - Length: 55 to 70 characters.
-   - Factual, journalistic, active voice. Front-load high-search keywords: e.g. "AKTU Even Semester Result 2026: OneView Portal Update & Verification Steps".
-   - NO clickbait, NO ALL-CAPS words.
-2. Inverted Pyramid Lead Paragraphs:
-   - The opening 2 paragraphs must immediately answer Who, What, When, Where, Why factually:
-     "Dr. A.P.J. Abdul Kalam Technical University (AKTU), Lucknow, has officially announced..."
+GOOGLE SEARCH & HELPFUL CONTENT EDITORIAL STANDARDS (E-E-A-T):
+1. Quality & Tone:
+   - Factual, objective, professional academic journalism.
+   - NO generic AI filler phrases (AVOID "In this fast-paced world", "delve into", "a testament to", "rich tapestry", "crucial to remember").
+   - Detailed analysis referencing specific university ordinances (e.g. AKTU Examination Ordinances, credit systems, grace marks criteria under university bylaws).
+2. Editorial Structure:
+   - Headline (Title): 55 to 70 characters. Journalistic, active voice, factual. No clickbait, no all-caps.
+   - Inverted Pyramid Lead: Opening 2 paragraphs immediately answer Who, What, When, Where, Why factually.
 3. Mandatory Sections Architecture (Markdown):
    - ## Executive Summary & Core Directives (Detailed summary plus 4-6 bullet takeaways).
    - ## In-Depth Analysis of University Circular & Notification (3-4 rich paragraphs dissecting the circular, administrative directives, and academic background).
    - ## Detailed Impact on Student Batches & Branch Eligibility (Thorough breakdown for B.Tech, B.Pharma, MBA, MCA, M.Tech; Regular vs Carry-Over COP students; Grace marks criteria under AKTU Ordinance).
-   - ## Important Deadlines, Examination Schedule & Verification Table (A structured Markdown table with columns: Stage / Notice Item | Scheduled Date / Tentative Timeline | Student Action Required | Official Portal).
-   - ## Step-by-Step Action Guide for College Students (Detailed numbered steps 1., 2., 3., 4., 5. explaining ERP student dashboard login, OneView verification, backlog fee submission, and what to do if marks are marked as PCP or INC).
+   - ## Important Deadlines, Examination Schedule & Verification Table (A structured Markdown table with columns: Stage / Notice Item | Scheduled Date / Tentative Timeline | Student Action Required | Official Portal). Ensure all COP/exam form rows specify [AKTU ERP](https://erp.aktu.ac.in).
+   - ## Step-by-Step Action Guide for College Students (Detailed numbered steps 1., 2., 3., 4., 5. explaining ERP student login on erp.aktu.ac.in, OneView verification, backlog fee submission, and what to do if marks are marked as PCP or INC).
    - ## Instant Result & Marksheet Verification Without DOB (Comprehensive tutorial explaining that students who forgot their registered Date of Birth or need fast marksheet retrieval can verify their live semester ledger via [AKTU Result Without DOB](https://akturesult.bond) or the [AKTU OneView Portal](https://akturesult.bond/oneview)).
-   - ## Official Source Verification, Fact-Check & Video Context (Detailed verification note cross-referencing university circulars, citing educational observer ${video.channel}).
+   - ## Official Source Verification, Fact-Check & Video Context (Detailed verification note cross-referencing university circulars from aktu.ac.in and erp.aktu.ac.in, citing educational observer ${video.channel}).
    - ## Frequently Asked Questions (FAQs) (4 to 5 comprehensive student questions with detailed, authoritative 50-75 word answers for Google People Also Ask snippets).
 
 Return your response strictly as valid, raw JSON (no surrounding markdown codeblocks like \`\`\`json) matching this schema:
@@ -459,11 +565,11 @@ The following structured table outlines the essential milestones, portal require
 
 | Stage / Notice Item | Scheduled Timeline | Student Action Required | Official Portal Gateway |
 | :--- | :--- | :--- | :--- |
-| **Circular Notification Release** | Current Session | Download official circular PDF and review subject codes | [AKTU ERP](https://akturesult.bond/aktu-erp-result) |
-| **Internal Assessment Verification** | Prior to Semester Audits | Confirm theory, sessional, and practical marks | [AKTU OneView](https://akturesult.bond/oneview) |
-| **Instant Result Verification** | 24/7 Live | Query marksheet without requiring registered Date of Birth | [AKTU Result Online](https://akturesult.bond) |
-| **COP Backlog Registration** | Declared Window | Submit exam forms and verify semester fee challan | University ERP Portal |
-| **Discrepancy Rectification** | Before Deadline | Submit formal application to College Exam Cell | Dean of Academics Office |
+| **Circular Notification Release** | Current Session | Download official circular PDF and review subject codes | [AKTU Circulars Archive](https://aktu.ac.in) |
+| **Internal Assessment Verification** | Prior to Semester Audits | Confirm theory, sessional, and practical marks | [AKTU Student ERP](https://erp.aktu.ac.in) |
+| **Instant Result Verification** | 24/7 Live | Query marksheet without requiring registered Date of Birth | [AKTU Result Online (No DOB)](https://akturesult.bond) |
+| **COP Backlog Registration** | Declared Window | Submit exam forms and verify semester fee challan | [AKTU ERP Official Portal](https://erp.aktu.ac.in) |
+| **Discrepancy Rectification** | Before Deadline | Submit formal application to College Exam Cell / ERP | [AKTU ERP Portal](https://erp.aktu.ac.in) |
 
 ---
 
@@ -659,6 +765,18 @@ Yes, AKTU typically provides a formal scrutiny and challenge evaluation window f
     // 6. Ping search engines for instant indexing
     const articleUrl = `https://akturesult.bond/news/${newArticle.slug}`;
     const pingOk = await this.pingIndexNow(articleUrl);
+
+    // 7. Dispatch free browser push notification to subscribed users (native Chrome / Browser Push API)
+    try {
+      PushNotificationService.broadcastNewArticle({
+        title: newArticle.title,
+        excerpt: newArticle.excerpt,
+        slug: newArticle.slug,
+        category: newArticle.category
+      }).catch((pErr: any) => console.warn('[PushNotification] Broadcast error:', pErr));
+    } catch (pushErr) {
+      console.warn('[PushNotification] Error initiating broadcast:', pushErr);
+    }
 
     return {
       success: true,

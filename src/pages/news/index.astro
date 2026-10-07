@@ -1,6 +1,7 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import { ArticleService } from '../../services/article.service';
+import PushNotificationSubscribe from '../../components/PushNotificationSubscribe.astro';
 
 export const prerender = false;
 
@@ -77,6 +78,9 @@ const jsonLd = {
            data-ad-format="auto"
            data-full-width-responsive="true"></ins>
     </div>
+
+    <!-- Free Native Browser Push Notifications Subscription Card -->
+    <PushNotificationSubscribe variant="banner" />
 
     <!-- Category Filter Tabs -->
     <div class="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none justify-start sm:justify-center">

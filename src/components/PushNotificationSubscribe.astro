@@ -1,0 +1,158 @@
+---
+interface Props {
+  variant?: 'banner' | 'compact';
+}
+
+const { variant = 'banner' } = Astro.props;
+---
+
+{variant === 'banner' ? (
+  <div id="push-subscribe-container" class="p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-purple-900/25 via-blue-900/20 to-slate-900/30 light:from-purple-50 light:via-blue-50 light:to-white border border-purple-500/30 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-lg transition-all">
+    <div class="flex items-center gap-3.5">
+      <div class="w-10 h-10 rounded-2xl bg-purple-500/20 text-purple-400 flex items-center justify-center text-xl shrink-0 border border-purple-500/30">
+        🔔
+      </div>
+      <div>
+        <h4 class="text-sm font-bold text-white light:text-ink flex items-center gap-2">
+          <span>Get Instant AKTU News &amp; Circular Alerts</span>
+          <span class="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">Free &bull; Browser Push</span>
+        </h4>
+        <p class="text-xs text-gray-400 light:text-gray-600 mt-0.5">
+          Receive instant notifications directly in your browser when new circulars, COP dates, or marksheets are announced. No email needed.
+        </p>
+      </div>
+    </div>
+    <div class="flex items-center gap-2 shrink-0 w-full sm:w-auto justify-end">
+      <button
+        id="push-subscribe-btn"
+        type="button"
+        class="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-gradient-to-r from-purple-600 to-brand-blue hover:from-purple-500 hover:to-brand-blue-hover text-white text-xs font-bold transition-all shadow-lg shadow-purple-600/25 flex items-center justify-center gap-2 cursor-pointer active:scale-95 disabled:opacity-75 disabled:cursor-not-allowed"
+      >
+        <span id="push-btn-icon">🔔</span>
+        <span id="push-btn-text">Turn On Post Alerts</span>
+      </button>
+    </div>
+  </div>
+) : (
+  <button
+    id="push-subscribe-btn"
+    type="button"
+    class="px-3 py-1.5 rounded-xl border border-purple-500/30 bg-purple-500/10 hover:bg-purple-500/20 text-purple-300 light:text-purple-700 text-xs font-semibold flex items-center gap-1.5 transition-all cursor-pointer active:scale-95"
+    title="Enable browser notifications for new posts"
+  >
+    <span id="push-btn-icon">🔔</span>
+    <span id="push-btn-text">Post Alerts</span>
+  </button>
+)}
+
+<script>
+  (function initPushSubscription() {
+    const btn = document.getElementById('push-subscribe-btn');
+    const btnText = document.getElementById('push-btn-text');
+    const btnIcon = document.getElementById('push-btn-icon');
+
+    if (!btn || !btnText) return;
+
+    function urlBase64ToUint8Array(base64String: string) {
+      const padding = '='.repeat((4 - (base64String.length % 4)) % 4);
+      const base64 = (base64String + padding).replace(/\-/g, '+').replace(/_/g, '/');
+      const rawData = window.atob(base64);
+      const outputArray = new Uint8Array(rawData.length);
+      for (let i = 0; i < rawData.length; ++i) {
+        outputArray[i] = rawData.charCodeAt(i);
+      }
+      return outputArray;
+    }
+
+    async function checkSubscriptionState() {
+      if (!('serviceWorker' in navigator) || !('PushManager' in window)) {
+        btn.setAttribute('disabled', 'true');
+        btnText.textContent = 'Push Not Supported';
+        return;
+      }
+
+      if (Notification.permission === 'denied') {
+        btn.setAttribute('disabled', 'true');
+        btnText.textContent = 'Alerts Blocked in Browser';
+        return;
+      }
+
+      try {
+        const reg = await navigator.serviceWorker.getRegistration('/sw.js');
+        if (reg) {
+          const sub = await reg.pushManager.getSubscription();
+          if (sub) {
+            btnText.textContent = 'Alerts Enabled';
+            if (btnIcon) btnIcon.textContent = '✓';
+            btn.classList.add('opacity-90');
+          }
+        }
+      } catch (e) {
+        // fail-safe
+      }
+    }
+
+    async function handleSubscribe() {
+      if (!('serviceWorker' in navigator) || !('PushManager' in window)) {
+        alert('Your browser does not support Web Push notifications.');
+        return;
+      }
+
+      try {
+        btn.setAttribute('disabled', 'true');
+        btnText.textContent = 'Requesting Permission...';
+
+        const permission = await Notification.requestPermission();
+        if (permission !== 'granted') {
+          btnText.textContent = permission === 'denied' ? 'Alerts Blocked in Browser' : 'Turn On Post Alerts';
+          btn.removeAttribute('disabled');
+          return;
+        }
+
+        btnText.textContent = 'Subscribing...';
+
+        // 1. Register service worker
+        const reg = await navigator.serviceWorker.register('/sw.js', { scope: '/' });
+        await navigator.serviceWorker.ready;
+
+        // 2. Fetch VAPID public key
+        const keyRes = await fetch('/api/notifications/public-key');
+        const keyData = await keyRes.json();
+        if (!keyData || !keyData.publicKey) {
+          throw new Error('Unable to fetch notification server key.');
+        }
+
+        // 3. Subscribe user via Chrome/browser PushManager
+        const applicationServerKey = urlBase64ToUint8Array(keyData.publicKey);
+        const sub = await reg.pushManager.subscribe({
+          userVisibleOnly: true,
+          applicationServerKey
+        });
+
+        // 4. Send subscription to backend
+        const saveRes = await fetch('/api/notifications/subscribe', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ subscription: sub.toJSON() })
+        });
+
+        if (saveRes.ok) {
+          btnText.textContent = 'Alerts Enabled';
+          if (btnIcon) btnIcon.textContent = '✓';
+          btn.classList.add('bg-emerald-600', 'hover:bg-emerald-700');
+        } else {
+          btnText.textContent = 'Alerts Enabled (Local)';
+          if (btnIcon) btnIcon.textContent = '✓';
+        }
+      } catch (err: any) {
+        console.error('Push subscription failed:', err);
+        btn.removeAttribute('disabled');
+        btnText.textContent = 'Turn On Post Alerts';
+        alert('Could not enable notifications. Please ensure notifications are allowed in browser settings.');
+      }
+    }
+
+    btn.addEventListener('click', handleSubscribe);
+    checkSubscriptionState();
+  })();
+</script>
