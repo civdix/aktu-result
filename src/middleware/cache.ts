@@ -51,6 +51,16 @@ AKTU Result provides autonomous AI agents, developers, and students instantaneou
     response.headers.set('link', `${existingLink}, </.well-known/api-catalog>; rel="api-catalog"`);
   }
 
+  // If response is an error (404, 500, etc.), NEVER cache it at CDN or browser
+  if (response.status >= 400) {
+    response.headers.set('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0');
+    response.headers.set('CDN-Cache-Control', 'no-store');
+    response.headers.set('Cloudflare-CDN-Cache-Control', 'no-store');
+    response.headers.set('Pragma', 'no-cache');
+    response.headers.set('Expires', '0');
+    return response;
+  }
+
   // Admin dashboard and API calls: never cache under any circumstances
   if (pathname.startsWith('/admin') || pathname.startsWith('/api/admin')) {
     response.headers.set('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0, s-maxage=0');
@@ -58,6 +68,20 @@ AKTU Result provides autonomous AI agents, developers, and students instantaneou
     response.headers.set('Cloudflare-CDN-Cache-Control', 'no-store');
     response.headers.set('Pragma', 'no-cache');
     response.headers.set('Expires', '0');
+    return response;
+  }
+
+  // Static hashed assets (_astro, images, fonts): cache 1 year immutable
+  if (
+    pathname.startsWith('/_astro/') ||
+    pathname.startsWith('/images/') ||
+    pathname.endsWith('.png') ||
+    pathname.endsWith('.webp') ||
+    pathname.endsWith('.ico') ||
+    pathname.endsWith('.svg') ||
+    pathname.endsWith('.woff2')
+  ) {
+    response.headers.set('Cache-Control', 'public, max-age=31536000, immutable');
     return response;
   }
 
@@ -85,7 +109,10 @@ AKTU Result provides autonomous AI agents, developers, and students instantaneou
     return response;
   }
 
-  // HTML content pages: cache 10 min at CDN edge, background revalidate
+  // HTML content pages:
+  // - max-age=0, must-revalidate: browser always revalidates with CDN so users never get stuck with stale HTML
+  // - s-maxage=180: CDN caches HTML for 3 minutes for optimal speed & DDoS protection
+  // - stale-while-revalidate=300: allows at most 5 minutes background revalidation, avoiding 24h stale desync
   if (
     pathname === '/' ||
     pathname === '/colleges' ||
@@ -95,9 +122,11 @@ AKTU Result provides autonomous AI agents, developers, and students instantaneou
     pathname === '/about' ||
     pathname === '/how-it-works' ||
     pathname === '/privacy-policy' ||
-    pathname === '/terms'
+    pathname === '/terms' ||
+    pathname === '/assessment-simulator' ||
+    pathname === '/news'
   ) {
-    response.headers.set('Cache-Control', 'public, max-age=120, s-maxage=600, stale-while-revalidate=86400');
+    response.headers.set('Cache-Control', 'public, max-age=0, must-revalidate, s-maxage=180, stale-while-revalidate=300');
   }
 
   return response;

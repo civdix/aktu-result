@@ -118,6 +118,61 @@ const isActive = (path: string) => {
         document.documentElement.classList.add('dark');
       }
     </script>
+
+    <!-- Critical Inline Fallback & Anti-FOUC Base Styles -->
+    <style is:inline>
+      html {
+        font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        background-color: #030712;
+        color: #f9fafb;
+        color-scheme: dark light;
+      }
+      html.light {
+        background-color: #f8fafc;
+        color: #0f172a;
+      }
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+      a { text-decoration: none; color: inherit; }
+      *, *::before, *::after { box-sizing: border-box; }
+    </style>
+
+    <!-- Self-Healing Watchdog for CDN Cache & Asset Desynchronization -->
+    <script is:inline>
+      (function() {
+        // 1. Intercept any stylesheet load errors and retry with cache-busting timestamp
+        window.addEventListener('error', function(e) {
+          if (e.target && e.target.tagName === 'LINK' && e.target.rel === 'stylesheet') {
+            var href = e.target.href;
+            if (!href.includes('retry=')) {
+              console.warn('[Asset Watchdog] Stylesheet failed to load from CDN, retrying with cache-bust:', href);
+              var retryLink = document.createElement('link');
+              retryLink.rel = 'stylesheet';
+              retryLink.href = href + (href.includes('?') ? '&' : '?') + 'retry=' + Date.now();
+              document.head.appendChild(retryLink);
+            }
+          }
+        }, true);
+
+        // 2. Health check: if browser received HTML but zero CSS rules loaded after DOM load
+        window.addEventListener('DOMContentLoaded', function() {
+          setTimeout(function() {
+            var hasStyles = document.styleSheets && document.styleSheets.length > 0;
+            if (!hasStyles && !sessionStorage.getItem('css_reload_attempted')) {
+              sessionStorage.setItem('css_reload_attempted', '1');
+              console.warn('[Asset Watchdog] Missing stylesheet detected. Hard revalidating with origin...');
+              window.location.reload();
+            }
+          }, 1200);
+        });
+      })();
+    </script>
   </head>
   <body class="bg-canvas-dark text-white dark:bg-canvas-dark dark:text-white light:bg-canvas-light light:text-ink min-h-screen flex flex-flow flex-col justify-between overflow-x-hidden selection:bg-brand-blue selection:text-white">
     
