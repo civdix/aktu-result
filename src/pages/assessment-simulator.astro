@@ -192,53 +192,192 @@ const jsonLd = {
         </div>
       </div>
 
-      <!-- Right Column: Hardware & Local Camera Diagnostic Box -->
+      <!-- Right Column: Video Conferencing & AI Object / Shabbiness Detection Diagnostic Lab -->
       <div class="space-y-6">
         <div class="p-6 rounded-3xl bg-white/[0.02] light:bg-white border border-white/10 light:border-black/10 shadow-xl space-y-4">
           <div class="flex items-center justify-between">
             <h3 class="text-sm font-bold text-white light:text-ink flex items-center gap-2">
-              <span>📷</span>
-              <span>Hardware &amp; Camera Check</span>
+              <span>📹</span>
+              <span>Video Conference &amp; AI Vision Lab</span>
             </h3>
-            <span id="cam-status-pill" class="text-[10px] px-2 py-0.5 rounded-full bg-gray-500/20 text-gray-400 font-semibold">Optional</span>
+            <span id="cam-status-pill" class="text-[10px] px-2 py-0.5 rounded-full bg-gray-500/20 text-gray-400 font-semibold font-mono">Camera: Standby</span>
           </div>
 
           <p class="text-xs text-gray-400 light:text-gray-500 leading-relaxed">
-            Real exams require an active webcam. Test your webcam framing and lighting locally. <em>Video stays 100% on your device and is never recorded or sent anywhere.</em>
+            Live proctored exams deploy video conferencing with local computer vision to catch unauthorized objects or unkempt perimeter items. <em>Runs 100% in your browser.</em>
           </p>
 
-          <!-- Camera Feed Container -->
-          <div class="relative rounded-2xl overflow-hidden aspect-video bg-black/80 border border-white/10 light:border-black/10 flex items-center justify-center">
-            <video id="webcam-preview" autoplay playsinline muted class="w-full h-full object-cover hidden mirror"></video>
-            <div id="webcam-placeholder" class="text-center p-4 space-y-2">
-              <span class="text-3xl block">📹</span>
-              <span class="text-xs text-gray-400 font-medium block">Camera Inactive</span>
-              <span class="text-[10px] text-gray-500 block">Click below to test local video frame</span>
-            </div>
-            <!-- Face Tracking Simulation Overlay -->
-            <div id="webcam-overlay" class="absolute inset-0 pointer-events-none hidden border-2 border-emerald-400/60 rounded-2xl flex flex-col justify-between p-2">
-              <div class="flex items-center justify-between text-[10px] bg-black/60 backdrop-blur px-2 py-0.5 rounded-md text-emerald-400 font-mono">
-                <span>[AI FACE MESH: LOCK]</span>
-                <span>CONFIDENCE: 98%</span>
-              </div>
-              <div class="text-[10px] bg-black/60 backdrop-blur px-2 py-0.5 rounded-md text-gray-300 font-mono self-start">
-                POZ: CENTERED • LIGHTING: GOOD
-              </div>
-            </div>
-          </div>
-
-          <div class="flex items-center gap-2">
+          <!-- Mode Selector: AI Invigilator vs P2P WebRTC Video Conference -->
+          <div class="grid grid-cols-2 gap-1.5 p-1 rounded-xl bg-black/40 light:bg-gray-100 border border-white/5 light:border-black/5 text-xs font-semibold">
             <button
-              id="btn-toggle-webcam"
+              id="tab-conf-ai"
               type="button"
-              class="w-full py-2.5 rounded-xl border border-white/10 hover:border-white/20 light:border-black/10 bg-white/5 hover:bg-white/10 text-xs text-white light:text-ink font-semibold transition-all cursor-pointer flex items-center justify-center gap-2"
+              class="conf-tab-btn active py-1.5 px-2 rounded-lg bg-brand-blue text-white shadow transition-all cursor-pointer text-center text-[11px]"
             >
-              <span>🎥 Turn On Webcam Test</span>
+              🤖 AI Proctor Room
+            </button>
+            <button
+              id="tab-conf-p2p"
+              type="button"
+              class="conf-tab-btn py-1.5 px-2 rounded-lg text-gray-400 hover:text-white light:hover:text-ink transition-all cursor-pointer text-center text-[11px]"
+            >
+              👥 2-Way P2P WebRTC
             </button>
           </div>
 
+          <!-- Video Conference Dual Stage Container -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+            
+            <!-- Candidate Feed (Left) with CV Detection Canvas -->
+            <div class="space-y-1.5">
+              <div class="flex items-center justify-between text-[11px] font-mono text-gray-400">
+                <span>You (Candidate)</span>
+                <span id="cv-fps-pill" class="text-[9px] px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-400">CV: Ready</span>
+              </div>
+              <div class="relative rounded-2xl overflow-hidden aspect-video bg-black/80 border border-white/10 light:border-black/10 flex items-center justify-center">
+                <video id="webcam-preview" autoplay playsinline muted class="w-full h-full object-cover hidden mirror"></video>
+                <canvas id="detection-canvas" class="absolute inset-0 w-full h-full pointer-events-none hidden"></canvas>
+                <div id="webcam-placeholder" class="text-center p-3 space-y-1">
+                  <span class="text-2xl block">📹</span>
+                  <span class="text-[11px] text-gray-400 font-medium block">Camera Inactive</span>
+                  <span class="text-[9px] text-gray-500 block">Click below to start video test</span>
+                </div>
+              </div>
+
+              <!-- Audio Mic Level Visualizer -->
+              <div class="space-y-1">
+                <div class="flex items-center justify-between text-[10px] text-gray-400 font-mono">
+                  <span>🎙️ Mic Audio:</span>
+                  <span id="mic-db-label">Muted</span>
+                </div>
+                <div class="w-full h-1.5 bg-black/50 light:bg-gray-200 rounded-full overflow-hidden">
+                  <div id="mic-level-bar" class="h-full bg-emerald-400 transition-all duration-75 w-0"></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Proctor / Peer Feed (Right) -->
+            <div class="space-y-1.5">
+              <div class="flex items-center justify-between text-[11px] font-mono text-gray-400">
+                <span id="conf-partner-title">AI Invigilator Station</span>
+                <span id="conf-partner-badge" class="text-[9px] px-1.5 py-0.5 rounded bg-purple-500/20 text-purple-400">Room #4</span>
+              </div>
+              <div class="relative rounded-2xl overflow-hidden aspect-video bg-black/80 border border-white/10 light:border-black/10 flex items-center justify-center">
+                <!-- AI Proctor Canvas View -->
+                <canvas id="proctor-stream-canvas" class="w-full h-full object-cover block"></canvas>
+                <!-- Peer Remote Video (For P2P WebRTC) -->
+                <video id="peer-video" autoplay playsinline class="w-full h-full object-cover hidden"></video>
+                <div id="peer-placeholder" class="absolute inset-0 bg-black/80 hidden flex-col items-center justify-center p-2 text-center">
+                  <span class="text-xl">👥</span>
+                  <span class="text-[10px] text-gray-400 mt-1">Waiting for Peer Connection</span>
+                  <span class="text-[9px] text-gray-500">Share Room Code to connect</span>
+                </div>
+              </div>
+
+              <!-- Cleanliness / Shabbiness Monitor Bar -->
+              <div class="space-y-1">
+                <div class="flex items-center justify-between text-[10px] text-gray-400 font-mono">
+                  <span>Desk Tidiness:</span>
+                  <span id="tidiness-score-label" class="text-emerald-400 font-bold">100% Clean</span>
+                </div>
+                <div class="w-full h-1.5 bg-black/50 light:bg-gray-200 rounded-full overflow-hidden">
+                  <div id="tidiness-level-bar" class="h-full bg-emerald-400 transition-all duration-150 w-full"></div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Video Conference Controls -->
+          <div class="grid grid-cols-2 gap-2 pt-1">
+            <button
+              id="btn-toggle-webcam"
+              type="button"
+              class="py-2.5 px-3 rounded-xl border border-white/10 hover:border-white/20 light:border-black/10 bg-white/5 hover:bg-white/10 text-xs text-white light:text-ink font-semibold transition-all cursor-pointer flex items-center justify-center gap-1.5"
+            >
+              <span>🎥 Start Camera</span>
+            </button>
+            <button
+              id="btn-toggle-mic"
+              type="button"
+              class="py-2.5 px-3 rounded-xl border border-white/10 hover:border-white/20 light:border-black/10 bg-white/5 hover:bg-white/10 text-xs text-white light:text-ink font-semibold transition-all cursor-pointer flex items-center justify-center gap-1.5 disabled:opacity-40"
+              disabled
+            >
+              <span>🎙️ Mic: Off</span>
+            </button>
+          </div>
+
+          <!-- WebRTC Room Bar (Shown when P2P tab active) -->
+          <div id="webrtc-room-bar" class="hidden p-3 rounded-xl bg-purple-950/20 border border-purple-500/30 space-y-2">
+            <div class="flex items-center justify-between text-xs font-semibold text-purple-300">
+              <span>WebRTC P2P Conference Room:</span>
+              <span id="webrtc-status-text" class="text-[10px] text-gray-400 font-mono">Disconnected</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <input
+                id="input-room-code"
+                type="text"
+                value="AKTU-EXAM-ROOM"
+                placeholder="Room Code"
+                class="w-full px-2.5 py-1.5 rounded-lg bg-black/60 border border-white/10 text-white font-mono text-xs focus:outline-none focus:border-purple-400"
+              />
+              <button
+                id="btn-join-room"
+                type="button"
+                class="px-3 py-1.5 rounded-lg bg-purple-600 hover:bg-purple-500 text-white font-bold text-xs shrink-0 cursor-pointer"
+              >
+                Connect
+              </button>
+            </div>
+            <p class="text-[10px] text-gray-400">
+              Open another tab with this link &amp; room code to test real two-way WebRTC video conferencing!
+            </p>
+          </div>
+
+          <!-- Computer Vision Intrusion Diagnostic Tests -->
+          <div class="pt-2 border-t border-white/5 light:border-black/5 space-y-2">
+            <div class="flex items-center justify-between text-xs">
+              <span class="font-bold text-gray-300 light:text-gray-700 flex items-center gap-1">
+                <span>⚡</span>
+                <span>Test Local CV Detection Algo:</span>
+              </span>
+              <button
+                id="btn-calibrate-clean"
+                type="button"
+                class="text-[10px] text-brand-blue hover:underline font-mono cursor-pointer"
+              >
+                [Calibrate Desk Baseline]
+              </button>
+            </div>
+
+            <div class="grid grid-cols-2 gap-2">
+              <button
+                id="btn-sim-shabby"
+                type="button"
+                class="py-2 px-2.5 rounded-xl bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/30 text-amber-300 text-[11px] font-semibold transition-all cursor-pointer flex items-center justify-center gap-1"
+              >
+                <span>⚠️ Test Shabby Object</span>
+              </button>
+              <button
+                id="btn-sim-device"
+                type="button"
+                class="py-2 px-2.5 rounded-xl bg-rose-500/10 hover:bg-rose-500/20 border border-rose-500/30 text-rose-300 text-[11px] font-semibold transition-all cursor-pointer flex items-center justify-center gap-1"
+              >
+                <span>📱 Test Phone Intrusion</span>
+              </button>
+            </div>
+          </div>
+
           <!-- Environment Diagnostic Checklist -->
-          <div class="pt-3 border-t border-white/5 light:border-black/5 space-y-2 text-xs">
+          <div class="pt-2 border-t border-white/5 light:border-black/5 space-y-2 text-xs">
+            <div class="flex items-center justify-between text-gray-400 light:text-gray-600">
+              <span>Local CV Detection Algorithm:</span>
+              <span id="chk-cv-algo" class="text-emerald-400 font-semibold font-mono">✓ Active (Pure JS)</span>
+            </div>
+            <div class="flex items-center justify-between text-gray-400 light:text-gray-600">
+              <span>Shabbiness / Clutter Heuristic:</span>
+              <span class="text-emerald-400 font-semibold font-mono">✓ Laplacian + Entropy</span>
+            </div>
             <div class="flex items-center justify-between text-gray-400 light:text-gray-600">
               <span>Single Display Monitor:</span>
               <span id="chk-monitor" class="text-emerald-400 font-semibold font-mono">✓ Verified</span>
@@ -258,7 +397,7 @@ const jsonLd = {
         <div class="p-5 rounded-2xl bg-gradient-to-r from-amber-500/[0.08] to-orange-500/[0.08] border border-amber-500/25 space-y-1.5">
           <span class="text-[10px] font-bold uppercase tracking-wider text-amber-400 block">Proctoring Insight:</span>
           <p class="text-xs text-gray-300 light:text-gray-700 leading-relaxed">
-            Most false-positive disqualifications happen because of pop-up notifications (Discord, Telegram, Windows Update) that steal window focus. Run this simulator to verify your system remains uninterrupted.
+            Real exams flag not just window switches, but also any foreign objects (phones, notes, or secondary persons) entering the camera frame. Keep your desk tidy, lit, and clear of clutter.
           </p>
         </div>
       </div>
@@ -391,6 +530,66 @@ const jsonLd = {
         <!-- Proctoring Activity Console & Palette (Right Column) -->
         <div class="space-y-6">
           
+          <!-- Docked Video Conference & AI Object Detection HUD -->
+          <div class="p-4 rounded-3xl bg-black/80 dark:bg-black/90 light:bg-white border border-white/15 light:border-black/10 shadow-2xl space-y-3">
+            <div class="flex items-center justify-between border-b border-white/10 pb-2">
+              <div class="flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                <span class="text-xs font-bold text-white light:text-ink">Live Video &amp; Proctor HUD</span>
+              </div>
+              <span id="active-cv-status-pill" class="text-[9px] px-2 py-0.5 rounded font-mono bg-emerald-500/15 text-emerald-400">
+                AI Vision: Scanning
+              </span>
+            </div>
+
+            <!-- Mini Dual Video Deck: Candidate Stream + Proctor Stream -->
+            <div class="grid grid-cols-2 gap-2">
+              <!-- Candidate Mini Feed with Live Detection Overlay -->
+              <div class="relative rounded-xl overflow-hidden aspect-video bg-black/90 border border-white/10">
+                <video id="active-webcam-preview" autoplay playsinline muted class="w-full h-full object-cover mirror"></video>
+                <canvas id="active-detection-canvas" class="absolute inset-0 w-full h-full pointer-events-none"></canvas>
+                <div id="active-cam-placeholder" class="absolute inset-0 flex flex-col items-center justify-center p-1 text-center bg-black/80">
+                  <span class="text-lg">📹</span>
+                  <span class="text-[9px] text-gray-400">Webcam Inactive</span>
+                </div>
+                <div class="absolute bottom-1 left-1 text-[8px] bg-black/70 backdrop-blur px-1.5 py-0.5 rounded text-gray-300 font-mono">
+                  You
+                </div>
+              </div>
+
+              <!-- Remote Proctor / Peer Mini Feed -->
+              <div class="relative rounded-xl overflow-hidden aspect-video bg-black/90 border border-white/10">
+                <canvas id="active-proctor-canvas" class="w-full h-full object-cover block"></canvas>
+                <video id="active-peer-video" autoplay playsinline class="w-full h-full object-cover hidden"></video>
+                <div class="absolute bottom-1 left-1 text-[8px] bg-purple-950/80 backdrop-blur px-1.5 py-0.5 rounded text-purple-300 font-mono" id="active-partner-tag">
+                  Invigilator #4
+                </div>
+              </div>
+            </div>
+
+            <!-- Real-Time Desk Tidiness & Audio Indicators -->
+            <div class="space-y-1.5 pt-1 text-[10px] font-mono">
+              <div class="flex items-center justify-between text-gray-300 light:text-gray-700">
+                <span>Desk Tidiness:</span>
+                <span id="active-tidiness-label" class="text-emerald-400 font-bold">100% Clean</span>
+              </div>
+              <div class="w-full h-1.5 bg-black/50 light:bg-gray-200 rounded-full overflow-hidden">
+                <div id="active-tidiness-bar" class="h-full bg-emerald-400 transition-all duration-150 w-full"></div>
+              </div>
+
+              <div class="flex items-center justify-between pt-1">
+                <span class="text-gray-400">Object Intrusions: <strong id="active-intrusion-count" class="text-white light:text-ink">0</strong></span>
+                <button
+                  id="btn-active-sim-shabby"
+                  type="button"
+                  class="text-[9px] px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 hover:bg-amber-500/30 transition-all cursor-pointer font-sans"
+                >
+                  🧪 Test Intrusion
+                </button>
+              </div>
+            </div>
+          </div>
+
           <!-- Live Real-Time Violation Log Stream -->
           <div class="p-5 rounded-3xl bg-[#0b0f19] light:bg-gray-900 border border-white/15 text-white shadow-2xl space-y-3">
             <div class="flex items-center justify-between border-b border-white/10 pb-2.5">
@@ -507,6 +706,60 @@ const jsonLd = {
               <span class="text-[10px] text-gray-400 block uppercase">Clipboard / Keys</span>
               <strong class="text-xl font-bold text-white light:text-ink" id="stat-clip-count">0</strong>
               <span class="text-[10px] text-gray-500 block mt-0.5">Copy/Paste/F12 blocks</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section: AI Video & Workspace Environment Audit -->
+        <div class="space-y-4">
+          <div class="flex items-center justify-between">
+            <h3 class="text-sm font-bold text-white light:text-ink uppercase tracking-wider flex items-center gap-2">
+              <span>📹</span>
+              <span>AI Video &amp; Workspace Environment Audit:</span>
+            </h3>
+            <span class="text-xs text-gray-400 font-mono">CV Sensor: Laplacian + Spatial Entropy</span>
+          </div>
+
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+            <div class="p-4 rounded-2xl bg-white/[0.02] light:bg-gray-50 border border-white/10 light:border-black/10 text-center">
+              <span class="text-[10px] text-gray-400 block uppercase">Object Intrusions</span>
+              <strong class="text-xl font-bold text-white light:text-ink" id="stat-object-count">0</strong>
+              <span class="text-[10px] text-gray-500 block mt-0.5">Objects in perimeter</span>
+            </div>
+
+            <div class="p-4 rounded-2xl bg-white/[0.02] light:bg-gray-50 border border-white/10 light:border-black/10 text-center">
+              <span class="text-[10px] text-gray-400 block uppercase">Shabby / Clutter Alerts</span>
+              <strong class="text-xl font-bold text-white light:text-ink" id="stat-shabby-count">0</strong>
+              <span class="text-[10px] text-gray-500 block mt-0.5">High entropy anomalies</span>
+            </div>
+
+            <div class="p-4 rounded-2xl bg-white/[0.02] light:bg-gray-50 border border-white/10 light:border-black/10 text-center">
+              <span class="text-[10px] text-gray-400 block uppercase">Desk Tidiness Score</span>
+              <strong class="text-xl font-bold text-emerald-400" id="stat-cleanliness-score">100%</strong>
+              <span class="text-[10px] text-gray-500 block mt-0.5">Workspace neatness</span>
+            </div>
+
+            <div class="p-4 rounded-2xl bg-white/[0.02] light:bg-gray-50 border border-white/10 light:border-black/10 text-center">
+              <span class="text-[10px] text-gray-400 block uppercase">Face Framing Lock</span>
+              <strong class="text-xl font-bold text-emerald-400" id="stat-face-compliance">98%</strong>
+              <span class="text-[10px] text-gray-500 block mt-0.5">Centered compliance</span>
+            </div>
+          </div>
+
+          <!-- Captured Violation Snapshots Evidence Gallery -->
+          <div class="p-5 rounded-2xl bg-black/40 light:bg-gray-50 border border-white/10 light:border-black/10 space-y-3">
+            <div class="flex items-center justify-between">
+              <h4 class="text-xs font-bold text-white light:text-ink uppercase tracking-wider flex items-center gap-1.5">
+                <span>📸</span>
+                <span>Proctor Snapshot Evidence (Incident Frames):</span>
+              </h4>
+              <span id="evidence-count-tag" class="text-[10px] font-mono text-gray-400">0 captures</span>
+            </div>
+
+            <div id="intrusion-gallery" class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-1">
+              <div class="col-span-2 sm:col-span-4 p-4 rounded-xl border border-dashed border-white/10 light:border-black/10 text-center text-xs text-gray-400">
+                ✨ Clean environment! No unauthorized objects or shabby clutter breached your test perimeter.
+              </div>
             </div>
           </div>
         </div>
@@ -692,6 +945,28 @@ const jsonLd = {
       let examTimerSeconds = 600; // 10 minutes
       let examTimerInterval = null;
       let webcamStream = null;
+      let micStreamTrack = null;
+      let isMicMuted = false;
+
+      // Video Conferencing & P2P WebRTC State
+      let activeConfMode = 'ai'; // 'ai' | 'p2p'
+      let peerConnection = null;
+      let p2pBroadcastChannel = null;
+      let remotePeerStream = null;
+      let currentRoomCode = 'AKTU-EXAM-ROOM';
+      let proctorAnimRaf = null;
+
+      // Local Computer Vision & Shabby Object Intrusion Detection State
+      let intrusionEventsCount = 0;
+      let shabbyEventsCount = 0;
+      let deskTidinessScore = 100;
+      let tidinessHistory = [];
+      let intrusionSnapshots = []; // [{ time, label, clutter, dataUrl }]
+      let lastIntrusionAlertTimestamp = 0;
+      let cvLoopInterval = null;
+      let baselineBuffer = null; // Float32Array for background subtraction
+      let baselineCalibrated = false;
+      let simulatedIntrusion = { active: false, type: 'shabby', step: 0 };
 
       // Proctoring Metrics
       let violationsCount = 0;
@@ -705,8 +980,11 @@ const jsonLd = {
       let awayTimerStart = null;
       let proctorLogs = [];
 
-      // 3. Audio Tone Generator (Web Audio API)
+      // 3. Audio Tone Generator & Decibel Meter (Web Audio API)
       let audioCtx = null;
+      let micAnalyser = null;
+      let micDataArray = null;
+
       function playWarningTone(frequency = 440, duration = 0.25, type = 'sine') {
         try {
           if (!audioCtx) {
@@ -739,10 +1017,47 @@ const jsonLd = {
       const btnFinish = document.getElementById('btn-finish-exam');
       const btnRetake = document.getElementById('btn-retake-exam');
       const btnToggleCam = document.getElementById('btn-toggle-webcam');
+      const btnToggleMic = document.getElementById('btn-toggle-mic');
       const webcamPreview = document.getElementById('webcam-preview');
       const webcamPlaceholder = document.getElementById('webcam-placeholder');
-      const webcamOverlay = document.getElementById('webcam-overlay');
+      const detectionCanvas = document.getElementById('detection-canvas');
       const camStatusPill = document.getElementById('cam-status-pill');
+      const cvFpsPill = document.getElementById('cv-fps-pill');
+
+      // Video Conference DOM Elements
+      const tabConfAi = document.getElementById('tab-conf-ai');
+      const tabConfP2p = document.getElementById('tab-conf-p2p');
+      const confPartnerTitle = document.getElementById('conf-partner-title');
+      const confPartnerBadge = document.getElementById('conf-partner-badge');
+      const proctorStreamCanvas = document.getElementById('proctor-stream-canvas');
+      const peerVideo = document.getElementById('peer-video');
+      const peerPlaceholder = document.getElementById('peer-placeholder');
+      const webrtcRoomBar = document.getElementById('webrtc-room-bar');
+      const inputRoomCode = document.getElementById('input-room-code');
+      const btnJoinRoom = document.getElementById('btn-join-room');
+      const webrtcStatusText = document.getElementById('webrtc-status-text');
+
+      // Audio & Tidiness HUD Elements
+      const micLevelBar = document.getElementById('mic-level-bar');
+      const micDbLabel = document.getElementById('mic-db-label');
+      const tidinessScoreLabel = document.getElementById('tidiness-score-label');
+      const tidinessLevelBar = document.getElementById('tidiness-level-bar');
+
+      // Active Exam Docked Video HUD Elements
+      const activeWebcamPreview = document.getElementById('active-webcam-preview');
+      const activeDetectionCanvas = document.getElementById('active-detection-canvas');
+      const activeCamPlaceholder = document.getElementById('active-cam-placeholder');
+      const activeProctorCanvas = document.getElementById('active-proctor-canvas');
+      const activePeerVideo = document.getElementById('active-peer-video');
+      const activeTidinessLabel = document.getElementById('active-tidiness-label');
+      const activeTidinessBar = document.getElementById('active-tidiness-bar');
+      const activeIntrusionCount = document.getElementById('active-intrusion-count');
+      const btnActiveSimShabby = document.getElementById('btn-active-sim-shabby');
+
+      // CV Test Action Buttons
+      const btnCalibrateClean = document.getElementById('btn-calibrate-clean');
+      const btnSimShabby = document.getElementById('btn-sim-shabby');
+      const btnSimDevice = document.getElementById('btn-sim-device');
 
       const hudTimer = document.getElementById('exam-timer-display');
       const hudViolations = document.getElementById('hud-violation-count');
@@ -1008,48 +1323,648 @@ const jsonLd = {
         }
       }
 
-      // 7. Webcam Diagnostics
+      // 7. VIDEO CONFERENCING & PROCTOR PRESENCE ENGINE
+      function startAIProctorCanvasAnimation() {
+        const canvases = [proctorStreamCanvas, activeProctorCanvas].filter(Boolean);
+        let phase = 0;
+        function renderProctor() {
+          phase += 0.04;
+          canvases.forEach(cvs => {
+            const ctx = cvs.getContext('2d');
+            if (!ctx) return;
+            const w = cvs.width = cvs.clientWidth || 320;
+            const h = cvs.height = cvs.clientHeight || 180;
+
+            // Background
+            ctx.fillStyle = '#0a0f1d';
+            ctx.fillRect(0, 0, w, h);
+
+            // Technical Grid
+            ctx.strokeStyle = 'rgba(56, 189, 248, 0.08)';
+            ctx.lineWidth = 1;
+            for (let x = 0; x < w; x += 20) {
+              ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, h); ctx.stroke();
+            }
+            for (let y = 0; y < h; y += 20) {
+              ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(w, y); ctx.stroke();
+            }
+
+            // Invigilator Silhouette Avatar
+            ctx.fillStyle = '#1e293b';
+            ctx.beginPath();
+            ctx.arc(w / 2, h / 2 - 10, 22, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.beginPath();
+            ctx.ellipse(w / 2, h / 2 + 30, 44, 24, 0, 0, Math.PI * 2);
+            ctx.fill();
+
+            // Active Listening / Audio Waveform
+            ctx.strokeStyle = '#38bdf8';
+            ctx.lineWidth = 1.5;
+            ctx.beginPath();
+            for (let x = 0; x < w; x += 4) {
+              const y = h - 22 + Math.sin(x * 0.09 + phase) * 6 * Math.cos(x * 0.02 + phase * 0.4);
+              if (x === 0) ctx.moveTo(x, y);
+              else ctx.lineTo(x, y);
+            }
+            ctx.stroke();
+
+            // Status badges
+            ctx.fillStyle = '#c084fc';
+            ctx.font = '10px monospace';
+            ctx.fillText('[INVIGILATOR STATION #4]', 8, 16);
+            ctx.fillStyle = '#34d399';
+            ctx.fillText('ONLINE • 24ms', w - 95, 16);
+
+            // Sweeping radar scan line
+            const scanY = ((Math.sin(phase * 0.6) + 1) / 2) * h;
+            ctx.strokeStyle = 'rgba(52, 211, 153, 0.25)';
+            ctx.lineWidth = 1.5;
+            ctx.beginPath(); ctx.moveTo(0, scanY); ctx.lineTo(w, scanY); ctx.stroke();
+          });
+
+          proctorAnimRaf = requestAnimationFrame(renderProctor);
+        }
+        renderProctor();
+      }
+
+      startAIProctorCanvasAnimation();
+
+      // Video Conference Tab Switcher
+      tabConfAi?.addEventListener('click', () => {
+        activeConfMode = 'ai';
+        tabConfAi.classList.add('bg-brand-blue', 'text-white');
+        tabConfAi.classList.remove('text-gray-400');
+        tabConfP2p.classList.remove('bg-brand-blue', 'text-white');
+        tabConfP2p.classList.add('text-gray-400');
+
+        proctorStreamCanvas?.classList.remove('hidden');
+        peerVideo?.classList.add('hidden');
+        peerPlaceholder?.classList.add('hidden');
+        webrtcRoomBar?.classList.add('hidden');
+        if (confPartnerTitle) confPartnerTitle.textContent = 'AI Invigilator Station';
+        if (confPartnerBadge) confPartnerBadge.textContent = 'Room #4';
+      });
+
+      tabConfP2p?.addEventListener('click', () => {
+        activeConfMode = 'p2p';
+        tabConfP2p.classList.add('bg-brand-blue', 'text-white');
+        tabConfP2p.classList.remove('text-gray-400');
+        tabConfAi.classList.remove('bg-brand-blue', 'text-white');
+        tabConfAi.classList.add('text-gray-400');
+
+        proctorStreamCanvas?.classList.add('hidden');
+        peerVideo?.classList.remove('hidden');
+        webrtcRoomBar?.classList.remove('hidden');
+        if (!remotePeerStream && peerPlaceholder) {
+          peerPlaceholder.classList.remove('hidden');
+        }
+        if (confPartnerTitle) confPartnerTitle.textContent = 'WebRTC Peer Stream';
+        if (confPartnerBadge) confPartnerBadge.textContent = 'P2P Live';
+      });
+
+      // WebRTC P2P Conference Signaling & PeerConnection
+      function initP2PWebRTC() {
+        if (typeof BroadcastChannel === 'undefined') return;
+        p2pBroadcastChannel = new BroadcastChannel('aktu_exam_webrtc_channel');
+        p2pBroadcastChannel.onmessage = async (event) => {
+          const data = event.data;
+          if (!data || data.room !== currentRoomCode) return;
+
+          if (data.type === 'offer') {
+            await handleWebRTCOffer(data.offer);
+          } else if (data.type === 'answer') {
+            await handleWebRTCAnswer(data.answer);
+          } else if (data.type === 'candidate') {
+            if (peerConnection && data.candidate) {
+              try { await peerConnection.addIceCandidate(new RTCIceCandidate(data.candidate)); } catch (e) {}
+            }
+          }
+        };
+      }
+
+      async function createPeerConnection() {
+        peerConnection = new RTCPeerConnection({
+          iceServers: [{ urls: 'stun:stun.l.google.com:19302' }]
+        });
+
+        peerConnection.onicecandidate = (event) => {
+          if (event.candidate && p2pBroadcastChannel) {
+            p2pBroadcastChannel.postMessage({
+              room: currentRoomCode,
+              type: 'candidate',
+              candidate: event.candidate
+            });
+          }
+        };
+
+        peerConnection.ontrack = (event) => {
+          remotePeerStream = event.streams[0];
+          if (peerVideo) {
+            peerVideo.srcObject = remotePeerStream;
+            peerVideo.classList.remove('hidden');
+          }
+          if (activePeerVideo) {
+            activePeerVideo.srcObject = remotePeerStream;
+            activePeerVideo.classList.remove('hidden');
+          }
+          peerPlaceholder?.classList.add('hidden');
+          if (webrtcStatusText) {
+            webrtcStatusText.textContent = 'Connected (2-Way Stream)';
+            webrtcStatusText.className = 'text-[10px] text-emerald-400 font-mono font-bold';
+          }
+        };
+
+        if (webcamStream) {
+          webcamStream.getTracks().forEach(track => {
+            peerConnection.addTrack(track, webcamStream);
+          });
+        }
+      }
+
+      async function connectWebRTCRoom() {
+        currentRoomCode = inputRoomCode?.value?.trim() || 'AKTU-EXAM-ROOM';
+        if (webrtcStatusText) webrtcStatusText.textContent = 'Connecting...';
+
+        await createPeerConnection();
+        const offer = await peerConnection.createOffer();
+        await peerConnection.setLocalDescription(offer);
+
+        p2pBroadcastChannel?.postMessage({
+          room: currentRoomCode,
+          type: 'offer',
+          offer: offer
+        });
+      }
+
+      async function handleWebRTCOffer(offer) {
+        if (!peerConnection) await createPeerConnection();
+        await peerConnection.setRemoteDescription(new RTCSessionDescription(offer));
+        const answer = await peerConnection.createAnswer();
+        await peerConnection.setLocalDescription(answer);
+
+        p2pBroadcastChannel?.postMessage({
+          room: currentRoomCode,
+          type: 'answer',
+          answer: answer
+        });
+      }
+
+      async function handleWebRTCAnswer(answer) {
+        if (peerConnection) {
+          await peerConnection.setRemoteDescription(new RTCSessionDescription(answer));
+        }
+      }
+
+      btnJoinRoom?.addEventListener('click', connectWebRTCRoom);
+      initP2PWebRTC();
+
+      // Audio Monitoring Setup
+      function setupAudioAnalyser(stream) {
+        try {
+          if (!audioCtx) {
+            audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+          }
+          if (audioCtx.state === 'suspended') audioCtx.resume();
+
+          const source = audioCtx.createMediaStreamSource(stream);
+          micAnalyser = audioCtx.createAnalyser();
+          micAnalyser.fftSize = 64;
+          source.connect(micAnalyser);
+          micDataArray = new Uint8Array(micAnalyser.frequencyBinCount);
+
+          function updateMicMeter() {
+            if (!micAnalyser) return;
+            micAnalyser.getByteFrequencyData(micDataArray);
+            let sum = 0;
+            for (let i = 0; i < micDataArray.length; i++) sum += micDataArray[i];
+            const avg = sum / micDataArray.length;
+            const percent = Math.min(100, Math.round((avg / 120) * 100));
+            const db = Math.round(avg * 0.38);
+
+            if (micLevelBar) micLevelBar.style.width = isMicMuted ? '0%' : (percent + '%');
+            if (micDbLabel) micDbLabel.textContent = isMicMuted ? 'Muted' : (db + ' dB');
+
+            requestAnimationFrame(updateMicMeter);
+          }
+          updateMicMeter();
+        } catch (e) {
+          console.warn('Microphone analyser initialization error:', e);
+        }
+      }
+
+      // Mic Mute / Unmute Toggle
+      btnToggleMic?.addEventListener('click', () => {
+        if (!micStreamTrack) return;
+        isMicMuted = !isMicMuted;
+        micStreamTrack.enabled = !isMicMuted;
+        btnToggleMic.textContent = isMicMuted ? '🔇 Mic: Muted' : '🎙️ Mic: On';
+        btnToggleMic.className = isMicMuted
+          ? 'py-2.5 px-3 rounded-xl border border-rose-500/30 bg-rose-500/10 text-rose-300 text-xs font-semibold transition-all cursor-pointer flex items-center justify-center gap-1.5'
+          : 'py-2.5 px-3 rounded-xl border border-white/10 hover:border-white/20 light:border-black/10 bg-white/5 hover:bg-white/10 text-xs text-white light:text-ink font-semibold transition-all cursor-pointer flex items-center justify-center gap-1.5';
+      });
+
+      // Webcam Toggle
       btnToggleCam?.addEventListener('click', async () => {
         if (webcamStream) {
           // Stop stream
           webcamStream.getTracks().forEach(t => t.stop());
           webcamStream = null;
+          micStreamTrack = null;
           if (webcamPreview) {
             webcamPreview.srcObject = null;
             webcamPreview.classList.add('hidden');
           }
-          webcamPlaceholder?.classList.remove('hidden');
-          webcamOverlay?.classList.add('hidden');
-          btnToggleCam.textContent = '🎥 Turn On Webcam Test';
-          if (camStatusPill) {
-            camStatusPill.textContent = 'Optional';
-            camStatusPill.className = 'text-[10px] px-2 py-0.5 rounded-full bg-gray-500/20 text-gray-400 font-semibold';
+          if (activeWebcamPreview) {
+            activeWebcamPreview.srcObject = null;
           }
+          webcamPlaceholder?.classList.remove('hidden');
+          detectionCanvas?.classList.add('hidden');
+          activeCamPlaceholder?.classList.remove('hidden');
+          btnToggleCam.textContent = '🎥 Start Camera';
+          if (btnToggleMic) {
+            btnToggleMic.disabled = true;
+            btnToggleMic.textContent = '🎙️ Mic: Off';
+          }
+          if (camStatusPill) {
+            camStatusPill.textContent = 'Camera: Standby';
+            camStatusPill.className = 'text-[10px] px-2 py-0.5 rounded-full bg-gray-500/20 text-gray-400 font-semibold font-mono';
+          }
+          stopComputerVisionLoop();
         } else {
           try {
             btnToggleCam.textContent = 'Requesting Camera...';
-            webcamStream = await navigator.mediaDevices.getUserMedia({ video: { width: 640, height: 360 } });
+            webcamStream = await navigator.mediaDevices.getUserMedia({
+              video: { width: 640, height: 360 },
+              audio: true
+            });
+
             if (webcamPreview) {
               webcamPreview.srcObject = webcamStream;
               webcamPreview.classList.remove('hidden');
             }
-            webcamPlaceholder?.classList.add('hidden');
-            webcamOverlay?.classList.remove('hidden');
-            btnToggleCam.textContent = '⏹️ Turn Off Webcam';
-            if (camStatusPill) {
-              camStatusPill.textContent = 'Active (Local)';
-              camStatusPill.className = 'text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 font-semibold';
+            if (activeWebcamPreview) {
+              activeWebcamPreview.srcObject = webcamStream;
             }
+            webcamPlaceholder?.classList.add('hidden');
+            activeCamPlaceholder?.classList.add('hidden');
+            detectionCanvas?.classList.remove('hidden');
+
+            btnToggleCam.textContent = '⏹️ Stop Camera';
+            if (camStatusPill) {
+              camStatusPill.textContent = 'Camera: Active (Local)';
+              camStatusPill.className = 'text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 font-semibold font-mono';
+            }
+
+            // Audio track setup
+            const audioTracks = webcamStream.getAudioTracks();
+            if (audioTracks.length > 0) {
+              micStreamTrack = audioTracks[0];
+              if (btnToggleMic) {
+                btnToggleMic.disabled = false;
+                btnToggleMic.textContent = '🎙️ Mic: On';
+              }
+              setupAudioAnalyser(webcamStream);
+            }
+
+            // Start Computer Vision Object & Shabby Detection Engine
+            startComputerVisionLoop();
+
+            // Calibrate desk baseline after 1 second of camera settling
+            setTimeout(calibrateDeskBaseline, 1000);
           } catch (err) {
-            alert('Could not access camera. Please allow webcam permission in your browser settings.');
-            btnToggleCam.textContent = '🎥 Turn On Webcam Test';
+            alert('Could not access camera/mic. Please allow camera and microphone permissions in browser settings.');
+            btnToggleCam.textContent = '🎥 Start Camera';
           }
         }
       });
 
-      // 8. Exam Lifecycle: Start, Render, Finish
+      // 8. BROWSER-LOCAL COMPUTER VISION OBJECT & SHABBINESS DETECTION ENGINE
+      const cvWidth = 160;
+      const cvHeight = 120;
+      const cvOffscreen = document.createElement('canvas');
+      cvOffscreen.width = cvWidth;
+      cvOffscreen.height = cvHeight;
+      const cvCtx = cvOffscreen.getContext('2d', { willReadFrequently: true });
+
+      function calibrateDeskBaseline() {
+        if (!webcamStream && !simulatedIntrusion.active) return;
+        try {
+          cvCtx.drawImage(webcamPreview.classList.contains('hidden') ? cvOffscreen : webcamPreview, 0, 0, cvWidth, cvHeight);
+          const imgData = cvCtx.getImageData(0, 0, cvWidth, cvHeight);
+          const data = imgData.data;
+          baselineBuffer = new Float32Array(cvWidth * cvHeight);
+          for (let i = 0; i < baselineBuffer.length; i++) {
+            const idx = i * 4;
+            baselineBuffer[i] = 0.299 * data[idx] + 0.587 * data[idx + 1] + 0.114 * data[idx + 2];
+          }
+          baselineCalibrated = true;
+          logProctorEvent('INFO', 'Workspace & desk perimeter calibrated to baseline cleanliness.', false);
+        } catch (e) {}
+      }
+
+      btnCalibrateClean?.addEventListener('click', () => {
+        calibrateDeskBaseline();
+        deskTidinessScore = 100;
+        updateTidinessUI(100);
+      });
+
+      function startComputerVisionLoop() {
+        if (cvLoopInterval) clearInterval(cvLoopInterval);
+        cvLoopInterval = setInterval(runComputerVisionDetectionCycle, 85); // ~12 FPS
+        if (cvFpsPill) {
+          cvFpsPill.textContent = 'CV: Active (12 FPS)';
+          cvFpsPill.className = 'text-[9px] px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-400 font-mono';
+        }
+      }
+
+      function stopComputerVisionLoop() {
+        if (cvLoopInterval) clearInterval(cvLoopInterval);
+        cvLoopInterval = null;
+        if (cvFpsPill) {
+          cvFpsPill.textContent = 'CV: Standby';
+          cvFpsPill.className = 'text-[9px] px-1.5 py-0.5 rounded bg-gray-500/20 text-gray-400 font-mono';
+        }
+      }
+
+      function runComputerVisionDetectionCycle() {
+        const targetVideo = isExamActive ? activeWebcamPreview : webcamPreview;
+        const targetCanvas = isExamActive ? activeDetectionCanvas : detectionCanvas;
+
+        const hasVideo = targetVideo && !targetVideo.classList.contains('hidden') && targetVideo.readyState >= 2;
+        if (!hasVideo && !simulatedIntrusion.active) {
+          if (targetCanvas) {
+            const ctx = targetCanvas.getContext('2d');
+            ctx?.clearRect(0, 0, targetCanvas.width, targetCanvas.height);
+          }
+          return;
+        }
+
+        // 1. Draw frame to downscaled offscreen analysis canvas
+        if (hasVideo) {
+          cvCtx.drawImage(targetVideo, 0, 0, cvWidth, cvHeight);
+        } else {
+          cvCtx.fillStyle = '#1e293b';
+          cvCtx.fillRect(0, 0, cvWidth, cvHeight);
+        }
+
+        // 2. Render simulated intrusion if active
+        if (simulatedIntrusion.active) {
+          simulatedIntrusion.step++;
+          cvCtx.save();
+          if (simulatedIntrusion.type === 'shabby') {
+            // Render an irregular, textured crumpled object moving in
+            const objX = Math.max(105, 155 - simulatedIntrusion.step * 4);
+            const objY = 60 + Math.sin(simulatedIntrusion.step * 0.4) * 8;
+            cvCtx.fillStyle = '#b45309';
+            cvCtx.beginPath();
+            cvCtx.moveTo(objX, objY);
+            cvCtx.lineTo(objX + 38, objY - 12);
+            cvCtx.lineTo(objX + 44, objY + 28);
+            cvCtx.lineTo(objX + 8, objY + 36);
+            cvCtx.closePath();
+            cvCtx.fill();
+
+            // Add high-entropy irregular clutter texture
+            cvCtx.strokeStyle = '#fef08a';
+            cvCtx.lineWidth = 2;
+            for (let l = 0; l < 5; l++) {
+              cvCtx.beginPath();
+              cvCtx.moveTo(objX + l * 6, objY + l * 4);
+              cvCtx.lineTo(objX + 22, objY + l * 6);
+              cvCtx.stroke();
+            }
+          } else {
+            // Render a handheld phone device
+            const phoneX = Math.max(115, 155 - simulatedIntrusion.step * 4);
+            const phoneY = 70;
+            cvCtx.fillStyle = '#0f172a';
+            cvCtx.fillRect(phoneX, phoneY, 24, 42); // 16:9 phone rectangle
+            cvCtx.strokeStyle = '#38bdf8';
+            cvCtx.strokeRect(phoneX + 2, phoneY + 4, 20, 32);
+          }
+          cvCtx.restore();
+
+          if (simulatedIntrusion.step > 45) {
+            simulatedIntrusion.active = false;
+          }
+        }
+
+        // 3. Extract pixels & analyze
+        const imgData = cvCtx.getImageData(0, 0, cvWidth, cvHeight);
+        const data = imgData.data;
+        const currentLuminance = new Float32Array(cvWidth * cvHeight);
+
+        for (let i = 0; i < currentLuminance.length; i++) {
+          const idx = i * 4;
+          currentLuminance[i] = 0.299 * data[idx] + 0.587 * data[idx + 1] + 0.114 * data[idx + 2];
+        }
+
+        if (!baselineBuffer) {
+          baselineBuffer = new Float32Array(currentLuminance);
+          baselineCalibrated = true;
+        }
+
+        // 4. Perimeter Difference & Blob Detection
+        let minX = cvWidth, maxX = 0, minY = cvHeight, maxY = 0;
+        let diffPixelsCount = 0;
+        let edgeVarianceSum = 0;
+
+        for (let y = 1; y < cvHeight - 1; y++) {
+          for (let x = 1; x < cvWidth - 1; x++) {
+            const idx = y * cvWidth + x;
+            const diff = Math.abs(currentLuminance[idx] - baselineBuffer[idx]);
+
+            // Filter out candidate's central face zone
+            const isCenterHead = (x >= 48 && x <= 112 && y >= 15 && y <= 85);
+            if (!isCenterHead && diff > 30) {
+              diffPixelsCount++;
+              if (x < minX) minX = x;
+              if (x > maxX) maxX = x;
+              if (y < minY) minY = y;
+              if (y > maxY) maxY = y;
+
+              // Compute Laplacian second-derivative operator for edge roughness
+              const laplacian = Math.abs(
+                4 * currentLuminance[idx] -
+                currentLuminance[idx + 1] -
+                currentLuminance[idx - 1] -
+                currentLuminance[idx + cvWidth] -
+                currentLuminance[idx - cvWidth]
+              );
+              edgeVarianceSum += laplacian;
+            } else {
+              // Slowly adapt background for lighting changes
+              baselineBuffer[idx] = baselineBuffer[idx] * 0.995 + currentLuminance[idx] * 0.005;
+            }
+          }
+        }
+
+        // 5. Setup target overlay canvas for drawing
+        if (!targetCanvas) return;
+        const overlayCtx = targetCanvas.getContext('2d');
+        if (!overlayCtx) return;
+
+        const cw = targetCanvas.width = targetCanvas.clientWidth || 320;
+        const ch = targetCanvas.height = targetCanvas.clientHeight || 180;
+        overlayCtx.clearRect(0, 0, cw, ch);
+
+        const scaleX = cw / cvWidth;
+        const scaleY = ch / cvHeight;
+
+        // Draw Candidate Anchor Box (Center)
+        overlayCtx.strokeStyle = 'rgba(52, 211, 153, 0.7)';
+        overlayCtx.lineWidth = 1.5;
+        const candX = cw * 0.3;
+        const candY = ch * 0.12;
+        const candW = cw * 0.4;
+        const candH = ch * 0.75;
+        drawCornerBrackets(overlayCtx, candX, candY, candW, candH, 'rgba(52, 211, 153, 0.9)');
+
+        overlayCtx.fillStyle = 'rgba(16, 185, 129, 0.2)';
+        overlayCtx.fillRect(candX, candY - 16, 110, 16);
+        overlayCtx.fillStyle = '#34d399';
+        overlayCtx.font = 'bold 9px monospace';
+        overlayCtx.fillText('CANDIDATE: LOCK', candX + 4, candY - 4);
+
+        // 6. Object / Shabbiness Evaluation
+        let activeIntrusion = false;
+        let detectedLabel = '';
+        let detectedShabbiness = 0;
+
+        if (diffPixelsCount >= 220 && (maxX - minX) > 12 && (maxY - minY) > 12) {
+          activeIntrusion = true;
+          const blobW = (maxX - minX);
+          const blobH = (maxY - minY);
+          const blobArea = blobW * blobH;
+          const aspectRatio = blobH / (blobW || 1);
+          const laplacianAvg = edgeVarianceSum / (diffPixelsCount || 1);
+
+          // Contour roughness heuristic
+          const perimeterEst = 2 * (blobW + blobH);
+          const roughness = (perimeterEst * perimeterEst) / (4 * Math.PI * (diffPixelsCount || 1));
+
+          // Shabbiness metric: combination of high-frequency edge variance and geometric disorder
+          detectedShabbiness = Math.min(100, Math.max(15, Math.round((laplacianAvg * 2.4) + (roughness * 12))));
+
+          if (aspectRatio >= 1.5 && aspectRatio <= 2.5 && blobArea < 2200) {
+            detectedLabel = '📱 Foreign Device / Phone Detected';
+          } else if (detectedShabbiness >= 48) {
+            detectedLabel = `⚠️ Shabby Object Intrusion (${detectedShabbiness}% Clutter)`;
+          } else {
+            detectedLabel = '⚠️ Foreign Object in Workspace Perimeter';
+          }
+
+          // Draw Alert Bounding Box on Overlay
+          const bx = minX * scaleX;
+          const by = minY * scaleY;
+          const bw = (maxX - minX) * scaleX;
+          const bh = (maxY - minY) * scaleY;
+
+          overlayCtx.strokeStyle = detectedShabbiness >= 48 ? '#f43f5e' : '#f59e0b';
+          overlayCtx.lineWidth = 2.5;
+          drawCornerBrackets(overlayCtx, bx, by, bw, bh, detectedShabbiness >= 48 ? '#f43f5e' : '#f59e0b');
+
+          // Tag Label pill
+          overlayCtx.fillStyle = detectedShabbiness >= 48 ? 'rgba(225, 29, 72, 0.9)' : 'rgba(217, 119, 6, 0.9)';
+          overlayCtx.fillRect(bx, Math.max(0, by - 18), Math.min(cw - bx, 180), 18);
+          overlayCtx.fillStyle = '#ffffff';
+          overlayCtx.font = 'bold 9px sans-serif';
+          overlayCtx.fillText(detectedLabel, bx + 4, Math.max(12, by - 5));
+
+          // Cooldown check for violation logging (3.5s cooldown)
+          const now = Date.now();
+          if (now - lastIntrusionAlertTimestamp > 3500) {
+            lastIntrusionAlertTimestamp = now;
+            intrusionEventsCount++;
+            if (detectedShabbiness >= 48) shabbyEventsCount++;
+
+            if (activeIntrusionCount) activeIntrusionCount.textContent = String(intrusionEventsCount);
+
+            // Capture snapshot thumbnail
+            const snapshotDataUrl = cvOffscreen.toDataURL('image/jpeg', 0.7);
+            const nowTime = new Date().toTimeString().split(' ')[0];
+            intrusionSnapshots.push({
+              time: nowTime,
+              label: detectedLabel,
+              clutter: detectedShabbiness,
+              dataUrl: snapshotDataUrl
+            });
+
+            if (isExamActive) {
+              logProctorEvent('CRITICAL', `Object Intrusion: ${detectedLabel} detected entering camera workspace.`, true);
+            } else {
+              playWarningTone(550, 0.2, 'sawtooth');
+            }
+          }
+        }
+
+        // 7. Update Workspace Tidiness Score
+        if (activeIntrusion) {
+          deskTidinessScore = Math.max(35, deskTidinessScore - 8);
+        } else {
+          deskTidinessScore = Math.min(100, deskTidinessScore + 2);
+        }
+        updateTidinessUI(deskTidinessScore);
+      }
+
+      function drawCornerBrackets(ctx, x, y, w, h, color) {
+        ctx.save();
+        ctx.strokeStyle = color;
+        const len = Math.min(14, w * 0.25, h * 0.25);
+
+        // Top-left
+        ctx.beginPath(); ctx.moveTo(x, y + len); ctx.lineTo(x, y); ctx.lineTo(x + len, y); ctx.stroke();
+        // Top-right
+        ctx.beginPath(); ctx.moveTo(x + w - len, y); ctx.lineTo(x + w, y); ctx.lineTo(x + w, y + len); ctx.stroke();
+        // Bottom-left
+        ctx.beginPath(); ctx.moveTo(x, y + h - len); ctx.lineTo(x, y + h); ctx.lineTo(x + len, y + h); ctx.stroke();
+        // Bottom-right
+        ctx.beginPath(); ctx.moveTo(x + w - len, y + h); ctx.lineTo(x + w, y + h); ctx.lineTo(x + w, y + h - len); ctx.stroke();
+        ctx.restore();
+      }
+
+      function updateTidinessUI(score) {
+        tidinessHistory.push(score);
+        if (tidinessHistory.length > 300) tidinessHistory.shift();
+
+        const colorClass = score >= 80 ? 'text-emerald-400' : (score >= 60 ? 'text-amber-400' : 'text-rose-400');
+        const bgBarClass = score >= 80 ? 'bg-emerald-400' : (score >= 60 ? 'bg-amber-400' : 'bg-rose-500');
+
+        if (tidinessScoreLabel) {
+          tidinessScoreLabel.textContent = `${score}% ${score >= 80 ? 'Clean' : (score >= 60 ? 'Moderate Clutter' : '⚠️ Untidy / Shabby')}`;
+          tidinessScoreLabel.className = `${colorClass} font-bold font-mono text-[10px]`;
+        }
+        if (tidinessLevelBar) {
+          tidinessLevelBar.style.width = `${score}%`;
+          tidinessLevelBar.className = `h-full ${bgBarClass} transition-all duration-150`;
+        }
+
+        if (activeTidinessLabel) {
+          activeTidinessLabel.textContent = `${score}% ${score >= 80 ? 'Clean' : '⚠️ Clutter Alert'}`;
+          activeTidinessLabel.className = `${colorClass} font-bold`;
+        }
+        if (activeTidinessBar) {
+          activeTidinessBar.style.width = `${score}%`;
+          activeTidinessBar.className = `h-full ${bgBarClass} transition-all duration-150`;
+        }
+      }
+
+      // Simulation Triggers
+      function triggerSimulatedIntrusion(type) {
+        simulatedIntrusion = { active: true, type, step: 0 };
+        if (!cvLoopInterval) {
+          startComputerVisionLoop();
+        }
+        playWarningTone(600, 0.15, 'sawtooth');
+      }
+
+      btnSimShabby?.addEventListener('click', () => triggerSimulatedIntrusion('shabby'));
+      btnActiveSimShabby?.addEventListener('click', () => triggerSimulatedIntrusion('shabby'));
+      btnSimDevice?.addEventListener('click', () => triggerSimulatedIntrusion('phone'));
+
+      // 9. Exam Lifecycle: Start, Render, Finish
       async function startAssessment() {
-        // Arm sensors
         isExamActive = true;
         violationsCount = 0;
         blurEventsCount = 0;
@@ -1058,10 +1973,19 @@ const jsonLd = {
         clipboardBlocksCount = 0;
         mouseOutCount = 0;
         totalAwayTimeSeconds = 0;
+        intrusionEventsCount = 0;
+        shabbyEventsCount = 0;
+        intrusionSnapshots = [];
         userAnswers = {};
         markedForReview.clear();
         currentQuestionIndex = 0;
         examTimerSeconds = 600;
+
+        // Synchronize Active Exam webcam preview if active
+        if (webcamStream && activeWebcamPreview) {
+          activeWebcamPreview.srcObject = webcamStream;
+          activeCamPlaceholder?.classList.add('hidden');
+        }
 
         // Switch screens
         screenPre?.classList.add('hidden');
@@ -1079,7 +2003,7 @@ const jsonLd = {
         // Start timer
         startTimer();
 
-        logProctorEvent('INFO', 'Candidate launched exam session. Fullscreen lockdown enabled.', false);
+        logProctorEvent('INFO', 'Candidate launched exam session. Fullscreen lockdown & CV object sensor enabled.', false);
       }
 
       function startTimer() {
@@ -1202,7 +2126,6 @@ const jsonLd = {
         if (currentQuestionIndex < QUESTIONS.length - 1) {
           renderQuestion(currentQuestionIndex + 1);
         } else {
-          // Finished last question
           if (confirm('You have reached the final question. Would you like to submit your assessment and generate your audit report?')) {
             finishAssessment();
           }
@@ -1225,7 +2148,7 @@ const jsonLd = {
         renderPalette();
       });
 
-      // 9. Finish Assessment & Calculate Report
+      // 10. Finish Assessment & Calculate Integrity Scorecard
       function finishAssessment() {
         isExamActive = false;
         if (examTimerInterval) clearInterval(examTimerInterval);
@@ -1245,13 +2168,17 @@ const jsonLd = {
         });
 
         // Calculate Proctor Integrity Score
-        // Base: 100, deductions:
+        // Deductions:
         // - Tab switch: -20 each
         // - Window blur: -15 each
         // - Fullscreen exit: -25 each
         // - Clipboard / shortcut block: -10 each
-        // - Mouse leaving bounds: -3 each
-        const deduction = (tabSwitchCount * 20) + (blurEventsCount * 15) + (fullscreenExitCount * 25) + (clipboardBlocksCount * 10) + (mouseOutCount * 3);
+        // - Mouse out: -3 each
+        // - Object intrusions: -12 each
+        // - Shabby / clutter alerts: -8 each
+        const deduction = (tabSwitchCount * 20) + (blurEventsCount * 15) + (fullscreenExitCount * 25) + 
+                          (clipboardBlocksCount * 10) + (mouseOutCount * 3) + 
+                          (intrusionEventsCount * 12) + (shabbyEventsCount * 8);
         const integrityScore = Math.max(0, 100 - deduction);
 
         // Switch to Report Screen
@@ -1316,6 +2243,57 @@ const jsonLd = {
         if (statTab) statTab.textContent = String(tabSwitchCount);
         if (statFs) statFs.textContent = String(fullscreenExitCount);
         if (statClip) statClip.textContent = String(clipboardBlocksCount);
+
+        // Populate AI Video & Workspace Environment Audit Stats
+        const statObj = document.getElementById('stat-object-count');
+        const statShabby = document.getElementById('stat-shabby-count');
+        const statClean = document.getElementById('stat-cleanliness-score');
+        const evidenceCountTag = document.getElementById('evidence-count-tag');
+        const intrusionGallery = document.getElementById('intrusion-gallery');
+
+        if (statObj) statObj.textContent = String(intrusionEventsCount);
+        if (statShabby) statShabby.textContent = String(shabbyEventsCount);
+
+        // Calculate average tidiness
+        let avgTidiness = 100;
+        if (tidinessHistory.length > 0) {
+          const sumT = tidinessHistory.reduce((a, b) => a + b, 0);
+          avgTidiness = Math.round(sumT / tidinessHistory.length);
+        }
+        if (statClean) {
+          statClean.textContent = `${avgTidiness}%`;
+          statClean.className = avgTidiness >= 80 ? 'text-xl font-bold text-emerald-400' : 'text-xl font-bold text-amber-400';
+        }
+
+        if (evidenceCountTag) {
+          evidenceCountTag.textContent = `${intrusionSnapshots.length} captures`;
+        }
+
+        // Render Captured Violation Snapshots Evidence Gallery
+        if (intrusionGallery) {
+          if (intrusionSnapshots.length === 0) {
+            intrusionGallery.innerHTML = `
+              <div class="col-span-2 sm:col-span-4 p-4 rounded-xl border border-dashed border-white/10 light:border-black/10 text-center text-xs text-gray-400">
+                ✨ Clean environment! No unauthorized objects or shabby clutter breached your test perimeter.
+              </div>
+            `;
+          } else {
+            intrusionGallery.innerHTML = '';
+            intrusionSnapshots.slice(0, 8).forEach(snap => {
+              const card = document.createElement('div');
+              card.className = 'p-2 rounded-xl bg-black/60 border border-white/10 space-y-1';
+              card.innerHTML = `
+                <img src="${snap.dataUrl}" alt="Intrusion snapshot" class="w-full aspect-video object-cover rounded-lg border border-rose-500/30" />
+                <div class="flex items-center justify-between text-[9px] font-mono">
+                  <span class="text-gray-400">[${snap.time}]</span>
+                  <span class="text-rose-400 font-bold">${snap.clutter}% Clutter</span>
+                </div>
+                <p class="text-[9px] text-gray-300 truncate" title="${snap.label}">${snap.label}</p>
+              `;
+              intrusionGallery.appendChild(card);
+            });
+          }
+        }
 
         window.scrollTo({ top: 0, behavior: 'smooth' });
       }
