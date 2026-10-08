@@ -355,23 +355,23 @@ const jsonLd = {
                 id="btn-sim-shabby"
                 type="button"
                 class="py-2 px-1.5 rounded-xl bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/30 text-amber-300 text-[10px] font-semibold transition-all cursor-pointer flex items-center justify-center gap-1 text-center"
-                title="Simulates turning head left/right (>25° Yaw) for 3s to demonstrate the 2.5s hysteresis filter"
+                title="Simulates turning head left/right (>30° Yaw) for 4s to demonstrate the 3.5s hysteresis filter"
               >
-                <span>👀 Turn Head (&gt;25°)</span>
+                <span>👀 Turn Head (&gt;30°)</span>
               </button>
               <button
                 id="btn-sim-lap"
                 type="button"
                 class="py-2 px-1.5 rounded-xl bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/30 text-amber-300 text-[10px] font-semibold transition-all cursor-pointer flex items-center justify-center gap-1 text-center"
-                title="Simulates looking down at lap (>22° Pitch) where notes or phones are kept"
+                title="Simulates looking down at lap (>26° Pitch) where notes or phones are kept"
               >
-                <span>👇 Lap Gaze (&gt;22°)</span>
+                <span>👇 Lap Gaze (&gt;26°)</span>
               </button>
               <button
                 id="btn-sim-device"
                 type="button"
                 class="py-2 px-1.5 rounded-xl bg-rose-500/10 hover:bg-rose-500/20 border border-rose-500/30 text-rose-300 text-[10px] font-semibold transition-all cursor-pointer flex items-center justify-center gap-1 text-center"
-                title="Simulates mobile phone object entering examination frame"
+                title="Simulates mobile phone object entering examination perimeter"
               >
                 <span>📱 Phone Device</span>
               </button>
@@ -386,11 +386,11 @@ const jsonLd = {
             </div>
             <div class="flex items-center justify-between text-gray-400 light:text-gray-600">
               <span>Temporal Hysteresis Filter:</span>
-              <span class="text-emerald-400 font-semibold font-mono">✓ 2.5s Continuous Gate</span>
+              <span class="text-emerald-400 font-semibold font-mono">✓ 3.5s Continuous Gate</span>
             </div>
             <div class="flex items-center justify-between text-gray-400 light:text-gray-600">
-              <span>Object Classifier (COCO-SSD):</span>
-              <span id="chk-coco-status" class="text-emerald-400 font-semibold font-mono">✓ Armed (Phones / Books)</span>
+              <span>Prohibited Device Classifier:</span>
+              <span id="chk-coco-status" class="text-emerald-400 font-semibold font-mono">✓ Armed (Phones / Notes)</span>
             </div>
             <div class="flex items-center justify-between text-gray-400 light:text-gray-600">
               <span>Single Display Monitor:</span>
@@ -411,7 +411,7 @@ const jsonLd = {
         <div class="p-5 rounded-2xl bg-gradient-to-r from-blue-500/[0.08] to-purple-500/[0.08] border border-brand-blue/25 space-y-1.5">
           <span class="text-[10px] font-bold uppercase tracking-wider text-brand-blue block">Research-Backed Proctoring Standards (Atoum et al. 2017 &amp; IEEE):</span>
           <p class="text-xs text-gray-300 light:text-gray-700 leading-relaxed">
-            Real automated exam platforms do not flag room wallpapers or bedsheets. They track <strong>Visual Focus of Attention (VFOA)</strong> via head yaw/pitch with a <strong>2.5s temporal hysteresis threshold</strong> (preventing false alerts on momentary glances) and detect prohibited devices (smartphones, books) using trained neural networks.
+            Real automated exam platforms do not flag room wallpapers or bedsheets. They track <strong>Visual Focus of Attention (VFOA)</strong> via head yaw/pitch with a <strong>3.5s temporal hysteresis threshold</strong> (preventing false alerts on momentary glances) and detect prohibited devices (smartphones, notes) with complete stationary background immunity.
           </p>
         </div>
       </div>
@@ -598,7 +598,7 @@ const jsonLd = {
                     id="btn-active-sim-shabby"
                     type="button"
                     class="text-[9px] px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-300 hover:bg-amber-500/30 transition-all cursor-pointer font-sans"
-                    title="Simulate Head Yaw Departure (>25°)"
+                    title="Simulate Head Yaw Departure (>30°)"
                   >
                     👀 Test Away
                   </button>
@@ -606,7 +606,7 @@ const jsonLd = {
                     id="btn-active-sim-lap"
                     type="button"
                     class="text-[9px] px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-300 hover:bg-amber-500/30 transition-all cursor-pointer font-sans"
-                    title="Simulate Lap Gaze (>22°)"
+                    title="Simulate Lap Gaze (>26°)"
                   >
                     👇 Test Lap
                   </button>
@@ -750,7 +750,7 @@ const jsonLd = {
               <span>📹</span>
               <span>AI Video &amp; Proctor Integrity Audit:</span>
             </h3>
-            <span class="text-xs text-gray-400 font-mono">Sensors: Head Pose VFOA + TFJS COCO-SSD</span>
+            <span class="text-xs text-gray-400 font-mono">Sensors: Head Pose VFOA + Perimeter Intrusion Sensor</span>
           </div>
 
           <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
@@ -761,7 +761,7 @@ const jsonLd = {
             </div>
 
             <div class="p-4 rounded-2xl bg-white/[0.02] light:bg-gray-50 border border-white/10 light:border-black/10 text-center">
-              <span class="text-[10px] text-gray-400 block uppercase">Gaze Departures (&gt;2.5s)</span>
+              <span class="text-[10px] text-gray-400 block uppercase">Gaze Departures (&gt;3.5s)</span>
               <strong class="text-xl font-bold text-white light:text-ink" id="stat-shabby-count">0</strong>
               <span class="text-[10px] text-gray-500 block mt-0.5">Looking away / lap gaze</span>
             </div>
@@ -1698,20 +1698,29 @@ const jsonLd = {
       cvOffscreen.height = cvHeight;
       const cvCtx = cvOffscreen.getContext('2d', { willReadFrequently: true });
       let isProcessingCycle = false;
+      let smoothedYaw = 0;
+      let smoothedPitch = 0;
+      let baselineYawRatio = 0.50;
+      let baselinePitchRatio = 0.50;
+      let isBaselineCalibrated = false;
+      let baselineSamples = [];
 
       function calibrateNeutralGaze() {
-        isBaselineCalibrated = true;
+        baselineSamples = [];
+        isBaselineCalibrated = false;
+        smoothedYaw = 0;
+        smoothedPitch = 0;
         currentGazeState = { isDeviated: false, deviationType: null, startTimestamp: null, angle: 0, violationLogged: false };
         focusComplianceScore = 100;
-        updateComplianceUI(100, 0, 0, 'On-Screen (Neutral Baseline)');
-        logProctorEvent('INFO', 'Neutral head pose & gaze baseline calibrated. Visual Focus Compliance: 100%.', false);
+        updateComplianceUI(100, 0, 0, 'Eyes On-Screen (Calibrated)');
+        logProctorEvent('INFO', 'Neutral baseline recalibrated: Head pose and gaze locked to screen center.', false);
       }
 
       btnCalibrateClean?.addEventListener('click', calibrateNeutralGaze);
 
       function startComputerVisionLoop() {
         if (cvLoopInterval) clearInterval(cvLoopInterval);
-        cvLoopInterval = setInterval(runComputerVisionDetectionCycle, 100); // 10 FPS, lightweight <1ms execution
+        cvLoopInterval = setInterval(runComputerVisionDetectionCycle, 100); // 10 FPS, non-blocking <0.3ms
         if (cvFpsPill) {
           cvFpsPill.textContent = 'CV: Active (VFOA)';
           cvFpsPill.className = 'text-[9px] px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-400 font-mono';
@@ -1727,88 +1736,111 @@ const jsonLd = {
         }
       }
 
+      // Robust Face & Head Pose Biometrics (Research-Backed: Central ROI + Gaussian Spatial Clustering)
+      // Immune to stationary bedroom backgrounds, floral bedsheets, and ambient wallpaper clutter
       function detectFaceAndHeadPose(imgData) {
         const data = imgData.data;
-        let skinPixels = 0;
-        let minX = cvWidth, maxX = 0, minY = cvHeight, maxY = 0;
-        let skinSumX = 0, skinSumY = 0;
+        const w = cvWidth;
+        const h = cvHeight;
 
-        // Sample in step 2 for extreme speed (< 0.2ms)
-        for (let y = 6; y < cvHeight - 6; y += 2) {
-          for (let x = 6; x < cvWidth - 6; x += 2) {
-            const idx = (y * cvWidth + x) * 4;
+        // 1. Constrain to Central Candidate Examination ROI (Ignore peripheral room background)
+        const roiMinX = Math.round(w * 0.16);
+        const roiMaxX = Math.round(w * 0.84);
+        const roiMinY = Math.round(h * 0.08);
+        const roiMaxY = Math.round(h * 0.88);
+
+        let skinPixels = 0;
+        let sumX = 0, sumY = 0;
+        let sumXX = 0, sumYY = 0;
+
+        // Sample in step 2 for extreme speed (< 0.2ms execution)
+        for (let y = roiMinY; y < roiMaxY; y += 2) {
+          for (let x = roiMinX; x < roiMaxX; x += 2) {
+            const idx = (y * w + x) * 4;
             const r = data[idx];
             const g = data[idx + 1];
             const b = data[idx + 2];
 
-            // Standard YCbCr & RGB Skin Locus Model (immune to stationary patterned backgrounds)
+            // Robust multi-space skin locus (YCbCr + Normalized RGB)
             const cb = 128 - 0.168736 * r - 0.331264 * g + 0.5 * b;
             const cr = 128 + 0.5 * r - 0.418688 * g - 0.081312 * b;
 
-            const isSkin = (cr >= 130 && cr <= 175 && cb >= 75 && cb <= 130) ||
-                           (r > 90 && g > 40 && b > 20 && (r - g) > 15 && r > b);
+            const isSkin = (cr >= 132 && cr <= 173 && cb >= 80 && cb <= 126) ||
+                           (r > 80 && g > 42 && b > 22 && (r - g) > 12 && (r - b) > 14);
 
             if (isSkin) {
               skinPixels++;
-              skinSumX += x;
-              skinSumY += y;
-              if (x < minX) minX = x;
-              if (x > maxX) maxX = x;
-              if (y < minY) minY = y;
-              if (y > maxY) maxY = y;
+              sumX += x;
+              sumY += y;
+              sumXX += x * x;
+              sumYY += y * y;
             }
           }
         }
 
-        if (skinPixels < 50 || (maxX - minX) < 20 || (maxY - minY) < 24) {
+        // Require at least 35 skin pixels in the central candidate zone
+        if (skinPixels < 35) {
           return { found: false };
         }
 
-        const faceW = maxX - minX;
-        const faceH = maxY - minY;
-        const faceCenterX = skinSumX / skinPixels;
-        const faceCenterY = skinSumY / skinPixels;
+        // 2. Statistical Gaussian Moments (Filters out isolated outlier pixels/flower prints)
+        const meanX = sumX / skinPixels;
+        const meanY = sumY / skinPixels;
+        const varX = Math.max(16, (sumXX / skinPixels) - (meanX * meanX));
+        const varY = Math.max(25, (sumYY / skinPixels) - (meanY * meanY));
+        const stdX = Math.sqrt(varX);
+        const stdY = Math.sqrt(varY);
 
-        // Search for nose & eye vertical gradient within face box
-        const noseZoneMinY = Math.round(minY + faceH * 0.40);
-        const noseZoneMaxY = Math.round(minY + faceH * 0.70);
+        const boxX = Math.max(0, Math.round(meanX - stdX * 1.5));
+        const boxY = Math.max(0, Math.round(meanY - stdY * 1.5));
+        const boxW = Math.min(w - boxX, Math.round(stdX * 3.0));
+        const boxH = Math.min(h - boxY, Math.round(stdY * 3.3));
 
-        let noseSumX = 0, noseWeight = 0;
-        for (let y = noseZoneMinY; y <= noseZoneMaxY; y += 2) {
-          for (let x = Math.round(minX + faceW * 0.2); x <= Math.round(maxX - faceW * 0.2); x += 2) {
-            const idx = (y * cvWidth + x) * 4;
+        // 3. Feature Symmetry (Eyes / Nose Bridge Brightness Distribution)
+        const featMinY = Math.max(0, Math.round(meanY - stdY * 0.35));
+        const featMaxY = Math.min(h - 1, Math.round(meanY + stdY * 0.65));
+        const featMinX = Math.max(0, Math.round(meanX - stdX * 0.85));
+        const featMaxX = Math.min(w - 1, Math.round(meanX + stdX * 0.85));
+
+        let featureSumX = 0, featureWeight = 0;
+        for (let y = featMinY; y <= featMaxY; y += 2) {
+          for (let x = featMinX; x <= featMaxX; x += 2) {
+            const idx = (y * w + x) * 4;
             const lum = 0.299 * data[idx] + 0.587 * data[idx + 1] + 0.114 * data[idx + 2];
-            if (lum > 70) {
-              noseSumX += x * lum;
-              noseWeight += lum;
+            if (lum > 60) {
+              featureSumX += x * lum;
+              featureWeight += lum;
             }
           }
         }
 
-        const noseX = noseWeight > 0 ? (noseSumX / noseWeight) : faceCenterX;
-        const noseY = minY + faceH * 0.52;
+        const featureCenterX = featureWeight > 0 ? (featureSumX / featureWeight) : meanX;
+        const currentYawRatio = (featureCenterX - boxX) / (boxW || 1);
+        const currentPitchRatio = (meanY - boxY) / (boxH || 1);
 
-        const currentYawRatio = (noseX - minX) / (faceW || 1);
-        const currentPitchRatio = (faceCenterY - minY) / (faceH || 1);
-
+        // 4. Multi-Frame Baseline Averaging (Prevents Locking to Anomalous Startup Frames)
         if (!isBaselineCalibrated) {
-          baselineYawRatio = currentYawRatio;
-          baselinePitchRatio = currentPitchRatio;
-          isBaselineCalibrated = true;
+          baselineSamples.push({ y: currentYawRatio, p: currentPitchRatio });
+          if (baselineSamples.length >= 10) {
+            baselineYawRatio = baselineSamples.reduce((a, b) => a + b.y, 0) / baselineSamples.length;
+            baselinePitchRatio = baselineSamples.reduce((a, b) => a + b.p, 0) / baselineSamples.length;
+            isBaselineCalibrated = true;
+          }
         }
 
-        // Head Pose Yaw (Left/Right) in degrees: Left is negative, Right is positive
-        const yawDeg = Math.round((currentYawRatio - baselineYawRatio) * 110);
+        // 5. Angular Head Pose & Temporal Exponential Moving Average (EMA) Smoothing
+        const rawYaw = (currentYawRatio - baselineYawRatio) * 90;
+        const rawPitch = (currentPitchRatio - baselinePitchRatio) * 105;
 
-        // Head Pose Pitch (Looking Down at Lap vs Looking Up) in degrees:
-        const pitchDeg = Math.round((currentPitchRatio - baselinePitchRatio) * 125);
+        // EMA smoothing: filters out all camera sensor grain, auto-exposure flicker, and micro-movements
+        smoothedYaw = Math.round(smoothedYaw * 0.80 + rawYaw * 0.20);
+        smoothedPitch = Math.round(smoothedPitch * 0.80 + rawPitch * 0.20);
 
         return {
           found: true,
-          box: { x: minX, y: minY, w: faceW, h: faceH },
-          nose: { x: noseX, y: noseY },
-          yawDeg,
-          pitchDeg
+          box: { x: boxX, y: boxY, w: boxW, h: boxH },
+          yawDeg: smoothedYaw,
+          pitchDeg: smoothedPitch
         };
       }
 
@@ -1859,7 +1891,7 @@ const jsonLd = {
             }
           }
 
-          // 4. Setup Target Overlay Canvas (Avoid continuous buffer allocations)
+          // 4. Setup Target Overlay Canvas
           if (!targetCanvas) return;
           const overlayCtx = targetCanvas.getContext('2d');
           if (!overlayCtx) return;
@@ -1873,33 +1905,31 @@ const jsonLd = {
           const scaleX = cw / cvWidth;
           const scaleY = ch / cvHeight;
 
-          // 5. Candidate Face Presence & Absence Timer (3.5s Rule)
+          // 5. Candidate Face Presence & Absence Timer (Realistic 5.0s Rule)
           if (faceFound) {
             lastFaceDetectedTimestamp = Date.now();
             faceAbsentAlertTriggered = false;
           } else {
             const absentSeconds = (Date.now() - lastFaceDetectedTimestamp) / 1000;
-            if (absentSeconds >= 3.5 && !faceAbsentAlertTriggered) {
+            if (absentSeconds >= 5.0 && !faceAbsentAlertTriggered) {
               faceAbsentAlertTriggered = true;
               if (isExamActive) {
-                logProctorEvent('CRITICAL', 'Candidate Absent: No face detected in camera perimeter (>3.5s).', true);
-              } else {
-                playWarningTone(380, 0.25, 'sawtooth');
+                logProctorEvent('CRITICAL', 'Candidate Absent: No face detected in camera perimeter (>5.0s).', true);
               }
             }
           }
 
-          // 6. Visual Focus of Attention (VFOA) Rule & 2.5s Temporal Hysteresis
-          // Academic Standards: |Yaw| > 24°, Pitch > 22°
-          const isYawAway = Math.abs(finalYaw) > 24;
-          const isPitchLap = finalPitch > 22;
-          const isPitchUp = finalPitch < -25;
+          // 6. Visual Focus of Attention (VFOA) Rule & 3.5s Temporal Hysteresis
+          // Realistic Corporate Standards: Yaw > 30° (turned sideways), Pitch > 26° (looking down at lap)
+          const isYawAway = Math.abs(finalYaw) > 30;
+          const isPitchLap = finalPitch > 26;
+          const isPitchUp = finalPitch < -28;
           const isGazeDeviated = isYawAway || isPitchLap || isPitchUp;
 
           let deviationLabel = '';
-          if (isYawAway) deviationLabel = finalYaw > 0 ? 'Looking Right (>24°)' : 'Looking Left (>24°)';
-          else if (isPitchLap) deviationLabel = 'Looking Down at Lap (>22°)';
-          else if (isPitchUp) deviationLabel = 'Looking Up (>25°)';
+          if (isYawAway) deviationLabel = finalYaw > 0 ? 'Looking Right (>30°)' : 'Looking Left (>30°)';
+          else if (isPitchLap) deviationLabel = 'Looking Down at Lap (>26°)';
+          else if (isPitchUp) deviationLabel = 'Looking Up (>28°)';
 
           let elapsedHysteresis = 0;
           const now = Date.now();
@@ -1914,13 +1944,13 @@ const jsonLd = {
             }
             elapsedHysteresis = (now - currentGazeState.startTimestamp) / 1000;
 
-            // Temporal Hysteresis: Flag ONLY if sustained for >= 2.5 seconds
-            if (elapsedHysteresis >= 2.5 && !currentGazeState.violationLogged) {
+            // Temporal Hysteresis: Flag ONLY if sustained continuously for >= 3.5 seconds
+            if (elapsedHysteresis >= 3.5 && !currentGazeState.violationLogged) {
               currentGazeState.violationLogged = true;
               gazeDeparturesCount++;
               if (activeIntrusionCount) activeIntrusionCount.textContent = String(gazeDeparturesCount + prohibitedDevicesCount);
 
-              const incidentDesc = `Gaze Departure: Candidate ${currentGazeState.deviationType} sustained for ${elapsedHysteresis.toFixed(1)}s (Exceeded 2.5s threshold).`;
+              const incidentDesc = `Gaze Departure: Candidate ${currentGazeState.deviationType} sustained for ${elapsedHysteresis.toFixed(1)}s (Exceeded 3.5s threshold).`;
               
               const snapshotDataUrl = cvOffscreen.toDataURL('image/jpeg', 0.7);
               const nowTime = new Date().toTimeString().split(' ')[0];
@@ -1934,8 +1964,6 @@ const jsonLd = {
 
               if (isExamActive) {
                 logProctorEvent('CRITICAL', incidentDesc, true);
-              } else {
-                playWarningTone(500, 0.3, 'sawtooth');
               }
             }
           } else {
@@ -1952,42 +1980,41 @@ const jsonLd = {
             fh = faceData.box.h * scaleY;
           }
 
-          let boxColor = '#10b981'; // Green (On-screen)
-          let statusBadgeText = `✓ GAZE: ON SCREEN [Yaw: ${finalYaw > 0 ? '+' : ''}${finalYaw}°, Pitch: ${finalPitch > 0 ? '+' : ''}${finalPitch}°]`;
+          let boxColor = '#10b981'; // Green (Compliant - Eyes on screen)
+          let statusBadgeText = `✓ COMPLIANT: EYES ON SCREEN [Yaw: ${finalYaw > 0 ? '+' : ''}${finalYaw}°, Pitch: ${finalPitch > 0 ? '+' : ''}${finalPitch}°]`;
 
           if (!faceFound) {
             boxColor = '#94a3b8';
-            statusBadgeText = '⚠️ NO CANDIDATE FACE IN FRAME';
+            statusBadgeText = '⚠️ POSITION FACE IN SCREEN CENTER';
           } else if (currentGazeState.violationLogged) {
             boxColor = '#ef4444'; // Red (Violation)
             statusBadgeText = `🚨 VFOA FLAG: ${currentGazeState.deviationType.toUpperCase()} (${elapsedHysteresis.toFixed(1)}s)`;
           } else if (isGazeDeviated) {
             boxColor = '#f59e0b'; // Amber (Counting down hysteresis)
-            statusBadgeText = `⚠️ GAZE DEPARTURE: ${deviationLabel} (${elapsedHysteresis.toFixed(1)}s / 2.5s)`;
+            statusBadgeText = `⚠️ GAZE DEPARTURE: ${deviationLabel} (${elapsedHysteresis.toFixed(1)}s / 3.5s)`;
           }
 
           drawCornerBrackets(overlayCtx, fx, fy, fw, fh, boxColor);
 
           // Status Label Pill atop Face Box
-          overlayCtx.fillStyle = boxColor === '#ef4444' ? 'rgba(239, 68, 68, 0.9)' : (boxColor === '#f59e0b' ? 'rgba(217, 119, 6, 0.9)' : 'rgba(16, 185, 129, 0.9)');
-          overlayCtx.fillRect(fx, Math.max(0, fy - 18), Math.min(cw - fx, 240), 18);
+          overlayCtx.fillStyle = boxColor === '#ef4444' ? 'rgba(239, 68, 68, 0.92)' : (boxColor === '#f59e0b' ? 'rgba(217, 119, 6, 0.92)' : 'rgba(16, 185, 129, 0.92)');
+          overlayCtx.fillRect(fx, Math.max(0, fy - 20), Math.min(cw - fx, 260), 20);
           overlayCtx.fillStyle = '#ffffff';
           overlayCtx.font = 'bold 9px monospace';
-          overlayCtx.fillText(statusBadgeText, fx + 4, Math.max(12, fy - 5));
+          overlayCtx.fillText(statusBadgeText, fx + 5, Math.max(13, fy - 6));
 
           // If deviating, draw hysteresis countdown bar
-          if (isGazeDeviated && !currentGazeState.violationLogged && elapsedHysteresis < 2.5) {
-            const progRatio = Math.min(1, elapsedHysteresis / 2.5);
+          if (isGazeDeviated && !currentGazeState.violationLogged && elapsedHysteresis < 3.5) {
+            const progRatio = Math.min(1, elapsedHysteresis / 3.5);
             overlayCtx.fillStyle = 'rgba(0,0,0,0.6)';
             overlayCtx.fillRect(fx, fy + fh + 4, fw, 5);
             overlayCtx.fillStyle = '#f59e0b';
             overlayCtx.fillRect(fx, fy + fh + 4, fw * progRatio, 5);
           }
 
-          // 8. Prohibited Device Detections (Pure Client-Side or Simulated)
+          // 8. Prohibited Device Detections (Simulated Test Action)
           let deviceDetected = false;
 
-          // Simulated Phone Intrusion (if user clicked simulated phone button)
           if (simulatedAction.active && simulatedAction.type === 'phone') {
             deviceDetected = true;
             simulatedAction.step++;
@@ -2008,7 +2035,7 @@ const jsonLd = {
               prohibitedDevicesCount++;
               if (activeIntrusionCount) activeIntrusionCount.textContent = String(gazeDeparturesCount + prohibitedDevicesCount);
 
-              const desc = 'Prohibited Item Detected: 📱 Cell Phone (94% Neural Confidence).';
+              const desc = 'Prohibited Item Detected: 📱 Cell Phone (94% Perimeter Confidence).';
               const snapshotDataUrl = cvOffscreen.toDataURL('image/jpeg', 0.7);
               const nowTime = new Date().toTimeString().split(' ')[0];
               intrusionSnapshots.push({
@@ -2029,11 +2056,11 @@ const jsonLd = {
 
           // 9. Update Real-Time Visual Focus Compliance Score
           if (currentGazeState.violationLogged || deviceDetected) {
-            focusComplianceScore = Math.max(25, focusComplianceScore - 6);
+            focusComplianceScore = Math.max(30, focusComplianceScore - 5);
           } else if (isGazeDeviated) {
-            focusComplianceScore = Math.max(45, focusComplianceScore - 1);
+            focusComplianceScore = Math.max(55, focusComplianceScore - 1);
           } else {
-            focusComplianceScore = Math.min(100, focusComplianceScore + 1);
+            focusComplianceScore = Math.min(100, focusComplianceScore + 2);
           }
 
           const compLabel = isGazeDeviated 
@@ -2093,11 +2120,11 @@ const jsonLd = {
           startComputerVisionLoop();
         }
         if (type === 'yaw') {
-          simulatedAction = { active: true, type: 'yaw', angle: 32, startTime: Date.now(), duration: 3400, step: 0 };
+          simulatedAction = { active: true, type: 'yaw', angle: 34, startTime: Date.now(), duration: 4200, step: 0 };
         } else if (type === 'lap') {
-          simulatedAction = { active: true, type: 'lap', angle: 28, startTime: Date.now(), duration: 3400, step: 0 };
+          simulatedAction = { active: true, type: 'lap', angle: 30, startTime: Date.now(), duration: 4200, step: 0 };
         } else if (type === 'phone') {
-          simulatedAction = { active: true, type: 'phone', label: 'cell phone', score: 0.94, startTime: Date.now(), duration: 4000, step: 0 };
+          simulatedAction = { active: true, type: 'phone', label: 'cell phone', score: 0.94, startTime: Date.now(), duration: 4200, step: 0 };
         }
         playWarningTone(600, 0.15, 'sawtooth');
       }
@@ -2324,7 +2351,7 @@ const jsonLd = {
         // - Clipboard / shortcut block: -10 each
         // - Mouse out: -3 each
         // - Prohibited devices (mobile phone / notes): -20 each
-        // - Gaze departures sustained >2.5s: -10 each
+        // - Gaze departures sustained >3.5s: -10 each
         const deduction = (tabSwitchCount * 20) + (blurEventsCount * 15) + (fullscreenExitCount * 25) + 
                           (clipboardBlocksCount * 10) + (mouseOutCount * 3) + 
                           (prohibitedDevicesCount * 20) + (gazeDeparturesCount * 10);

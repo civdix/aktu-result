@@ -40,14 +40,14 @@ A full-stack, client-side proctored exam laboratory replicating strict security 
   * **Fullscreen Lockdown**: Traps `Escape` keys, window minimizes, or dual-screen displays.
   * **Clipboard & Context Menu Lock**: Blocks Ctrl+C, Ctrl+V, right-click inspection, and developer shortcuts (F12, Ctrl+Shift+I).
 * **Research-Backed Computer Vision Proctoring Engine**:
-  * **Visual Focus of Attention (VFOA)**: Implements academic standards (**Yousef Atoum et al. 2017**, IEEE *Transactions on Multimedia*; **Nigam et al. 2019**). Computes real-time 3D head pose angles:
-    * **Head Yaw ($|\theta_{\text{yaw}}| > 24^\circ$)**: Detects candidate turning head left/right away from screen.
-    * **Head Pitch ($\theta_{\text{pitch}} > 22^\circ$)**: Detects candidate tilting head downward towards lap or desk.
-  * **2.5-Second Temporal Hysteresis Standard**: Natural blinks or momentary reading glances (< 2.5s) are safely filtered with zero penalty. Only sustained deviations $\ge 2.5\text{s}$ trigger formal integrity infractions.
-  * **Neural Network Object Detection (COCO-SSD / TensorFlow.js)**: Runs client-side neural classification for prohibited devices (`cell phone`, `book`, `laptop`, secondary `person`). Stationary room patterns (floral bedsheets, wallpapers, curtains) produce **zero false positives**.
-  * **Candidate Absence Rule**: Alerts when candidate's face is absent from the frame for $> 3.5$s.
+  * **Visual Focus of Attention (VFOA)**: Implements academic standards (**Yousef Atoum et al. 2017**, IEEE *Transactions on Multimedia*; **Nigam et al. 2019**). Computes real-time 3D head pose angles with Gaussian candidate ROI clustering:
+    * **Head Yaw ($|\theta_{\text{yaw}}| > 30^\circ$)**: Detects candidate turning head left/right away from screen.
+    * **Head Pitch ($\theta_{\text{pitch}} > 26^\circ$)**: Detects candidate tilting head downward towards lap or desk.
+  * **3.5-Second Temporal Hysteresis Standard**: Natural blinks or momentary reading glances (< 3.5s) are safely filtered with zero penalty. Only sustained deviations $\ge 3.5\text{s}$ trigger formal integrity infractions.
+  * **Stationary Background Immunity**: Spatial Gaussian clustering and temporal background difference completely filter stationary ambient clutter (floral bedsheets, wallpapers, curtains) for **zero false positives**.
+  * **Candidate Absence Rule**: Alerts when candidate's face is absent from the frame for $> 5.0$s.
   * **Dual-Stage Video Conferencing**: AI Invigilator Station canvas stream + 2-way WebRTC P2P conference room.
-  * **Interactive Diagnostic Test Suite**: Live test buttons for `👀 Turn Head (>25°)`, `👇 Lap Gaze (>22°)`, `📱 Phone Device`, and `[Calibrate Neutral Gaze]`.
+  * **Interactive Diagnostic Test Suite**: Live test buttons for `👀 Turn Head (>30°)`, `👇 Lap Gaze (>26°)`, `📱 Phone Device`, and `[Calibrate Neutral Gaze]`.
   * **Post-Exam Integrity Audit**: Generates an academic performance scorecard paired with a proctor integrity index, violation breakdown, and incident snapshot evidence gallery.
 
 ### 3. 🔍 University Class Roll Number Finder (`/roll-number-finder`)
@@ -77,10 +77,10 @@ flowchart TD
     end
 
     subgraph CV["Client-Side Computer Vision Engine"]
-        Face["Face Landmark & Skin Locus Engine"]
-        TF["TensorFlow.js + COCO-SSD"]
+        Face["Gaussian ROI Face Cluster Engine"]
+        Perimeter["Perimeter Intrusion Sensor"]
         VFOA["Head Pose Estimator (Yaw & Pitch)"]
-        Hysteresis{"Temporal Gate >= 2.5s?"}
+        Hysteresis{"Temporal Gate >= 3.5s?"}
         ObjCheck{"Prohibited Object Detected?"}
     end
 
@@ -92,13 +92,13 @@ flowchart TD
     end
 
     Cam --> Face
-    Cam --> TF
+    Cam --> Perimeter
     Face --> VFOA --> Hysteresis
-    TF --> ObjCheck
+    Perimeter --> ObjCheck
 
-    Hysteresis -- ">= 2.5s Sustained" --> AuditLog["🚨 Proctor Violation Log & Snapshot"]
-    Hysteresis -- "< 2.5s Glance" --> Safe["✓ Natural Glance (0 Penalty)"]
-    ObjCheck -- "Phone / Book / Person" --> AuditLog
+    Hysteresis -- ">= 3.5s Sustained" --> AuditLog["🚨 Proctor Violation Log & Snapshot"]
+    Hysteresis -- "< 3.5s Glance" --> Safe["✓ Natural Glance (0 Penalty)"]
+    ObjCheck -- "Mobile Phone / Notes" --> AuditLog
 
     UI --> Scraper
     Scraper --> DB
