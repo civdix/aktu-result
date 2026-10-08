@@ -1,0 +1,1338 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+export const prerender = false;
+
+const pageTitle = "AKTU Online Assessment Simulator & Proctored Exam Lab 2026";
+const pageDescription = "Practice real-world proctored online exams (Wheebox, TCS iON, Mercer Mettl). Experience live window focus tracking, tab-switch logging, fullscreen lock, copy-paste blocking, and get an instant integrity readiness report.";
+const pageKeywords = "aktu online exam, wheebox proctoring test, online assessment simulator, tab switch detector, tcs ion exam practice, focus loss logger, exam malpractice detector practice, campus placement online test";
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "AKTU Online Assessment Environment Simulator",
+  "url": "https://akturesult.bond/assessment-simulator",
+  "description": pageDescription,
+  "applicationCategory": "EducationalApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "INR"
+  }
+};
+---
+
+<Layout
+  title={pageTitle}
+  description={pageDescription}
+  keywords={pageKeywords}
+  canonicalUrl="https://akturesult.bond/assessment-simulator"
+  jsonLd={jsonLd}
+>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 text-left space-y-8">
+
+    <!-- Top Breadcrumb & Heading Header -->
+    <header class="space-y-3">
+      <nav aria-label="Breadcrumb" class="text-xs text-gray-400 light:text-gray-500 flex items-center gap-1.5 flex-wrap">
+        <a href="/" class="hover:text-white light:hover:text-ink transition-colors">Home</a>
+        <span>/</span>
+        <span class="text-brand-blue font-semibold">Online Assessment Simulator</span>
+      </nav>
+
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div>
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-purple-500/25 bg-purple-500/10 text-xs text-purple-400 font-semibold mb-2">
+            <span class="w-2 h-2 rounded-full bg-purple-400 animate-pulse"></span>
+            <span>Real-Time Proctoring Sensor &amp; Environment Lab</span>
+          </div>
+          <h1 class="text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight text-white light:text-ink">
+            Online Assessment Environment Simulator
+          </h1>
+          <p class="text-xs sm:text-sm text-gray-400 light:text-gray-600 max-w-2xl mt-1">
+            Simulate real corporate &amp; university proctored exams (TCS iON, Wheebox, Mercer Mettl). Immediate live logging for focus loss, tab switching, clipboard events, and fullscreen exits.
+          </p>
+        </div>
+
+        <div class="flex items-center gap-2.5 shrink-0">
+          <span id="simulator-mode-badge" class="px-3 py-1.5 rounded-xl bg-white/5 border border-white/10 text-xs text-gray-300 light:text-gray-700 font-mono flex items-center gap-1.5">
+            <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+            <span>Environment: Ready</span>
+          </span>
+        </div>
+      </div>
+    </header>
+
+    <!-- SECTION 1: PRE-EXAM SETUP & SENSOR ONBOARDING (Visible by default) -->
+    <section id="screen-pre-exam" class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      
+      <!-- Left Column: Test Configuration & Rules -->
+      <div class="lg:col-span-2 space-y-6">
+        <div class="p-6 sm:p-8 rounded-3xl bg-white/[0.02] light:bg-white border border-white/10 light:border-black/10 shadow-xl space-y-6">
+          <div class="flex items-center gap-3">
+            <div class="w-12 h-12 rounded-2xl bg-brand-blue/15 text-brand-blue flex items-center justify-center text-2xl border border-brand-blue/25">
+              🛡️
+            </div>
+            <div>
+              <h2 class="text-lg sm:text-xl font-bold text-white light:text-ink">
+                Configure Assessment Simulation
+              </h2>
+              <p class="text-xs text-gray-400 light:text-gray-500">
+                Choose your target platform profile to simulate its specific anti-cheating rules and sensitivities.
+              </p>
+            </div>
+          </div>
+
+          <!-- Platform Profile Selector -->
+          <div class="space-y-3">
+            <label class="block text-xs font-bold uppercase tracking-wider text-gray-300 light:text-gray-700">
+              Select Exam Platform Profile
+            </label>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3" id="profile-selector-group">
+              <button 
+                type="button" 
+                data-profile="wheebox" 
+                class="profile-btn active p-4 rounded-2xl border text-left transition-all cursor-pointer bg-brand-blue/15 border-brand-blue text-white"
+              >
+                <div class="font-bold text-xs flex items-center justify-between">
+                  <span>AKTU / Wheebox</span>
+                  <span class="text-[10px] px-1.5 py-0.5 rounded bg-brand-blue text-white font-mono">Strict</span>
+                </div>
+                <p class="text-[11px] text-gray-400 light:text-gray-600 mt-1">
+                  3-warning auto-termination, tab-switch threshold &gt; 3s, fullscreen enforcement.
+                </p>
+              </button>
+
+              <button 
+                type="button" 
+                data-profile="tcs" 
+                class="profile-btn p-4 rounded-2xl border border-white/10 light:border-black/10 text-left transition-all cursor-pointer bg-white/[0.02] light:bg-black/[0.02] text-gray-300 hover:border-brand-blue/40"
+              >
+                <div class="font-bold text-xs flex items-center justify-between">
+                  <span>TCS iON / Infosys</span>
+                  <span class="text-[10px] px-1.5 py-0.5 rounded bg-purple-500/20 text-purple-400 font-mono">Enterprise</span>
+                </div>
+                <p class="text-[11px] text-gray-400 light:text-gray-600 mt-1">
+                  Zero clipboard access, instant focus penalty, DevTools lockdown.
+                </p>
+              </button>
+
+              <button 
+                type="button" 
+                data-profile="practice" 
+                class="profile-btn p-4 rounded-2xl border border-white/10 light:border-black/10 text-left transition-all cursor-pointer bg-white/[0.02] light:bg-black/[0.02] text-gray-300 hover:border-brand-blue/40"
+              >
+                <div class="font-bold text-xs flex items-center justify-between">
+                  <span>Diagnostic Lab</span>
+                  <span class="text-[10px] px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-400 font-mono">Practice</span>
+                </div>
+                <p class="text-[11px] text-gray-400 light:text-gray-600 mt-1">
+                  Unlimited warnings, detailed explanations, real-time trigger diagnostics.
+                </p>
+              </button>
+            </div>
+          </div>
+
+          <!-- Proctoring Rules Monitored in This Session -->
+          <div class="p-5 rounded-2xl bg-black/40 light:bg-gray-50 border border-white/10 light:border-black/10 space-y-3">
+            <h3 class="text-xs font-bold text-white light:text-ink uppercase tracking-wider flex items-center gap-2">
+              <span>⚡</span>
+              <span>Proctoring Sensors Armed in This Simulation:</span>
+            </h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-xs text-gray-300 light:text-gray-700">
+              <div class="flex items-center gap-2">
+                <span class="text-emerald-400 font-bold">✓</span>
+                <span><strong>Window Focus Loss:</strong> Logs Alt+Tab &amp; clicking outside</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="text-emerald-400 font-bold">✓</span>
+                <span><strong>Tab Switch:</strong> Detects hidden browser tabs</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="text-emerald-400 font-bold">✓</span>
+                <span><strong>Fullscreen Exit:</strong> Intercepts Escape or window minimize</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="text-emerald-400 font-bold">✓</span>
+                <span><strong>Clipboard Lock:</strong> Blocks Ctrl+C, Ctrl+V, copy/paste</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="text-emerald-400 font-bold">✓</span>
+                <span><strong>Context Menu:</strong> Blocks right-click inspection</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="text-emerald-400 font-bold">✓</span>
+                <span><strong>DevTools Intercept:</strong> Detects F12 &amp; developer keys</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="text-emerald-400 font-bold">✓</span>
+                <span><strong>Cursor Bounds:</strong> Logs mouse leaving viewport</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="text-emerald-400 font-bold">✓</span>
+                <span><strong>Audio Tone:</strong> Plays audible warning tone on violation</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Action Button: Launch Fullscreen Assessment -->
+          <div class="pt-2 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div class="text-xs text-gray-400 light:text-gray-500">
+              <span>⏱️ Duration: <strong>10 Minutes</strong> • 10 Practice Questions</span>
+            </div>
+            <button
+              id="btn-start-exam"
+              type="button"
+              class="w-full sm:w-auto px-8 py-3.5 rounded-2xl bg-gradient-to-r from-brand-blue via-purple-600 to-brand-blue hover:from-brand-blue-hover hover:to-purple-700 text-white font-bold text-sm shadow-xl shadow-brand-blue/30 transition-all transform hover:scale-[1.02] active:scale-[0.98] cursor-pointer flex items-center justify-center gap-2.5"
+            >
+              <span>🚀 Enter Fullscreen Proctored Test</span>
+              <span>&rarr;</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column: Hardware & Local Camera Diagnostic Box -->
+      <div class="space-y-6">
+        <div class="p-6 rounded-3xl bg-white/[0.02] light:bg-white border border-white/10 light:border-black/10 shadow-xl space-y-4">
+          <div class="flex items-center justify-between">
+            <h3 class="text-sm font-bold text-white light:text-ink flex items-center gap-2">
+              <span>📷</span>
+              <span>Hardware &amp; Camera Check</span>
+            </h3>
+            <span id="cam-status-pill" class="text-[10px] px-2 py-0.5 rounded-full bg-gray-500/20 text-gray-400 font-semibold">Optional</span>
+          </div>
+
+          <p class="text-xs text-gray-400 light:text-gray-500 leading-relaxed">
+            Real exams require an active webcam. Test your webcam framing and lighting locally. <em>Video stays 100% on your device and is never recorded or sent anywhere.</em>
+          </p>
+
+          <!-- Camera Feed Container -->
+          <div class="relative rounded-2xl overflow-hidden aspect-video bg-black/80 border border-white/10 light:border-black/10 flex items-center justify-center">
+            <video id="webcam-preview" autoplay playsinline muted class="w-full h-full object-cover hidden mirror"></video>
+            <div id="webcam-placeholder" class="text-center p-4 space-y-2">
+              <span class="text-3xl block">📹</span>
+              <span class="text-xs text-gray-400 font-medium block">Camera Inactive</span>
+              <span class="text-[10px] text-gray-500 block">Click below to test local video frame</span>
+            </div>
+            <!-- Face Tracking Simulation Overlay -->
+            <div id="webcam-overlay" class="absolute inset-0 pointer-events-none hidden border-2 border-emerald-400/60 rounded-2xl flex flex-col justify-between p-2">
+              <div class="flex items-center justify-between text-[10px] bg-black/60 backdrop-blur px-2 py-0.5 rounded-md text-emerald-400 font-mono">
+                <span>[AI FACE MESH: LOCK]</span>
+                <span>CONFIDENCE: 98%</span>
+              </div>
+              <div class="text-[10px] bg-black/60 backdrop-blur px-2 py-0.5 rounded-md text-gray-300 font-mono self-start">
+                POZ: CENTERED • LIGHTING: GOOD
+              </div>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-2">
+            <button
+              id="btn-toggle-webcam"
+              type="button"
+              class="w-full py-2.5 rounded-xl border border-white/10 hover:border-white/20 light:border-black/10 bg-white/5 hover:bg-white/10 text-xs text-white light:text-ink font-semibold transition-all cursor-pointer flex items-center justify-center gap-2"
+            >
+              <span>🎥 Turn On Webcam Test</span>
+            </button>
+          </div>
+
+          <!-- Environment Diagnostic Checklist -->
+          <div class="pt-3 border-t border-white/5 light:border-black/5 space-y-2 text-xs">
+            <div class="flex items-center justify-between text-gray-400 light:text-gray-600">
+              <span>Single Display Monitor:</span>
+              <span id="chk-monitor" class="text-emerald-400 font-semibold font-mono">✓ Verified</span>
+            </div>
+            <div class="flex items-center justify-between text-gray-400 light:text-gray-600">
+              <span>Fullscreen Capability:</span>
+              <span id="chk-fullscreen" class="text-emerald-400 font-semibold font-mono">✓ Supported</span>
+            </div>
+            <div class="flex items-center justify-between text-gray-400 light:text-gray-600">
+              <span>Web Audio Warnings:</span>
+              <span id="chk-audio" class="text-emerald-400 font-semibold font-mono">✓ Armed</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick Advice Card -->
+        <div class="p-5 rounded-2xl bg-gradient-to-r from-amber-500/[0.08] to-orange-500/[0.08] border border-amber-500/25 space-y-1.5">
+          <span class="text-[10px] font-bold uppercase tracking-wider text-amber-400 block">Proctoring Insight:</span>
+          <p class="text-xs text-gray-300 light:text-gray-700 leading-relaxed">
+            Most false-positive disqualifications happen because of pop-up notifications (Discord, Telegram, Windows Update) that steal window focus. Run this simulator to verify your system remains uninterrupted.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 2: ACTIVE PROCTORED EXAM RUNNER (Hidden until test launched) -->
+    <section id="screen-active-exam" class="hidden space-y-6">
+
+      <!-- Real-Time Top HUD Banner -->
+      <div class="sticky top-16 z-40 p-4 rounded-2xl bg-black/80 dark:bg-black/90 light:bg-white/95 backdrop-blur-xl border border-white/15 light:border-black/10 shadow-2xl flex flex-wrap items-center justify-between gap-4">
+        
+        <!-- Left: Status & Fullscreen indicator -->
+        <div class="flex items-center gap-3">
+          <div class="flex items-center gap-2 px-3 py-1 rounded-xl bg-rose-500/15 border border-rose-500/30 text-rose-400 text-xs font-bold animate-pulse">
+            <span class="w-2 h-2 rounded-full bg-rose-500"></span>
+            <span>PROCTORING STRICT LOCKDOWN</span>
+          </div>
+
+          <div id="hud-fullscreen-indicator" class="hidden sm:flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-white/5 border border-white/10 text-xs text-gray-300 light:text-gray-700 font-mono">
+            <span>⛶</span>
+            <span id="hud-fullscreen-text">Fullscreen: Locked</span>
+          </div>
+        </div>
+
+        <!-- Center: Warnings Counter Badge -->
+        <div class="flex items-center gap-2">
+          <div id="hud-warning-badge" class="px-3.5 py-1.5 rounded-xl bg-amber-500/15 border border-amber-500/30 text-amber-300 light:text-amber-800 text-xs font-bold flex items-center gap-2 transition-all">
+            <span id="hud-warning-icon">⚠️</span>
+            <span>Violations: <strong id="hud-violation-count">0</strong> / <span id="hud-violation-limit">3</span></span>
+          </div>
+        </div>
+
+        <!-- Right: Timer & Finish Actions -->
+        <div class="flex items-center gap-3">
+          <div class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-brand-blue/15 border border-brand-blue/30 text-white font-mono text-sm font-bold">
+            <span>⏱️</span>
+            <span id="exam-timer-display">10:00</span>
+          </div>
+
+          <button
+            id="btn-finish-exam"
+            type="button"
+            class="px-4 py-1.5 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-bold text-xs shadow-md transition-all cursor-pointer active:scale-95"
+          >
+            Submit &amp; View Audit
+          </button>
+        </div>
+      </div>
+
+      <!-- Warning Flash Alert Banner (Dynamic) -->
+      <div id="violation-alert-bar" class="hidden p-4 rounded-2xl bg-rose-600/90 text-white border border-rose-500 text-xs font-bold flex items-center justify-between shadow-2xl animate-bounce">
+        <div class="flex items-center gap-2.5">
+          <span class="text-xl">🚨</span>
+          <span id="violation-alert-text">VIOLATION DETECTED: Window lost focus!</span>
+        </div>
+        <button id="btn-dismiss-alert" type="button" class="px-3 py-1 rounded-lg bg-black/40 hover:bg-black/60 text-xs text-white font-bold">
+          Acknowledge
+        </button>
+      </div>
+
+      <!-- Main Assessment Grid: Questions Left, Proctor Log Right -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+        <!-- Question Canvas (Left 2 Cols) -->
+        <div class="lg:col-span-2 space-y-6">
+          <div class="p-6 sm:p-8 rounded-3xl bg-white/[0.02] light:bg-white border border-white/10 light:border-black/10 shadow-xl space-y-6">
+            
+            <!-- Question Header -->
+            <div class="flex items-center justify-between gap-2 pb-4 border-b border-white/10 light:border-black/10">
+              <div>
+                <span class="text-[11px] font-bold text-brand-blue uppercase tracking-wider block" id="q-category">
+                  Computer Science &amp; Logic
+                </span>
+                <h3 class="text-sm sm:text-base font-bold text-white light:text-ink" id="q-number-title">
+                  Question 1 of 10
+                </h3>
+              </div>
+              <div class="flex items-center gap-1.5">
+                <button
+                  id="btn-mark-review"
+                  type="button"
+                  class="px-3 py-1.5 rounded-xl bg-purple-500/15 hover:bg-purple-500/25 border border-purple-500/30 text-purple-300 text-xs font-semibold transition-all cursor-pointer"
+                >
+                  🔖 Mark for Review
+                </button>
+                <button
+                  id="btn-clear-response"
+                  type="button"
+                  class="px-3 py-1.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-gray-400 text-xs font-semibold transition-all cursor-pointer"
+                >
+                  Clear Answer
+                </button>
+              </div>
+            </div>
+
+            <!-- Question Body -->
+            <div id="q-text-container" class="space-y-4 text-xs sm:text-sm text-gray-200 light:text-gray-800 leading-relaxed font-medium">
+              <!-- Dynamically populated by JS -->
+            </div>
+
+            <!-- Options Radio List -->
+            <div id="q-options-container" class="space-y-2.5 pt-2">
+              <!-- Dynamically populated by JS -->
+            </div>
+
+            <!-- Question Footer Navigation -->
+            <div class="pt-6 border-t border-white/10 light:border-black/10 flex items-center justify-between gap-3 flex-wrap">
+              <button
+                id="btn-prev-q"
+                type="button"
+                class="px-4 py-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-white light:text-ink text-xs font-semibold transition-all cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed"
+              >
+                &larr; Previous Question
+              </button>
+
+              <div class="flex items-center gap-2">
+                <span class="text-[11px] text-gray-500 hidden sm:inline">Try pressing Ctrl+C or switching tabs to test proctoring</span>
+                <button
+                  id="btn-next-q"
+                  type="button"
+                  class="px-6 py-2.5 rounded-xl bg-brand-blue hover:bg-brand-blue-hover text-white text-xs font-bold transition-all shadow-lg shadow-brand-blue/20 cursor-pointer"
+                >
+                  Save &amp; Next &rarr;
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Proctoring Activity Console & Palette (Right Column) -->
+        <div class="space-y-6">
+          
+          <!-- Live Real-Time Violation Log Stream -->
+          <div class="p-5 rounded-3xl bg-[#0b0f19] light:bg-gray-900 border border-white/15 text-white shadow-2xl space-y-3">
+            <div class="flex items-center justify-between border-b border-white/10 pb-2.5">
+              <div class="flex items-center gap-2">
+                <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping"></span>
+                <h4 class="text-xs font-black uppercase tracking-wider text-gray-200">
+                  Live Integrity Audit Stream
+                </h4>
+              </div>
+              <span id="log-count-pill" class="text-[10px] font-mono px-2 py-0.5 rounded bg-white/10 text-emerald-400">0 events</span>
+            </div>
+
+            <!-- Terminal Stream Body -->
+            <div 
+              id="proctor-log-terminal" 
+              class="h-64 sm:h-72 overflow-y-auto space-y-1.5 font-mono text-[11px] p-2 rounded-xl bg-black/60 border border-white/5 scrollbar-thin scrollbar-thumb-white/20"
+            >
+              <div class="text-gray-500 italic text-[10px]">[00:00:00] Proctor daemon initiated. All window, keyboard &amp; focus sensors active.</div>
+            </div>
+
+            <div class="pt-2 flex items-center justify-between text-[10px] text-gray-400 border-t border-white/5">
+              <span>Sensor: Document Visibility &amp; Blur API</span>
+              <button id="btn-clear-log" type="button" class="text-brand-blue hover:underline">Clear View</button>
+            </div>
+          </div>
+
+          <!-- Question Palette Matrix -->
+          <div class="p-5 rounded-3xl bg-white/[0.02] light:bg-white border border-white/10 light:border-black/10 shadow-xl space-y-3">
+            <h4 class="text-xs font-bold uppercase tracking-wider text-gray-300 light:text-gray-700">
+              Question Palette
+            </h4>
+            <div id="palette-grid" class="grid grid-cols-5 gap-2">
+              <!-- Dynamically populated 1 to 10 -->
+            </div>
+            <div class="pt-3 border-t border-white/5 light:border-black/5 flex items-center justify-between text-[10px] text-gray-400 light:text-gray-500">
+              <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-emerald-500"></span> Answered</span>
+              <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-purple-500"></span> Review</span>
+              <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-white/20"></span> Unvisited</span>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION 3: AUDIT REPORT & PERFORMANCE SCORECARD (Shown upon finish) -->
+    <section id="screen-report" class="hidden space-y-8">
+      <div class="p-6 sm:p-10 rounded-3xl bg-white/[0.02] light:bg-white border border-white/10 light:border-black/10 shadow-2xl space-y-8">
+        
+        <!-- Header Summary -->
+        <div class="text-center space-y-3 max-w-xl mx-auto">
+          <div id="report-verdict-icon" class="w-16 h-16 rounded-full flex items-center justify-center mx-auto text-3xl shadow-2xl">
+            🏆
+          </div>
+          <h2 id="report-verdict-title" class="text-2xl sm:text-3xl font-black text-white light:text-ink tracking-tight">
+            Assessment Completed
+          </h2>
+          <p id="report-verdict-desc" class="text-xs sm:text-sm text-gray-400 light:text-gray-600 leading-relaxed">
+            Here is your comprehensive evaluation breakdown combining academic problem accuracy and proctoring integrity compliance.
+          </p>
+        </div>
+
+        <!-- 2 Big KPI Cards: Academic Score vs Proctor Integrity Score -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl mx-auto">
+          
+          <!-- Card 1: Academic Score -->
+          <div class="p-6 rounded-3xl bg-black/40 light:bg-gray-50 border border-white/10 light:border-black/10 space-y-2 text-center">
+            <span class="text-xs font-bold uppercase tracking-wider text-gray-400">Academic Score</span>
+            <div class="text-4xl sm:text-5xl font-black text-brand-blue" id="report-academic-score">
+              0 / 10
+            </div>
+            <p class="text-xs text-gray-400" id="report-academic-percent">0% Accuracy</p>
+          </div>
+
+          <!-- Card 2: Proctor Integrity Index -->
+          <div class="p-6 rounded-3xl bg-black/40 light:bg-gray-50 border border-white/10 light:border-black/10 space-y-2 text-center">
+            <span class="text-xs font-bold uppercase tracking-wider text-gray-400">Proctor Integrity Score</span>
+            <div class="text-4xl sm:text-5xl font-black" id="report-integrity-score">
+              100%
+            </div>
+            <p class="text-xs font-semibold" id="report-integrity-verdict">Clean Record (No Flags)</p>
+          </div>
+
+        </div>
+
+        <!-- Detailed Breakdown of Violations -->
+        <div class="space-y-4">
+          <h3 class="text-sm font-bold text-white light:text-ink uppercase tracking-wider flex items-center gap-2">
+            <span>📊</span>
+            <span>Integrity Violation Audit Breakdown:</span>
+          </h3>
+
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+            <div class="p-4 rounded-2xl bg-white/[0.02] light:bg-gray-50 border border-white/10 light:border-black/10 text-center">
+              <span class="text-[10px] text-gray-400 block uppercase">Focus Loss / Blur</span>
+              <strong class="text-xl font-bold text-white light:text-ink" id="stat-blur-count">0</strong>
+              <span class="text-[10px] text-gray-500 block mt-0.5" id="stat-away-time">0s away</span>
+            </div>
+
+            <div class="p-4 rounded-2xl bg-white/[0.02] light:bg-gray-50 border border-white/10 light:border-black/10 text-center">
+              <span class="text-[10px] text-gray-400 block uppercase">Tab Switches</span>
+              <strong class="text-xl font-bold text-white light:text-ink" id="stat-tab-count">0</strong>
+              <span class="text-[10px] text-gray-500 block mt-0.5">Visibility changes</span>
+            </div>
+
+            <div class="p-4 rounded-2xl bg-white/[0.02] light:bg-gray-50 border border-white/10 light:border-black/10 text-center">
+              <span class="text-[10px] text-gray-400 block uppercase">Fullscreen Exits</span>
+              <strong class="text-xl font-bold text-white light:text-ink" id="stat-fs-count">0</strong>
+              <span class="text-[10px] text-gray-500 block mt-0.5">Escape / Minimizes</span>
+            </div>
+
+            <div class="p-4 rounded-2xl bg-white/[0.02] light:bg-gray-50 border border-white/10 light:border-black/10 text-center">
+              <span class="text-[10px] text-gray-400 block uppercase">Clipboard / Keys</span>
+              <strong class="text-xl font-bold text-white light:text-ink" id="stat-clip-count">0</strong>
+              <span class="text-[10px] text-gray-500 block mt-0.5">Copy/Paste/F12 blocks</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Real Placement Exam Safety Checklist -->
+        <div class="p-6 rounded-3xl bg-blue-950/20 light:bg-blue-50 border border-brand-blue/30 space-y-3">
+          <h4 class="text-xs sm:text-sm font-bold text-white light:text-ink flex items-center gap-2">
+            <span>🛡️</span>
+            <span>How Real Assessment Platforms (Wheebox, TCS iON, Mettl) Evaluate You:</span>
+          </h4>
+          <ul class="space-y-2 text-xs text-gray-300 light:text-gray-700 leading-relaxed list-disc list-inside">
+            <li><strong>Automated Disqualification Threshold:</strong> Most platforms automatically freeze your test session or flag you for manual review after <strong>3 to 5 focus losses</strong>.</li>
+            <li><strong>Background Notification Hazard:</strong> Ensure Windows "Focus Assist / Do Not Disturb" is active and close background messaging apps (Discord, Telegram, WhatsApp Web, Slack). A single pop-up steal of window focus counts as a tab switch!</li>
+            <li><strong>Dual Display Hazards:</strong> Disconnect any secondary monitors, HDMI cords, or screen casting devices before launching your official exam portal.</li>
+            <li><strong>Clipboard Audit:</strong> Exam engines log any attempt to press Ctrl+C, Ctrl+V or right-click. Never attempt copy-pasting code or question statements.</li>
+          </ul>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="flex items-center justify-center gap-4 flex-wrap pt-4">
+          <button
+            id="btn-retake-exam"
+            type="button"
+            class="px-6 py-3 rounded-2xl bg-brand-blue hover:bg-brand-blue-hover text-white text-xs font-bold transition-all shadow-lg shadow-brand-blue/20 cursor-pointer active:scale-95"
+          >
+            🔄 Retake Simulation
+          </button>
+          <a
+            href="/faq"
+            class="px-6 py-3 rounded-2xl bg-white/5 hover:bg-white/10 text-white light:text-ink text-xs font-semibold border border-white/10 light:border-black/10 transition-all"
+          >
+            Read Exam FAQs
+          </a>
+        </div>
+
+      </div>
+    </section>
+
+  </div>
+
+  <!-- Client-Side Simulation Script (Vanilla JS, Zero External Libraries) -->
+  <script is:inline>
+    (function initAssessmentSimulator() {
+      // 1. Question Bank: 10 High Quality Placement / AKTU Technical & Logic Questions
+      const QUESTIONS = [
+        {
+          id: 1,
+          category: "Data Structures & Algorithms",
+          question: "What is the worst-case time complexity of searching for an element in an unbalanced Binary Search Tree (BST) containing n nodes?",
+          options: [
+            "O(log n)",
+            "O(n)",
+            "O(n log n)",
+            "O(1)"
+          ],
+          correct: 1,
+          explanation: "In the worst case, an unbalanced BST degenerates into a linear linked list (skewed tree), causing search operations to require O(n) comparisons."
+        },
+        {
+          id: 2,
+          category: "Computer Networks",
+          question: "Which of the following transport layer protocols is connectionless and does not guarantee packet delivery order or retransmission?",
+          options: [
+            "Transmission Control Protocol (TCP)",
+            "User Datagram Protocol (UDP)",
+            "Stream Control Transmission Protocol (SCTP)",
+            "Transport Layer Security (TLS)"
+          ],
+          correct: 1,
+          explanation: "UDP is an unreliable, connectionless protocol designed for fast, low-overhead communication such as video streaming and DNS queries."
+        },
+        {
+          id: 3,
+          category: "Operating Systems",
+          question: "Which of the following is NOT one of the four mandatory Coffman conditions necessary for a system deadlock to occur?",
+          options: [
+            "Mutual Exclusion",
+            "Hold and Wait",
+            "Preemption Allowed",
+            "Circular Wait"
+          ],
+          correct: 2,
+          explanation: "Deadlock requires 'No Preemption'. If preemption is allowed, the operating system can reclaim resources, thus preventing deadlocks."
+        },
+        {
+          id: 4,
+          category: "Database Management Systems (DBMS)",
+          question: "In relational database design, which Normal Form guarantees that every determinant is a super key, resolving functional dependency anomalies?",
+          options: [
+            "First Normal Form (1NF)",
+            "Second Normal Form (2NF)",
+            "Third Normal Form (3NF)",
+            "Boyce-Codd Normal Form (BCNF)"
+          ],
+          correct: 3,
+          explanation: "Boyce-Codd Normal Form (BCNF) strictly requires that for every functional dependency X -> Y, X must be a candidate/super key."
+        },
+        {
+          id: 5,
+          category: "Quantitative Aptitude",
+          question: "Pipe A can fill a tank in 6 hours and Pipe B can empty it in 8 hours. If both pipes are opened simultaneously, in how many hours will the tank be full?",
+          options: [
+            "12 hours",
+            "18 hours",
+            "24 hours",
+            "30 hours"
+          ],
+          correct: 2,
+          explanation: "Net rate = (1/6) - (1/8) = (4 - 3)/24 = 1/24 per hour. Therefore, the tank fills completely in 24 hours."
+        },
+        {
+          id: 6,
+          category: "Logical Reasoning",
+          question: "Find the next number in the sequence: 4, 9, 25, 49, 121, 169, ?",
+          options: [
+            "225",
+            "256",
+            "289",
+            "361"
+          ],
+          correct: 2,
+          explanation: "The series represents squares of prime numbers: 2²=4, 3²=9, 5²=25, 7²=49, 11²=121, 13²=169. The next prime is 17, and 17² = 289."
+        },
+        {
+          id: 7,
+          category: "Programming Concepts (C/Python)",
+          question: "What is the primary difference between a process and a thread in modern concurrent programming?",
+          options: [
+            "Threads do not have their own program counter",
+            "Threads in the same process share the same heap memory space, while processes have isolated memory",
+            "Processes cannot communicate across a network",
+            "Threads cannot execute concurrently on multi-core processors"
+          ],
+          correct: 1,
+          explanation: "Threads of a process share code, data, and heap memory but maintain private stacks and program counters, enabling lightweight concurrency."
+        },
+        {
+          id: 8,
+          category: "Software Engineering & SDLC",
+          question: "Which testing technique evaluates software functionality by executing code without knowledge of the internal code structure or implementation details?",
+          options: [
+            "White Box Testing",
+            "Black Box Testing",
+            "Mutation Testing",
+            "Code Coverage Analysis"
+          ],
+          correct: 1,
+          explanation: "Black Box testing assesses software behavior strictly against specified functional requirements from an end-user perspective without examining internal logic."
+        },
+        {
+          id: 9,
+          category: "Computer Architecture",
+          question: "Which type of memory is volatile and placed directly closest to the CPU core to reduce memory access latency?",
+          options: [
+            "Read-Only Memory (ROM)",
+            "L1 / L2 Cache Memory (SRAM)",
+            "Dynamic RAM (DRAM)",
+            "Solid State Storage (NVMe)"
+          ],
+          correct: 1,
+          explanation: "L1 and L2 cache memories are constructed using high-speed Static RAM (SRAM) placed on or near the processor die to minimize latency."
+        },
+        {
+          id: 10,
+          category: "Discrete Mathematics",
+          question: "In propositional logic, the logical statement 'P implies Q' (P -> Q) is logically equivalent to which of the following?",
+          options: [
+            "NOT P OR Q",
+            "P AND NOT Q",
+            "NOT P AND Q",
+            "P OR NOT Q"
+          ],
+          correct: 0,
+          explanation: "By classical truth-table equivalence, the implication P -> Q is true in all cases except when P is true and Q is false, making it identical to (NOT P OR Q)."
+        }
+      ];
+
+      // 2. State Tracking Variables
+      let currentQuestionIndex = 0;
+      let userAnswers = {}; // { 0: optionIndex, ... }
+      let markedForReview = new Set();
+      let isExamActive = false;
+      let examTimerSeconds = 600; // 10 minutes
+      let examTimerInterval = null;
+      let webcamStream = null;
+
+      // Proctoring Metrics
+      let violationsCount = 0;
+      let maxViolationsAllowed = 3;
+      let blurEventsCount = 0;
+      let tabSwitchCount = 0;
+      let fullscreenExitCount = 0;
+      let clipboardBlocksCount = 0;
+      let mouseOutCount = 0;
+      let totalAwayTimeSeconds = 0;
+      let awayTimerStart = null;
+      let proctorLogs = [];
+
+      // 3. Audio Tone Generator (Web Audio API)
+      let audioCtx = null;
+      function playWarningTone(frequency = 440, duration = 0.25, type = 'sine') {
+        try {
+          if (!audioCtx) {
+            audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+          }
+          if (audioCtx.state === 'suspended') {
+            audioCtx.resume();
+          }
+          const osc = audioCtx.createOscillator();
+          const gain = audioCtx.createGain();
+          osc.type = type;
+          osc.frequency.setValueAtTime(frequency, audioCtx.currentTime);
+          gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + duration);
+          osc.connect(gain);
+          gain.connect(audioCtx.destination);
+          osc.start();
+          osc.stop(audioCtx.currentTime + duration);
+        } catch (e) {
+          // ignore audio failure
+        }
+      }
+
+      // 4. UI Element References
+      const screenPre = document.getElementById('screen-pre-exam');
+      const screenActive = document.getElementById('screen-active-exam');
+      const screenReport = document.getElementById('screen-report');
+
+      const btnStart = document.getElementById('btn-start-exam');
+      const btnFinish = document.getElementById('btn-finish-exam');
+      const btnRetake = document.getElementById('btn-retake-exam');
+      const btnToggleCam = document.getElementById('btn-toggle-webcam');
+      const webcamPreview = document.getElementById('webcam-preview');
+      const webcamPlaceholder = document.getElementById('webcam-placeholder');
+      const webcamOverlay = document.getElementById('webcam-overlay');
+      const camStatusPill = document.getElementById('cam-status-pill');
+
+      const hudTimer = document.getElementById('exam-timer-display');
+      const hudViolations = document.getElementById('hud-violation-count');
+      const hudLimit = document.getElementById('hud-violation-limit');
+      const hudFsIndicator = document.getElementById('hud-fullscreen-indicator');
+      const hudFsText = document.getElementById('hud-fullscreen-text');
+      const alertBar = document.getElementById('violation-alert-bar');
+      const alertText = document.getElementById('violation-alert-text');
+      const btnDismissAlert = document.getElementById('btn-dismiss-alert');
+      const proctorTerminal = document.getElementById('proctor-log-terminal');
+      const logCountPill = document.getElementById('log-count-pill');
+      const btnClearLog = document.getElementById('btn-clear-log');
+
+      const qCategory = document.getElementById('q-category');
+      const qNumberTitle = document.getElementById('q-number-title');
+      const qTextContainer = document.getElementById('q-text-container');
+      const qOptionsContainer = document.getElementById('q-options-container');
+      const btnPrev = document.getElementById('btn-prev-q');
+      const btnNext = document.getElementById('btn-next-q');
+      const btnMarkReview = document.getElementById('btn-mark-review');
+      const btnClearResp = document.getElementById('btn-clear-response');
+      const paletteGrid = document.getElementById('palette-grid');
+
+      // Profile selector
+      const profileButtons = document.querySelectorAll('.profile-btn');
+      profileButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+          profileButtons.forEach(b => {
+            b.classList.remove('active', 'bg-brand-blue/15', 'border-brand-blue', 'text-white');
+            b.classList.add('border-white/10', 'text-gray-300');
+          });
+          btn.classList.add('active', 'bg-brand-blue/15', 'border-brand-blue', 'text-white');
+          btn.classList.remove('border-white/10', 'text-gray-300');
+
+          const profile = btn.getAttribute('data-profile');
+          if (profile === 'wheebox') {
+            maxViolationsAllowed = 3;
+          } else if (profile === 'tcs') {
+            maxViolationsAllowed = 4;
+          } else {
+            maxViolationsAllowed = 99;
+          }
+          if (hudLimit) hudLimit.textContent = maxViolationsAllowed === 99 ? '∞' : String(maxViolationsAllowed);
+        });
+      });
+
+      // 5. Proctor Logging Engine
+      function logProctorEvent(type, message, isViolation = true) {
+        const now = new Date();
+        const timeStr = now.toTimeString().split(' ')[0] + '.' + String(now.getMilliseconds()).padStart(3, '0').slice(0, 2);
+        
+        const logItem = {
+          time: timeStr,
+          type, // 'CRITICAL' | 'WARNING' | 'INFO' | 'RESTORE'
+          message,
+          isViolation
+        };
+        proctorLogs.push(logItem);
+
+        if (isViolation) {
+          violationsCount++;
+          if (hudViolations) hudViolations.textContent = String(violationsCount);
+          playWarningTone(300, 0.35, 'sawtooth');
+          triggerAlertBanner(`⚠️ ${type}: ${message}`);
+        }
+
+        // Render to live terminal
+        if (proctorTerminal) {
+          const row = document.createElement('div');
+          row.className = 'flex items-start gap-2 py-0.5 border-b border-white/[0.03] animate-fadeIn';
+          
+          let badgeColor = 'text-gray-400';
+          if (type === 'CRITICAL') badgeColor = 'text-rose-400 font-bold';
+          else if (type === 'WARNING') badgeColor = 'text-amber-400 font-bold';
+          else if (type === 'RESTORE') badgeColor = 'text-emerald-400 font-bold';
+
+          row.innerHTML = `
+            <span class="text-gray-500 text-[10px] select-none">[${timeStr}]</span>
+            <span class="${badgeColor}">[${type}]</span>
+            <span class="text-gray-300 flex-1 break-all">${message}</span>
+          `;
+          proctorTerminal.appendChild(row);
+          proctorTerminal.scrollTop = proctorTerminal.scrollHeight;
+        }
+
+        if (logCountPill) {
+          logCountPill.textContent = `${proctorLogs.length} events`;
+        }
+
+        // Check if exceeded max limit
+        if (isViolation && violationsCount >= maxViolationsAllowed && maxViolationsAllowed < 90) {
+          setTimeout(() => {
+            alert(`🚨 Disqualification Limit Reached!\n\nIn a real exam (Wheebox/TCS iON), your test would be terminated immediately for exceeding ${maxViolationsAllowed} security violations.`);
+            finishAssessment();
+          }, 400);
+        }
+      }
+
+      function triggerAlertBanner(text) {
+        if (!alertBar || !alertText) return;
+        alertText.textContent = text;
+        alertBar.classList.remove('hidden');
+        setTimeout(() => {
+          alertBar.classList.add('hidden');
+        }, 5000);
+      }
+
+      btnDismissAlert?.addEventListener('click', () => {
+        alertBar?.classList.add('hidden');
+      });
+
+      btnClearLog?.addEventListener('click', () => {
+        if (proctorTerminal) proctorTerminal.innerHTML = '<div class="text-gray-500 italic text-[10px]">Log cleared by user. Sensors active.</div>';
+      });
+
+      // 6. Proctoring Listeners Setup
+      function armProctorSensors() {
+        // A. Window Blur (Focus lost / Clicked outside / Alt+Tab)
+        window.addEventListener('blur', onWindowBlur);
+        window.addEventListener('focus', onWindowFocus);
+
+        // B. Tab switch / Visibility change
+        document.addEventListener('visibilitychange', onVisibilityChange);
+
+        // C. Fullscreen change
+        document.addEventListener('fullscreenchange', onFullscreenChange);
+        document.addEventListener('webkitfullscreenchange', onFullscreenChange);
+
+        // D. Context Menu / Right-Click Interception
+        document.addEventListener('contextmenu', onContextMenu);
+
+        // E. Clipboard Copy/Cut/Paste Interception
+        document.addEventListener('copy', onCopyCutPaste);
+        document.addEventListener('cut', onCopyCutPaste);
+        document.addEventListener('paste', onCopyCutPaste);
+
+        // F. Key combinations (F12, DevTools, Ctrl+C, Ctrl+V, PrintScreen)
+        window.addEventListener('keydown', onKeyDown);
+
+        // G. Mouse leaving viewport
+        document.addEventListener('mouseleave', onMouseLeave);
+      }
+
+      function disarmProctorSensors() {
+        window.removeEventListener('blur', onWindowBlur);
+        window.removeEventListener('focus', onWindowFocus);
+        document.removeEventListener('visibilitychange', onVisibilityChange);
+        document.removeEventListener('fullscreenchange', onFullscreenChange);
+        document.removeEventListener('webkitfullscreenchange', onFullscreenChange);
+        document.removeEventListener('contextmenu', onContextMenu);
+        document.removeEventListener('copy', onCopyCutPaste);
+        document.removeEventListener('cut', onCopyCutPaste);
+        document.removeEventListener('paste', onCopyCutPaste);
+        window.removeEventListener('keydown', onKeyDown);
+        document.removeEventListener('mouseleave', onMouseLeave);
+      }
+
+      function onWindowBlur() {
+        if (!isExamActive) return;
+        awayTimerStart = Date.now();
+        blurEventsCount++;
+        logProctorEvent('CRITICAL', 'Window focus lost! User clicked outside or Alt-Tabbed.', true);
+      }
+
+      function onWindowFocus() {
+        if (!isExamActive) return;
+        if (awayTimerStart) {
+          const diff = Math.max(0.1, ((Date.now() - awayTimerStart) / 1000)).toFixed(1);
+          totalAwayTimeSeconds += parseFloat(diff);
+          awayTimerStart = null;
+          logProctorEvent('RESTORE', `Window focus restored. Time spent away: ${diff} seconds.`, false);
+        }
+      }
+
+      function onVisibilityChange() {
+        if (!isExamActive) return;
+        if (document.hidden) {
+          tabSwitchCount++;
+          logProctorEvent('CRITICAL', 'Tab switch detected! Active document hidden or minimized.', true);
+        } else {
+          logProctorEvent('RESTORE', 'Tab visibility restored.', false);
+        }
+      }
+
+      function onFullscreenChange() {
+        if (!isExamActive) return;
+        const isFullscreen = !!(document.fullscreenElement || document.webkitFullscreenElement);
+        if (!isFullscreen) {
+          fullscreenExitCount++;
+          if (hudFsIndicator) hudFsIndicator.classList.add('border-rose-500', 'bg-rose-500/20');
+          if (hudFsText) hudFsText.textContent = 'Fullscreen: EXITED';
+          logProctorEvent('CRITICAL', 'Fullscreen mode breached! User exited fullscreen.', true);
+          
+          // Prompt user to re-enter
+          setTimeout(() => {
+            if (isExamActive && confirm('⚠️ You have exited Fullscreen Mode!\n\nClick OK to return to Fullscreen lockdown mode.')) {
+              requestFullscreenLock();
+            }
+          }, 300);
+        } else {
+          if (hudFsIndicator) hudFsIndicator.classList.remove('border-rose-500', 'bg-rose-500/20');
+          if (hudFsText) hudFsText.textContent = 'Fullscreen: Locked';
+          logProctorEvent('INFO', 'Fullscreen mode resumed.', false);
+        }
+      }
+
+      function onContextMenu(e) {
+        if (!isExamActive) return;
+        e.preventDefault();
+        clipboardBlocksCount++;
+        logProctorEvent('WARNING', 'Right-click context menu attempt blocked.', true);
+      }
+
+      function onCopyCutPaste(e) {
+        if (!isExamActive) return;
+        e.preventDefault();
+        clipboardBlocksCount++;
+        logProctorEvent('CRITICAL', `Unauthorized clipboard ${e.type.toUpperCase()} attempt blocked.`, true);
+      }
+
+      function onKeyDown(e) {
+        if (!isExamActive) return;
+
+        // F12 or Inspect element keys
+        if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C')) || (e.ctrlKey && e.key === 'u')) {
+          e.preventDefault();
+          clipboardBlocksCount++;
+          logProctorEvent('CRITICAL', `Developer tools / Inspect shortcut blocked (${e.key}).`, true);
+          return;
+        }
+
+        // Copy/Paste shortcuts
+        if ((e.ctrlKey || e.metaKey) && (e.key === 'c' || e.key === 'v' || e.key === 'x' || e.key === 'a')) {
+          e.preventDefault();
+          clipboardBlocksCount++;
+          logProctorEvent('WARNING', `Keyboard shortcut blocked (Ctrl+${e.key.toUpperCase()}).`, true);
+          return;
+        }
+
+        // PrintScreen attempt
+        if (e.key === 'PrintScreen') {
+          e.preventDefault();
+          logProctorEvent('CRITICAL', 'Screenshot attempt detected (PrintScreen).', true);
+        }
+      }
+
+      function onMouseLeave() {
+        if (!isExamActive) return;
+        mouseOutCount++;
+        logProctorEvent('WARNING', 'Cursor departed exam window boundaries.', true);
+      }
+
+      async function requestFullscreenLock() {
+        try {
+          const el = document.documentElement;
+          if (el.requestFullscreen) {
+            await el.requestFullscreen();
+          } else if (el.webkitRequestFullscreen) {
+            await el.webkitRequestFullscreen();
+          }
+        } catch (err) {
+          console.warn('Fullscreen request denied:', err);
+        }
+      }
+
+      // 7. Webcam Diagnostics
+      btnToggleCam?.addEventListener('click', async () => {
+        if (webcamStream) {
+          // Stop stream
+          webcamStream.getTracks().forEach(t => t.stop());
+          webcamStream = null;
+          if (webcamPreview) {
+            webcamPreview.srcObject = null;
+            webcamPreview.classList.add('hidden');
+          }
+          webcamPlaceholder?.classList.remove('hidden');
+          webcamOverlay?.classList.add('hidden');
+          btnToggleCam.textContent = '🎥 Turn On Webcam Test';
+          if (camStatusPill) {
+            camStatusPill.textContent = 'Optional';
+            camStatusPill.className = 'text-[10px] px-2 py-0.5 rounded-full bg-gray-500/20 text-gray-400 font-semibold';
+          }
+        } else {
+          try {
+            btnToggleCam.textContent = 'Requesting Camera...';
+            webcamStream = await navigator.mediaDevices.getUserMedia({ video: { width: 640, height: 360 } });
+            if (webcamPreview) {
+              webcamPreview.srcObject = webcamStream;
+              webcamPreview.classList.remove('hidden');
+            }
+            webcamPlaceholder?.classList.add('hidden');
+            webcamOverlay?.classList.remove('hidden');
+            btnToggleCam.textContent = '⏹️ Turn Off Webcam';
+            if (camStatusPill) {
+              camStatusPill.textContent = 'Active (Local)';
+              camStatusPill.className = 'text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 font-semibold';
+            }
+          } catch (err) {
+            alert('Could not access camera. Please allow webcam permission in your browser settings.');
+            btnToggleCam.textContent = '🎥 Turn On Webcam Test';
+          }
+        }
+      });
+
+      // 8. Exam Lifecycle: Start, Render, Finish
+      async function startAssessment() {
+        // Arm sensors
+        isExamActive = true;
+        violationsCount = 0;
+        blurEventsCount = 0;
+        tabSwitchCount = 0;
+        fullscreenExitCount = 0;
+        clipboardBlocksCount = 0;
+        mouseOutCount = 0;
+        totalAwayTimeSeconds = 0;
+        userAnswers = {};
+        markedForReview.clear();
+        currentQuestionIndex = 0;
+        examTimerSeconds = 600;
+
+        // Switch screens
+        screenPre?.classList.add('hidden');
+        screenReport?.classList.add('hidden');
+        screenActive?.classList.remove('hidden');
+
+        // Request Fullscreen
+        await requestFullscreenLock();
+        armProctorSensors();
+
+        // Render first question & palette
+        renderQuestion(0);
+        renderPalette();
+
+        // Start timer
+        startTimer();
+
+        logProctorEvent('INFO', 'Candidate launched exam session. Fullscreen lockdown enabled.', false);
+      }
+
+      function startTimer() {
+        if (examTimerInterval) clearInterval(examTimerInterval);
+        examTimerInterval = setInterval(() => {
+          if (!isExamActive) return;
+          examTimerSeconds--;
+
+          const mins = Math.floor(examTimerSeconds / 60);
+          const secs = examTimerSeconds % 60;
+          if (hudTimer) hudTimer.textContent = `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+
+          if (examTimerSeconds <= 60 && examTimerSeconds > 0 && examTimerSeconds % 10 === 0) {
+            playWarningTone(600, 0.1, 'sine');
+          }
+
+          if (examTimerSeconds <= 0) {
+            clearInterval(examTimerInterval);
+            alert('Time expired! Submitting your assessment responses.');
+            finishAssessment();
+          }
+        }, 1000);
+      }
+
+      function renderQuestion(index) {
+        currentQuestionIndex = index;
+        const q = QUESTIONS[index];
+        if (!q) return;
+
+        if (qCategory) qCategory.textContent = q.category;
+        if (qNumberTitle) qNumberTitle.textContent = `Question ${index + 1} of ${QUESTIONS.length}`;
+
+        if (qTextContainer) {
+          qTextContainer.innerHTML = `<p class="text-sm sm:text-base font-semibold">${q.question}</p>`;
+        }
+
+        if (qOptionsContainer) {
+          qOptionsContainer.innerHTML = '';
+          const currentSelected = userAnswers[index];
+
+          q.options.forEach((optText, optIdx) => {
+            const isSelected = currentSelected === optIdx;
+            const btnOpt = document.createElement('button');
+            btnOpt.type = 'button';
+            btnOpt.className = `w-full p-4 rounded-2xl border text-left text-xs sm:text-sm font-medium transition-all flex items-center gap-3 cursor-pointer ${
+              isSelected 
+                ? 'bg-brand-blue/20 border-brand-blue text-white shadow-md' 
+                : 'bg-white/[0.02] light:bg-black/[0.02] border-white/10 light:border-black/10 text-gray-300 light:text-gray-700 hover:border-white/30'
+            }`;
+
+            const badgeChar = String.fromCharCode(65 + optIdx); // A, B, C, D
+            btnOpt.innerHTML = `
+              <span class="w-6 h-6 rounded-lg flex items-center justify-center font-mono font-bold text-xs ${
+                isSelected ? 'bg-brand-blue text-white' : 'bg-white/10 text-gray-300'
+              }">${badgeChar}</span>
+              <span>${optText}</span>
+            `;
+
+            btnOpt.addEventListener('click', () => {
+              userAnswers[index] = optIdx;
+              renderQuestion(index);
+              renderPalette();
+            });
+
+            qOptionsContainer.appendChild(btnOpt);
+          });
+        }
+
+        // Prev/Next button states
+        if (btnPrev) {
+          btnPrev.disabled = index === 0;
+        }
+        if (btnNext) {
+          btnNext.textContent = index === QUESTIONS.length - 1 ? 'Save & Review 🏁' : 'Save & Next →';
+        }
+
+        if (btnMarkReview) {
+          const isMarked = markedForReview.has(index);
+          btnMarkReview.textContent = isMarked ? '✓ Marked for Review' : '🔖 Mark for Review';
+          btnMarkReview.className = isMarked
+            ? 'px-3 py-1.5 rounded-xl bg-purple-500 text-white text-xs font-semibold'
+            : 'px-3 py-1.5 rounded-xl bg-purple-500/15 hover:bg-purple-500/25 border border-purple-500/30 text-purple-300 text-xs font-semibold';
+        }
+      }
+
+      function renderPalette() {
+        if (!paletteGrid) return;
+        paletteGrid.innerHTML = '';
+
+        QUESTIONS.forEach((_, idx) => {
+          const isAnswered = typeof userAnswers[idx] === 'number';
+          const isMarked = markedForReview.has(idx);
+          const isCurrent = currentQuestionIndex === idx;
+
+          let bgClass = 'bg-white/5 border-white/10 text-gray-400';
+          if (isAnswered) bgClass = 'bg-emerald-600 text-white border-emerald-500 font-bold';
+          if (isMarked) bgClass = 'bg-purple-600 text-white border-purple-500 font-bold';
+          if (isCurrent) bgClass += ' ring-2 ring-brand-blue';
+
+          const btnP = document.createElement('button');
+          btnP.type = 'button';
+          btnP.className = `h-9 rounded-xl border text-xs flex items-center justify-center transition-all cursor-pointer ${bgClass}`;
+          btnP.textContent = String(idx + 1);
+
+          btnP.addEventListener('click', () => {
+            renderQuestion(idx);
+          });
+
+          paletteGrid.appendChild(btnP);
+        });
+      }
+
+      btnPrev?.addEventListener('click', () => {
+        if (currentQuestionIndex > 0) {
+          renderQuestion(currentQuestionIndex - 1);
+        }
+      });
+
+      btnNext?.addEventListener('click', () => {
+        if (currentQuestionIndex < QUESTIONS.length - 1) {
+          renderQuestion(currentQuestionIndex + 1);
+        } else {
+          // Finished last question
+          if (confirm('You have reached the final question. Would you like to submit your assessment and generate your audit report?')) {
+            finishAssessment();
+          }
+        }
+      });
+
+      btnMarkReview?.addEventListener('click', () => {
+        if (markedForReview.has(currentQuestionIndex)) {
+          markedForReview.delete(currentQuestionIndex);
+        } else {
+          markedForReview.add(currentQuestionIndex);
+        }
+        renderQuestion(currentQuestionIndex);
+        renderPalette();
+      });
+
+      btnClearResp?.addEventListener('click', () => {
+        delete userAnswers[currentQuestionIndex];
+        renderQuestion(currentQuestionIndex);
+        renderPalette();
+      });
+
+      // 9. Finish Assessment & Calculate Report
+      function finishAssessment() {
+        isExamActive = false;
+        if (examTimerInterval) clearInterval(examTimerInterval);
+        disarmProctorSensors();
+
+        // Exit fullscreen if still active
+        if (document.fullscreenElement) {
+          document.exitFullscreen().catch(() => {});
+        }
+
+        // Calculate Academic Score
+        let correctCount = 0;
+        QUESTIONS.forEach((q, idx) => {
+          if (userAnswers[idx] === q.correct) {
+            correctCount++;
+          }
+        });
+
+        // Calculate Proctor Integrity Score
+        // Base: 100, deductions:
+        // - Tab switch: -20 each
+        // - Window blur: -15 each
+        // - Fullscreen exit: -25 each
+        // - Clipboard / shortcut block: -10 each
+        // - Mouse leaving bounds: -3 each
+        const deduction = (tabSwitchCount * 20) + (blurEventsCount * 15) + (fullscreenExitCount * 25) + (clipboardBlocksCount * 10) + (mouseOutCount * 3);
+        const integrityScore = Math.max(0, 100 - deduction);
+
+        // Switch to Report Screen
+        screenActive?.classList.add('hidden');
+        screenReport?.classList.remove('hidden');
+
+        // Populate Report Cards
+        const scoreEl = document.getElementById('report-academic-score');
+        const percentEl = document.getElementById('report-academic-percent');
+        const integrityEl = document.getElementById('report-integrity-score');
+        const integrityVerdictEl = document.getElementById('report-integrity-verdict');
+        const verdictTitle = document.getElementById('report-verdict-title');
+        const verdictIcon = document.getElementById('report-verdict-icon');
+
+        if (scoreEl) scoreEl.textContent = `${correctCount} / ${QUESTIONS.length}`;
+        if (percentEl) percentEl.textContent = `${((correctCount / QUESTIONS.length) * 100).toFixed(0)}% Overall Accuracy`;
+
+        if (integrityEl) {
+          integrityEl.textContent = `${integrityScore}%`;
+          if (integrityScore >= 80) integrityEl.className = 'text-4xl sm:text-5xl font-black text-emerald-400';
+          else if (integrityScore >= 50) integrityEl.className = 'text-4xl sm:text-5xl font-black text-amber-400';
+          else integrityEl.className = 'text-4xl sm:text-5xl font-black text-rose-500';
+        }
+
+        if (integrityVerdictEl) {
+          if (integrityScore >= 85) {
+            integrityVerdictEl.textContent = '🟢 Clean Record (Eligible for Corporate Exam)';
+            integrityVerdictEl.className = 'text-xs font-semibold text-emerald-400';
+            if (verdictTitle) verdictTitle.textContent = 'Simulation Passed with High Integrity!';
+            if (verdictIcon) {
+              verdictIcon.textContent = '🛡️';
+              verdictIcon.className = 'w-16 h-16 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center mx-auto text-3xl shadow-2xl';
+            }
+          } else if (integrityScore >= 50) {
+            integrityVerdictEl.textContent = '🟡 Moderate Risk (Manual Audit Triggered)';
+            integrityVerdictEl.className = 'text-xs font-semibold text-amber-400';
+            if (verdictTitle) verdictTitle.textContent = 'Assessment Completed with Proctor Warnings';
+            if (verdictIcon) {
+              verdictIcon.textContent = '⚠️';
+              verdictIcon.className = 'w-16 h-16 rounded-full bg-amber-500/20 text-amber-400 flex items-center justify-center mx-auto text-3xl shadow-2xl';
+            }
+          } else {
+            integrityVerdictEl.textContent = '🔴 High Risk / Disqualified on Real Platform';
+            integrityVerdictEl.className = 'text-xs font-semibold text-rose-500';
+            if (verdictTitle) verdictTitle.textContent = 'Disqualification Risk Detected';
+            if (verdictIcon) {
+              verdictIcon.textContent = '🚨';
+              verdictIcon.className = 'w-16 h-16 rounded-full bg-rose-500/20 text-rose-400 flex items-center justify-center mx-auto text-3xl shadow-2xl';
+            }
+          }
+        }
+
+        // Populate Violation Breakdown Stats
+        const statBlur = document.getElementById('stat-blur-count');
+        const statAway = document.getElementById('stat-away-time');
+        const statTab = document.getElementById('stat-tab-count');
+        const statFs = document.getElementById('stat-fs-count');
+        const statClip = document.getElementById('stat-clip-count');
+
+        if (statBlur) statBlur.textContent = String(blurEventsCount);
+        if (statAway) statAway.textContent = `${totalAwayTimeSeconds.toFixed(1)}s total away`;
+        if (statTab) statTab.textContent = String(tabSwitchCount);
+        if (statFs) statFs.textContent = String(fullscreenExitCount);
+        if (statClip) statClip.textContent = String(clipboardBlocksCount);
+
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+
+      // Event Listeners for actions
+      btnStart?.addEventListener('click', startAssessment);
+      btnFinish?.addEventListener('click', () => {
+        if (confirm('Are you sure you want to finish the assessment and inspect your integrity score?')) {
+          finishAssessment();
+        }
+      });
+      btnRetake?.addEventListener('click', () => {
+        screenReport?.classList.add('hidden');
+        screenPre?.classList.remove('hidden');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+
+    })();
+  </script>
+</Layout>
