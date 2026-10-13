@@ -1,15 +1,13 @@
 /* TEAM */
-Chef / Developer: Shivam Dixit
-Website: https://shivamdixit.vercel.app
-Twitter: @civdix
-GitHub: https://github.com/civdix
-Location: Mathura, Uttar Pradesh, India
+Developer: AKTU Open Source Community
+Website: https://akturesult.bond
+Location: Uttar Pradesh, India
 
 /* THANKS */
-AstroJS, Tailwind CSS v4, Vercel UI design system
+AstroJS, Tailwind CSS, Vercel UI design system
 
 /* TECHNOLOGY COLOPHON */
 HTML5, CSS3, ESNext, TypeScript
 Framework: AstroJS
-Styles: Tailwind CSS v4
-Deployment: Cloudflare Pages
+Styles: Tailwind CSS
+Deployment: Cloudflare Pages / Vercel

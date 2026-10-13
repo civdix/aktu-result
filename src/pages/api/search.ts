@@ -502,14 +502,22 @@ export const POST: APIRoute = async ({ request }) => {
       );
     }
 
+    const isTimeout = engineResult.error && (
+      engineResult.error.toLowerCase().includes('timeout') ||
+      engineResult.error.toLowerCase().includes('gateway')
+    );
+
     return new Response(
       JSON.stringify({
         success: false,
-        error: engineResult.error || "Enrollment number was not found in university portal records. Please verify the roll number or open official OneView directly.",
-        notFound: true,
+        error: isTimeout
+          ? "The university verification server (DigiShakti UP) is currently taking too long to respond. Please try again in a few moments or open OneView directly."
+          : (engineResult.error || "Enrollment number was not found in university portal records. Please verify the roll number or open official OneView directly."),
+        notFound: !isTimeout,
+        gatewayTimeout: !!isTimeout,
         canOpenOneView: true,
         rollNumber: trimmedRoll,
-        code: 404
+        code: isTimeout ? 504 : 404
       }),
       {
         status: 200,

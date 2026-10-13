@@ -12,4 +12,3 @@
 ---
 * **[Live Portal](https://akturesult.bond)**
 * **[Telegram Bot](https://t.me/akturesultwithoutdobbot)**
-* **[GitHub Repository](https://github.com/civdix/aktu-result)**

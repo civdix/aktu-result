@@ -48,8 +48,8 @@ export const POST: APIRoute = async ({ request }) => {
 
         const mailOptions = {
           from: gmailUser,
-          to: 'dixitshivam249@gmail.com',
-          subject: `[AKTU API Request] ${subject} - ${name}`,
+          to: process.env.SUPPORT_EMAIL || process.env.GMAIL_USER || 'support@akturesult.bond',
+          subject: `[AKTU Portal Inquiry] ${subject} - ${name}`,
           text: `You have received a new developer inquiry from the AKTU Result portal:
 
 Name: ${name}

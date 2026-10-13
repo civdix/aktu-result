@@ -11,22 +11,28 @@ console.log('🚀 [Unified Server] Starting AKTU Full Stack Service');
 console.log(`🌐 [Unified Server] Host: ${process.env.HOST} | Port: ${process.env.PORT}`);
 console.log('====================================================');
 
-// 1. Launch Telegram Bot in the background
-console.log('🤖 [Unified Server] Launching Telegram Bot listener...');
-import('./bot/telegram.js')
-  .then(() => {
-    console.log('✅ [Unified Server] Telegram Bot initialized successfully.');
-  })
-  .catch((err) => {
-    console.error('❌ [Unified Server] Error initializing Telegram Bot:', err.message);
-  });
-
-// 2. Launch Astro Node.js Web Server (serves all frontend pages and API routes)
+// 1. Launch Astro Node.js Web Server (serves all frontend pages and API routes)
 console.log('🌐 [Unified Server] Launching Astro Web Server & APIs...');
 import('../dist/server/entry.mjs')
   .then(async () => {
     console.log(`✅ [Unified Server] Astro Web Server is LIVE on http://${process.env.HOST}:${process.env.PORT}`);
     await purgeCloudflareCache();
+
+    // 2. Launch Telegram Bot in the background AFTER web server has initialized
+    if (process.env.TELEGRAM_BOT_TOKEN) {
+      console.log('🤖 [Unified Server] Launching Telegram Bot listener in 2s...');
+      setTimeout(() => {
+        import('./bot/telegram.js')
+          .then(() => {
+            console.log('✅ [Unified Server] Telegram Bot initialized successfully.');
+          })
+          .catch((err) => {
+            console.error('❌ [Unified Server] Error initializing Telegram Bot:', err.message);
+          });
+      }, 2000);
+    } else {
+      console.log('ℹ️  [Unified Server] Skipping Telegram Bot (TELEGRAM_BOT_TOKEN not configured).');
+    }
   })
   .catch((err) => {
     console.error('❌ [Unified Server] Error starting Astro Web Server:', err.message);

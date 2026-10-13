@@ -1,9 +1,9 @@
 # PowerShell script to clone and push the Wiki files directly to GitHub Wiki
 param(
-    [string]$PatToken = ""
+    [string]$PatToken = "",
+    [string]$RepoOwner = ($env:GITHUB_OWNER ? $env:GITHUB_OWNER : "akturesult")
 )
 
-$RepoOwner = "civdix"
 $RepoName = "aktu-result"
 $WikiDir = Join-Path $PSScriptRoot "..\docs\wiki"
 $TempDir = Join-Path $env:TEMP "aktu-result-wiki"

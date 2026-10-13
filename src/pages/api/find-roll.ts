@@ -129,7 +129,7 @@ export const POST: APIRoute = async ({ request }) => {
       const erpUrl = "https://erp.aktu.ac.in/WebPages/StudentServices/frmStudentGrievanceForm.aspx";
 
       // Set headers
-      const erpHeaders: any = {
+      const erpHeaders: Record<string, string> = {
         "accept": "*/*",
         "accept-language": "en-GB,en-US;q=0.9,en;q=0.8",
         "cache-control": "no-cache",
@@ -141,34 +141,101 @@ export const POST: APIRoute = async ({ request }) => {
         "sec-fetch-dest": "empty",
         "sec-fetch-mode": "cors",
         "sec-fetch-site": "same-origin",
-        "user-agent": "Mozilla/5.0 (Linux; Android 15; Pixel 9) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Mobile Safari/537.36",
+        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
         "x-microsoftajax": "Delta=true",
         "x-requested-with": "XMLHttpRequest"
       };
 
       try {
-        // 1. Fetch main page to initialize session and retrieve VIEWSTATE parameters
-        const getResp = await fetch(erpUrl, { headers: erpHeaders });
-        const getHtml = await getResp.text();
+        // 1. Fetch main page with cookie-aware redirect support (handles AspxAutoDetectCookieSupport=1 302 redirect)
+        const initResp = await fetch(erpUrl, {
+          headers: {
+            "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+            "user-agent": erpHeaders["user-agent"]
+          },
+          redirect: "manual"
+        });
+
+        const cookie1 = initResp.headers.get("set-cookie");
+        const redirectLoc = initResp.headers.get("location");
+
+        let mainHtml = "";
+        let sessionCookies = "";
+
+        if (redirectLoc) {
+          const nextUrl = new URL(redirectLoc, erpUrl).toString();
+          const cookieHeader = cookie1 ? cookie1.split(";")[0] : "";
+          const secondResp = await fetch(nextUrl, {
+            headers: {
+              "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+              "user-agent": erpHeaders["user-agent"],
+              "cookie": cookieHeader
+            }
+          });
+          const cookie2 = secondResp.headers.get("set-cookie") || "";
+          sessionCookies = [cookie1, cookie2].filter(Boolean).map(c => c!.split(";")[0]).join("; ");
+          mainHtml = await secondResp.text();
+        } else {
+          sessionCookies = cookie1 ? cookie1.split(";")[0] : "";
+          mainHtml = await initResp.text();
+        }
 
         // Retrieve ASP.NET variables
-        const viewstateMatch = getHtml.match(/id="__VIEWSTATE"\s+value="([^"]*)"/);
-        const viewstateGenMatch = getHtml.match(/id="__VIEWSTATEGENERATOR"\s+value="([^"]*)"/);
+        const viewstateMatch = mainHtml.match(/id="__VIEWSTATE"\s+value="([^"]*)"/);
+        const viewstateGenMatch = mainHtml.match(/id="__VIEWSTATEGENERATOR"\s+value="([^"]*)"/);
 
         const viewstate = viewstateMatch ? viewstateMatch[1] : '';
         const viewstateGenerator = viewstateGenMatch ? viewstateGenMatch[1] : '';
-        const sessionCookie = getResp.headers.get('set-cookie') || '';
 
-        if (sessionCookie) {
-          erpHeaders["cookie"] = sessionCookie.split(';')[0];
-        }
+        erpHeaders["cookie"] = sessionCookies;
         erpHeaders["content-type"] = "application/x-www-form-urlencoded; charset=UTF-8";
 
+        // Helper to extract student name from ASP.NET ViewState or AJAX response
+        const parseStudentName = (resText: string, roll: string): string => {
+          if (resText.includes("There is no row at position 0") || resText.includes("no row at position 0")) {
+            return '';
+          }
+
+          // 1. Extract from LosFormatter ViewState string
+          const vsPart = resText.match(/\|__VIEWSTATE\|([^|]+)\|/);
+          if (vsPart) {
+            try {
+              const buf = Buffer.from(vsPart[1], 'base64');
+              const str = buf.toString('latin1');
+              const rollIndex = str.indexOf(roll);
+              if (rollIndex !== -1) {
+                const afterRoll = str.slice(rollIndex + roll.length);
+                const ddIndex = afterRoll.indexOf('dd');
+                if (ddIndex !== -1) {
+                  const namePart = afterRoll.slice(ddIndex + 2);
+                  const nextDd = namePart.indexOf('dd');
+                  if (nextDd !== -1) {
+                    const rawName = namePart.slice(0, nextDd).replace(/^[^A-Za-z\s]+/, '').trim();
+                    if (rawName && rawName.length >= 2 && rawName.length <= 60) {
+                      return rawName.toUpperCase();
+                    }
+                  }
+                }
+              }
+            } catch (e) {
+              // fallback to regex parsing below
+            }
+          }
+
+          // 2. Extract from input tag if full HTML returned
+          const inputMatch = resText.match(/<input[^>]*id="ContentPlaceHolder1_txtStudentName"[^>]*>/i) ||
+            resText.match(/<input[^>]*name="ctl00\$ContentPlaceHolder1\$txtStudentName"[^>]*>/i);
+          const valueMatch = inputMatch ? inputMatch[0].match(/value="([^"]*)"/i) : null;
+          if (valueMatch && valueMatch[1].trim()) {
+            return valueMatch[1].trim().toUpperCase();
+          }
+
+          return '';
+        };
+
         // 2. Query student records in parallel batches of 20
-        const serialsToScan = [
-          ...Array.from({ length: 40 }, (_, i) => i + 1),     // 1 to 40 (lateral/small course range)
-          ...Array.from({ length: 120 }, (_, i) => i + 100)   // 100 to 219 (regular course range)
-        ];
+        // Covers standard class serials 1 through 140
+        const serialsToScan = Array.from({ length: 140 }, (_, i) => i + 1);
 
         let batchIndex = 0;
         const batchSize = 20;
@@ -219,8 +286,8 @@ export const POST: APIRoute = async ({ request }) => {
 
                 const isValid = text.includes("There is no row at position 0") || 
                                 text.includes("no row at position 0") || 
-                                text.includes("ContentPlaceHolder1_txtStudentName") ||
-                                text.includes("txtStudentName");
+                                text.includes("__VIEWSTATE") ||
+                                text.includes("ContentPlaceHolder1_txtStudentName");
 
                 if (isValid) {
                   success = true;
@@ -244,34 +311,16 @@ export const POST: APIRoute = async ({ request }) => {
           const batchResults = await Promise.all(batchPromises);
 
           let validInBatchCount = 0;
-          let isRegularBatch = false;
 
           for (const res of batchResults) {
-            if (res.serial >= 100) {
-              isRegularBatch = true;
-            }
-
             if (!res.success) continue;
 
-            const isEmpty = res.text.includes("There is no row at position 0") || res.text.includes("no row at position 0");
-            if (!isEmpty) {
-              validInBatchCount++;
-            } else {
-              continue;
-            }
-            // Parse student name from the input tag value attribute
-            const inputMatch = res.text.match(/<input[^>]*id="ContentPlaceHolder1_txtStudentName"[^>]*>/i) ||
-              res.text.match(/<input[^>]*name="ctl00\$ContentPlaceHolder1\$txtStudentName"[^>]*>/i);
-            const valueMatch = inputMatch ? inputMatch[0].match(/value="([^"]*)"/i) : null;
-            const studentName = valueMatch ? valueMatch[1].trim().toUpperCase() : '';
-            console.log("Student Name: ", studentName);
+            const studentName = parseStudentName(res.text, res.roll);
             if (studentName) {
+              validInBatchCount++;
               minValidSerial = Math.min(minValidSerial, res.serial);
               maxValidSerial = Math.max(maxValidSerial, res.serial);
 
-              // Database caching disabled
-
-              // If searchName is blank (no filter name) or studentName matches query pattern, include it
               if (!searchName || studentName.includes(searchName)) {
                 liveMatches.push({
                   name: studentName,
@@ -282,9 +331,8 @@ export const POST: APIRoute = async ({ request }) => {
             }
           }
 
-          // Only stop scanning regular batches if we've already found some students (class start boundary identified)
-          // AND this regular batch has 0 valid students (class end boundary identified).
-          if (isRegularBatch && validInBatchCount === 0 && maxValidSerial >= 100) {
+          // If we've already found some students and hit an entirely empty batch past serial 30, stop scanning
+          if (validInBatchCount === 0 && maxValidSerial > 0 && batchSerials[0] > 30) {
             shouldStop = true;
           }
 

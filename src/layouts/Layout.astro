@@ -456,77 +456,6 @@ const isActive = (path: string) => {
         }
       });
 
-      // Buy Me A Coffee Modal Handler
-      const coffeeModal = document.getElementById("coffee-modal");
-      const coffeeModalContent = document.getElementById("coffee-modal-content");
-      const coffeeModalClose = document.getElementById("coffee-modal-close");
-      const coffeeModalBackdrop = document.getElementById("coffee-modal-backdrop");
-      const floatingCoffeeBtn = document.getElementById("floating-coffee-btn");
-      
-      const tabUpi = document.getElementById("tab-upi");
-      const tabBmac = document.getElementById("tab-bmac");
-      const sectionUpi = document.getElementById("section-upi");
-      const sectionBmac = document.getElementById("section-bmac");
-      
-      const copyUpiBtn = document.getElementById("copy-upi-btn");
-      const upiIdText = document.getElementById("upi-id-text");
-
-      const openCoffeeModal = () => {
-        if (!coffeeModal || !coffeeModalContent) return;
-        coffeeModal.classList.remove("hidden");
-        document.body.classList.add("overflow-hidden");
-        setTimeout(() => {
-          coffeeModalContent.classList.remove("scale-95", "opacity-0");
-          coffeeModalContent.classList.add("scale-100", "opacity-100");
-        }, 10);
-      };
-
-      const closeCoffeeModal = () => {
-        if (!coffeeModal || !coffeeModalContent) return;
-        coffeeModalContent.classList.remove("scale-100", "opacity-100");
-        coffeeModalContent.classList.add("scale-95", "opacity-0");
-        document.body.classList.remove("overflow-hidden");
-        setTimeout(() => {
-          coffeeModal.classList.add("hidden");
-        }, 300);
-      };
-
-      if (floatingCoffeeBtn) {
-        // Initial state: hide when scrolled near top of page to prevent form overlap
-        if (window.scrollY < 180) {
-          floatingCoffeeBtn.style.opacity = "0";
-          floatingCoffeeBtn.style.pointerEvents = "none";
-          floatingCoffeeBtn.style.transform = "scale(0.8)";
-        }
-        floatingCoffeeBtn.style.transition = "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)";
-
-        window.addEventListener("scroll", () => {
-          if (window.scrollY < 180) {
-            floatingCoffeeBtn.style.opacity = "0";
-            floatingCoffeeBtn.style.pointerEvents = "none";
-            floatingCoffeeBtn.style.transform = "scale(0.8)";
-          } else {
-            floatingCoffeeBtn.style.opacity = "1";
-            floatingCoffeeBtn.style.pointerEvents = "auto";
-            floatingCoffeeBtn.style.transform = "scale(1)";
-          }
-        });
-      }
-
-      floatingCoffeeBtn?.addEventListener("click", openCoffeeModal);
-      coffeeModalClose?.addEventListener("click", closeCoffeeModal);
-      coffeeModalBackdrop?.addEventListener("click", closeCoffeeModal);
-
-      // Handle custom triggers from anywhere with class 'coffee-trigger'
-      document.addEventListener("click", (e) => {
-        const target = e.target as any;
-        const trigger = target.closest(".coffee-trigger");
-        if (trigger) {
-          e.preventDefault();
-          openCoffeeModal();
-        }
-      });
-
       // Roll Assistant Modal Handler
       const rollModal = document.getElementById("roll-assistant-modal");
       const rollModalContent = document.getElementById("roll-assistant-modal-content");
@@ -617,7 +546,6 @@ const isActive = (path: string) => {
       // Dismiss modals with Escape key
       document.addEventListener("keydown", (e) => {
         if (e.key === "Escape") {
-          closeCoffeeModal();
           closeRollModal();
         }
       });
@@ -639,42 +567,6 @@ const isActive = (path: string) => {
         }
       });
 
-      // Tabs switching
-      tabUpi?.addEventListener("click", () => {
-        tabUpi.classList.add("bg-brand-blue", "text-white");
-        tabUpi.classList.remove("text-gray-400", "hover:text-white", "light:hover:text-ink");
-        tabBmac?.classList.remove("bg-brand-blue", "text-white");
-        tabBmac?.classList.add("text-gray-400", "hover:text-white", "light:hover:text-ink");
-        
-        sectionUpi?.classList.remove("hidden");
-        sectionBmac?.classList.add("hidden");
-      });
-
-      tabBmac?.addEventListener("click", () => {
-        tabBmac.classList.add("bg-brand-blue", "text-white");
-        tabBmac.classList.remove("text-gray-400", "hover:text-white", "light:hover:text-ink");
-        tabUpi?.classList.remove("bg-brand-blue", "text-white");
-        tabUpi?.classList.add("text-gray-400", "hover:text-white", "light:hover:text-ink");
-        
-        sectionBmac?.classList.remove("hidden");
-        sectionUpi?.classList.add("hidden");
-      });
-
-      // Copy UPI ID
-      copyUpiBtn?.addEventListener("click", () => {
-        const upiId = upiIdText?.textContent || "shivdix@axl";
-        navigator.clipboard.writeText(upiId).then(() => {
-          copyUpiBtn.textContent = "Copied!";
-          copyUpiBtn.classList.remove("bg-brand-blue");
-          copyUpiBtn.classList.add("bg-emerald-600");
-          setTimeout(() => {
-            copyUpiBtn.textContent = "Copy";
-            copyUpiBtn.classList.remove("bg-emerald-600");
-            copyUpiBtn.classList.add("bg-brand-blue");
-          }, 2000);
-        });
-      });
-
       // Cookie & Privacy Management: Cookies are automatically active (no popups, banners, or setting modals)
       (window as any).hasCookieConsent = () => true;
       (window as any).ensureCookieConsent = (callback: () => void) => {
@@ -683,82 +575,6 @@ const isActive = (path: string) => {
       (window as any).openCookieConsentModal = () => {};
       (window as any).closeCookieConsentModal = () => {};
     </script>
-
-    <!-- Buy Me A Coffee Modal -->
-    <div id="coffee-modal" class="fixed inset-0 z-50 flex items-center justify-center hidden p-4">
-      <!-- Backdrop -->
-      <div id="coffee-modal-backdrop" class="absolute inset-0 bg-black/60 backdrop-blur-md"></div>
-      
-      <!-- Modal Content -->
-      <div class="relative w-full max-w-sm bg-canvas-dark-tile light:bg-white border border-canvas-dark-border light:border-canvas-light-border rounded-2xl overflow-hidden shadow-2xl z-10 transform scale-95 opacity-0 transition-all duration-300 ease-out max-h-[90vh] flex flex-col" id="coffee-modal-content">
-        <!-- Close Button -->
-        <button id="coffee-modal-close" class="absolute top-4 right-4 text-gray-500 hover:text-white light:hover:text-ink focus:outline-none cursor-pointer">
-          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-          </svg>
-        </button>
-
-        <div class="p-6 text-center overflow-y-auto flex-1 custom-scrollbar">
-          <div class="w-14 h-14 bg-[#72a4f2]/10 text-[#72a4f2] rounded-full flex items-center justify-center mx-auto mb-4 text-2xl">
-            💙
-          </div>
-          
-          <h3 class="text-lg font-bold text-white light:text-ink mb-1.5">Support on Ko-fi</h3>
-          <p class="text-[11px] text-gray-400 light:text-gray-500 leading-relaxed mb-5">
-            If this helper tool successfully recovered your credentials, consider supporting to keep the servers running. Even a small tip makes a huge difference!
-          </p>
-
-          <!-- Toggle Options -->
-          <div class="flex bg-black/45 light:bg-gray-100 p-0.5 rounded-xl mb-5 border border-white/5 light:border-black/5">
-            <button id="tab-upi" class="flex-1 py-1.5 text-[10px] font-bold rounded-lg bg-brand-blue text-white focus:outline-none cursor-pointer transition-all">
-              UPI (India)
-            </button>
-            <button id="tab-bmac" class="flex-1 py-1.5 text-[10px] font-bold text-gray-400 hover:text-white light:hover:text-ink focus:outline-none cursor-pointer transition-all">
-              Ko-fi
-            </button>
-          </div>
-
-          <!-- UPI Section -->
-          <div id="section-upi" class="space-y-4">
-            <!-- UPI QR Code -->
-            <div class="bg-white p-3 rounded-xl inline-block shadow-inner border border-gray-200">
-              <img 
-                src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=upi%3A%2F%2Fpay%3Fpa%3Dshivdix%40axl%26pn%3DShivam%2520Dixit%26cu%3DINR" 
-                alt="UPI QR Code" 
-                class="w-32 h-32 mx-auto"
-                loading="lazy"
-              />
-            </div>
-            
-            <p class="text-[9px] text-gray-500">Scan QR using any UPI app (GPay, PhonePe, Paytm)</p>
-            
-            <div class="flex items-center justify-between bg-black/40 light:bg-gray-50 p-2 rounded-xl border borderq-canvas-dark-border light:border-canvas-light-border text-xs">
-              <span class="font-mono text-gray-300 light:text-ink font-semibold" id="upi-id-text">shivdix@axl</span>
-              <button id="copy-upi-btn" class="px-2.5 py-1 bg-brand-blue hover:bg-brand-blue-hover text-[10px] text-white font-bold rounded-lg cursor-pointer transition-colors">
-                Copy
-              </button>
-            </div>
-          </div>
-
-          <!-- BMAC Section -->
-          <div id="section-bmac" class="hidden space-y-4 py-4">
-            <p class="text-gray-400 light:text-gray-500 text-xs">
-              Support via standard Ko-fi portal.
-            </p>
-            
-            <a 
-              href="https://ko-fi.com/shivamdiixt" 
-              target="_blank" 
-              rel="noopener noreferrer" 
-              class="inline-flex items-center gap-1.5 px-5 py-2.5 bg-[#72a4f2] text-white font-extrabold rounded-xl hover:bg-[#5b8ddb] transition-all shadow-lg text-xs"
-            >
-              <span class="text-sm">💙</span>
-              <span>Support me on Ko-fi</span>
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
 
     <!-- Roll Number Assistant Modal -->
     <div id="roll-assistant-modal" class="fixed inset-0 z-50 flex items-center justify-center hidden p-4">
@@ -915,15 +731,7 @@ const isActive = (path: string) => {
 
 
 
-    <!-- Floating Ko-fi Button (Bottom Left) -->
-    <button 
-      id="floating-coffee-btn" 
-      class="fixed bottom-5 left-5 md:bottom-6 md:left-6 z-40 w-10 h-10 rounded-full bg-[#72a4f2] hover:bg-[#5b8ddb] text-white flex items-center justify-center shadow-xl hover:shadow-[#72a4f2]/25 hover:scale-105 active:scale-95 transition-all duration-300 cursor-pointer"
-      title="Support me on Ko-fi"
-      aria-label="Support me on Ko-fi"
-    >
-      <span class="text-base">💙</span>
-    </button>
+
 
     <!-- Floating WhatsApp Alerts Badge (Bottom Right Floater) -->
     <aside aria-label="WhatsApp Result Alerts" class="fixed bottom-5 right-5 z-40 flex items-center">

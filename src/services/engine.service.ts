@@ -60,34 +60,41 @@ interface CollegeItem {
   CGCode?: string | null;
 }
 
-const collegeMap = new Map<string, { id: number; name: string }>();
+let collegeMap: Map<string, { id: number; name: string }> | null = null;
 
-const addKeys = (raw: string, cgid: number, name: string) => {
-  if (!raw) return;
-  collegeMap.set(raw.toUpperCase(), { id: cgid, name });
-  const num = raw.replace(/^AK/i, '').replace(/^0+/, '');
-  if (num) {
-    collegeMap.set(num, { id: cgid, name });
-    collegeMap.set(num.padStart(3, '0'), { id: cgid, name });
-    collegeMap.set(num.padStart(4, '0'), { id: cgid, name });
-    collegeMap.set('AK' + num, { id: cgid, name });
-    collegeMap.set('AK' + num.padStart(3, '0'), { id: cgid, name });
+function getCollegeMap(): Map<string, { id: number; name: string }> {
+  if (collegeMap) return collegeMap;
+  collegeMap = new Map();
+
+  const addKeys = (raw: string, cgid: number, name: string) => {
+    if (!raw) return;
+    collegeMap!.set(raw.toUpperCase(), { id: cgid, name });
+    const num = raw.replace(/^AK/i, '').replace(/^0+/, '');
+    if (num) {
+      collegeMap!.set(num, { id: cgid, name });
+      collegeMap!.set(num.padStart(3, '0'), { id: cgid, name });
+      collegeMap!.set(num.padStart(4, '0'), { id: cgid, name });
+      collegeMap!.set('AK' + num, { id: cgid, name });
+      collegeMap!.set('AK' + num.padStart(3, '0'), { id: cgid, name });
+    }
+  };
+
+  for (const d of colleges as CollegeItem[]) {
+    if (!d.CGId) continue;
+    const rawCode = (d.code || '').trim();
+    const cgCode = (d.CGCode || '').trim();
+    if (rawCode) addKeys(rawCode, d.CGId, d.name);
+    if (cgCode) addKeys(cgCode, d.CGId, d.name);
   }
-};
 
-for (const d of colleges as CollegeItem[]) {
-  if (!d.CGId) continue;
-  const rawCode = (d.code || '').trim();
-  const cgCode = (d.CGCode || '').trim();
-  if (rawCode) addKeys(rawCode, d.CGId, d.name);
-  if (cgCode) addKeys(cgCode, d.CGId, d.name);
-}
+  for (const d of (aktuColleges as any[])) {
+    if (!d.CGId) continue;
+    const cgCode = (d.CGCode || '').trim();
+    const name = d.CGName || '';
+    if (cgCode) addKeys(cgCode, d.CGId, name);
+  }
 
-for (const d of (aktuColleges as any[])) {
-  if (!d.CGId) continue;
-  const cgCode = (d.CGCode || '').trim();
-  const name = d.CGName || '';
-  if (cgCode) addKeys(cgCode, d.CGId, name);
+  return collegeMap;
 }
 
 export function resolveCollegeFromRoll(rollNumber: string): { id: number; name: string } | null {
@@ -112,8 +119,9 @@ export function resolveCollegeFromRoll(rollNumber: string): { id: number; name: 
     num.padStart(4, '0')
   ];
 
+  const map = getCollegeMap();
   for (const candidate of candidates) {
-    const found = collegeMap.get(candidate.toUpperCase());
+    const found = map.get(candidate.toUpperCase());
     if (found) {
       return found;
     }
@@ -238,61 +246,73 @@ export class AktuEngineService {
       };
     }
 
-    try {
-      const cgidObj = userCgid ? { id: userCgid, name: '' } : resolveCollegeFromRoll(trimmedRoll);
-      const cgid = cgidObj?.id || 10992;
-      const collegeName = cgidObj?.name || '';
+    let lastError: any = null;
+    for (let attempt = 1; attempt <= 2; attempt++) {
+      try {
+        const cgidObj = userCgid ? { id: userCgid, name: '' } : resolveCollegeFromRoll(trimmedRoll);
+        const cgid = cgidObj?.id || 10992;
+        const collegeName = cgidObj?.name || '';
 
-      const cookieMap = new Map<string, string>();
+        const cookieMap = new Map<string, string>();
 
-      const { res: resPage, finalUrl: redirectUrl } = await fetchWithCookies(
-        `${DIGISHAKTI_BASE_URL}/`,
-        { method: 'GET' },
-        cookieMap
-      );
+        const { res: resPage, finalUrl: redirectUrl } = await fetchWithCookies(
+          `${DIGISHAKTI_BASE_URL}/`,
+          { method: 'GET' },
+          cookieMap
+        );
 
-      const html2 = await resPage.text();
-      const tokenMatch = html2.match(/name="__RequestVerificationToken"[^>]*value="([^"]+)"/i)
-        || html2.match(/value="([^"]+)"[^>]*name="__RequestVerificationToken"/i);
-      const token = tokenMatch ? tokenMatch[1] : '';
+        const html2 = await resPage.text();
+        const tokenMatch = html2.match(/name="__RequestVerificationToken"[^>]*value="([^"]+)"/i)
+          || html2.match(/value="([^"]+)"[^>]*name="__RequestVerificationToken"/i);
+        const token = tokenMatch ? tokenMatch[1] : '';
 
-      // Download captcha image
-      const { res: resCap } = await fetchWithCookies(
-        `${DIGISHAKTI_BASE_URL}/EPramaan/GetCaptchaimage?query=${Math.random()}`,
-        {
-          headers: {
-            'Referer': redirectUrl
-          }
-        },
-        cookieMap
-      );
+        // Download captcha image
+        const { res: resCap } = await fetchWithCookies(
+          `${DIGISHAKTI_BASE_URL}/EPramaan/GetCaptchaimage?query=${Math.random()}`,
+          {
+            headers: {
+              'Referer': redirectUrl
+            }
+          },
+          cookieMap
+        );
 
-      const arrayBuffer = await resCap.arrayBuffer();
-      const imageBuffer = Buffer.from(arrayBuffer);
-      const cleanImageBuffer = await this.preprocessCaptcha(imageBuffer);
-      const captchaImageBase64 = 'data:image/png;base64,' + cleanImageBuffer.toString('base64');
+        const arrayBuffer = await resCap.arrayBuffer();
+        const imageBuffer = Buffer.from(arrayBuffer);
+        const cleanImageBuffer = await this.preprocessCaptcha(imageBuffer);
+        const captchaImageBase64 = 'data:image/png;base64,' + cleanImageBuffer.toString('base64');
 
-      const sessionId = 'dsh_' + Math.random().toString(36).substring(2, 12);
+        const sessionId = 'dsh_' + Math.random().toString(36).substring(2, 12);
 
-      return {
-        cached: false,
-        session: {
-          sessionId,
-          token,
-          cookies: getCookieHeader(cookieMap),
-          redirectUrl,
-          cgid,
-          collegeName,
-          captchaUrl: '/EPramaan/GetCaptchaimage'
-        },
-        imageBuffer,
-        captchaImageBase64
-      };
-    } catch (err: any) {
-      const detailed = err.cause?.message ? `${err.message} (${err.cause.message})` : err.message;
-      console.error('[EngineService] Error starting DigiShakti session:', detailed);
-      return { cached: false, error: detailed };
+        return {
+          cached: false,
+          session: {
+            sessionId,
+            token,
+            cookies: getCookieHeader(cookieMap),
+            redirectUrl,
+            cgid,
+            collegeName,
+            captchaUrl: '/EPramaan/GetCaptchaimage'
+          },
+          imageBuffer,
+          captchaImageBase64
+        };
+      } catch (err: any) {
+        lastError = err;
+        if (attempt === 1) {
+          await new Promise(r => setTimeout(r, 1000));
+        }
+      }
     }
+
+    const err = lastError;
+    const isTimeout = err?.message?.toLowerCase().includes('timeout') || err?.cause?.message?.toLowerCase().includes('timeout');
+    const detailed = isTimeout
+      ? 'State university gateway (DigiShakti UP) timed out after 10s. The government portal may be busy or geo-blocking foreign servers.'
+      : (err?.cause?.message ? `${err.message} (${err.cause.message})` : err?.message || 'Failed connecting to verification portal');
+    console.error('[EngineService] Error starting DigiShakti session:', detailed);
+    return { cached: false, error: detailed };
   }
 
   /**
