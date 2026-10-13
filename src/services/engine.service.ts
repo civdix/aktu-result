@@ -154,6 +154,24 @@ function getCookieHeader(cookieMap: Map<string, string>): string {
   return Array.from(cookieMap.entries()).map(([k, v]) => `${k}=${v}`).join('; ');
 }
 
+let cachedProxyDispatcher: ProxyAgent | null = null;
+let currentProxyUri: string | null = null;
+
+function getProxyDispatcher(proxyUrl: string): ProxyAgent {
+  const normalized = proxyUrl.startsWith('http://') || proxyUrl.startsWith('https://')
+    ? proxyUrl
+    : `http://${proxyUrl}`;
+
+  if (!cachedProxyDispatcher || currentProxyUri !== normalized) {
+    currentProxyUri = normalized;
+    cachedProxyDispatcher = new ProxyAgent({
+      uri: normalized,
+      requestTls: { rejectUnauthorized: false }
+    });
+  }
+  return cachedProxyDispatcher;
+}
+
 async function fetchWithCookies(
   url: string,
   options: RequestInit = {},
@@ -182,15 +200,15 @@ async function fetchWithCookies(
       headers['User-Agent'] = USER_AGENT;
     }
 
-    const proxyUrl = process.env.PROXY_URL || process.env.HTTP_PROXY || process.env.HTTPS_PROXY;
+    const rawProxy = process.env.PROXY_URL || process.env.HTTP_PROXY || process.env.HTTPS_PROXY || 'http://13.233.81.236:8088';
     const fetchOptions: any = {
       ...currentOptions,
       headers,
       redirect: 'manual'
     };
-    if (proxyUrl) {
+    if (rawProxy && rawProxy !== 'none' && rawProxy !== 'false') {
       try {
-        fetchOptions.dispatcher = new ProxyAgent(proxyUrl);
+        fetchOptions.dispatcher = getProxyDispatcher(rawProxy);
       } catch (proxyErr: any) {
         console.warn('[EngineService] Could not initialize ProxyAgent:', proxyErr.message);
       }
