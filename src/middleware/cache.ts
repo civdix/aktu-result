@@ -89,7 +89,7 @@ AKTU Result provides autonomous AI agents, developers, and students instantaneou
     return response;
   }
 
-  // Dynamic API calls: prevent caching
+  // Dynamic API calls: prevent caching anywhere (browser, proxy, Cloudflare CDN)
   if (
     pathname.startsWith('/api/search') ||
     pathname.startsWith('/api/dob') ||
@@ -99,7 +99,11 @@ AKTU Result provides autonomous AI agents, developers, and students instantaneou
     pathname.startsWith('/api/articles/live') ||
     pathname.startsWith('/api/recent-searches')
   ) {
-    response.headers.set('Cache-Control', 'no-store, no-cache, must-revalidate');
+    response.headers.set('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0');
+    response.headers.set('CDN-Cache-Control', 'no-store');
+    response.headers.set('Cloudflare-CDN-Cache-Control', 'no-store');
+    response.headers.set('Pragma', 'no-cache');
+    response.headers.set('Expires', '0');
     return response;
   }
 
