@@ -215,12 +215,25 @@ async function fetchWithCookies(
       }
     }
 
-    const res = await fetch(currentUrl, fetchOptions);
+    let res: Response;
+    try {
+      res = await fetch(currentUrl, fetchOptions);
+    } catch (fetchErr: any) {
+      if (fetchOptions.dispatcher) {
+        console.warn(`[EngineService] Proxy request to ${currentUrl} failed (${fetchErr.message}). Retrying directly...`);
+        const directOptions = { ...fetchOptions };
+        delete directOptions.dispatcher;
+        res = await fetch(currentUrl, directOptions);
+      } else {
+        throw fetchErr;
+      }
+    }
 
     parseCookies(res, cookieMap);
 
     if (res.status >= 300 && res.status < 400) {
       const loc = res.headers.get('location');
+      await res.body?.cancel().catch(() => {});
       if (!loc) return { res, finalUrl: currentUrl };
       currentUrl = loc.startsWith('http') ? loc : new URL(loc, currentUrl).toString();
       currentOptions = { method: 'GET' };
