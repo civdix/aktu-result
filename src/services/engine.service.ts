@@ -9,6 +9,7 @@ import dotenv from 'dotenv';
 import { ProxyAgent } from 'undici';
 import colleges from '../data/colleges.json';
 import aktuColleges from '../data/AKTUCollege.json';
+import { AlertService } from './alert.service';
 
 dotenv.config();
 
@@ -330,6 +331,14 @@ export class AktuEngineService {
       ? 'State university gateway (DigiShakti UP) timed out after 10s. The government portal may be busy or geo-blocking foreign servers.'
       : (err?.cause?.message ? `${err.message} (${err.cause.message})` : err?.message || 'Failed connecting to verification portal');
     console.error('[EngineService] Error starting DigiShakti session:', detailed);
+
+    // Non-blocking incident alert dispatch (cooldown throttled)
+    AlertService.sendDigiShaktiAlert({
+      rollNumber: trimmedRoll,
+      error: detailed,
+      stage: 'Session Initialization'
+    }).catch(() => {});
+
     return { cached: false, error: detailed };
   }
 
@@ -595,6 +604,14 @@ export class AktuEngineService {
     } catch (err: any) {
       const detailed = err.cause?.message ? `${err.message} (${err.cause.message})` : err.message;
       console.error('[EngineService] Error verifying session:', detailed);
+
+      // Non-blocking incident alert dispatch (cooldown throttled)
+      AlertService.sendDigiShaktiAlert({
+        rollNumber,
+        error: detailed,
+        stage: 'Session Verification / Payload Submit'
+      }).catch(() => {});
+
       return { success: false, error: detailed };
     }
   }
