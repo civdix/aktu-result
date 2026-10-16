@@ -1,0 +1,166 @@
+---
+import Layout from "../../layouts/Layout.astro";
+
+const siteUrl = "https://akturesult.bond";
+const pageUrl = `${siteUrl}/guides/aktu-result-troubleshooting`;
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": pageUrl,
+      "url": pageUrl,
+      "headline": "AKTU Result Troubleshooting: Fixing Session Expired, Captcha & Timeout Errors",
+      "description": "Technical guide to solving common AKTU OneView and ERP errors including session expired, cryptographic token mismatches, infinite captcha loops, and gateway timeouts.",
+      "datePublished": "2026-03-08T08:00:00+05:30",
+      "dateModified": "2026-10-16T12:00:00+05:30",
+      "author": {
+        "@type": "Organization",
+        "name": "akturesult.bond Student Editorial Team"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "akturesult.bond",
+        "url": siteUrl
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": `${pageUrl}/#breadcrumb`,
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": siteUrl },
+        { "@type": "ListItem", "position": 2, "name": "Guides", "item": `${siteUrl}/guides` },
+        { "@type": "ListItem", "position": 3, "name": "Result Troubleshooting", "item": pageUrl }
+      ]
+    }
+  ]
+};
+---
+
+<Layout 
+  title="AKTU Result Troubleshooting & Portal Fixes | akturesult.bond"
+  description="Troubleshoot AKTU OneView errors: Fix Session Expired, ViewState token errors, endless captcha verification, 504 timeouts, and mobile rendering issues."
+  jsonLd={jsonLd}
+>
+  <article class="py-16 md:py-20 bg-black light:bg-white text-gray-400 light:text-gray-600 text-left">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6">
+      
+      <!-- Breadcrumbs -->
+      <nav class="flex items-center gap-2 text-xs text-gray-500 mb-6" aria-label="Breadcrumb">
+        <a href="/" class="hover:text-brand-blue transition-colors">Home</a>
+        <span>/</span>
+        <a href="/guides" class="hover:text-brand-blue transition-colors">Guides</a>
+        <span>/</span>
+        <span class="text-gray-300 light:text-gray-800 font-semibold truncate">Result Troubleshooting</span>
+      </nav>
+
+      <!-- Header -->
+      <div class="border-b border-canvas-dark-border light:border-canvas-light-border pb-6 mb-8">
+        <div class="flex items-center gap-2 text-xs text-brand-blue font-semibold uppercase tracking-wider mb-2">
+          <span>Technical Diagnostics</span>
+          <span>•</span>
+          <span>6 min read</span>
+          <span>•</span>
+          <span>Updated October 2026</span>
+        </div>
+        <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-white light:text-ink leading-tight">
+          AKTU Result Troubleshooting: Fixing Portal &amp; Session Errors
+        </h1>
+        <p class="text-sm sm:text-base text-gray-400 light:text-gray-600 mt-3 leading-relaxed">
+          The official AKTU OneView web application runs on Microsoft ASP.NET technology. High server traffic frequently causes session desynchronization, token expiration, and rendering bugs. Here is how to fix them.
+        </p>
+      </div>
+
+      <!-- Mandatory Non-Affiliation Alert -->
+      <div class="p-4 rounded-xl border border-amber-500/30 bg-amber-500/10 text-amber-200 text-xs sm:text-sm leading-relaxed mb-10">
+        <strong>Important Student Notice:</strong> akturesult.bond is an independent student utility platform and is not affiliated with, endorsed by, or officially connected to Dr. A.P.J. Abdul Kalam Technical University (AKTU). This guide provides technical troubleshooting advice for common browser and portal glitches.
+      </div>
+
+      <div class="space-y-10 text-xs sm:text-sm leading-relaxed">
+        
+        <!-- Error 1 -->
+        <section class="space-y-3">
+          <h2 class="text-lg sm:text-xl font-bold text-white light:text-ink flex items-center gap-2">
+            <span class="text-red-400">1.</span> "Session Expired" or "Cryptographic Token Error"
+          </h2>
+          <p>
+            <strong>Why it happens:</strong> The official portal uses hidden form fields (<code class="text-gray-300 light:text-gray-700">__VIEWSTATE</code> and <code class="text-gray-300 light:text-gray-700">__EVENTVALIDATION</code>) tied to an <code class="text-gray-300 light:text-gray-700">ASP.NET_SessionId</code> cookie. If you leave the tab open for more than 2-3 minutes or the server restarts during traffic spikes, the encryption vector fails to validate your form submission.
+          </p>
+          <div class="p-4 rounded-xl border border-canvas-dark-border light:border-canvas-light-border bg-canvas-dark-tile light:bg-canvas-light-tile space-y-2">
+            <h4 class="font-bold text-white light:text-ink">How to Fix It:</h4>
+            <ol class="list-decimal pl-5 space-y-1 text-xs text-gray-400 light:text-gray-600">
+              <li>Do not hit "Back" or "Refresh" on the error page; this will resend stale headers.</li>
+              <li>Close the browser tab completely.</li>
+              <li>Open a new Incognito / Private window to bypass cached session cookies.</li>
+              <li>Re-enter the portal URL cleanly (<a href="https://oneview.aktu.ac.in" target="_blank" rel="noopener noreferrer" class="text-brand-blue hover:underline">oneview.aktu.ac.in</a>) and submit immediately.</li>
+            </ol>
+          </div>
+        </section>
+
+        <!-- Error 2 -->
+        <section class="space-y-3">
+          <h2 class="text-lg sm:text-xl font-bold text-white light:text-ink flex items-center gap-2">
+            <span class="text-amber-400">2.</span> Endless Captcha Verification Loop
+          </h2>
+          <p>
+            <strong>Why it happens:</strong> You solve the security captcha correctly, but clicking "Submit" reloads the same blank form with a new captcha challenge. This occurs when server load balancer nodes desynchronize, causing your verification token to land on a worker node that has no record of your initial handshake.
+          </p>
+          <div class="p-4 rounded-xl border border-canvas-dark-border light:border-canvas-light-border bg-canvas-dark-tile light:bg-canvas-light-tile space-y-2">
+            <h4 class="font-bold text-white light:text-ink">How to Fix It:</h4>
+            <ul class="list-disc pl-5 space-y-1 text-xs text-gray-400 light:text-gray-600">
+              <li>Switch from mobile Wi-Fi to cellular data (or vice versa) to receive a clean routing IP.</li>
+              <li>Disable ad blockers or privacy extensions that may be blocking third-party verification scripts (like Google reCAPTCHA).</li>
+              <li>Use our independent lookup assistant on <a href="/" class="text-brand-blue hover:underline">akturesult.bond</a>, which manages server-side retries automatically.</li>
+            </ul>
+          </div>
+        </section>
+
+        <!-- Error 3 -->
+        <section class="space-y-3">
+          <h2 class="text-lg sm:text-xl font-bold text-white light:text-ink flex items-center gap-2">
+            <span class="text-purple-400">3.</span> Blank White Screen or "504 Gateway Time-out"
+          </h2>
+          <p>
+            <strong>Why it happens:</strong> When 50,000+ students attempt to query their scorecards within minutes of a university circular, the database connection pool reaches maximum capacity. Nginx reverse proxies return HTTP status 502 (Bad Gateway) or 504 (Gateway Timeout).
+          </p>
+          <div class="p-4 rounded-xl border border-canvas-dark-border light:border-canvas-light-border bg-canvas-dark-tile light:bg-canvas-light-tile space-y-2">
+            <h4 class="font-bold text-white light:text-ink">How to Fix It:</h4>
+            <p class="text-xs text-gray-400 light:text-gray-600">
+              Repeated aggressive F5 refreshes will only prolong database locking. Wait 15 to 20 minutes before making another attempt. Early morning (5:00 AM - 8:00 AM) and late night (after 11:00 PM) offer the fastest server response times.
+            </p>
+          </div>
+        </section>
+
+        <!-- Error 4 -->
+        <section class="space-y-3">
+          <h2 class="text-lg sm:text-xl font-bold text-white light:text-ink flex items-center gap-2">
+            <span class="text-cyan-400">4.</span> Date of Birth Format Mismatches
+          </h2>
+          <p>
+            <strong>Why it happens:</strong> Many mobile keyboards format dates as <code class="text-gray-300 light:text-gray-700">YYYY-MM-DD</code> or <code class="text-gray-300 light:text-gray-700">MM/DD/YYYY</code>, whereas the AKTU database strictly expects <code class="text-gray-300 light:text-gray-700">DD/MM/YYYY</code>. If your birth date is January 5, 2002, submitting <em>05-01-2002</em> instead of <em>05/01/2002</em> will cause an authentication failure.
+          </p>
+          <div class="p-4 rounded-xl border border-canvas-dark-border light:border-canvas-light-border bg-canvas-dark-tile light:bg-canvas-light-tile space-y-2">
+            <h4 class="font-bold text-white light:text-ink">How to Fix It:</h4>
+            <p class="text-xs text-gray-400 light:text-gray-600">
+              Use the on-screen calendar picker rather than manual text input. If you cannot remember your registered birth date, use the <a href="/" class="text-brand-blue hover:underline">akturesult.bond tool</a> to query your scorecard without DOB.
+            </p>
+          </div>
+        </section>
+
+      </div>
+
+      <!-- Quick CTA -->
+      <div class="mt-12 p-6 rounded-2xl bg-gradient-to-r from-brand-blue/20 to-purple-600/15 border border-brand-blue/30 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div>
+          <h3 class="text-sm font-bold text-white light:text-ink">Bypass session timeouts easily</h3>
+          <p class="text-xs text-gray-400 light:text-gray-600">Check your AKTU semester result with our automated assistant.</p>
+        </div>
+        <a href="/" class="px-4 py-2.5 rounded-xl bg-brand-blue hover:bg-brand-blue-hover text-white text-xs font-bold transition-all shadow-md shrink-0">
+          ⚡ Try Fast Result Search &rarr;
+        </a>
+      </div>
+
+    </div>
+  </article>
+</Layout>

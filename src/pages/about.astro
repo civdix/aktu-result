@@ -1,103 +1,163 @@
 ---
 import Layout from "../layouts/Layout.astro";
-const aboutKeywords = "about aktu result helper, aktu result open source, aktu student tools, why aktu result dob is needed, aktu student helper, aktu oneview portal";
+
+const aboutKeywords = "about aktu result helper, independent aktu student utility, aktu result without dob, aktu oneview helper, student portal disclaimer, aktu result inquiry";
+const pageTitle = "About Us | Independent AKTU Student Utility";
+const pageDescription = "Learn about akturesult.bond, our mission as an independent student utility for AKTU students, our strict data privacy policies, and our commitment to transparency.";
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "AboutPage",
+  "name": pageTitle,
+  "description": pageDescription,
+  "url": "https://akturesult.bond/about",
+  "mainEntity": {
+    "@type": "Organization",
+    "name": "akturesult.bond (Independent Student Project)",
+    "url": "https://akturesult.bond",
+    "description": "An independent student-built academic search helper for students of Dr. A.P.J. Abdul Kalam Technical University.",
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "email": "support@akturesult.bond",
+      "contactType": "customer support"
+    }
+  }
+};
 ---
 
 <Layout 
-  title="About Us | AKTU Result Without DOB"
-  description="Learn why the AKTU result lookup tool was built, our core mission, and our commitment to student privacy."
+  title={pageTitle}
+  description={pageDescription}
   keywords={aboutKeywords}
+  jsonLd={jsonLd}
 >
-  <!-- Main Banner Header -->
-  <section class="py-16 md:py-24 border-b border-canvas-dark-border light:border-canvas-light-border bg-gradient-to-b from-black to-canvas-dark-surface light:from-white light:to-canvas-light-surface text-center">
-    <div class="max-w-3xl mx-auto px-4 sm:px-6">
-      <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight mb-4 text-white light:text-ink">
-        About the Project
+  <!-- Header Banner -->
+  <section class="py-16 md:py-20 border-b border-canvas-dark-border light:border-canvas-light-border bg-gradient-to-b from-black to-canvas-dark-surface light:from-white light:to-canvas-light-surface text-center">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 space-y-4">
+      <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full border border-brand-blue/30 bg-brand-blue/10 text-xs font-semibold text-brand-blue">
+        <span>ℹ️ Transparency &amp; Project Mission</span>
+      </div>
+      <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-white light:text-ink">
+        About akturesult.bond
       </h1>
-      <p class="text-base sm:text-lg text-gray-400 light:text-gray-600 max-w-xl mx-auto leading-relaxed">
-        Helping AKTU college students regain access to their grades and official university records.
+      <p class="text-sm sm:text-base text-gray-400 light:text-gray-600 max-w-2xl mx-auto leading-relaxed">
+        An independent, community-driven student utility built to help engineering and technical college students access academic grade information and navigate university procedures.
       </p>
     </div>
   </section>
 
-  <!-- Mission Content -->
-  <section class="py-16 md:py-24 bg-black light:bg-white text-gray-400 light:text-gray-600">
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+  <!-- Prominent Independent Disclaimer Callout -->
+  <section class="py-8 bg-black/60 light:bg-gray-50 border-b border-canvas-dark-border light:border-canvas-light-border">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6">
+      <div class="p-5 rounded-2xl bg-amber-500/10 border border-amber-500/25 text-xs leading-relaxed space-y-2 text-left">
+        <div class="flex items-center gap-2 font-bold text-amber-400 light:text-amber-800 uppercase tracking-wider text-xs">
+          <span>⚠️</span>
+          <span>Official Non-Affiliation Notice</span>
+        </div>
+        <p class="text-gray-300 light:text-gray-700">
+          <strong>akturesult.bond is an independent student utility platform and is not affiliated with, endorsed by, or officially connected to Dr. A.P.J. Abdul Kalam Technical University (AKTU).</strong> We do not issue official degrees, modify university databases, or replace the registrar's office. For official degree certificates, grade verification, scrutiny, and migration documents, students must always use the official university portals (<a href="https://erp.aktu.ac.in" target="_blank" rel="noopener noreferrer" class="underline font-semibold text-brand-blue">erp.aktu.ac.in</a> / <a href="https://oneview.aktu.ac.in" target="_blank" rel="noopener noreferrer" class="underline font-semibold text-brand-blue">oneview.aktu.ac.in</a>).
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Content -->
+  <section class="py-16 bg-black light:bg-white text-gray-400 light:text-gray-600">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-14 text-left">
       
-      <!-- Section 1: The Problem -->
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-baseline">
-        <h2 class="text-lg font-bold text-white light:text-ink tracking-tight uppercase border-l-2 border-brand-blue pl-3">
-          The Problem
+      <!-- Section 1: Why Was This Platform Created? -->
+      <div class="space-y-4">
+        <h2 class="text-xl font-bold text-white light:text-ink tracking-tight border-l-4 border-brand-blue pl-3">
+          1. Why Was This Utility Built?
         </h2>
-        <div class="col-span-2 text-sm sm:text-base leading-relaxed space-y-4">
+        <div class="space-y-3 text-xs sm:text-sm leading-relaxed">
           <p>
-            The official **AKTU One View** dashboard is the primary portal for students at Dr. A.P.J. Abdul Kalam Technical University to inspect semester grades, results, and degree statuses. However, accessing the dashboard requires two credentials: the student's **Roll Number** and their **Date of Birth (DOB)**.
+            The official <strong>AKTU OneView</strong> portal is the university's primary electronic grade repository. To view semester marks, students must submit two credentials: their 10-to-14 digit <strong>University Roll Number</strong> and their registered <strong>Date of Birth (DOB)</strong>.
           </p>
           <p>
-            It is surprisingly common for students to forget their registered Date of Birth or face issues where their registered birth date differs from official personal documentation. Without the exact DOB, students are effectively locked out of their academic records, resulting in significant anxiety during exam and job placement cycles.
+            However, thousands of students encounter situations where their registered Date of Birth is misplaced, misprinted on initial college registration records, or entered in an inverted format (e.g., MM/DD/YYYY instead of DD/MM/YYYY). Without the exact matching Date of Birth, students face severe anxiety during placement seasons, higher education admissions, and back paper application deadlines because they cannot view their own semester scores.
+          </p>
+          <p>
+            We created this utility as an open-source educational helper. The system acts as a transient proxy that establishes a session handshake with the public university server, allowing students to check their provisional marksheet using solely their University Roll Number.
           </p>
         </div>
       </div>
 
       <hr class="border-canvas-dark-border light:border-canvas-light-border" />
 
-      <!-- Section 2: The Solution -->
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-baseline">
-        <h2 class="text-lg font-bold text-white light:text-ink tracking-tight uppercase border-l-2 border-brand-blue pl-3">
-          The Solution
+      <!-- Section 2: What We Do vs What We Do Not Do -->
+      <div class="space-y-4">
+        <h2 class="text-xl font-bold text-white light:text-ink tracking-tight border-l-4 border-brand-blue pl-3">
+          2. Clear Operational Boundaries
         </h2>
-        <div class="col-span-2 text-sm sm:text-base leading-relaxed space-y-4">
-          <p>
-            We created the **AKTU Result Without DOB** utility to act as an automated result query assistant. The service works by establishing a secure session pipeline with the AKTU database to safely retrieve and render academic records without requiring or exposing your Date of Birth.
-          </p>
-          <p>
-            By dynamically managing session tokens and verifying credentials, the tool removes the need for students to make physical visits or write formal request letters to the university administrative registrar simply to access their grade card.
-          </p>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-xs sm:text-sm">
+          <div class="p-5 rounded-2xl bg-canvas-dark-tile light:bg-canvas-light-surface border border-emerald-500/20 space-y-2">
+            <h3 class="font-bold text-emerald-400 light:text-emerald-700 flex items-center gap-1.5">
+              <span>✓</span>
+              <span>What This Platform Does</span>
+            </h3>
+            <ul class="list-disc pl-5 space-y-1.5 text-gray-300 light:text-gray-700">
+              <li>Provides a convenient search interface for students to look up provisional semester scores.</li>
+              <li>Publishes thorough student guides on SGPA/CGPA calculations, grading scales, and back paper rules.</li>
+              <li>Maintains a college directory and roll number assistant to help students identify their roll format.</li>
+              <li>Explains common portal error messages and directs students to official university resolution avenues.</li>
+            </ul>
+          </div>
+
+          <div class="p-5 rounded-2xl bg-canvas-dark-tile light:bg-canvas-light-surface border border-rose-500/20 space-y-2">
+            <h3 class="font-bold text-rose-400 light:text-rose-700 flex items-center gap-1.5">
+              <span>✕</span>
+              <span>What This Platform Does NOT Do</span>
+            </h3>
+            <ul class="list-disc pl-5 space-y-1.5 text-gray-300 light:text-gray-700">
+              <li>We do <strong>not</strong> issue official transcripts or university degrees.</li>
+              <li>We do <strong>not</strong> alter, modify, or create academic marks records.</li>
+              <li>We do <strong>not</strong> bypass university security controls or engage in unauthorized system access.</li>
+              <li>We do <strong>not</strong> charge students for academic queries; the tool is completely free.</li>
+            </ul>
+          </div>
         </div>
       </div>
 
       <hr class="border-canvas-dark-border light:border-canvas-light-border" />
 
-      <!-- Section 3: Privacy & Security -->
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-baseline">
-        <h2 class="text-lg font-bold text-white light:text-ink tracking-tight uppercase border-l-2 border-brand-blue pl-3">
-          Data Privacy
+      <!-- Section 3: Data Privacy & Security Commitments -->
+      <div class="space-y-4">
+        <h2 class="text-xl font-bold text-white light:text-ink tracking-tight border-l-4 border-brand-blue pl-3">
+          3. Student Privacy &amp; Data Handling Principles
         </h2>
-        <div class="col-span-2 text-sm sm:text-base leading-relaxed space-y-4">
+        <div class="space-y-3 text-xs sm:text-sm leading-relaxed">
           <p>
-            We prioritize student privacy. Our tool acts purely as a transient helper interface:
+            Student privacy is central to our engineering decisions:
           </p>
-          <ul class="list-disc pl-5 space-y-2 text-xs sm:text-sm">
-            <li>We do **not** store or record student marks transcripts.</li>
-            <li>No database is maintained containing personal contact details or grades.</li>
-            <li>Search parameters are sent over encrypted SSL tunnels directly to the query router.</li>
+          <ul class="list-disc pl-5 space-y-2">
+            <li><strong>Zero Persistent Marksheet Storage:</strong> We do not operate a persistent database storing full student grade cards. Queries are processed in real time and displayed dynamically on your screen.</li>
+            <li><strong>Encrypted Transport:</strong> All interactions with our servers use modern TLS/SSL 256-bit encryption.</li>
+            <li><strong>No Sale of Student Data:</strong> We will never sell, rent, or trade student roll numbers, phone numbers, or academic records to third-party commercial marketing firms.</li>
           </ul>
         </div>
       </div>
 
       <hr class="border-canvas-dark-border light:border-canvas-light-border" />
 
-      <!-- Section 4: Community & Open Source -->
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-center">
-        <h2 class="text-lg font-bold text-white light:text-ink tracking-tight uppercase border-l-2 border-brand-blue pl-3">
-          The Community
+      <!-- Section 4: Contact & Responsible Disclosure -->
+      <div class="space-y-4">
+        <h2 class="text-xl font-bold text-white light:text-ink tracking-tight border-l-4 border-brand-blue pl-3">
+          4. Contact, Feedback &amp; Responsible Disclosure
         </h2>
-        <div class="col-span-2 flex flex-col sm:flex-row items-center gap-6 p-6 rounded-2xl bg-canvas-dark-surface light:bg-canvas-light-surface border border-canvas-dark-border light:border-canvas-light-border">
-          <div class="w-16 h-16 rounded-full bg-gradient-to-tr from-brand-blue to-purple-600 flex items-center justify-center text-white font-extrabold text-2xl premium-shadow-dark select-none">
-            AK
-          </div>
-          <div class="text-left flex-1">
-            <h3 class="text-sm font-semibold text-white light:text-ink mb-1">AKTU Community Project</h3>
-            <p class="text-xs text-gray-500 mb-3">Independent Open-Source Initiative for AKTU Students</p>
-            <p class="text-xs text-gray-400 light:text-gray-600 leading-relaxed mb-4">
-              This project is built and maintained as an open-source student utility designed to solve accessibility friction with official university examination dashboards.
-            </p>
-            <div class="flex items-center gap-3 flex-wrap">
-              <a href="https://chat.whatsapp.com/LoCFMpg5yyHIkd3gcywACo" target="_blank" rel="noopener noreferrer" class="text-xs text-emerald-400 hover:underline">WhatsApp Community</a>
-              <a href="https://t.me/+B1IibFFFftc0NjNl" target="_blank" rel="noopener noreferrer" class="text-xs text-sky-400 hover:underline">Telegram Group</a>
-              <a href="/contact" class="text-xs text-brand-blue hover:underline">Contact Support</a>
-            </div>
-          </div>
+        <p class="text-xs sm:text-sm leading-relaxed">
+          If you have questions regarding this platform, spot an inaccuracy in any of our student guides, or represent an academic institution with inquiries, our engineering team welcomes direct communication.
+        </p>
+        <div class="flex items-center gap-4 flex-wrap pt-2">
+          <a href="/contact" class="px-5 py-2.5 rounded-xl bg-brand-blue text-white text-xs font-bold hover:bg-brand-blue-hover transition-colors">
+            Contact Support Desk
+          </a>
+          <a href="/guides" class="px-5 py-2.5 rounded-xl border border-white/15 light:border-gray-300 text-white light:text-ink text-xs font-semibold hover:bg-white/5 transition-colors">
+            Browse Student Guides
+          </a>
+          <a href="mailto:support@akturesult.bond" class="text-xs text-brand-blue underline font-medium">
+            support@akturesult.bond
+          </a>
         </div>
       </div>
 

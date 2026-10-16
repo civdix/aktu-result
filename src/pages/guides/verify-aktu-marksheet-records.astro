@@ -1,0 +1,155 @@
+---
+import Layout from "../../layouts/Layout.astro";
+
+const siteUrl = "https://akturesult.bond";
+const pageUrl = `${siteUrl}/guides/verify-aktu-marksheet-records`;
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": pageUrl,
+      "url": pageUrl,
+      "headline": "How to Verify AKTU Marksheets & Academic Records (WES, DigiLocker & Employers)",
+      "description": "Comprehensive guide on verifying AKTU degree marksheets. Learn the difference between provisional web results and official transcripts, DigiLocker verification, and WES evaluation.",
+      "datePublished": "2026-04-12T08:00:00+05:30",
+      "dateModified": "2026-10-16T12:00:00+05:30",
+      "author": {
+        "@type": "Organization",
+        "name": "akturesult.bond Student Editorial Team"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "akturesult.bond",
+        "url": siteUrl
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": `${pageUrl}/#breadcrumb`,
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": siteUrl },
+        { "@type": "ListItem", "position": 2, "name": "Guides", "item": `${siteUrl}/guides` },
+        { "@type": "ListItem", "position": 3, "name": "Verify Marksheets", "item": pageUrl }
+      ]
+    }
+  ]
+};
+---
+
+<Layout 
+  title="How to Verify AKTU Marksheets & Transcripts (WES, DigiLocker) | akturesult.bond"
+  description="Learn how to verify AKTU academic records. Guidelines for DigiLocker, WES evaluation, employer background checks, and official university transcripts."
+  jsonLd={jsonLd}
+>
+  <article class="py-16 md:py-20 bg-black light:bg-white text-gray-400 light:text-gray-600 text-left">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6">
+      
+      <!-- Breadcrumbs -->
+      <nav class="flex items-center gap-2 text-xs text-gray-500 mb-6" aria-label="Breadcrumb">
+        <a href="/" class="hover:text-brand-blue transition-colors">Home</a>
+        <span>/</span>
+        <a href="/guides" class="hover:text-brand-blue transition-colors">Guides</a>
+        <span>/</span>
+        <span class="text-gray-300 light:text-gray-800 font-semibold truncate">Verify Marksheets</span>
+      </nav>
+
+      <!-- Header -->
+      <div class="border-b border-canvas-dark-border light:border-canvas-light-border pb-6 mb-8">
+        <div class="flex items-center gap-2 text-xs text-brand-blue font-semibold uppercase tracking-wider mb-2">
+          <span>Verification &amp; Credentials</span>
+          <span>•</span>
+          <span>6 min read</span>
+          <span>•</span>
+          <span>Updated October 2026</span>
+        </div>
+        <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-white light:text-ink leading-tight">
+          How to Verify AKTU Marksheets &amp; Transcripts
+        </h1>
+        <p class="text-sm sm:text-base text-gray-400 light:text-gray-600 mt-3 leading-relaxed">
+          Applying for study abroad (WES evaluation), government exams (UPPSC, SSC), or corporate background checks? Here is how to formally verify your AKTU academic records.
+        </p>
+      </div>
+
+      <!-- Mandatory Non-Affiliation Alert -->
+      <div class="p-4 rounded-xl border border-amber-500/30 bg-amber-500/10 text-amber-200 text-xs sm:text-sm leading-relaxed mb-10">
+        <strong>Important Student Notice:</strong> akturesult.bond is an independent student utility platform and is not affiliated with, endorsed by, or officially connected to Dr. A.P.J. Abdul Kalam Technical University (AKTU). This informational guide explains official document verification procedures.
+      </div>
+
+      <div class="space-y-10 text-xs sm:text-sm leading-relaxed">
+        
+        <!-- Section 1 -->
+        <section class="space-y-4">
+          <h2 class="text-xl sm:text-2xl font-bold text-white light:text-ink">
+            1. Provisional Web Marksheet vs. Official University Transcript
+          </h2>
+          <p>
+            Understanding the legal distinction between a web copy and an official university transcript is critical:
+          </p>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div class="p-4 rounded-xl border border-canvas-dark-border light:border-canvas-light-border bg-canvas-dark-tile light:bg-canvas-light-tile space-y-2">
+              <strong class="text-white light:text-ink text-sm block">Provisional Web Marksheet</strong>
+              <p class="text-xs text-gray-400 light:text-gray-600">
+                A printed copy from <code class="text-gray-300 light:text-gray-700">oneview.aktu.ac.in</code> or <code class="text-gray-300 light:text-gray-700">akturesult.bond</code>. Suitable for immediate personal reference, provisional college progression, and informal interview screening. Not legally binding without college seal.
+              </p>
+            </div>
+            <div class="p-4 rounded-xl border border-emerald-500/30 bg-emerald-500/10 space-y-2">
+              <strong class="text-emerald-400 text-sm block">Official Sealed Transcript</strong>
+              <p class="text-xs text-gray-300">
+                Printed on specialized security watermarked paper, embossed with the university hologram, and signed by the Controller of Examinations. Required for immigration, foreign university admissions, and government recruitment.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <!-- Section 2 -->
+        <section class="space-y-4">
+          <h2 class="text-xl sm:text-2xl font-bold text-white light:text-ink">
+            2. Digital Verification via DigiLocker &amp; NAD
+          </h2>
+          <p>
+            Dr. A.P.J. Abdul Kalam Technical University is fully integrated with the Government of India's <strong>National Academic Depository (NAD)</strong> and <strong>DigiLocker</strong>:
+          </p>
+          <ol class="list-decimal pl-5 space-y-2 text-xs text-gray-400 light:text-gray-600">
+            <li>Download the official <strong>DigiLocker App</strong> or visit <a href="https://www.digilocker.gov.in" target="_blank" rel="noopener noreferrer" class="text-brand-blue hover:underline font-semibold">digilocker.gov.in</a>.</li>
+            <li>Sign in using your Aadhaar-linked credentials.</li>
+            <li>Under Education, search for <strong>Dr. A.P.J. Abdul Kalam Technical University (AKTU)</strong>.</li>
+            <li>Select <strong>Degree / Marksheet</strong>, input your Roll Number and Admission Year.</li>
+            <li>Your digitally signed electronic transcript will be issued with a cryptographic QR code that employers and government bodies can verify instantly.</li>
+          </ol>
+        </section>
+
+        <!-- Section 3 -->
+        <section class="space-y-4">
+          <h2 class="text-xl sm:text-2xl font-bold text-white light:text-ink">
+            3. Official Transcript Application for WES / Study Abroad
+          </h2>
+          <p>
+            For students applying to Canadian or US institutions requiring World Education Services (WES) credential evaluation:
+          </p>
+          <div class="p-4 rounded-xl border border-canvas-dark-border light:border-canvas-light-border bg-canvas-dark-surface/50 light:bg-canvas-light-surface/50 space-y-2">
+            <h4 class="font-bold text-white light:text-ink">Electronic WES Transmission:</h4>
+            <p class="text-xs text-gray-400 light:text-gray-600">
+              AKTU has established a direct electronic transcript transmission agreement with WES. Students can apply through the <a href="https://erp.aktu.ac.in" target="_blank" rel="noopener noreferrer" class="text-brand-blue hover:underline font-semibold">AKTU Student Service Portal</a>, enter their 7-digit WES Reference Number, pay the university transcript fee, and the university registrar will dispatch digitally signed records directly to WES via secure electronic data transfer.
+            </p>
+          </div>
+        </section>
+
+      </div>
+
+      <!-- Quick CTA -->
+      <div class="mt-12 p-6 rounded-2xl bg-gradient-to-r from-brand-blue/20 to-purple-600/15 border border-brand-blue/30 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div>
+          <h3 class="text-sm font-bold text-white light:text-ink">Need to check your provisional marksheet?</h3>
+          <p class="text-xs text-gray-400 light:text-gray-600">Inspect your complete academic record on our fast search assistant.</p>
+        </div>
+        <a href="/" class="px-4 py-2.5 rounded-xl bg-brand-blue hover:bg-brand-blue-hover text-white text-xs font-bold transition-all shadow-md shrink-0">
+          ⚡ Search Student Record &rarr;
+        </a>
+      </div>
+
+    </div>
+  </article>
+</Layout>

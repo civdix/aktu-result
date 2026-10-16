@@ -144,7 +144,7 @@ const jsonLd = {
         </div>
 
         <!-- 1. Search Form -->
-        <form id="oneview-search-form" class="space-y-4">
+        <form id="oneview-search-form" class="space-y-4" action="javascript:void(0);" onsubmit="event.preventDefault();">
           <div>
             <label for="oneview-roll-number" class="text-[10px] uppercase font-bold text-gray-400 light:text-gray-600 tracking-wider block mb-1">
               AKTU University Roll Number
@@ -180,9 +180,6 @@ const jsonLd = {
           >
             <span>🖥️ Open Live OneView Gateway Directly</span>
           </button>
-
-          <!-- High-Speed Alternative Server Mirror Link -->
-          <DirectLink variant="button" text="⚡ Fast Server 2 (Direct Mirror)" class="w-full" />
         </form>
 
         <!-- 2. Multi-Stage Background Process Loader with Live Percentage -->
@@ -662,7 +659,7 @@ const jsonLd = {
               <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-4 border-b border-emerald-500/20 light:border-emerald-200">
                 <div class="flex items-center gap-2">
                   <span class="w-3 h-3 rounded-full bg-emerald-400 light:bg-emerald-600 animate-pulse"></span>
-                  <span class="text-xs sm:text-sm font-bold text-emerald-400 light:text-emerald-700 uppercase tracking-wider">OneView Official Marksheet Verified ✅</span>
+                  <span class="text-xs sm:text-sm font-bold text-emerald-400 light:text-emerald-700 uppercase tracking-wider">OneView Academic Record Retrieved</span>
                 </div>
                 <span class="px-3 py-1 rounded-full text-[10px] font-bold bg-emerald-500/20 light:bg-emerald-100 text-emerald-300 light:text-emerald-800 border border-emerald-500/30 light:border-emerald-200 self-start sm:self-auto">
                   Gateway Synchronized
@@ -1269,11 +1266,11 @@ const jsonLd = {
         }
 
         // Enforce 5 fetches per day limit
-        if (typeof (window as any).checkDailyFetchLimit === "function") {
-          const limitInfo = (window as any).checkDailyFetchLimit();
+        if (typeof window.checkDailyFetchLimit === "function") {
+          const limitInfo = window.checkDailyFetchLimit();
           if (limitInfo && limitInfo.exceeded) {
-            if (typeof (window as any).showDailyLimitPopup === "function") {
-              (window as any).showDailyLimitPopup("You have exceeded the limit to fetch details kindly comeback later");
+            if (typeof window.showDailyLimitPopup === "function") {
+              window.showDailyLimitPopup("You have exceeded the limit to fetch details kindly comeback later");
             }
             return;
           }
@@ -1347,8 +1344,8 @@ const jsonLd = {
         }, 1500);
 
         // Network Request & Minimum Animation Delay
-        if (typeof (window as any).recordDailyFetchAttempt === "function") {
-          (window as any).recordDailyFetchAttempt();
+        if (typeof window.recordDailyFetchAttempt === "function") {
+          window.recordDailyFetchAttempt();
         }
 
         const fetchPromise = fetch('/api/search', {
@@ -1374,8 +1371,8 @@ const jsonLd = {
                 });
               } else if (resData && (resData.limitExceeded || resData.rateLimited || res.status === 429)) {
                 resetUI();
-                if (typeof (window as any).showDailyLimitPopup === "function") {
-                  (window as any).showDailyLimitPopup(resData?.error || "You have exceeded the limit to fetch details kindly comeback later");
+                if (typeof window.showDailyLimitPopup === "function") {
+                  window.showDailyLimitPopup(resData?.error || "You have exceeded the limit to fetch details kindly comeback later");
                 }
               } else if (resData && resData.needsManualCaptcha && resData.captchaImage) {
                 renderOneViewManualCaptcha(resData, enteredRoll);

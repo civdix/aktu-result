@@ -1,0 +1,167 @@
+---
+import Layout from "../../layouts/Layout.astro";
+
+const siteUrl = "https://akturesult.bond";
+const pageUrl = `${siteUrl}/guides/common-portal-errors`;
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": pageUrl,
+      "url": pageUrl,
+      "headline": "Common AKTU Portal Errors: Solutions for OneView & ERP Glitches",
+      "description": "Comprehensive reference of error messages encountered on oneview.aktu.ac.in and erp.aktu.ac.in with verified troubleshooting workarounds.",
+      "datePublished": "2026-03-12T08:00:00+05:30",
+      "dateModified": "2026-10-16T12:00:00+05:30",
+      "author": {
+        "@type": "Organization",
+        "name": "akturesult.bond Student Editorial Team"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "akturesult.bond",
+        "url": siteUrl
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": `${pageUrl}/#breadcrumb`,
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": siteUrl },
+        { "@type": "ListItem", "position": 2, "name": "Guides", "item": `${siteUrl}/guides` },
+        { "@type": "ListItem", "position": 3, "name": "Common Portal Errors", "item": pageUrl }
+      ]
+    }
+  ]
+};
+
+const errorsList = [
+  {
+    code: "ERR_MAC_FAIL",
+    title: "Validation of viewstate MAC failed",
+    portal: "OneView (oneview.aktu.ac.in)",
+    cause: "Occurs when a farm of web servers is used and machine keys are desynchronized, or when your session took too long to submit.",
+    solution: "Clear browser cache and reload the portal in an incognito window. Do not leave the form idle before submitting."
+  },
+  {
+    code: "ERR_NOT_FOUND",
+    title: "Student Record Not Found / Check Parameters",
+    portal: "OneView & ERP",
+    cause: "The roll number entered does not exist in the active semester table, or your course/branch result has not yet been declared.",
+    solution: "Verify that your roll number is 10 to 14 digits without spaces. Check official circulars to confirm if your branch is declared."
+  },
+  {
+    code: "ERR_ASP_500",
+    title: "Server Error in '/' Application (Runtime Error)",
+    portal: "ERP (erp.aktu.ac.in)",
+    cause: "Database connection pool exhaustion or unhandled exception during exam fee registration or revaluation form processing.",
+    solution: "Wait 15-30 minutes for server workers to recycle. Avoid opening multiple duplicate tabs on the ERP dashboard."
+  },
+  {
+    code: "ERR_MARKS_HOLD",
+    title: "Marks not finalized by Examination Section",
+    portal: "OneView",
+    cause: "External examiner or college practical marks have not been reconciled with the university examination database.",
+    solution: "Notify your college department exam coordinator immediately. Once the award sheet is re-uploaded, marks will populate."
+  },
+  {
+    code: "ERR_DASH_LOCKED",
+    title: "Student Dashboard Access Disabled by College",
+    portal: "ERP",
+    cause: "Your affiliated college administration has placed an administrative hold due to pending semester fee payments or attendance shortage.",
+    solution: "Contact your college accounts/registrar department to clear the hold. This cannot be resolved at the university campus."
+  },
+  {
+    code: "ERR_PASS_EXPIRED",
+    title: "ERP Password Expired / Requires Reset",
+    portal: "ERP",
+    cause: "AKTU security policy requires mandatory password rotation every 180 days to protect student profiles.",
+    solution: "Click 'Reset Password' on the login screen, enter your Roll Number, and input the OTP sent to your registered mobile."
+  }
+];
+---
+
+<Layout 
+  title="Common AKTU Portal Error Codes & Solutions | akturesult.bond"
+  description="Exhaustive index of error codes on AKTU OneView and ERP. Step-by-step solutions for MAC failures, Server Error 500, and dashboard locks."
+  jsonLd={jsonLd}
+>
+  <article class="py-16 md:py-20 bg-black light:bg-white text-gray-400 light:text-gray-600 text-left">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6">
+      
+      <!-- Breadcrumbs -->
+      <nav class="flex items-center gap-2 text-xs text-gray-500 mb-6" aria-label="Breadcrumb">
+        <a href="/" class="hover:text-brand-blue transition-colors">Home</a>
+        <span>/</span>
+        <a href="/guides" class="hover:text-brand-blue transition-colors">Guides</a>
+        <span>/</span>
+        <span class="text-gray-300 light:text-gray-800 font-semibold truncate">Portal Errors</span>
+      </nav>
+
+      <!-- Header -->
+      <div class="border-b border-canvas-dark-border light:border-canvas-light-border pb-6 mb-8">
+        <div class="flex items-center gap-2 text-xs text-brand-blue font-semibold uppercase tracking-wider mb-2">
+          <span>Error Reference</span>
+          <span>•</span>
+          <span>5 min read</span>
+          <span>•</span>
+          <span>Updated October 2026</span>
+        </div>
+        <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-white light:text-ink leading-tight">
+          Common AKTU Portal Errors &amp; Step-by-Step Solutions
+        </h1>
+        <p class="text-sm sm:text-base text-gray-400 light:text-gray-600 mt-3 leading-relaxed">
+          Encountering cryptic error screens on oneview.aktu.ac.in or erp.aktu.ac.in? Find the exact error message below for the cause and remedy.
+        </p>
+      </div>
+
+      <!-- Mandatory Non-Affiliation Alert -->
+      <div class="p-4 rounded-xl border border-amber-500/30 bg-amber-500/10 text-amber-200 text-xs sm:text-sm leading-relaxed mb-10">
+        <strong>Important Student Notice:</strong> akturesult.bond is an independent student utility platform and is not affiliated with, endorsed by, or officially connected to Dr. A.P.J. Abdul Kalam Technical University (AKTU). This error catalog is compiled from common technical issues encountered by students.
+      </div>
+
+      <div class="space-y-6">
+        {errorsList.map((err) => (
+          <div class="p-5 rounded-2xl border border-canvas-dark-border light:border-canvas-light-border bg-canvas-dark-tile light:bg-canvas-light-tile space-y-3">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-canvas-dark-border/40 pb-3">
+              <h2 class="text-base font-bold text-white light:text-ink">
+                {err.title}
+              </h2>
+              <div class="flex items-center gap-2">
+                <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-brand-blue/15 text-brand-blue border border-brand-blue/20">
+                  {err.portal}
+                </span>
+              </div>
+            </div>
+
+            <div class="space-y-2 text-xs">
+              <div>
+                <strong class="text-gray-300 light:text-gray-700">Root Cause:</strong>
+                <p class="text-gray-400 light:text-gray-600 mt-0.5">{err.cause}</p>
+              </div>
+
+              <div class="p-3 rounded-xl bg-canvas-dark-surface light:bg-canvas-light-surface border border-canvas-dark-border/40">
+                <strong class="text-emerald-400 light:text-emerald-600 block mb-0.5">Recommended Fix:</strong>
+                <p class="text-gray-300 light:text-gray-700">{err.solution}</p>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <!-- Quick CTA -->
+      <div class="mt-12 p-6 rounded-2xl bg-gradient-to-r from-brand-blue/20 to-purple-600/15 border border-brand-blue/30 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div>
+          <h3 class="text-sm font-bold text-white light:text-ink">Tired of portal glitches?</h3>
+          <p class="text-xs text-gray-400 light:text-gray-600">Check your AKTU semester result with our automated assistant.</p>
+        </div>
+        <a href="/" class="px-4 py-2.5 rounded-xl bg-brand-blue hover:bg-brand-blue-hover text-white text-xs font-bold transition-all shadow-md shrink-0">
+          ⚡ Check Result Online &rarr;
+        </a>
+      </div>
+
+    </div>
+  </article>
+</Layout>

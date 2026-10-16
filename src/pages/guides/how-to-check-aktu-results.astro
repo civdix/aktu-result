@@ -1,0 +1,274 @@
+---
+import Layout from "../../layouts/Layout.astro";
+
+const siteUrl = "https://akturesult.bond";
+const pageUrl = `${siteUrl}/guides/how-to-check-aktu-results`;
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": pageUrl,
+      "url": pageUrl,
+      "headline": "How to Check AKTU Results Online (Step-by-Step Student Guide)",
+      "description": "Comprehensive tutorial explaining how to check AKTU semester results across the official OneView portal, AKTU ERP student dashboard, and independent result utilities.",
+      "datePublished": "2026-01-15T08:00:00+05:30",
+      "dateModified": "2026-10-16T12:00:00+05:30",
+      "author": {
+        "@type": "Organization",
+        "name": "akturesult.bond Student Editorial Team"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "akturesult.bond",
+        "url": siteUrl
+      }
+    },
+    {
+      "@type": "HowTo",
+      "name": "How to Check AKTU Semester Results Online",
+      "description": "Step-by-step instructions for checking and printing your AKTU semester result using your University Roll Number.",
+      "step": [
+        {
+          "@type": "HowToStep",
+          "position": 1,
+          "name": "Locate Your University Roll Number",
+          "text": "Find your 10 to 14 digit AKTU Roll Number from your examination admit card, fee receipt, or student ID."
+        },
+        {
+          "@type": "HowToStep",
+          "position": 2,
+          "name": "Select Your Lookup Portal",
+          "text": "Choose between official portals (OneView or ERP) or an independent fast utility like akturesult.bond."
+        },
+        {
+          "@type": "HowToStep",
+          "position": 3,
+          "name": "Enter Credentials & Solve Captcha",
+          "text": "Input your roll number, enter your date of birth if required, and complete the security verification."
+        },
+        {
+          "@type": "HowToStep",
+          "position": 4,
+          "name": "Review Semester Grades and Download",
+          "text": "Inspect your subject grades, internal and external marks, SGPA, CGPA, and save a PDF summary."
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": `${pageUrl}/#breadcrumb`,
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": siteUrl },
+        { "@type": "ListItem", "position": 2, "name": "Guides", "item": `${siteUrl}/guides` },
+        { "@type": "ListItem", "position": 3, "name": "How to Check AKTU Results", "item": pageUrl }
+      ]
+    }
+  ]
+};
+---
+
+<Layout 
+  title="How to Check AKTU Results Online (Step-by-Step) | akturesult.bond"
+  description="Learn how to check your AKTU semester examination results on the official OneView portal, AKTU ERP student login, or fast independent assistant. Step-by-step guide with troubleshooting tips."
+  jsonLd={jsonLd}
+>
+  <article class="py-16 md:py-20 bg-black light:bg-white text-gray-400 light:text-gray-600 text-left">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6">
+      
+      <!-- Breadcrumbs -->
+      <nav class="flex items-center gap-2 text-xs text-gray-500 mb-6" aria-label="Breadcrumb">
+        <a href="/" class="hover:text-brand-blue transition-colors">Home</a>
+        <span>/</span>
+        <a href="/guides" class="hover:text-brand-blue transition-colors">Guides</a>
+        <span>/</span>
+        <span class="text-gray-300 light:text-gray-800 font-semibold truncate">How to Check AKTU Results</span>
+      </nav>
+
+      <!-- Header -->
+      <div class="border-b border-canvas-dark-border light:border-canvas-light-border pb-6 mb-8">
+        <div class="flex items-center gap-2 text-xs text-brand-blue font-semibold uppercase tracking-wider mb-2">
+          <span>Portal Guide</span>
+          <span>•</span>
+          <span>6 min read</span>
+          <span>•</span>
+          <span>Updated October 2026</span>
+        </div>
+        <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-white light:text-ink leading-tight">
+          How to Check AKTU Results Online: A Complete Student Guide
+        </h1>
+        <p class="text-sm sm:text-base text-gray-400 light:text-gray-600 mt-3 leading-relaxed">
+          Every semester, over 300,000 students across 750+ affiliated colleges in Uttar Pradesh check their examination scorecards. Here is the definitive guide on navigating the official portals and handling server downtime.
+        </p>
+      </div>
+
+      <!-- Mandatory Non-Affiliation Alert -->
+      <div class="p-4 rounded-xl border border-amber-500/30 bg-amber-500/10 text-amber-200 text-xs sm:text-sm leading-relaxed mb-10">
+        <strong>Important Notice:</strong> akturesult.bond is an independent student utility platform and is not affiliated with, endorsed by, or officially connected to Dr. A.P.J. Abdul Kalam Technical University (AKTU). This guide is provided for educational and navigational assistance only. Official records reside exclusively on official university portals.
+      </div>
+
+      <div class="space-y-10 text-xs sm:text-sm leading-relaxed">
+        
+        <!-- Section 1 -->
+        <section class="space-y-4">
+          <h2 class="text-xl sm:text-2xl font-bold text-white light:text-ink">
+            1. Overview of AKTU Result Platforms
+          </h2>
+          <p>
+            Dr. A.P.J. Abdul Kalam Technical University maintains two distinct official web platforms for student examination data, alongside third-party independent utilities:
+          </p>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2">
+            <div class="p-4 rounded-xl border border-canvas-dark-border light:border-canvas-light-border bg-canvas-dark-surface/60 light:bg-canvas-light-surface/60 space-y-2">
+              <h3 class="font-bold text-white light:text-ink text-sm">AKTU OneView</h3>
+              <p class="text-xs text-gray-500">Official public result engine (<code class="text-gray-300 light:text-gray-700">oneview.aktu.ac.in</code>). Designed for students, parents, and employers to view full semester-wise history.</p>
+            </div>
+            <div class="p-4 rounded-xl border border-canvas-dark-border light:border-canvas-light-border bg-canvas-dark-surface/60 light:bg-canvas-light-surface/60 space-y-2">
+              <h3 class="font-bold text-white light:text-ink text-sm">AKTU ERP Portal</h3>
+              <p class="text-xs text-gray-500">Official student administrative dashboard (<code class="text-gray-300 light:text-gray-700">erp.aktu.ac.in</code>). Requires individual student password for exam fees, scrutiny, and admit cards.</p>
+            </div>
+            <div class="p-4 rounded-xl border border-canvas-dark-border light:border-canvas-light-border bg-canvas-dark-surface/60 light:bg-canvas-light-surface/60 space-y-2">
+              <h3 class="font-bold text-white light:text-ink text-sm">Independent Helpers</h3>
+              <p class="text-xs text-gray-500">Community utilities like <code class="text-gray-300 light:text-gray-700">akturesult.bond</code> that query university gateways to assist students who have lost their registered date of birth.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- Section 2 -->
+        <section class="space-y-4">
+          <h2 class="text-xl sm:text-2xl font-bold text-white light:text-ink">
+            2. Method 1: Checking via Official AKTU OneView Portal
+          </h2>
+          <p>
+            The official OneView repository is the most widely used portal for viewing comprehensive marksheet summaries. Follow these steps:
+          </p>
+          <ol class="list-decimal pl-5 space-y-3">
+            <li>
+              <strong>Visit the Official Portal:</strong> Open your web browser and go to <a href="https://oneview.aktu.ac.in" target="_blank" rel="noopener noreferrer" class="text-brand-blue hover:underline font-semibold">https://oneview.aktu.ac.in</a>.
+            </li>
+            <li>
+              <strong>Enter Your Roll Number:</strong> In the primary input field labeled "Roll No", type your 10 to 14 digit university roll number accurately.
+            </li>
+            <li>
+              <strong>Enter Registered Date of Birth:</strong> Select your Date of Birth in the exact format required (<code class="text-gray-300 light:text-gray-700">DD/MM/YYYY</code>). Ensure this matches the birth date recorded in your high school certificate and college admission form.
+            </li>
+            <li>
+              <strong>Solve the Captcha:</strong> Complete the security challenge (such as reCAPTCHA or math calculation) to verify you are a genuine visitor.
+            </li>
+            <li>
+              <strong>Click "Search":</strong> Submit the query. The system will load your full profile along with expandable semester accordion tables.
+            </li>
+          </ol>
+        </section>
+
+        <!-- Section 3 -->
+        <section class="space-y-4">
+          <h2 class="text-xl sm:text-2xl font-bold text-white light:text-ink">
+            3. Method 2: Checking via Official AKTU ERP Student Login
+          </h2>
+          <p>
+            If you need to view challenge revaluation updates, special carry-over registrations, or internal sessional marks directly from your college department:
+          </p>
+          <ol class="list-decimal pl-5 space-y-3">
+            <li>Navigate to the official student login at <a href="https://erp.aktu.ac.in" target="_blank" rel="noopener noreferrer" class="text-brand-blue hover:underline font-semibold">https://erp.aktu.ac.in</a>.</li>
+            <li>Enter your User ID (which is your University Roll Number) and your confidential ERP password.</li>
+            <li>Complete the security captcha and click <strong>Login</strong>.</li>
+            <li>From the left-hand navigation menu or dashboard tiles, select <strong>Examination Dashboard</strong> &rarr; <strong>Result / Marksheet</strong>.</li>
+            <li>View your latest declared semester scores or download your provisional marksheet.</li>
+          </ol>
+          <div class="p-4 rounded-xl border border-canvas-dark-border light:border-canvas-light-border bg-canvas-dark-surface/40 light:bg-canvas-light-surface/40">
+            <h4 class="font-bold text-white light:text-ink mb-1">Forgot Your ERP Password?</h4>
+            <p class="text-xs text-gray-500">
+              Click "Forgot Password" on the ERP login screen. An OTP will be dispatched to the mobile number registered in the university database. If your phone number has changed, you must contact your college registrar to update your profile.
+            </p>
+          </div>
+        </section>
+
+        <!-- Section 4 -->
+        <section class="space-y-4">
+          <h2 class="text-xl sm:text-2xl font-bold text-white light:text-ink">
+            4. Method 3: Using akturesult.bond Independent Assistant
+          </h2>
+          <p>
+            When students do not remember their registered Date of Birth or when the official portal displays format mismatch errors, our independent helper provides a streamlined alternative:
+          </p>
+          <ol class="list-decimal pl-5 space-y-3">
+            <li>Visit the <a href="/" class="text-brand-blue hover:underline font-semibold">akturesult.bond homepage</a>.</li>
+            <li>Enter your 10 to 14 digit University Roll Number into the search field.</li>
+            <li>Click <strong>⚡ Check Result</strong>.</li>
+            <li>The system performs an automated live query with university gateways, formatting and presenting your semester grades, SGPA, and carry-over status without requiring a Date of Birth.</li>
+          </ol>
+        </section>
+
+        <!-- Section 5 -->
+        <section class="space-y-4">
+          <h2 class="text-xl sm:text-2xl font-bold text-white light:text-ink">
+            5. What to Check on Your Result Screen
+          </h2>
+          <p>
+            Once your result opens, verify the following essential details carefully:
+          </p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div class="p-3.5 rounded-xl border border-canvas-dark-border light:border-canvas-light-border bg-canvas-dark-tile light:bg-canvas-light-tile">
+              <strong class="text-white light:text-ink block mb-1">1. Student Credentials</strong>
+              <p class="text-xs text-gray-500">Confirm your name spelling, father's name, enrollment number, and college name.</p>
+            </div>
+            <div class="p-3.5 rounded-xl border border-canvas-dark-border light:border-canvas-light-border bg-canvas-dark-tile light:bg-canvas-light-tile">
+              <strong class="text-white light:text-ink block mb-1">2. Sessional &amp; External Marks</strong>
+              <p class="text-xs text-gray-500">Check that internal marks from your college and external university exam marks are both populated.</p>
+            </div>
+            <div class="p-3.5 rounded-xl border border-canvas-dark-border light:border-canvas-light-border bg-canvas-dark-tile light:bg-canvas-light-tile">
+              <strong class="text-white light:text-ink block mb-1">3. Status Indicator</strong>
+              <p class="text-xs text-gray-500">Look for <strong>PASS</strong>, <strong>PWG</strong> (Passed With Grace), or <strong>PCP</strong> (Passed with Carry Over Papers).</p>
+            </div>
+            <div class="p-3.5 rounded-xl border border-canvas-dark-border light:border-canvas-light-border bg-canvas-dark-tile light:bg-canvas-light-tile">
+              <strong class="text-white light:text-ink block mb-1">4. SGPA / CGPA</strong>
+              <p class="text-xs text-gray-500">Verify your term SGPA and cumulative CGPA. For formulas, read our <a href="/guides/aktu-sgpa-calculation" class="text-brand-blue hover:underline">SGPA Guide</a>.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- Section 6 -->
+        <section class="space-y-4">
+          <h2 class="text-xl sm:text-2xl font-bold text-white light:text-ink">
+            6. What to Do if the Official Portal Crashes
+          </h2>
+          <p>
+            During peak declaration periods (especially when B.Tech odd or even semester results go live), the official ASP.NET servers experience immense concurrent load, causing "504 Gateway Time-out" or "Session Expired" errors:
+          </p>
+          <ul class="list-disc pl-5 space-y-2">
+            <li><strong>Wait 15-30 Minutes:</strong> Avoid continuous aggressive browser refreshes, which compound server load and can trigger temporary IP rate limits.</li>
+            <li><strong>Clear Cache or Use Incognito:</strong> Old session tokens stored in your browser can cause ViewState desynchronization.</li>
+            <li><strong>Check Off-Peak:</strong> Access the portal during lower traffic windows (early morning or late evening).</li>
+            <li><strong>Refer to Community Updates:</strong> Check our <a href="https://t.me/+B1IibFFFftc0NjNl" target="_blank" rel="noopener noreferrer" class="text-brand-blue hover:underline">Telegram group</a> for real-time university server status alerts.</li>
+          </ul>
+        </section>
+
+      </div>
+
+      <!-- Related Guides Footer -->
+      <div class="mt-12 pt-8 border-t border-canvas-dark-border light:border-canvas-light-border space-y-4">
+        <h3 class="text-base font-bold text-white light:text-ink">Related Student Guides</h3>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+          <a href="/guides/how-to-check-aktu-oneview" class="p-3 rounded-xl border border-canvas-dark-border light:border-canvas-light-border bg-canvas-dark-tile light:bg-canvas-light-tile hover:border-brand-blue/30 text-white light:text-ink font-semibold flex items-center justify-between">
+            <span>Understanding OneView Marksheets</span>
+            <span>&rarr;</span>
+          </a>
+          <a href="/guides/aktu-result-not-showing" class="p-3 rounded-xl border border-canvas-dark-border light:border-canvas-light-border bg-canvas-dark-tile light:bg-canvas-light-tile hover:border-brand-blue/30 text-white light:text-ink font-semibold flex items-center justify-between">
+            <span>Result Not Showing? Troubleshooting WH &amp; INC</span>
+            <span>&rarr;</span>
+          </a>
+          <a href="/guides/aktu-sgpa-calculation" class="p-3 rounded-xl border border-canvas-dark-border light:border-canvas-light-border bg-canvas-dark-tile light:bg-canvas-light-tile hover:border-brand-blue/30 text-white light:text-ink font-semibold flex items-center justify-between">
+            <span>How to Calculate SGPA &amp; CGPA</span>
+            <span>&rarr;</span>
+          </a>
+          <a href="/guides/aktu-carry-over-cop-back-paper" class="p-3 rounded-xl border border-canvas-dark-border light:border-canvas-light-border bg-canvas-dark-tile light:bg-canvas-light-tile hover:border-brand-blue/30 text-white light:text-ink font-semibold flex items-center justify-between">
+            <span>Carry-Over (COP) Rules &amp; Year Back Limits</span>
+            <span>&rarr;</span>
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </article>
+</Layout>

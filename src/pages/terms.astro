@@ -3,43 +3,134 @@ import Layout from "../layouts/Layout.astro";
 ---
 
 <Layout 
-  title="Terms of Service | AKTU Result Without DOB"
-  description="Read our terms of service and usage regulations for the student result query utility."
+  title="Terms of Service | akturesult.bond"
+  description="Read the terms of service, acceptable use policies, and legal disclaimers governing the use of the akturesult.bond student utility platform."
 >
   <section class="py-16 md:py-24 bg-black light:bg-white text-gray-400 light:text-gray-600 text-left">
-    <div class="max-w-3xl mx-auto px-4 sm:px-6">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6">
       
-      <h1 class="text-3xl font-extrabold tracking-tight text-white light:text-ink mb-8 border-b border-canvas-dark-border pb-4">
-        Terms of Service
-      </h1>
+      <div class="border-b border-canvas-dark-border light:border-canvas-light-border pb-6 mb-8">
+        <span class="text-xs font-semibold uppercase tracking-wider text-brand-blue">Legal &amp; Compliance</span>
+        <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight text-white light:text-ink mt-2">
+          Terms of Service
+        </h1>
+        <p class="text-xs sm:text-sm text-gray-500 light:text-gray-500 mt-2">
+          Last Updated: October 2026 • Effective Date: Immediately upon access
+        </p>
+      </div>
 
-      <div class="space-y-6 text-xs sm:text-sm leading-relaxed">
-        <p>
-          Last Updated: July 2026
-        </p>
-        <p>
-          By accessing and using this search tool, you agree to comply with the terms and guidelines outlined below.
-        </p>
+      <!-- Mandatory Disclaimer Box -->
+      <div class="p-4 rounded-xl border border-amber-500/30 bg-amber-500/10 text-amber-200 text-xs sm:text-sm leading-relaxed mb-8">
+        <strong>Mandatory Non-Affiliation Notice:</strong> akturesult.bond is an independent student utility platform and is not affiliated with, endorsed by, or officially connected to Dr. A.P.J. Abdul Kalam Technical University (AKTU). By accessing or utilizing this website, you explicitly acknowledge and agree to these terms.
+      </div>
 
-        <h3 class="text-sm font-semibold text-white light:text-ink uppercase tracking-wider mt-6">1. Permitted Use</h3>
-        <p>
-          This utility is provided solely to assist students in retrieving academic records from the official AKTU portal without needing a Date of Birth. You agree to use this tool only for legitimate and authorized lookup requests relating to your own record or where you have received explicit student permission.
-        </p>
+      <div class="space-y-8 text-xs sm:text-sm leading-relaxed">
+        
+        <div>
+          <h2 class="text-base font-bold text-white light:text-ink uppercase tracking-wider mb-3">
+            1. Acceptance of Terms
+          </h2>
+          <p>
+            By accessing, browsing, or utilizing any feature of <strong>akturesult.bond</strong> (the "Service"), you acknowledge that you have read, understood, and agreed to be legally bound by these Terms of Service and our Privacy Policy. If you do not agree to these terms in their entirety, you must discontinue use of the Service immediately.
+          </p>
+        </div>
 
-        <h3 class="text-sm font-semibold text-white light:text-ink uppercase tracking-wider mt-6">2. Rate Limiting & Abuse</h3>
-        <p>
-          To protect server bandwidth and prevent denial of service (DoS), lookup actions are rate limited to 100 requests per IP address per day. Any attempts to circumvent these limits, automate bulk requests, or reverse-engineer the session-iteration logic are strictly prohibited.
-        </p>
+        <div>
+          <h2 class="text-base font-bold text-white light:text-ink uppercase tracking-wider mb-3">
+            2. Nature of the Utility &amp; Provisional Information
+          </h2>
+          <p class="mb-3">
+            akturesult.bond is built strictly as an independent informational search helper and student navigation tool:
+          </p>
+          <ul class="list-disc pl-5 space-y-2">
+            <li><strong>Provisional Online Data:</strong> All marks, grades, SGPA/CGPA calculations, and academic statuses displayed through this platform represent uncertified provisional internet data parsed from publicly accessible university web gateways.</li>
+            <li><strong>No Official Document Issuance:</strong> This service does not issue official transcripts, original marksheets, degrees, migration certificates, or degree verifications. Only Dr. A.P.J. Abdul Kalam Technical University and your affiliated college administration have the legal authority to issue binding academic records.</li>
+            <li><strong>Requirement for Official Verification:</strong> For formal employment background checks, higher education applications, WES credential evaluations, or government documentation, students must obtain signed and stamped original transcripts directly from official university offices.</li>
+          </ul>
+        </div>
 
-        <h3 class="text-sm font-semibold text-white light:text-ink uppercase tracking-wider mt-6">3. No Affiliation</h3>
-        <p>
-          You acknowledge that this utility is a third-party developer tool and has **no affiliation** with Dr. A.P.J. Abdul Kalam Technical University (AKTU).
-        </p>
+        <div>
+          <h2 class="text-base font-bold text-white light:text-ink uppercase tracking-wider mb-3">
+            3. Strict Prohibition of Fraudulent or Malicious Activities
+          </h2>
+          <p class="mb-3">
+            Users must use this platform in complete compliance with all applicable laws and ethical standards. Under no circumstances may this platform be used to:
+          </p>
+          <ul class="list-disc pl-5 space-y-2">
+            <li><strong>Forgery or Document Falsification:</strong> Modify, manipulate, tamper with, or forge academic records, grades, or marksheet displays for unauthorized or fraudulent gain.</li>
+            <li><strong>Unauthorized Access or Security Circumvention:</strong> Bypass university authentication barriers, inject malicious payloads, conduct penetration testing without authorization, or compromise university servers.</li>
+            <li><strong>Impersonation &amp; Privacy Infringement:</strong> Impersonate another student, administrator, or faculty member, or conduct unauthorized reconnaissance on fellow students without their explicit consent.</li>
+            <li><strong>Automated Bulk Scraping:</strong> Execute unauthorized automated scripts, headless browser clusters, mass crawlers, or high-concurrency bot networks to harvest university records in bulk.</li>
+            <li><strong>Denial of Service (DoS):</strong> Flood server endpoints with requests intended to exhaust server resources or degrade service availability for other students.</li>
+          </ul>
+        </div>
 
-        <h3 class="text-sm font-semibold text-white light:text-ink uppercase tracking-wider mt-6">4. Disclaimer of Warranties</h3>
-        <p>
-          This service is provided "as is" and "as available", without warranty of any kind, express or implied. The developer does not guarantee that the tool will be uninterrupted, error-free, or compatible with future AKTU portal backend design updates.
-        </p>
+        <div>
+          <h2 class="text-base font-bold text-white light:text-ink uppercase tracking-wider mb-3">
+            4. Rate Limiting, Fair Use &amp; Automated Enforcement
+          </h2>
+          <p>
+            To protect infrastructure integrity and maintain equitable access for genuine students during peak result declaration seasons, akturesult.bond enforces strict automated rate limiting. Users exceeding threshold lookups per hour or per day will be temporarily or permanently blocked by automated defense firewalls. Circumventing rate limits using proxy networks or rotating VPN pools is a direct violation of these terms.
+          </p>
+        </div>
+
+        <div>
+          <h2 class="text-base font-bold text-white light:text-ink uppercase tracking-wider mb-3">
+            5. Intellectual Property &amp; Trademarks
+          </h2>
+          <p>
+            All original layout designs, proprietary parsing scripts, custom code, guides, and educational articles authored on this website are the intellectual property of akturesult.bond. The names "AKTU", "Dr. A.P.J. Abdul Kalam Technical University", "UPTU", and related university logos or acronyms are registered trademarks of their respective statutory bodies. Their mention on this website is strictly nominative and descriptive, intended solely to inform students about relevant academic portals.
+          </p>
+        </div>
+
+        <div>
+          <h2 class="text-base font-bold text-white light:text-ink uppercase tracking-wider mb-3">
+            6. Third-Party Links &amp; Advertisements
+          </h2>
+          <p>
+            This website may contain links to third-party web portals, including official AKTU systems (<code class="text-gray-300 light:text-gray-800">oneview.aktu.ac.in</code>, <code class="text-gray-300 light:text-gray-800">erp.aktu.ac.in</code>) and third-party advertising partners (such as Google AdSense). We do not control or endorse the content, policies, or technical operations of third-party domains. Any interaction or transaction conducted with third-party sites is solely between the user and the respective third-party entity.
+          </p>
+        </div>
+
+        <div>
+          <h2 class="text-base font-bold text-white light:text-ink uppercase tracking-wider mb-3">
+            7. Disclaimer of Warranties &amp; Limitation of Liability
+          </h2>
+          <p class="mb-3">
+            THE SERVICE IS PROVIDED ON AN "AS IS" AND "AS AVAILABLE" BASIS WITHOUT WARRANTIES OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, ACCURACY, OR UNINTERRUPTED AVAILABILITY.
+          </p>
+          <p>
+            IN NO EVENT SHALL THE OPERATORS, DEVELOPERS, OR CONTRIBUTORS OF AKTURESULT.BOND BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, CONSEQUENTIAL, SPECIAL, OR EXEMPLARY DAMAGES (INCLUDING LOSS OF ADMISSION DEADLINES, REVALUATION WINDOWS, ACADEMIC DISPUTES, OR SYSTEM OUTAGES) ARISING OUT OF OR IN CONNECTION WITH THE USE OF OR INABILITY TO USE THIS SERVICE.
+          </p>
+        </div>
+
+        <div>
+          <h2 class="text-base font-bold text-white light:text-ink uppercase tracking-wider mb-3">
+            8. Modifications to Terms
+          </h2>
+          <p>
+            We reserve the right to revise or amend these Terms of Service at any time without prior notice. Continued use of the website following the posting of modifications constitutes your acceptance of the updated terms.
+          </p>
+        </div>
+
+        <div>
+          <h2 class="text-base font-bold text-white light:text-ink uppercase tracking-wider mb-3">
+            9. Contact &amp; Grievances
+          </h2>
+          <p>
+            For questions, legal inquiries, or grievance redressal regarding these terms, please contact:
+          </p>
+          <div class="mt-3 p-4 rounded-xl border border-canvas-dark-border light:border-canvas-light-border bg-canvas-dark-tile light:bg-canvas-light-tile flex items-center justify-between">
+            <div>
+              <p class="font-bold text-white light:text-ink">Legal &amp; Compliance Desk</p>
+              <p class="text-xs text-gray-500 light:text-gray-600">akturesult.bond Student Utility</p>
+            </div>
+            <a href="mailto:support@akturesult.bond" class="text-brand-blue font-semibold hover:underline text-xs sm:text-sm">
+              support@akturesult.bond
+            </a>
+          </div>
+        </div>
+
       </div>
 
     </div>

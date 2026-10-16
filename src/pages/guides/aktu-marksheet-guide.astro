@@ -1,0 +1,191 @@
+---
+import Layout from "../../layouts/Layout.astro";
+
+const siteUrl = "https://akturesult.bond";
+const pageUrl = `${siteUrl}/guides/aktu-marksheet-guide`;
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": pageUrl,
+      "url": pageUrl,
+      "headline": "Anatomy of an AKTU Marksheet: Decoding Codes, Abbreviations & Indicators",
+      "description": "Student guide to understanding an AKTU marksheet. Detailed decoding of subject codes, credits, and status abbreviations including PCP, PWG, ABS, and UFM.",
+      "datePublished": "2026-03-28T08:00:00+05:30",
+      "dateModified": "2026-10-16T12:00:00+05:30",
+      "author": {
+        "@type": "Organization",
+        "name": "akturesult.bond Student Editorial Team"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "akturesult.bond",
+        "url": siteUrl
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": `${pageUrl}/#breadcrumb`,
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": siteUrl },
+        { "@type": "ListItem", "position": 2, "name": "Guides", "item": `${siteUrl}/guides` },
+        { "@type": "ListItem", "position": 3, "name": "Marksheet Guide", "item": pageUrl }
+      ]
+    }
+  ]
+};
+
+const acronyms = [
+  { term: "PASS", full: "Passed", meaning: "Cleared all subjects in the semester with satisfactory internal and external marks." },
+  { term: "PWG", full: "Passed With Grace", meaning: "Passed after being awarded statutory university grace marks (up to 7-10 marks)." },
+  { term: "PCP", full: "Promoted with Carry Over Papers", meaning: "Eligible for promotion to the next semester, but carries uncleared back papers." },
+  { term: "ABS", full: "Absent", meaning: "Student was marked absent on the examination hall attendance sheet." },
+  { term: "UFM", full: "Unfair Means", meaning: "Case registered by flying squad or exam superintendent; pending disciplinary committee review." },
+  { term: "INC", full: "Incomplete", meaning: "Internal sessional or external viva marks missing from college submission." },
+  { term: "WH", full: "Withheld", meaning: "Result suspended due to college fee dues, eligibility disputes, or administrative hold." },
+  { term: "AUD", full: "Audit Course", meaning: "Non-credit mandatory course (e.g., Cyber Security) graded as Satisfactory / Unsatisfactory." }
+];
+---
+
+<Layout 
+  title="Anatomy of an AKTU Marksheet: Decoding PCP, PWG & Grades | akturesult.bond"
+  description="Learn how to read and interpret your AKTU marksheet. Complete glossary of terms: PCP, PWG, ABS, UFM, subject codes, credits, and division rankings."
+  jsonLd={jsonLd}
+>
+  <article class="py-16 md:py-20 bg-black light:bg-white text-gray-400 light:text-gray-600 text-left">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6">
+      
+      <!-- Breadcrumbs -->
+      <nav class="flex items-center gap-2 text-xs text-gray-500 mb-6" aria-label="Breadcrumb">
+        <a href="/" class="hover:text-brand-blue transition-colors">Home</a>
+        <span>/</span>
+        <a href="/guides" class="hover:text-brand-blue transition-colors">Guides</a>
+        <span>/</span>
+        <span class="text-gray-300 light:text-gray-800 font-semibold truncate">Marksheet Guide</span>
+      </nav>
+
+      <!-- Header -->
+      <div class="border-b border-canvas-dark-border light:border-canvas-light-border pb-6 mb-8">
+        <div class="flex items-center gap-2 text-xs text-brand-blue font-semibold uppercase tracking-wider mb-2">
+          <span>Marksheet Reference</span>
+          <span>•</span>
+          <span>5 min read</span>
+          <span>•</span>
+          <span>Updated October 2026</span>
+        </div>
+        <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-white light:text-ink leading-tight">
+          Anatomy of an AKTU Marksheet: Decoding Indicators &amp; Acronyms
+        </h1>
+        <p class="text-sm sm:text-base text-gray-400 light:text-gray-600 mt-3 leading-relaxed">
+          AKTU marksheets are packed with technical abbreviations like PCP, PWG, ESE, and AUD. Here is your student guide to decoding every single field on your scorecard.
+        </p>
+      </div>
+
+      <!-- Mandatory Non-Affiliation Alert -->
+      <div class="p-4 rounded-xl border border-amber-500/30 bg-amber-500/10 text-amber-200 text-xs sm:text-sm leading-relaxed mb-10">
+        <strong>Important Student Notice:</strong> akturesult.bond is an independent student utility platform and is not affiliated with, endorsed by, or officially connected to Dr. A.P.J. Abdul Kalam Technical University (AKTU). This informational article is designed to help students understand university marksheet terminology.
+      </div>
+
+      <div class="space-y-10 text-xs sm:text-sm leading-relaxed">
+        
+        <!-- Section 1 -->
+        <section class="space-y-4">
+          <h2 class="text-xl sm:text-2xl font-bold text-white light:text-ink">
+            1. Comprehensive Result Status Glossary
+          </h2>
+          <p>
+            The summary row of each semester accordion displays a status tag. Here is what each acronym officially means:
+          </p>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {acronyms.map((item) => (
+              <div class="p-4 rounded-xl border border-canvas-dark-border light:border-canvas-light-border bg-canvas-dark-tile light:bg-canvas-light-tile space-y-1.5">
+                <div class="flex items-center justify-between">
+                  <span class="font-mono font-bold text-brand-blue text-sm">{item.term}</span>
+                  <span class="text-[10px] text-gray-500 font-semibold uppercase">{item.full}</span>
+                </div>
+                <p class="text-xs text-gray-400 light:text-gray-600 leading-relaxed">
+                  {item.meaning}
+                </p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <!-- Section 2 -->
+        <section class="space-y-4">
+          <h2 class="text-xl sm:text-2xl font-bold text-white light:text-ink">
+            2. Decoding AKTU Subject Codes
+          </h2>
+          <p>
+            Every course code follows a standardized naming convention established by the university syllabus board:
+          </p>
+          <ul class="list-disc pl-5 space-y-2">
+            <li><strong>Prefix:</strong> The first letter indicates the syllabus revision series (e.g., <strong>K</strong> indicates the current AICTE model curriculum; older batches had <strong>N</strong> or <strong>R</strong>).</li>
+            <li><strong>Department Identifier:</strong> Two or three letters denoting discipline: <em>CS</em> (Computer Science), <em>EC</em> (Electronics), <em>ME</em> (Mechanical), <em>AS</em> (Applied Science), <em>EE</em> (Electrical).</li>
+            <li><strong>Semester &amp; Sequence Number:</strong> Three numbers: the first digit is the semester (e.g., <em>KCS<strong>5</strong>01</em> indicates 5th semester, course #01).</li>
+            <li><strong>Labs &amp; Practicals:</strong> Practical lab subjects append 50 to the sequence (e.g., <em>KCS-<strong>551</strong></em> is the practical lab corresponding to <em>KCS-501</em>).</li>
+          </ul>
+        </section>
+
+        <!-- Section 3 -->
+        <section class="space-y-4">
+          <h2 class="text-xl sm:text-2xl font-bold text-white light:text-ink">
+            3. Credit Units vs Marks
+          </h2>
+          <p>
+            A high mark in a 4-credit course elevates your SGPA significantly more than a high mark in a 1-credit lab. Credits reflect instructional hours:
+          </p>
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-xs border border-canvas-dark-border light:border-canvas-light-border rounded-xl overflow-hidden">
+              <thead class="bg-canvas-dark-surface light:bg-canvas-light-surface text-white light:text-ink">
+                <tr>
+                  <th class="p-3 border-b border-canvas-dark-border">Course Format</th>
+                  <th class="p-3 border-b border-canvas-dark-border">Typical Credits</th>
+                  <th class="p-3 border-b border-canvas-dark-border">Impact on Semester SGPA</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-canvas-dark-border/40 light:divide-canvas-light-border font-mono">
+                <tr>
+                  <td class="p-3 font-sans">Core Theory Subject (4 hrs/week)</td>
+                  <td class="p-3 font-bold text-brand-blue">4 Credits</td>
+                  <td class="p-3 font-sans text-emerald-400">High Weightage (~25% of SGPA)</td>
+                </tr>
+                <tr>
+                  <td class="p-3 font-sans">Elective Theory Subject (3 hrs/week)</td>
+                  <td class="p-3 font-bold text-brand-blue">3 Credits</td>
+                  <td class="p-3 font-sans text-emerald-400">Moderate Weightage (~18% of SGPA)</td>
+                </tr>
+                <tr>
+                  <td class="p-3 font-sans">Practical Lab Course (2 hrs/week)</td>
+                  <td class="p-3 font-bold text-cyan-400">1 Credit</td>
+                  <td class="p-3 font-sans text-gray-400">Low Weightage (~6% of SGPA)</td>
+                </tr>
+                <tr>
+                  <td class="p-3 font-sans">Audit Course (Constitution, UHV)</td>
+                  <td class="p-3 font-bold text-gray-500">0 Credits</td>
+                  <td class="p-3 font-sans text-gray-400">Zero Weightage (Mandatory to clear)</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+      </div>
+
+      <!-- Quick CTA -->
+      <div class="mt-12 p-6 rounded-2xl bg-gradient-to-r from-brand-blue/20 to-purple-600/15 border border-brand-blue/30 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div>
+          <h3 class="text-sm font-bold text-white light:text-ink">Ready to review your marksheet?</h3>
+          <p class="text-xs text-gray-400 light:text-gray-600">Enter your roll number to view your full scorecard summary.</p>
+        </div>
+        <a href="/" class="px-4 py-2.5 rounded-xl bg-brand-blue hover:bg-brand-blue-hover text-white text-xs font-bold transition-all shadow-md shrink-0">
+          ⚡ View Marksheet &rarr;
+        </a>
+      </div>
+
+    </div>
+  </article>
+</Layout>

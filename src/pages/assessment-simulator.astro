@@ -1700,9 +1700,9 @@ const jsonLd = {
       let isProcessingCycle = false;
       let smoothedYaw = 0;
       let smoothedPitch = 0;
-      let baselineYawRatio = 0.50;
-      let baselinePitchRatio = 0.50;
-      let isBaselineCalibrated = false;
+      baselineYawRatio = 0.50;
+      baselinePitchRatio = 0.50;
+      isBaselineCalibrated = false;
       let baselineSamples = [];
 
       function calibrateNeutralGaze() {

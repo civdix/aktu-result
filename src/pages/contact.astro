@@ -2,22 +2,23 @@
 import Layout from "../layouts/Layout.astro";
 
 const email = "support@akturesult.bond";
-const contactKeywords = "contact aktu result portal, aktu api access, support aktu result, aktu data search api, student help desk";
+const contactKeywords = "contact aktu result portal, student help desk, aktu result troubleshooting, feedback, report issue";
 ---
 
 <Layout 
-  title="Contact Support | AKTU Result Portal"
-  description="Get in touch with the AKTU Result portal support team for inquiries, API access, and technical assistance."
+  title="Contact & Student Support | akturesult.bond"
+  description="Get in touch with the akturesult.bond team for website feedback, bug reports, guide suggestions, or technical support."
   keywords={contactKeywords}
 >
   <!-- Header Banner -->
   <section class="py-16 md:py-24 border-b border-canvas-dark-border light:border-canvas-light-border bg-gradient-to-b from-black to-canvas-dark-surface light:from-white light:to-canvas-light-surface text-center">
     <div class="max-w-3xl mx-auto px-4 sm:px-6">
-      <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight mb-4 text-white light:text-ink">
-        Get In Touch
+      <span class="text-xs font-semibold uppercase tracking-wider text-brand-blue">Community &amp; Assistance</span>
+      <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight mt-2 mb-4 text-white light:text-ink">
+        Contact &amp; Student Support
       </h1>
       <p class="text-base sm:text-lg text-gray-400 light:text-gray-600 max-w-xl mx-auto leading-relaxed">
-        Have questions about API integration, portal features, or need technical assistance? Let's connect.
+        Have questions about using our student tools, feedback on our guides, or need to report a bug? We are here to help.
       </p>
     </div>
   </section>
@@ -26,26 +27,32 @@ const contactKeywords = "contact aktu result portal, aktu api access, support ak
   <section class="py-16 md:py-24 bg-black light:bg-white text-gray-400 light:text-gray-600">
     <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
       
+      <!-- Non-affiliation notice -->
+      <div class="p-4 rounded-xl border border-amber-500/30 bg-amber-500/10 text-amber-200 text-xs sm:text-sm leading-relaxed mb-12 text-left">
+        <strong>Important Student Note:</strong> akturesult.bond is an independent student utility platform and is not affiliated with, endorsed by, or officially connected to Dr. A.P.J. Abdul Kalam Technical University (AKTU). For official marksheet corrections, examination grievances, degree issuance, or revaluation forms, please contact your college registrar or submit an official ticket through the <a href="https://erp.aktu.ac.in" target="_blank" rel="noopener noreferrer" class="underline font-semibold text-white">AKTU ERP Grievance Portal</a>.
+      </div>
+
       <!-- 2-Column Grid -->
       <div class="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-16">
         
         <!-- Column 1: Contact Details -->
         <div class="space-y-8 text-left">
-          <div class="space-y-4">
-            <h2 class="text-xl font-bold text-white light:text-ink">Help &amp; Support Desk</h2>
-            <p class="text-xs sm:text-sm leading-relaxed text-gray-500 light:text-gray-600">
-              Maintained by an open-source team of student developers. We provide assistance for students and developers seeking API connectivity.
+          <div class="space-y-3">
+            <h2 class="text-xl font-bold text-white light:text-ink">Student Support &amp; Feedback</h2>
+            <p class="text-xs sm:text-sm leading-relaxed text-gray-400 light:text-gray-600">
+              Our website is maintained by independent alumni and student developers committed to making university portal information accessible and straightforward.
             </p>
           </div>
 
           <!-- Contact items -->
-          <div class="space-y-5">
+          <div class="space-y-4">
             <!-- Email -->
             <a href={`mailto:${email}`} class="flex items-center gap-4 p-4 rounded-xl border border-canvas-dark-border light:border-canvas-light-border bg-canvas-dark-tile light:bg-canvas-light-tile hover:border-brand-blue/30 transition-all group">
               <div class="w-10 h-10 rounded-lg bg-brand-blue/10 text-brand-blue flex items-center justify-center font-bold text-lg">📧</div>
               <div>
-                <h4 class="text-xs font-semibold text-gray-500 uppercase tracking-wider">Email Address</h4>
+                <h4 class="text-xs font-semibold text-gray-500 uppercase tracking-wider">Direct Email</h4>
                 <p class="text-sm font-semibold text-white light:text-ink group-hover:text-brand-blue transition-colors">{email}</p>
+                <p class="text-[11px] text-gray-500">Typical response time: Within 24-48 hours</p>
               </div>
             </a>
 
@@ -54,7 +61,8 @@ const contactKeywords = "contact aktu result portal, aktu api access, support ak
               <div class="w-10 h-10 rounded-lg bg-emerald-500/10 text-emerald-400 flex items-center justify-center font-bold text-lg">💬</div>
               <div>
                 <h4 class="text-xs font-semibold text-gray-500 uppercase tracking-wider">WhatsApp Community</h4>
-                <p class="text-sm font-semibold text-white light:text-ink group-hover:text-brand-blue transition-colors">Join Student Alerts Channel</p>
+                <p class="text-sm font-semibold text-white light:text-ink group-hover:text-brand-blue transition-colors">Join Student Alerts Group</p>
+                <p class="text-[11px] text-gray-500">Peer updates &amp; result announcements</p>
               </div>
             </a>
 
@@ -63,59 +71,71 @@ const contactKeywords = "contact aktu result portal, aktu api access, support ak
               <div class="w-10 h-10 rounded-lg bg-sky-500/10 text-sky-400 flex items-center justify-center font-bold text-lg">📢</div>
               <div>
                 <h4 class="text-xs font-semibold text-gray-500 uppercase tracking-wider">Telegram Channel</h4>
-                <p class="text-sm font-semibold text-white light:text-ink group-hover:text-brand-blue transition-colors">AKTU Result Community</p>
+                <p class="text-sm font-semibold text-white light:text-ink group-hover:text-brand-blue transition-colors">AKTU Student Community</p>
+                <p class="text-[11px] text-gray-500">Instant circulars and server status alerts</p>
               </div>
             </a>
           </div>
 
-          <!-- Extra details -->
+          <!-- Official University Channels Info Box -->
           <div class="p-5 border border-canvas-dark-border light:border-canvas-light-border rounded-xl bg-canvas-dark-surface/50 light:bg-canvas-light-surface/50 text-xs leading-relaxed space-y-2">
-            <h4 class="font-bold text-white light:text-ink">Looking for custom API integrations?</h4>
+            <h4 class="font-bold text-white light:text-ink flex items-center gap-1.5">
+              <span>🏛️</span> Official AKTU University Helpdesks
+            </h4>
             <p>
-              We provide enterprise-grade DOB search tunnels for college registrars, administrative dashboards, and developer systems. Bulk queries and dedicated bandwidth options are available upon request.
+              For formal university queries, fee discrepancies, or exam registration disputes, please reach out to the official university channels:
             </p>
+            <ul class="list-disc pl-5 space-y-1 text-gray-400 light:text-gray-600">
+              <li><strong>University Portal:</strong> <a href="https://aktu.ac.in" target="_blank" rel="noopener noreferrer" class="text-brand-blue hover:underline">aktu.ac.in</a></li>
+              <li><strong>ERP Student Grievance:</strong> <a href="https://erp.aktu.ac.in" target="_blank" rel="noopener noreferrer" class="text-brand-blue hover:underline">erp.aktu.ac.in</a></li>
+              <li><strong>Registrar Campus:</strong> Sec-11, Jankipuram Vistar, Lucknow, UP</li>
+            </ul>
           </div>
         </div>
 
         <!-- Column 2: Feedback Form -->
         <div class="bg-canvas-dark-tile light:bg-canvas-light-tile border border-canvas-dark-border light:border-canvas-light-border p-6 sm:p-8 rounded-2xl premium-shadow-dark light:premium-shadow-light">
-          <h2 class="text-lg font-bold text-white light:text-ink mb-6">Send a Message</h2>
+          <h2 class="text-lg font-bold text-white light:text-ink mb-2">Send a Message</h2>
+          <p class="text-xs text-gray-500 light:text-gray-500 mb-6">
+            Share feedback, report a tool error, or request a new student guide.
+          </p>
           
-          <form id="contact-form" class="space-y-5 text-left">
+          <form id="contact-form" class="space-y-4 text-left">
             <div>
-              <label for="contact-name" class="block text-xs font-semibold text-gray-400 light:text-gray-500 uppercase tracking-wider mb-2">Full Name</label>
+              <label for="contact-name" class="block text-xs font-semibold text-gray-400 light:text-gray-500 uppercase tracking-wider mb-2">Your Name</label>
               <input 
                 type="text" 
                 id="contact-name" 
                 name="name" 
                 required 
-                placeholder="Student / Developer Name" 
+                placeholder="Student Name" 
                 class="w-full px-4 py-2.5 bg-black/50 light:bg-white border border-canvas-dark-border light:border-canvas-light-border rounded-lg text-white light:text-ink text-sm focus:outline-none focus:border-brand-blue transition-all"
               />
             </div>
 
             <div>
-              <label for="contact-email" class="block text-xs font-semibold text-gray-400 light:text-gray-500 uppercase tracking-wider mb-2">Email Address</label>
+              <label for="contact-email" class="block text-xs font-semibold text-gray-400 light:text-gray-500 uppercase tracking-wider mb-2">Your Email</label>
               <input 
                 type="email" 
                 id="contact-email" 
                 name="email" 
                 required 
-                placeholder="contact@example.com" 
+                placeholder="student@example.com" 
                 class="w-full px-4 py-2.5 bg-black/50 light:bg-white border border-canvas-dark-border light:border-canvas-light-border rounded-lg text-white light:text-ink text-sm focus:outline-none focus:border-brand-blue transition-all"
               />
             </div>
 
             <div>
-              <label for="contact-subject" class="block text-xs font-semibold text-gray-400 light:text-gray-500 uppercase tracking-wider mb-2">Subject</label>
+              <label for="contact-subject" class="block text-xs font-semibold text-gray-400 light:text-gray-500 uppercase tracking-wider mb-2">Inquiry Category</label>
               <select 
                 id="contact-subject" 
                 name="subject" 
                 class="w-full px-4 py-2.5 bg-black/50 light:bg-white border border-canvas-dark-border light:border-canvas-light-border rounded-lg text-white light:text-ink text-sm focus:outline-none focus:border-brand-blue transition-all"
               >
-                <option value="api">Developer API Access</option>
-                <option value="support">General Support / DOB Issue</option>
-                <option value="custom">Custom Scraper Integration</option>
+                <option value="feedback">General Website Feedback</option>
+                <option value="bug">Report Broken Link or Tool Bug</option>
+                <option value="guide_suggestion">Suggest a Guide Topic</option>
+                <option value="privacy">Privacy &amp; Data Question</option>
                 <option value="other">Other Inquiry</option>
               </select>
             </div>
@@ -127,7 +147,7 @@ const contactKeywords = "contact aktu result portal, aktu api access, support ak
                 name="message" 
                 required 
                 rows="4" 
-                placeholder="Please write your query..." 
+                placeholder="Describe your question or feedback in detail..." 
                 class="w-full px-4 py-2.5 bg-black/50 light:bg-white border border-canvas-dark-border light:border-canvas-light-border rounded-lg text-white light:text-ink text-sm focus:outline-none focus:border-brand-blue transition-all resize-none"
               ></textarea>
             </div>
@@ -136,16 +156,16 @@ const contactKeywords = "contact aktu result portal, aktu api access, support ak
               type="submit" 
               class="w-full py-3 bg-brand-blue text-white hover:bg-brand-blue-hover text-sm font-semibold rounded-lg premium-shadow-dark btn-press-active transition-colors"
             >
-              Submit Inquiry
+              Send Message
             </button>
           </form>
 
           <!-- Mock Success Card -->
           <div id="contact-success" class="hidden py-8 text-center space-y-3 animate-fade-in">
             <div class="w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center mx-auto text-xl">✓</div>
-            <h3 class="text-sm font-semibold text-white light:text-ink">Message Sent!</h3>
+            <h3 class="text-sm font-semibold text-white light:text-ink">Message Received!</h3>
             <p class="text-xs text-gray-500 leading-relaxed max-w-xs mx-auto">
-              Thank you for contacting us. Our support team will respond to your query at {email} within 24 hours.
+              Thank you for reaching out. We review all feedback and will get back to your email if a follow-up is requested.
             </p>
             <button 
               id="contact-reset-btn" 
@@ -164,7 +184,6 @@ const contactKeywords = "contact aktu result portal, aktu api access, support ak
 
   <!-- Client-side script -->
   <script is:inline>
-    // Pre-select subject if passed in URL query parameter
     const urlParams = new URLSearchParams(window.location.search);
     const subjectParam = urlParams.get('subject');
     if (subjectParam) {
@@ -207,11 +226,11 @@ const contactKeywords = "contact aktu result portal, aktu api access, support ak
           form.classList.add("hidden");
           successCard.classList.remove("hidden");
         } else {
-          alert(data.error || "Could not able to submit now try later");
+          alert(data.error || "Could not submit right now, please try again later.");
         }
       } catch (err) {
         console.error("Submission error:", err);
-        alert("Could not able to submit now try later");
+        alert("Could not submit right now, please try again later.");
       } finally {
         submitBtn.disabled = false;
         submitBtn.textContent = originalBtnText;

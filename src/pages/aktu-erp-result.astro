@@ -136,7 +136,7 @@ const jsonLd = {
         </div>
 
         <!-- 1. Search Form -->
-        <form id="erp-search-form" class="space-y-4">
+        <form id="erp-search-form" class="space-y-4" action="javascript:void(0);" onsubmit="event.preventDefault();">
           <div>
             <label for="erp-roll-number" class="text-[10px] uppercase font-bold text-gray-400 light:text-gray-600 tracking-wider block mb-1">
               University Roll Number (User ID)
@@ -164,9 +164,6 @@ const jsonLd = {
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
             </svg>
           </button>
-
-          <!-- Direct Fast Gateway Mirror Link -->
-          <DirectLink variant="button" text="⚡ Fast Server 2 (Direct Mirror)" class="w-full" />
         </form>
 
         <!-- 2. Multi-Stage Background Process Loader -->
@@ -1182,11 +1179,11 @@ const jsonLd = {
         }
 
         // Enforce 5 fetches per day limit
-        if (typeof (window as any).checkDailyFetchLimit === "function") {
-          const limitInfo = (window as any).checkDailyFetchLimit();
+        if (typeof window.checkDailyFetchLimit === "function") {
+          const limitInfo = window.checkDailyFetchLimit();
           if (limitInfo && limitInfo.exceeded) {
-            if (typeof (window as any).showDailyLimitPopup === "function") {
-              (window as any).showDailyLimitPopup("You have exceeded the limit to fetch details kindly comeback later");
+            if (typeof window.showDailyLimitPopup === "function") {
+              window.showDailyLimitPopup("You have exceeded the limit to fetch details kindly comeback later");
             }
             return;
           }
@@ -1234,8 +1231,8 @@ const jsonLd = {
         }, 1500);
 
         // Network Request & Minimum Animation Delay
-        if (typeof (window as any).recordDailyFetchAttempt === "function") {
-          (window as any).recordDailyFetchAttempt();
+        if (typeof window.recordDailyFetchAttempt === "function") {
+          window.recordDailyFetchAttempt();
         }
 
         const fetchPromise = fetch('/api/search', {
@@ -1257,8 +1254,8 @@ const jsonLd = {
                 if (errData?.error) errorText = errData.error;
                 if (errData?.limitExceeded || errData?.rateLimited || res.status === 429) {
                   resetUI();
-                  if (typeof (window as any).showDailyLimitPopup === "function") {
-                    (window as any).showDailyLimitPopup(errData?.error || "You have exceeded the limit to fetch details kindly comeback later");
+                  if (typeof window.showDailyLimitPopup === "function") {
+                    window.showDailyLimitPopup(errData?.error || "You have exceeded the limit to fetch details kindly comeback later");
                   }
                   return;
                 }

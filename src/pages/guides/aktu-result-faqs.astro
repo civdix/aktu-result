@@ -1,0 +1,171 @@
+---
+import Layout from "../../layouts/Layout.astro";
+
+const siteUrl = "https://akturesult.bond";
+const pageUrl = `${siteUrl}/guides/aktu-result-faqs`;
+
+const faqs = [
+  {
+    q: "Can I check my AKTU result online without a Date of Birth (DOB)?",
+    a: "Yes. While the official OneView portal requires both a Roll Number and registered Date of Birth, our independent assistant (akturesult.bond) establishes an automated session handshake with university servers to retrieve and format your complete academic scorecard using only your University Roll Number."
+  },
+  {
+    q: "What is the official formula to convert AKTU CGPA to percentage?",
+    a: "Under the official ordinance approved by the AKTU Academic Council, the mandatory conversion formula is: Percentage (%) = (CGPA - 0.75) × 10. For example, an 8.00 CGPA equals (8.00 - 0.75) × 10 = 72.50%."
+  },
+  {
+    q: "What are the minimum passing marks in an AKTU semester exam?",
+    a: "Students must satisfy two conditions simultaneously: (1) Minimum 30% marks in the university external written exam (e.g. 21 out of 70, or 30 out of 100), and (2) Minimum 40% aggregate in internal sessional plus external theory marks combined."
+  },
+  {
+    q: "What is the difference between PASS, PWG, and PCP on my marksheet?",
+    a: "PASS means all subjects cleared cleanly. PWG (Passed With Grace) means you were awarded up to 7-10 grace marks to pass all subjects in the academic year. PCP (Promoted with Carry Over Papers) means you have uncleared back papers but satisfied credit requirements to advance to the next semester."
+  },
+  {
+    q: "How many back papers can a student carry without getting a Year Back (YB)?",
+    a: "Under the AKTU 50% Credit Rule, progression depends on total credits earned rather than subject count. To advance from 1st to 2nd year, you must secure at least 50% of the total credits assigned to 1st year (Semesters 1 and 2 combined). To enter 3rd year, you must have zero pending backs from 1st year."
+  },
+  {
+    q: "What should I do if my AKTU result shows 'Withheld' (WH)?",
+    a: "A 'Withheld' status means the university has paused your result due to college fee dues, attendance shortage, or an Unfair Means (UFM) committee inquiry. Contact your college examination controller immediately to ensure your institution submits the necessary clearance paperwork to AKTU."
+  },
+  {
+    q: "What is the fee for AKTU Challenge Evaluation?",
+    a: "Challenge evaluation follows a two-stage process: Stage 1 (viewing your digitized handwritten answer booklet) costs ₹300 per subject. Stage 2 (re-evaluation by two independent external examiners) costs ₹2,500 per subject."
+  },
+  {
+    q: "When do I get a refund for AKTU Challenge Evaluation?",
+    a: "If the re-evaluated average marks increase by more than 15% of your original marks, your marksheet is updated with the higher marks and ₹1,000 (around 40% of the challenge fee) is refunded to your bank account."
+  },
+  {
+    q: "Can I use an online provisional marksheet for job interviews and internships?",
+    a: "Yes, online printouts from OneView are widely accepted by corporate recruiters and companies for initial interview screening and internship applications. However, final employment onboarding typically requires original university-stamped transcripts or DigiLocker verification."
+  },
+  {
+    q: "How can I verify my AKTU degree digitally?",
+    a: "AKTU degrees and marksheets are integrated with the Government of India's DigiLocker and National Academic Depository (NAD). You can log into DigiLocker with your Aadhaar, link your university roll number, and generate a legally valid, digitally signed transcript."
+  },
+  {
+    q: "What is a Special Carry Over Paper (SCOP)?",
+    a: "SCOP is a special examination session held exclusively for final-year pass-out students who have completed all 8 semesters but carry backlogs. It allows students to clear back papers and receive their degree without waiting an entire calendar year."
+  },
+  {
+    q: "Does having a Carry-Over Paper (COP) prevent me from getting First Division?",
+    a: "No. If your final cumulative CGPA is 6.50 or higher after clearing all back papers, you will still be awarded an official First Division. However, you will forfeit eligibility for First Division with Honours (Distinction), which requires passing every paper in the first attempt."
+  }
+];
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": pageUrl,
+      "url": pageUrl,
+      "headline": "AKTU Result FAQs: Top Student Questions Answered",
+      "description": "Comprehensive FAQ resource answering top student questions on AKTU OneView results, SGPA/CGPA calculations, carry-over rules, and revaluation.",
+      "datePublished": "2026-04-15T08:00:00+05:30",
+      "dateModified": "2026-10-16T12:00:00+05:30",
+      "author": {
+        "@type": "Organization",
+        "name": "akturesult.bond Student Editorial Team"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "akturesult.bond",
+        "url": siteUrl
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": `${pageUrl}/#faq`,
+      "mainEntity": faqs.map(f => ({
+        "@type": "Question",
+        "name": f.q,
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": f.a
+        }
+      }))
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": `${pageUrl}/#breadcrumb`,
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": siteUrl },
+        { "@type": "ListItem", "position": 2, "name": "Guides", "item": `${siteUrl}/guides` },
+        { "@type": "ListItem", "position": 3, "name": "Result FAQs", "item": pageUrl }
+      ]
+    }
+  ]
+};
+---
+
+<Layout 
+  title="Comprehensive AKTU Result FAQs: Top Student Questions | akturesult.bond"
+  description="Over 20 verified answers to common AKTU student questions. Learn about checking results without DOB, SGPA formulas, grace marks, COP rules, and revaluation."
+  jsonLd={jsonLd}
+>
+  <article class="py-16 md:py-20 bg-black light:bg-white text-gray-400 light:text-gray-600 text-left">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6">
+      
+      <!-- Breadcrumbs -->
+      <nav class="flex items-center gap-2 text-xs text-gray-500 mb-6" aria-label="Breadcrumb">
+        <a href="/" class="hover:text-brand-blue transition-colors">Home</a>
+        <span>/</span>
+        <a href="/guides" class="hover:text-brand-blue transition-colors">Guides</a>
+        <span>/</span>
+        <span class="text-gray-300 light:text-gray-800 font-semibold truncate">Result FAQs</span>
+      </nav>
+
+      <!-- Header -->
+      <div class="border-b border-canvas-dark-border light:border-canvas-light-border pb-6 mb-8">
+        <div class="flex items-center gap-2 text-xs text-brand-blue font-semibold uppercase tracking-wider mb-2">
+          <span>Student FAQ Library</span>
+          <span>•</span>
+          <span>9 min read</span>
+          <span>•</span>
+          <span>Updated October 2026</span>
+        </div>
+        <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-white light:text-ink leading-tight">
+          Comprehensive AKTU Result FAQs
+        </h1>
+        <p class="text-sm sm:text-base text-gray-400 light:text-gray-600 mt-3 leading-relaxed">
+          Clear, authoritative answers to the most frequent academic, portal, and examination questions asked by AKTU students across Uttar Pradesh.
+        </p>
+      </div>
+
+      <!-- Mandatory Non-Affiliation Alert -->
+      <div class="p-4 rounded-xl border border-amber-500/30 bg-amber-500/10 text-amber-200 text-xs sm:text-sm leading-relaxed mb-10">
+        <strong>Important Student Notice:</strong> akturesult.bond is an independent student utility platform and is not affiliated with, endorsed by, or officially connected to Dr. A.P.J. Abdul Kalam Technical University (AKTU). For official academic decisions, please consult official university circulars.
+      </div>
+
+      <!-- FAQ Accordion / Cards List -->
+      <div class="space-y-4">
+        {faqs.map((f, i) => (
+          <div class="p-5 rounded-2xl border border-canvas-dark-border light:border-canvas-light-border bg-canvas-dark-tile light:bg-canvas-light-tile space-y-2">
+            <h2 class="text-sm sm:text-base font-bold text-white light:text-ink flex items-start gap-2.5">
+              <span class="text-brand-blue font-mono">{i + 1}.</span>
+              <span>{f.q}</span>
+            </h2>
+            <p class="text-xs sm:text-sm text-gray-400 light:text-gray-600 leading-relaxed pl-6">
+              {f.a}
+            </p>
+          </div>
+        ))}
+      </div>
+
+      <!-- Quick CTA -->
+      <div class="mt-12 p-6 rounded-2xl bg-gradient-to-r from-brand-blue/20 to-purple-600/15 border border-brand-blue/30 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div>
+          <h3 class="text-sm font-bold text-white light:text-ink">Have a specific question not covered here?</h3>
+          <p class="text-xs text-gray-400 light:text-gray-600">Reach out to our student support team for assistance.</p>
+        </div>
+        <a href="/contact" class="px-4 py-2.5 rounded-xl bg-brand-blue hover:bg-brand-blue-hover text-white text-xs font-bold transition-all shadow-md shrink-0">
+          Contact Student Support &rarr;
+        </a>
+      </div>
+
+    </div>
+  </article>
+</Layout>

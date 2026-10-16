@@ -51,10 +51,6 @@ const isActive = (path: string) => {
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5590747238948130"
      crossorigin="anonymous"></script>
     
-    <!-- Monetization & Ad Network Directives (Popunder & Social Bar) -->
-    <script is:inline data-cfasync="false" src="https://abscloud.org/1/6ea9e01a14d75a723cd19233af13d5ce"></script>
-    <script is:inline data-cfasync="false" src="https://bauval.org/14/2096306a82e07b81360dbce0609f6019"></script>
-    
     <!-- Favicon & Search Engine Icons (Google Search Console & Multi-Device Compliant) -->    
     <link rel="icon" href="/favicon.ico" sizes="48x48 32x32 16x16" />
     <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48x48.png" />
@@ -209,15 +205,14 @@ const isActive = (path: string) => {
           </div>
 
           <!-- Desktop Navigation Dock Links -->
-          <nav class="hidden md:flex items-center gap-1.5 bg-black/20 dark:bg-black/25 light:bg-gray-100/50 p-1 rounded-full border border-white/5 light:border-black/5">
+          <nav class="hidden md:flex items-center gap-1 bg-black/20 dark:bg-black/25 light:bg-gray-100/50 p-1 rounded-full border border-white/5 light:border-black/5">
             <a href="/" class={`px-3 py-1.5 rounded-full text-xs font-semibold transition-all duration-200 ${isActive('/') ? 'bg-brand-blue text-white premium-shadow-dark' : 'text-gray-400 hover:text-white light:text-gray-600 light:hover:text-ink'}`}>Home</a>
             <a href="/oneview" class={`px-3 py-1.5 rounded-full text-xs font-semibold transition-all duration-200 ${isActive('/oneview') ? 'bg-brand-blue text-white premium-shadow-dark' : 'text-gray-400 hover:text-white light:text-gray-600 light:hover:text-ink'}`}>OneView</a>
             <a href="/aktu-erp-result" class={`px-3 py-1.5 rounded-full text-xs font-semibold transition-all duration-200 ${isActive('/aktu-erp-result') ? 'bg-brand-blue text-white premium-shadow-dark' : 'text-gray-400 hover:text-white light:text-gray-600 light:hover:text-ink'}`}>ERP Result</a>
-            <a href="/assessment-simulator" class={`px-3 py-1.5 rounded-full text-xs font-semibold transition-all duration-200 ${isActive('/assessment-simulator') ? 'bg-brand-blue text-white premium-shadow-dark' : 'text-gray-400 hover:text-white light:text-gray-600 light:hover:text-ink'}`}>Exam Simulator</a>
+            <a href="/guides" class={`px-3 py-1.5 rounded-full text-xs font-semibold transition-all duration-200 ${isActive('/guides') ? 'bg-brand-blue text-white premium-shadow-dark' : 'text-gray-400 hover:text-white light:text-gray-600 light:hover:text-ink'}`}>Guides</a>
             <a href="/news" class={`px-3 py-1.5 rounded-full text-xs font-semibold transition-all duration-200 ${isActive('/news') ? 'bg-brand-blue text-white premium-shadow-dark' : 'text-gray-400 hover:text-white light:text-gray-600 light:hover:text-ink'}`}>News</a>
             <a href="/roll-number-finder" class={`px-3 py-1.5 rounded-full text-xs font-semibold transition-all duration-200 ${isActive('/roll-number-finder') ? 'bg-brand-blue text-white premium-shadow-dark' : 'text-gray-400 hover:text-white light:text-gray-600 light:hover:text-ink'}`}>Roll Finder</a>
             <a href="/colleges" class={`px-3 py-1.5 rounded-full text-xs font-semibold transition-all duration-200 ${isActive('/colleges') ? 'bg-brand-blue text-white premium-shadow-dark' : 'text-gray-400 hover:text-white light:text-gray-600 light:hover:text-ink'}`}>Colleges</a>
-            <a href="/download-app" class={`px-3 py-1.5 rounded-full text-xs font-semibold transition-all duration-200 ${isActive('/download-app') ? 'bg-brand-blue text-white premium-shadow-dark' : 'text-gray-400 hover:text-white light:text-gray-600 light:hover:text-ink'}`}>App</a>
             <a href="/faq" class={`px-3 py-1.5 rounded-full text-xs font-semibold transition-all duration-200 ${isActive('/faq') ? 'bg-brand-blue text-white premium-shadow-dark' : 'text-gray-400 hover:text-white light:text-gray-600 light:hover:text-ink'}`}>FAQ</a>
           </nav>
 
@@ -262,20 +257,16 @@ const isActive = (path: string) => {
             </a>
           </div>
           <a href="/" class={`text-sm font-semibold py-1.5 px-3 rounded-xl ${isActive('/') ? 'bg-brand-blue/10 text-brand-blue' : 'text-gray-400 light:text-gray-600'}`}>Home</a>
-          <a href="/aktu-result-without-date-of-birth" class={`text-sm font-semibold py-1.5 px-3 rounded-xl ${isActive('/aktu-result-without-date-of-birth') ? 'bg-brand-blue/10 text-brand-blue' : 'text-gray-400 light:text-gray-600'}`}>Without Date of Birth</a>
+          <a href="/guides" class={`text-sm font-semibold py-1.5 px-3 rounded-xl ${isActive('/guides') ? 'bg-brand-blue/10 text-brand-blue' : 'text-gray-400 light:text-gray-600'}`}>Student Guides Hub</a>
           <a href="/oneview" class={`text-sm font-semibold py-1.5 px-3 rounded-xl ${isActive('/oneview') ? 'bg-brand-blue/10 text-brand-blue' : 'text-gray-400 light:text-gray-600'}`}>OneView AKTU</a>
+          <a href="/aktu-result-without-date-of-birth" class={`text-sm font-semibold py-1.5 px-3 rounded-xl ${isActive('/aktu-result-without-date-of-birth') ? 'bg-brand-blue/10 text-brand-blue' : 'text-gray-400 light:text-gray-600'}`}>Without Date of Birth</a>
           <a href="/aktu-erp-result" class={`text-sm font-semibold py-1.5 px-3 rounded-xl ${isActive('/aktu-erp-result') ? 'bg-brand-blue/10 text-brand-blue' : 'text-gray-400 light:text-gray-600'}`}>AKTU ERP Result</a>
-          <a href="/assessment-simulator" class={`text-sm font-semibold py-1.5 px-3 rounded-xl flex items-center justify-between ${isActive('/assessment-simulator') ? 'bg-brand-blue/10 text-brand-blue' : 'text-gray-400 light:text-gray-600'}`}>
-            <span>Online Assessment Simulator</span>
-            <span class="text-[10px] bg-amber-500/20 text-amber-400 px-1.5 py-0.5 rounded font-mono font-medium">PROCTOR</span>
-          </a>
           <a href="/news" class={`text-sm font-semibold py-1.5 px-3 rounded-xl ${isActive('/news') ? 'bg-brand-blue/10 text-brand-blue' : 'text-gray-400 light:text-gray-600'}`}>News &amp; Circulars</a>
           <a href="/roll-number-finder" class={`text-sm font-semibold py-1.5 px-3 rounded-xl ${isActive('/roll-number-finder') ? 'bg-brand-blue/10 text-brand-blue' : 'text-gray-400 light:text-gray-600'}`}>Roll Finder</a>
           <a href="/colleges" class={`text-sm font-semibold py-1.5 px-3 rounded-xl ${isActive('/colleges') ? 'bg-brand-blue/10 text-brand-blue' : 'text-gray-400 light:text-gray-600'}`}>Colleges</a>
           <a href="/faq" class={`text-sm font-semibold py-1.5 px-3 rounded-xl ${isActive('/faq') ? 'bg-brand-blue/10 text-brand-blue' : 'text-gray-400 light:text-gray-600'}`}>FAQ</a>
-          <a href="/api" class={`text-sm font-semibold py-1.5 px-3 rounded-xl ${isActive('/api') ? 'bg-brand-blue/10 text-brand-blue' : 'text-gray-400 light:text-gray-600'}`}>Developer API</a>
-          <a href="/about" class={`text-sm font-semibold py-1.5 px-3 rounded-xl ${isActive('/about') ? 'bg-brand-blue/10 text-brand-blue' : 'text-gray-400 light:text-gray-600'}`}>About</a>
-          <a href="/contact" class={`text-sm font-semibold py-1.5 px-3 rounded-xl ${isActive('/contact') ? 'bg-brand-blue/10 text-brand-blue' : 'text-gray-400 light:text-gray-600'}`}>Contact</a>
+          <a href="/about" class={`text-sm font-semibold py-1.5 px-3 rounded-xl ${isActive('/about') ? 'bg-brand-blue/10 text-brand-blue' : 'text-gray-400 light:text-gray-600'}`}>About Us</a>
+          <a href="/contact" class={`text-sm font-semibold py-1.5 px-3 rounded-xl ${isActive('/contact') ? 'bg-brand-blue/10 text-brand-blue' : 'text-gray-400 light:text-gray-600'}`}>Contact Us</a>
         </div>
       </header>
     </div>
@@ -288,102 +279,125 @@ const isActive = (path: string) => {
     <!-- Sponsored Native Ad Widget -->
     <NativeBanner />
 
-    <!-- Vercel-style Footer -->
-    <footer class="border-t border-canvas-dark-border light:border-canvas-light-border bg-canvas-dark-surface light:bg-canvas-light-surface py-12 md:py-16 text-gray-500 light:text-gray-500 transition-colors duration-300">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="grid grid-cols-2 md:grid-cols-5 gap-8 md:gap-8">
+    <!-- Transparent, Independent Utility Footer -->
+    <footer class="border-t border-canvas-dark-border light:border-canvas-light-border bg-canvas-dark-surface light:bg-canvas-light-surface py-12 md:py-16 text-gray-400 light:text-gray-600 transition-colors duration-300 text-left">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+        
+        <!-- Top Independent Utility Notice Banner -->
+        <div class="p-4 sm:p-5 rounded-2xl bg-white/[0.02] light:bg-gray-100/80 border border-white/10 light:border-gray-200 text-xs leading-relaxed space-y-2">
+          <div class="flex items-center gap-2 font-bold text-white light:text-ink text-xs uppercase tracking-wider">
+            <span class="text-amber-400">⚖️</span>
+            <span>Independent Student Utility Notice &amp; Disclaimer</span>
+          </div>
+          <p class="text-gray-400 light:text-gray-600">
+            <strong>akturesult.bond</strong> is an independent student utility platform and is not affiliated with, endorsed by, or officially connected to Dr. A.P.J. Abdul Kalam Technical University (AKTU). This website does not claim to be an official university service. All university trademarks, logos, and acronyms ("AKTU", "UPTU", "OneView") are the property of their respective owners. For authoritative grade cards, transcripts, degree certificates, and examination registrations, students must consult official university resources at <a href="https://erp.aktu.ac.in" target="_blank" rel="noopener noreferrer" class="text-brand-blue underline font-semibold">erp.aktu.ac.in</a> and <a href="https://oneview.aktu.ac.in" target="_blank" rel="noopener noreferrer" class="text-brand-blue underline font-semibold">oneview.aktu.ac.in</a>.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-2 md:grid-cols-5 gap-8 md:gap-8 text-xs">
           
           <!-- Column 1: Results & Portals -->
           <div>
-            <h3 class="text-xs font-semibold text-white light:text-ink tracking-wider uppercase mb-4">Results & Portals</h3>
-            <ul class="space-y-3">
-              <li><a href="/" class="text-sm hover:text-white light:hover:text-ink transition-colors">AKTU Result Online</a></li>
-              <li><a href="/aktu-result-without-date-of-birth" class="text-sm hover:text-white light:hover:text-ink transition-colors">AKTU Result Without DOB</a></li>
-              <li><a href="/oneview" class="text-sm hover:text-white light:hover:text-ink transition-colors">OneView AKTU Portal</a></li>
-              <li><a href="/aktu-erp-result" class="text-sm hover:text-white light:hover:text-ink transition-colors">AKTU ERP Result</a></li>
-              <li><a href="/assessment-simulator" class="text-sm hover:text-white light:hover:text-ink transition-colors flex items-center gap-1.5"><span>Exam Assessment Simulator</span><span class="text-[9px] bg-brand-blue/20 text-brand-blue px-1 rounded font-semibold">TEST</span></a></li>
-              <li><a href="/news" class="text-sm hover:text-white light:hover:text-ink transition-colors">AKTU News &amp; Circulars</a></li>
-              <li><a href="/colleges" class="text-sm hover:text-white light:hover:text-ink transition-colors">AKTU Affiliated Colleges</a></li>
-              <li><a href="/aktu-affiliated-cse-college" class="text-sm hover:text-white light:hover:text-ink transition-colors">AKTU Affiliated CSE Colleges</a></li>
-              <li><a href="/roll-number-finder" class="text-sm hover:text-white light:hover:text-ink transition-colors">Roll Number Finder</a></li>
-              <li><a href="/faq" class="text-sm hover:text-white light:hover:text-ink transition-colors">AKTU Result FAQs</a></li>
-              <li>
-                <a href="https://araplhn.org/4/3de0f6a4e62809eda7933eb4915dac9c" target="_blank" rel="noopener noreferrer" class="text-sm text-amber-400 hover:text-amber-300 font-semibold flex items-center gap-1.5 transition-colors">
-                  <span>⚡ Fast Result Server 2 (Direct)</span>
-                </a>
-              </li>
+            <h3 class="text-xs font-bold text-white light:text-ink tracking-wider uppercase mb-3.5">Result Tools</h3>
+            <ul class="space-y-2.5">
+              <li><a href="/" class="hover:text-white light:hover:text-ink transition-colors">AKTU Result Search</a></li>
+              <li><a href="/oneview" class="hover:text-white light:hover:text-ink transition-colors">OneView Portal Assistant</a></li>
+              <li><a href="/aktu-result-without-date-of-birth" class="hover:text-white light:hover:text-ink transition-colors">Result Without DOB</a></li>
+              <li><a href="/aktu-erp-result" class="hover:text-white light:hover:text-ink transition-colors">ERP Result Overview</a></li>
+              <li><a href="/roll-number-finder" class="hover:text-white light:hover:text-ink transition-colors">Roll Number Finder</a></li>
+              <li><a href="/assessment-simulator" class="hover:text-white light:hover:text-ink transition-colors">Assessment Simulator</a></li>
+              <li><a href="/colleges" class="hover:text-white light:hover:text-ink transition-colors">Affiliated Colleges</a></li>
+              <li><a href="/news" class="hover:text-white light:hover:text-ink transition-colors">News &amp; Circulars</a></li>
             </ul>
           </div>
 
-          <!-- Column 2: Student Community & App -->
+          <!-- Column 2: Student Guides & Hub -->
           <div>
-            <h3 class="text-xs font-semibold text-emerald-400 tracking-wider uppercase mb-4 flex items-center gap-1.5">
-              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-              Live Community
-            </h3>
-            <ul class="space-y-3">
-              <li>
-                <a href="https://chat.whatsapp.com/LoCFMpg5yyHIkd3gcywACo" target="_blank" rel="noopener noreferrer" class="text-sm text-emerald-400 hover:text-emerald-300 font-medium flex items-center gap-1.5">
-                  <span>💬 WhatsApp Alerts</span>
-                </a>
-              </li>
-              <li>
-                <a href="https://t.me/+B1IibFFFftc0NjNl" target="_blank" rel="noopener noreferrer" class="text-sm text-sky-400 hover:text-sky-300 font-medium flex items-center gap-1.5">
-                  <span>📢 Telegram Group</span>
-                </a>
-              </li>
-              <li>
-                <a href="https://t.me/akturesultwithoutdobbot" target="_blank" rel="noopener noreferrer" class="text-sm hover:text-white light:hover:text-ink transition-colors flex items-center gap-1.5">
-                  <span>🤖 Result Telegram Bot</span>
-                </a>
-              </li>
-              <li>
-                <a href="/download-app" class="text-sm text-brand-blue hover:text-brand-blue-hover font-semibold flex items-center gap-1.5">
-                  <span>⚡ Download Android App</span>
-                </a>
-              </li>
-              <li><a href="/api" class="text-sm hover:text-white light:hover:text-ink transition-colors">Developer REST API</a></li>
+            <h3 class="text-xs font-bold text-brand-blue tracking-wider uppercase mb-3.5">Student Guides</h3>
+            <ul class="space-y-2.5">
+              <li><a href="/guides" class="font-bold text-brand-blue hover:underline">📚 Guides Hub Directory</a></li>
+              <li><a href="/guides/how-to-check-aktu-results" class="hover:text-white light:hover:text-ink transition-colors">How to Check Results</a></li>
+              <li><a href="/guides/how-to-check-aktu-oneview" class="hover:text-white light:hover:text-ink transition-colors">OneView Navigation</a></li>
+              <li><a href="/guides/aktu-result-not-showing" class="hover:text-white light:hover:text-ink transition-colors">Result Not Showing?</a></li>
+              <li><a href="/guides/aktu-sgpa-calculation" class="hover:text-white light:hover:text-ink transition-colors">SGPA Calculation Guide</a></li>
+              <li><a href="/guides/aktu-cgpa-calculation" class="hover:text-white light:hover:text-ink transition-colors">CGPA to Percentage</a></li>
+              <li><a href="/guides/aktu-marksheet-guide" class="hover:text-white light:hover:text-ink transition-colors">Marksheet Breakdown</a></li>
+              <li><a href="/guides/aktu-grading-system" class="hover:text-white light:hover:text-ink transition-colors">Grading Scale (CBCS)</a></li>
+              <li><a href="/guides/aktu-carry-over-cop-back-paper" class="hover:text-white light:hover:text-ink transition-colors">Carry-Over (COP) Rules</a></li>
+              <li><a href="/guides/aktu-revaluation-scrutiny-challenge" class="hover:text-white light:hover:text-ink transition-colors">Revaluation &amp; Scrutiny</a></li>
+              <li><a href="/faq" class="hover:text-white light:hover:text-ink transition-colors">Frequently Asked Questions</a></li>
             </ul>
           </div>
 
-          <!-- Column 3: Legal Documentation -->
+          <!-- Column 3: Official AKTU Links (External) -->
           <div>
-            <h3 class="text-xs font-semibold text-white light:text-ink tracking-wider uppercase mb-4">Legal</h3>
-            <ul class="space-y-3">
-              <li><a href="/privacy-policy" class="text-sm hover:text-white light:hover:text-ink transition-colors">Privacy Policy</a></li>
-              <li><a href="/terms" class="text-sm hover:text-white light:hover:text-ink transition-colors">Terms of Service</a></li>
-              <li><a href="/disclaimer" class="text-sm hover:text-white light:hover:text-ink transition-colors">Disclaimer</a></li>
+            <h3 class="text-xs font-bold text-white light:text-ink tracking-wider uppercase mb-3.5">Official Portals</h3>
+            <ul class="space-y-2.5">
+              <li>
+                <a href="https://aktu.ac.in" target="_blank" rel="noopener noreferrer" class="hover:text-white light:hover:text-ink transition-colors inline-flex items-center gap-1">
+                  <span>AKTU Main Website</span>
+                  <span class="text-[10px] opacity-60">↗</span>
+                </a>
+              </li>
+              <li>
+                <a href="https://oneview.aktu.ac.in" target="_blank" rel="noopener noreferrer" class="hover:text-white light:hover:text-ink transition-colors inline-flex items-center gap-1">
+                  <span>Official OneView</span>
+                  <span class="text-[10px] opacity-60">↗</span>
+                </a>
+              </li>
+              <li>
+                <a href="https://erp.aktu.ac.in" target="_blank" rel="noopener noreferrer" class="hover:text-white light:hover:text-ink transition-colors inline-flex items-center gap-1">
+                  <span>Official ERP Login</span>
+                  <span class="text-[10px] opacity-60">↗</span>
+                </a>
+              </li>
+              <li>
+                <a href="https://aktu.ac.in/circulars.html" target="_blank" rel="noopener noreferrer" class="hover:text-white light:hover:text-ink transition-colors inline-flex items-center gap-1">
+                  <span>Official Circulars</span>
+                  <span class="text-[10px] opacity-60">↗</span>
+                </a>
+              </li>
+              <li>
+                <a href="https://erp.aktu.ac.in/WebPages/StudentServices/frmStudentServiceDashboard.aspx" target="_blank" rel="noopener noreferrer" class="hover:text-white light:hover:text-ink transition-colors inline-flex items-center gap-1">
+                  <span>Student Services Portal</span>
+                  <span class="text-[10px] opacity-60">↗</span>
+                </a>
+              </li>
             </ul>
           </div>
 
-          <!-- Column 4: Developer Info -->
+          <!-- Column 4: Legal & Policies -->
           <div>
-            <h3 class="text-xs font-semibold text-white light:text-ink tracking-wider uppercase mb-4">Developer</h3>
-            <ul class="space-y-3">
-              <li><a href={authorWebsite} target="_blank" rel="noopener noreferrer" class="text-sm hover:text-white light:hover:text-ink transition-colors">{authorName}</a></li>
-              <li><a href="/about" class="text-sm hover:text-white light:hover:text-ink transition-colors">About Us</a></li>
-              <li><a href="/contact" class="text-sm hover:text-white light:hover:text-ink transition-colors">Get in Touch</a></li>
+            <h3 class="text-xs font-bold text-white light:text-ink tracking-wider uppercase mb-3.5">Legal &amp; Policy</h3>
+            <ul class="space-y-2.5">
+              <li><a href="/about" class="hover:text-white light:hover:text-ink transition-colors">About Us</a></li>
+              <li><a href="/contact" class="hover:text-white light:hover:text-ink transition-colors">Contact Us</a></li>
+              <li><a href="/privacy-policy" class="hover:text-white light:hover:text-ink transition-colors">Privacy Policy</a></li>
+              <li><a href="/terms" class="hover:text-white light:hover:text-ink transition-colors">Terms of Service</a></li>
+              <li><a href="/disclaimer" class="hover:text-white light:hover:text-ink transition-colors">Disclaimer</a></li>
+              <li><a href="/privacy-policy#advertising" class="hover:text-white light:hover:text-ink transition-colors">Advertising &amp; Cookie Disclosure</a></li>
             </ul>
           </div>
 
-          <!-- Column 5: Trust Metrics -->
-          <div class="col-span-2 md:col-span-1">
-            <h3 class="text-xs font-semibold text-white light:text-ink tracking-wider uppercase mb-4">Trust & Security</h3>
-            <p class="text-xs leading-relaxed text-gray-500 light:text-gray-600 mb-2">
-              All queries are compiled live without storing sensitive student records locally. Fully secure data transfers.
-            </p>
-            <div class="flex items-center gap-2">
-              <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-500/10 text-emerald-400">
-                SSL Secured
-              </span>
-              <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-brand-blue/10 text-brand-blue">
-                GDPR Compliant
-              </span>
+          <!-- Column 5: Community & Trust -->
+          <div class="col-span-2 md:col-span-1 space-y-4">
+            <div>
+              <h3 class="text-xs font-bold text-emerald-400 tracking-wider uppercase mb-3.5 flex items-center gap-1.5">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                <span>Student Community</span>
+              </h3>
+              <ul class="space-y-2.5">
+                <li><a href="https://chat.whatsapp.com/LoCFMpg5yyHIkd3gcywACo" target="_blank" rel="noopener noreferrer" class="text-emerald-400 hover:text-emerald-300 transition-colors">💬 WhatsApp Community</a></li>
+                <li><a href="https://t.me/+B1IibFFFftc0NjNl" target="_blank" rel="noopener noreferrer" class="text-sky-400 hover:text-sky-300 transition-colors">📢 Telegram Channel</a></li>
+                <li><a href="https://t.me/akturesultwithoutdobbot" target="_blank" rel="noopener noreferrer" class="hover:text-white light:hover:text-ink transition-colors">🤖 Telegram Assistant Bot</a></li>
+                <li><a href="/download-app" class="text-brand-blue hover:underline font-semibold">⚡ Companion Android App</a></li>
+                <li><a href="/api" class="hover:text-white light:hover:text-ink transition-colors">Developer REST API</a></li>
+              </ul>
             </div>
           </div>
         </div>
 
-        <div class="mt-12 pt-8 border-t border-canvas-dark-border light:border-canvas-light-border flex flex-col md:flex-row items-center justify-between gap-6 text-xs text-gray-600">
+        <div class="pt-8 border-t border-canvas-dark-border light:border-canvas-light-border flex flex-col md:flex-row items-center justify-between gap-6 text-xs text-gray-500">
           <div class="flex items-center gap-2.5">
             <img 
               src="/images/gemini-svg.webp" 
@@ -394,14 +408,14 @@ const isActive = (path: string) => {
               loading="lazy" 
               decoding="async"
             />
-            <span>&copy; {new Date().getFullYear()} AKTU Result Without DOB. All rights reserved.</span>
+            <span>&copy; {new Date().getFullYear()} akturesult.bond. An independent student utility.</span>
           </div>
-          
-          <!-- Explicit Third-Party Disclaimer Banner -->
-          <div class="max-w-md text-center md:text-right leading-relaxed text-[11px] text-gray-600 light:text-gray-500">
-            <strong>Disclaimer:</strong> This website is an independent search assistant. It is <strong>NOT</strong> affiliated with, authorized, or endorsed by Dr. A.P.J. Abdul Kalam Technical University (AKTU) or the Government of Uttar Pradesh.
+
+          <div class="text-xs text-gray-500 light:text-gray-500 text-center md:text-right">
+            <span>Built by student developers for the AKTU community • Educational assistance only</span>
           </div>
         </div>
+
       </div>
     </footer>
 
@@ -476,9 +490,9 @@ const isActive = (path: string) => {
       const rollModalContent = document.getElementById("roll-assistant-modal-content");
       const rollModalClose = document.getElementById("roll-assistant-modal-close");
       const rollModalBackdrop = document.getElementById("roll-assistant-modal-backdrop");
-      const assistantCollege = document.getElementById("assistant-college") as HTMLSelectElement;
+      const assistantCollege = document.getElementById("assistant-college");
       const manualCollegeContainer = document.getElementById("manual-college-container");
-      const manualCollegeInput = document.getElementById("assistant-manual-college") as HTMLInputElement;
+      const manualCollegeInput = document.getElementById("assistant-manual-college");
 
       let assistantDataLoaded = false;
       const loadAssistantOptions = async () => {
@@ -494,7 +508,7 @@ const isActive = (path: string) => {
 
           if (collegesData.success && collegesData.colleges && assistantCollege) {
             const otherOpt = assistantCollege.querySelector('option[value="other"]');
-            collegesData.colleges.sort((a: any, b: any) => a.name.localeCompare(b.name)).forEach((c: any) => {
+            collegesData.colleges.sort((a, b) => a.name.localeCompare(b.name)).forEach((c) => {
               const opt = document.createElement('option');
               opt.value = c.code;
               opt.textContent = `${c.name} (${c.code})`;
@@ -506,9 +520,9 @@ const isActive = (path: string) => {
             });
           }
 
-          const assistantBranch = document.getElementById("assistant-branch") as HTMLSelectElement;
+          const assistantBranch = document.getElementById("assistant-branch");
           if (branchesData.success && branchesData.branches && assistantBranch) {
-            branchesData.branches.sort((a: any, b: any) => a.name.localeCompare(b.name)).forEach((b: any) => {
+            branchesData.branches.sort((a, b) => a.name.localeCompare(b.name)).forEach((b) => {
               const opt = document.createElement('option');
               opt.value = b.code;
               opt.textContent = `${b.name} (${b.code})`;
@@ -520,8 +534,8 @@ const isActive = (path: string) => {
         }
       };
 
-      if ('requestIdleCallback' in window) {
-        (window as any).requestIdleCallback(loadAssistantOptions);
+      if ('requestIdleCallback' in window && typeof window.requestIdleCallback === 'function') {
+        window.requestIdleCallback(loadAssistantOptions);
       } else {
         setTimeout(loadAssistantOptions, 3000);
       }
@@ -544,7 +558,7 @@ const isActive = (path: string) => {
         document.body.classList.remove("overflow-hidden");
         setTimeout(() => {
           rollModal.classList.add("hidden");
-          const form = document.getElementById("roll-assistant-form") as HTMLFormElement;
+          const form = document.getElementById("roll-assistant-form");
           form?.reset();
           manualCollegeContainer?.classList.add("hidden");
           const output = document.getElementById("assistant-output");
@@ -566,29 +580,33 @@ const isActive = (path: string) => {
       });
 
       // Expose globally so index page trigger can open/close it
-      (window as any).openRollAssistantModal = openRollModal;
-      (window as any).closeRollAssistantModal = closeRollModal;
+      window.openRollAssistantModal = openRollModal;
+      window.closeRollAssistantModal = closeRollModal;
 
       // Handle Manual College input toggling
       assistantCollege?.addEventListener("change", () => {
         if (assistantCollege.value === "other") {
           manualCollegeContainer?.classList.remove("hidden");
-          manualCollegeInput.required = true;
-          manualCollegeInput.focus();
+          if (manualCollegeInput) {
+            manualCollegeInput.required = true;
+            manualCollegeInput.focus();
+          }
         } else {
           manualCollegeContainer?.classList.add("hidden");
-          manualCollegeInput.required = false;
-          manualCollegeInput.value = "";
+          if (manualCollegeInput) {
+            manualCollegeInput.required = false;
+            manualCollegeInput.value = "";
+          }
         }
       });
 
       // Cookie & Privacy Management: Cookies are automatically active (no popups, banners, or setting modals)
-      (window as any).hasCookieConsent = () => true;
-      (window as any).ensureCookieConsent = (callback: () => void) => {
+      window.hasCookieConsent = () => true;
+      window.ensureCookieConsent = (callback) => {
         if (typeof callback === "function") callback();
       };
-      (window as any).openCookieConsentModal = () => {};
-      (window as any).closeCookieConsentModal = () => {};
+      window.openCookieConsentModal = () => {};
+      window.closeCookieConsentModal = () => {};
     </script>
 
     <!-- Roll Number Assistant Modal -->

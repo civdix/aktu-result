@@ -1,0 +1,217 @@
+---
+import Layout from "../../layouts/Layout.astro";
+
+const siteUrl = "https://akturesult.bond";
+const pageUrl = `${siteUrl}/guides/how-to-check-aktu-oneview`;
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": pageUrl,
+      "url": pageUrl,
+      "headline": "Understanding AKTU OneView: Complete Student Marksheet Guide",
+      "description": "Comprehensive guide to navigating the AKTU OneView portal (oneview.aktu.ac.in), reading semester accordions, understanding COP updates, and interpreting grades.",
+      "datePublished": "2026-02-10T08:00:00+05:30",
+      "dateModified": "2026-10-16T12:00:00+05:30",
+      "author": {
+        "@type": "Organization",
+        "name": "akturesult.bond Student Editorial Team"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "akturesult.bond",
+        "url": siteUrl
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": `${pageUrl}/#breadcrumb`,
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": siteUrl },
+        { "@type": "ListItem", "position": 2, "name": "Guides", "item": `${siteUrl}/guides` },
+        { "@type": "ListItem", "position": 3, "name": "Understanding AKTU OneView", "item": pageUrl }
+      ]
+    }
+  ]
+};
+---
+
+<Layout 
+  title="Understanding AKTU OneView Portal & Marksheet Guide | akturesult.bond"
+  description="Master the AKTU OneView portal. Learn how to interpret semester accordions, theory and practical columns, carry-over (COP) updates, and verify marks online."
+  jsonLd={jsonLd}
+>
+  <article class="py-16 md:py-20 bg-black light:bg-white text-gray-400 light:text-gray-600 text-left">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6">
+      
+      <!-- Breadcrumbs -->
+      <nav class="flex items-center gap-2 text-xs text-gray-500 mb-6" aria-label="Breadcrumb">
+        <a href="/" class="hover:text-brand-blue transition-colors">Home</a>
+        <span>/</span>
+        <a href="/guides" class="hover:text-brand-blue transition-colors">Guides</a>
+        <span>/</span>
+        <span class="text-gray-300 light:text-gray-800 font-semibold truncate">Understanding AKTU OneView</span>
+      </nav>
+
+      <!-- Header -->
+      <div class="border-b border-canvas-dark-border light:border-canvas-light-border pb-6 mb-8">
+        <div class="flex items-center gap-2 text-xs text-brand-blue font-semibold uppercase tracking-wider mb-2">
+          <span>Portal Architecture</span>
+          <span>•</span>
+          <span>5 min read</span>
+          <span>•</span>
+          <span>Updated October 2026</span>
+        </div>
+        <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-white light:text-ink leading-tight">
+          Understanding AKTU OneView: Marksheet Layout &amp; Features
+        </h1>
+        <p class="text-sm sm:text-base text-gray-400 light:text-gray-600 mt-3 leading-relaxed">
+          AKTU OneView is the centralized digital academic transcript engine of Dr. A.P.J. Abdul Kalam Technical University. Learn how to read its semester tables, check carry-over marks, and interpret your academic journey.
+        </p>
+      </div>
+
+      <!-- Mandatory Non-Affiliation Alert -->
+      <div class="p-4 rounded-xl border border-amber-500/30 bg-amber-500/10 text-amber-200 text-xs sm:text-sm leading-relaxed mb-10">
+        <strong>Important Student Notice:</strong> akturesult.bond is an independent student utility platform and is not affiliated with, endorsed by, or officially connected to Dr. A.P.J. Abdul Kalam Technical University (AKTU). This informational article helps students understand how the official OneView platform organizes academic data.
+      </div>
+
+      <div class="space-y-10 text-xs sm:text-sm leading-relaxed">
+        
+        <!-- Section 1 -->
+        <section class="space-y-4">
+          <h2 class="text-xl sm:text-2xl font-bold text-white light:text-ink">
+            1. What is AKTU OneView?
+          </h2>
+          <p>
+            Introduced by Dr. A.P.J. Abdul Kalam Technical University, <strong>AKTU OneView</strong> (<code class="text-gray-300 light:text-gray-700">oneview.aktu.ac.in</code>) replaced old fragmented result links with a single persistent URL. Unlike conventional university portals that only display the most recently completed examination, OneView acts as a cumulative student ledger:
+          </p>
+          <ul class="list-disc pl-5 space-y-2">
+            <li><strong>Continuous Academic Record:</strong> From Semester 1 through graduation, all completed terms are archived in one unified document.</li>
+            <li><strong>Carry-Over History:</strong> When a student clears a back paper, the updated marks and clearing session are permanently recorded under that specific semester.</li>
+            <li><strong>Degree &amp; Division Summary:</strong> For final-year students, OneView computes final CGPA and awards Division (e.g., First Division with Distinction).</li>
+          </ul>
+        </section>
+
+        <!-- Section 2 -->
+        <section class="space-y-4">
+          <h2 class="text-xl sm:text-2xl font-bold text-white light:text-ink">
+            2. Header Profile: What Information is Stored?
+          </h2>
+          <p>
+            When a student profile loads on OneView, the upper container presents foundational identity information:
+          </p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div class="p-3.5 rounded-xl border border-canvas-dark-border light:border-canvas-light-border bg-canvas-dark-tile light:bg-canvas-light-tile">
+              <strong class="text-white light:text-ink block mb-1">Student &amp; Parent Name</strong>
+              <p class="text-xs text-gray-500">Spelled exactly as registered in university admissions and class 10th certificate records.</p>
+            </div>
+            <div class="p-3.5 rounded-xl border border-canvas-dark-border light:border-canvas-light-border bg-canvas-dark-tile light:bg-canvas-light-tile">
+              <strong class="text-white light:text-ink block mb-1">Roll &amp; Enrollment Number</strong>
+              <p class="text-xs text-gray-500">Roll number is your examination identifier; enrollment number is your permanent university registration ID.</p>
+            </div>
+            <div class="p-3.5 rounded-xl border border-canvas-dark-border light:border-canvas-light-border bg-canvas-dark-tile light:bg-canvas-light-tile">
+              <strong class="text-white light:text-ink block mb-1">Course &amp; Branch Code</strong>
+              <p class="text-xs text-gray-500">For example: <em>B.Tech in Computer Science and Engineering (010)</em> or <em>B.Pharm (050)</em>.</p>
+            </div>
+            <div class="p-3.5 rounded-xl border border-canvas-dark-border light:border-canvas-light-border bg-canvas-dark-tile light:bg-canvas-light-tile">
+              <strong class="text-white light:text-ink block mb-1">Institute Name &amp; Code</strong>
+              <p class="text-xs text-gray-500">The 3 or 4-digit code and legal name of your affiliated college.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- Section 3 -->
+        <section class="space-y-4">
+          <h2 class="text-xl sm:text-2xl font-bold text-white light:text-ink">
+            3. Decoding the Semester Accordion Grid
+          </h2>
+          <p>
+            Each completed term appears as an expandable accordion button (e.g., "Semester 1 [2022-23]", "Semester 2 [2022-23]"). Inside each accordion, subjects are cataloged into columns:
+          </p>
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-xs border border-canvas-dark-border light:border-canvas-light-border rounded-xl overflow-hidden">
+              <thead class="bg-canvas-dark-surface light:bg-canvas-light-surface text-white light:text-ink">
+                <tr>
+                  <th class="p-3 border-b border-canvas-dark-border">Column Name</th>
+                  <th class="p-3 border-b border-canvas-dark-border">Significance</th>
+                  <th class="p-3 border-b border-canvas-dark-border">Passing Requirement</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-canvas-dark-border/40 light:divide-canvas-light-border">
+                <tr>
+                  <td class="p-3 font-mono font-bold text-brand-blue">Subject Code &amp; Name</td>
+                  <td class="p-3">Official course code (e.g., KCS501 for Database Management Systems).</td>
+                  <td class="p-3 text-gray-400">Core credit requirement</td>
+                </tr>
+                <tr>
+                  <td class="p-3 font-mono font-bold text-brand-blue">Sessional (Internal)</td>
+                  <td class="p-3">Marks awarded by college faculty (Class Tests, Teacher Assessment, Attendance). Typically out of 30 or 50.</td>
+                  <td class="p-3 text-gray-400">Aggregated with theory</td>
+                </tr>
+                <tr>
+                  <td class="p-3 font-mono font-bold text-brand-blue">External (Theory/Lab)</td>
+                  <td class="p-3">Marks obtained in university end-semester written exams (typically out of 70 or 100).</td>
+                  <td class="p-3 text-emerald-400 font-semibold">Min 30% required in external</td>
+                </tr>
+                <tr>
+                  <td class="p-3 font-mono font-bold text-brand-blue">Total Marks &amp; Grade</td>
+                  <td class="p-3">Combined internal + external marks mapped to CBCS letter grades (O, A+, A, B+, B, C, P, F).</td>
+                  <td class="p-3 text-emerald-400 font-semibold">Min 40% aggregate total</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- Section 4 -->
+        <section class="space-y-4">
+          <h2 class="text-xl sm:text-2xl font-bold text-white light:text-ink">
+            4. How Carry-Over Papers (COP) Appear
+          </h2>
+          <p>
+            If you took a back paper (Carry Over Exam) in a subsequent semester, OneView does not create an isolated separate marksheet. Instead:
+          </p>
+          <ul class="list-disc pl-5 space-y-2">
+            <li>The back paper record is updated directly within the original semester accordion where the backlog originated.</li>
+            <li>A special COP session tag is appended (e.g., "Cleared in Session 2024-25 Odd").</li>
+            <li>The updated external score replaces the previous failing grade, and the semester SGPA is recalculated and updated.</li>
+          </ul>
+        </section>
+
+        <!-- Section 5 -->
+        <section class="space-y-4">
+          <h2 class="text-xl sm:text-2xl font-bold text-white light:text-ink">
+            5. Provisional Nature vs Official University Transcripts
+          </h2>
+          <p>
+            Students should bear in mind that the web display on <code class="text-gray-300 light:text-gray-700">oneview.aktu.ac.in</code> carries an explicit university disclaimer:
+          </p>
+          <div class="p-4 rounded-xl border border-canvas-dark-border light:border-canvas-light-border bg-canvas-dark-surface/50 light:bg-canvas-light-surface/50 space-y-2">
+            <h4 class="font-bold text-white light:text-ink">Official University Clause:</h4>
+            <p class="text-xs text-gray-400 light:text-gray-600 italic">
+              "Neither Dr. A.P.J. Abdul Kalam Technical University nor the software vendor is responsible for any inadvertent error that may have crept in the results being published on NET. The results published on net are for immediate information to the examinees. These cannot be treated as original mark sheets."
+            </p>
+          </div>
+          <p>
+            Original, sealed, and stamped marksheets are issued only by the university examination division through your affiliated college principal's office.
+          </p>
+        </section>
+
+      </div>
+
+      <!-- Quick CTA -->
+      <div class="mt-12 p-6 rounded-2xl bg-gradient-to-r from-brand-blue/20 to-purple-600/15 border border-brand-blue/30 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div>
+          <h3 class="text-sm font-bold text-white light:text-ink">Want to inspect your OneView marksheet right now?</h3>
+          <p class="text-xs text-gray-400 light:text-gray-600">Access your complete academic record without needing Date of Birth.</p>
+        </div>
+        <a href="/oneview" class="px-4 py-2.5 rounded-xl bg-brand-blue hover:bg-brand-blue-hover text-white text-xs font-bold transition-all shadow-md shrink-0">
+          Open OneView Helper &rarr;
+        </a>
+      </div>
+
+    </div>
+  </article>
+</Layout>

@@ -3,61 +3,154 @@ import Layout from "../layouts/Layout.astro";
 ---
 
 <Layout 
-  title="Privacy Policy | AKTU Result Without DOB"
-  description="Read the privacy guidelines outlining how we process student roll numbers and protect your personal credentials."
+  title="Privacy Policy & Cookie Disclosure | akturesult.bond"
+  description="Read our comprehensive privacy policy, cookie disclosures, and data protection practices for akturesult.bond student utility."
 >
   <section class="py-16 md:py-24 bg-black light:bg-white text-gray-400 light:text-gray-600 text-left">
-    <div class="max-w-3xl mx-auto px-4 sm:px-6">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6">
       
-      <h1 class="text-3xl font-extrabold tracking-tight text-white light:text-ink mb-8 border-b border-canvas-dark-border pb-4">
-        Privacy Policy
-      </h1>
+      <div class="border-b border-canvas-dark-border light:border-canvas-light-border pb-6 mb-8">
+        <span class="text-xs font-semibold uppercase tracking-wider text-brand-blue">Legal &amp; Compliance</span>
+        <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight text-white light:text-ink mt-2">
+          Privacy Policy &amp; Cookie Disclosure
+        </h1>
+        <p class="text-xs sm:text-sm text-gray-500 light:text-gray-500 mt-2">
+          Last Updated: October 2026 • Effective Date: Immediately upon publication
+        </p>
+      </div>
 
-      <div class="space-y-6 text-xs sm:text-sm leading-relaxed">
-        <p>
-          Last Updated: July 2026
-        </p>
-        <p>
-          At **AKTU Result Without DOB**, accessible via `akturesult.bond`, student privacy and security are paramount. This privacy document outlines the parameters of data processing.
-        </p>
+      <!-- Independent Notice Banner -->
+      <div class="p-4 rounded-xl border border-amber-500/30 bg-amber-500/10 text-amber-200 text-xs sm:text-sm leading-relaxed mb-8">
+        <strong>Important Student Notice:</strong> akturesult.bond is an independent student utility platform and is not affiliated with, endorsed by, or officially connected to Dr. A.P.J. Abdul Kalam Technical University (AKTU). This privacy policy describes how personal information and technical identifiers are handled when you use this website.
+      </div>
 
-        <h3 class="text-sm font-semibold text-white light:text-ink uppercase tracking-wider mt-6">1. Transient Data Processing</h3>
-        <p>
-          Our recovery engine operates exclusively as a **transient search helper**. When you input a Roll Number, the query is routed live to the university portal. We do **NOT** store student transcripts, grades, or query outputs in a persistent local database.
-        </p>
+      <div class="space-y-8 text-xs sm:text-sm leading-relaxed">
+        
+        <div>
+          <h2 class="text-base font-bold text-white light:text-ink uppercase tracking-wider mb-3">
+            1. Overview &amp; Commitment to Student Privacy
+          </h2>
+          <p>
+            At <strong>akturesult.bond</strong>, accessible via <code class="text-gray-300 light:text-gray-800">https://akturesult.bond/</code>, we respect the privacy of every student, developer, and visitor. We believe in minimal data footprint architecture: we only process technical information strictly necessary to provide provisional academic result lookups and maintain secure website operation.
+          </p>
+        </div>
 
-        <h3 class="text-sm font-semibold text-white light:text-ink uppercase tracking-wider mt-6">2. Salted IP Hashing</h3>
-        <p>
-          To prevent search abuse and protect our server resources, we track the request volumes of client IP addresses. To preserve user anonymity:
-        </p>
-        <ul class="list-disc pl-5 space-y-1.5">
-          <li>IP addresses are hashed immediately using the `SHA-256` protocol combined with a rotating salt.</li>
-          <li>We only store the anonymized hash signature rather than the raw IP sequence.</li>
-          <li>This signature is completely destroyed at the end of every 24-hour cycle.</li>
-        </ul>
+        <div>
+          <h2 class="text-base font-bold text-white light:text-ink uppercase tracking-wider mb-3">
+            2. Transient Processing of Academic Credentials
+          </h2>
+          <p class="mb-3">
+            When you enter an AKTU Roll Number into our search interface:
+          </p>
+          <ul class="list-disc pl-5 space-y-2">
+            <li><strong>No Permanent Storage of Records:</strong> Your Roll Number and any resulting academic marksheet data are processed in transient server memory solely to query and format information from the official university portal (<code class="text-gray-300 light:text-gray-800">oneview.aktu.ac.in</code>). We do <strong>not</strong> build permanent student profiling databases or harvest personal academic records.</li>
+            <li><strong>Client-Side Local Caching:</strong> For your convenience, your browser's local storage may optionally cache your last searched roll number so you do not need to retype it. This information never leaves your device and can be cleared at any time via your browser settings.</li>
+            <li><strong>Provisional Display Only:</strong> Information displayed via our search interface is provisional and retrieved directly from internet sources. Official, authoritative academic transcripts remain strictly with the university and your affiliated college.</li>
+          </ul>
+        </div>
 
-        <h3 class="text-sm font-semibold text-white light:text-ink uppercase tracking-wider mt-6">3. Third-Party Websites</h3>
-        <p>
-          This website provides external links to the official AKTU One View dashboard (`oneview.aktu.ac.in`). We have no control over, and assume no responsibility for, the content, cookies, privacy policies, or practices of university portals.
-        </p>
+        <div>
+          <h2 class="text-base font-bold text-white light:text-ink uppercase tracking-wider mb-3">
+            3. Rate Limiting &amp; Anonymized Technical Telemetry
+          </h2>
+          <p class="mb-3">
+            To prevent denial-of-service (DoS) attacks, automated bulk harvesting, and malicious server exploitation, we implement strict automated rate limiting:
+          </p>
+          <ul class="list-disc pl-5 space-y-2">
+            <li><strong>Salted Cryptographic Hashing:</strong> Incoming IP addresses are immediately hashed using the industry-standard <code class="text-gray-300 light:text-gray-800">SHA-256</code> algorithm combined with a cryptographically secure server-side salt. We never store raw, readable IP addresses in connection with student roll numbers.</li>
+            <li><strong>Automatic Cache Purging:</strong> The anonymized request volume counters are held in temporary memory and are automatically flushed and discarded on a rolling 24-hour schedule.</li>
+          </ul>
+        </div>
 
-        <h3 class="text-sm font-semibold text-white light:text-ink uppercase tracking-wider mt-6">4. Encryption</h3>
-        <p>
-          All communication between your browser and our lookup router is secured using industry-standard Secure Socket Layer (SSL/TLS) 256-bit encryption protocols.
-        </p>
+        <div id="advertising">
+          <h2 class="text-base font-bold text-white light:text-ink uppercase tracking-wider mb-3">
+            4. Cookies, Google AdSense &amp; Third-Party Advertising
+          </h2>
+          <p class="mb-3">
+            This website uses cookies and web beacons to enable core functionality, evaluate traffic patterns, and support the operational expenses of hosting free student utilities through non-intrusive advertising.
+          </p>
+          <div class="space-y-3">
+            <div class="p-4 rounded-xl border border-canvas-dark-border light:border-canvas-light-border bg-canvas-dark-surface/50 light:bg-canvas-light-surface/50">
+              <h3 class="font-semibold text-white light:text-ink mb-1">A. Essential &amp; Functional Cookies</h3>
+              <p class="text-xs text-gray-500 light:text-gray-600">
+                These cookies are necessary for basic web operations, such as remembering your preferred color theme (dark or light mode) and maintaining temporary session state during university server lookups.
+              </p>
+            </div>
 
-        <h3 class="text-sm font-semibold text-white light:text-ink uppercase tracking-wider mt-6">5. Cookies and Google AdSense Advertising</h3>
-        <p>
-          To manage student portal sessions, maintain state verification, and sustain our free lookup tools, we use cookies and local storage tokens:
-        </p>
-        <ul class="list-disc pl-5 space-y-1.5">
-          <li><strong>Strictly Necessary Cookies:</strong> We negotiate <code class="text-white light:text-ink">ASP.NET_SessionId</code> and ViewState validation tokens directly with university servers to retrieve genuine marksheets securely.</li>
-          <li><strong>Functional Storage:</strong> Remembers your light/dark mode preference and recent queries locally on your browser.</li>
-          <li><strong>Google AdSense &amp; Third-Party Cookies:</strong> Google AdSense uses cookies to serve contextual and personalized advertisements based on previous visits to this or other websites. These ads fund server operations and bandwidth.</li>
-        </ul>
-        <p class="mt-2">
-          By continuing to use our portal services, you acknowledge the use of essential session tokens and functional local storage required for secure marksheet queries and interface personalization.
-        </p>
+            <div class="p-4 rounded-xl border border-canvas-dark-border light:border-canvas-light-border bg-canvas-dark-surface/50 light:bg-canvas-light-surface/50">
+              <h3 class="font-semibold text-white light:text-ink mb-1">B. Google AdSense &amp; DoubleClick Cookies</h3>
+              <p class="text-xs text-gray-500 light:text-gray-600 mb-2">
+                Google, as a third-party vendor, uses cookies to serve ads on <strong>akturesult.bond</strong>. Google's use of advertising cookies (including the DoubleClick cookie) enables it and its partners to serve relevant advertisements to users based on their visits to this site and other websites across the Internet.
+              </p>
+              <ul class="list-disc pl-5 space-y-1 text-xs text-gray-500 light:text-gray-600">
+                <li>Third-party ad networks or vendors may also use cookies, JavaScript, or Web Beacons to measure ad effectiveness and personalize ad content.</li>
+                <li>Users may opt out of personalized advertising by visiting <a href="https://adssettings.google.com/" target="_blank" rel="noopener noreferrer" class="text-brand-blue hover:underline">Google Ads Settings</a>.</li>
+                <li>Alternatively, you can opt out of third-party vendor cookie usage for personalized advertising by visiting the <a href="https://optout.aboutads.info/" target="_blank" rel="noopener noreferrer" class="text-brand-blue hover:underline">AboutAds Opt-Out Portal</a> or the <a href="https://youronlinechoices.eu/" target="_blank" rel="noopener noreferrer" class="text-brand-blue hover:underline">Your Online Choices portal</a>.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <h2 class="text-base font-bold text-white light:text-ink uppercase tracking-wider mb-3">
+            5. Log Files &amp; Web Analytics
+          </h2>
+          <p>
+            Like virtually all modern web servers, akturesult.bond records standard server log files. The information inside the log files includes internet protocol (IP) hashes, browser type, Internet Service Provider (ISP), date/time stamps, referring/exit pages, and number of clicks. This data is not linked to any information that is personally identifiable and is used solely for analyzing trends, administering the site, tracking server health, and detecting malicious bot traffic.
+          </p>
+        </div>
+
+        <div>
+          <h2 class="text-base font-bold text-white light:text-ink uppercase tracking-wider mb-3">
+            6. External Links to University Portals &amp; Third-Party Sites
+          </h2>
+          <p>
+            Our website contains informational links to external resources, notably official AKTU portals such as <code class="text-gray-300 light:text-gray-800">https://oneview.aktu.ac.in</code> and <code class="text-gray-300 light:text-gray-800">https://erp.aktu.ac.in</code>. Please be aware that once you click an external link, you leave our site and are subject to the privacy policies and practices of that third party. We do not exercise editorial or administrative control over external websites.
+          </p>
+        </div>
+
+        <div>
+          <h2 class="text-base font-bold text-white light:text-ink uppercase tracking-wider mb-3">
+            7. Student Data Protection Rights (GDPR / CCPA / Global Standards)
+          </h2>
+          <p class="mb-3">
+            We support global privacy standards and student rights regarding data protection:
+          </p>
+          <ul class="list-disc pl-5 space-y-1.5">
+            <li><strong>Right to Know / Access:</strong> You have the right to request information on what categories of technical data we process.</li>
+            <li><strong>Right to Erasure / Deletion:</strong> Because our architecture does not retain personal student records or marksheet profiles, there is no permanent personal database to erase. Any local client data can be wiped immediately via browser cache clearing.</li>
+            <li><strong>Right to Opt Out:</strong> You have the right to refuse non-essential cookies via your browser's cookie settings or third-party opt-out mechanisms.</li>
+            <li><strong>Non-Discrimination:</strong> We do not restrict access to student utility tools based on whether you opt out of personalized advertising.</li>
+          </ul>
+        </div>
+
+        <div>
+          <h2 class="text-base font-bold text-white light:text-ink uppercase tracking-wider mb-3">
+            8. Children &amp; Minor Privacy Notice
+          </h2>
+          <p>
+            Our services are designed for adult university students and higher-education learners. We do not knowingly collect any personally identifiable information from children under the age of 13 (or under 16 in certain jurisdictions). If a parent or guardian believes that a child has submitted personal details to our site, please contact us immediately and we will take prompt remedial action.
+          </p>
+        </div>
+
+        <div>
+          <h2 class="text-base font-bold text-white light:text-ink uppercase tracking-wider mb-3">
+            9. Contact Information for Privacy Matters
+          </h2>
+          <p>
+            If you have questions, feedback, or concerns regarding this Privacy Policy, cookie disclosures, or our data practices, please contact our administrative team at:
+          </p>
+          <div class="mt-3 p-4 rounded-xl border border-canvas-dark-border light:border-canvas-light-border bg-canvas-dark-tile light:bg-canvas-light-tile flex items-center justify-between">
+            <div>
+              <p class="font-bold text-white light:text-ink">Privacy &amp; Compliance Team</p>
+              <p class="text-xs text-gray-500 light:text-gray-600">akturesult.bond Student Utility</p>
+            </div>
+            <a href="mailto:support@akturesult.bond" class="text-brand-blue font-semibold hover:underline text-xs sm:text-sm">
+              support@akturesult.bond
+            </a>
+          </div>
+        </div>
+
       </div>
 
     </div>

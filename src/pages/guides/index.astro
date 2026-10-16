@@ -1,0 +1,273 @@
+---
+import Layout from "../../layouts/Layout.astro";
+
+const siteUrl = "https://akturesult.bond";
+const pageUrl = `${siteUrl}/guides`;
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "CollectionPage",
+      "@id": pageUrl,
+      "url": pageUrl,
+      "name": "AKTU Student Knowledge Base & Result Guides Hub",
+      "description": "Comprehensive guides, calculators, and troubleshooting resources for AKTU OneView results, SGPA/CGPA calculations, carry-over rules, and revaluation.",
+      "isPartOf": {
+        "@type": "WebSite",
+        "@id": `${siteUrl}/#website`,
+        "name": "akturesult.bond",
+        "url": siteUrl
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": `${pageUrl}/#breadcrumb`,
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": siteUrl
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Guides",
+          "item": pageUrl
+        }
+      ]
+    }
+  ]
+};
+
+const guideCategories = [
+  {
+    title: "Result Portals & Lookups",
+    description: "Navigate official university gateways, understand OneView archives, and resolve portal connectivity issues.",
+    icon: "🖥️",
+    guides: [
+      {
+        title: "How to Check AKTU Results Online (Step-by-Step)",
+        slug: "how-to-check-aktu-results",
+        description: "A complete walkthrough of checking semester marks via OneView, AKTU ERP student login, and fast independent query tools.",
+        badge: "Essential",
+        readTime: "6 min read"
+      },
+      {
+        title: "Understanding AKTU OneView Portal",
+        slug: "how-to-check-aktu-oneview",
+        description: "An in-depth look at oneview.aktu.ac.in, how semester accordions work, internal vs external marks, and session history.",
+        badge: "Portal Guide",
+        readTime: "5 min read"
+      },
+      {
+        title: "What to Do When Your AKTU Result Is Not Showing",
+        slug: "aktu-result-not-showing",
+        description: "Demystifying Withheld (WH), Incomplete (INC), and missing marks. Step-by-step steps to resolve portal status flags.",
+        badge: "Troubleshooting",
+        readTime: "7 min read"
+      },
+      {
+        title: "How to Find Old AKTU Results & Archives",
+        slug: "how-to-find-old-aktu-result",
+        description: "Access past semester marksheets from 2015 onwards, retrieve forgotten roll numbers, and apply for duplicate transcripts.",
+        badge: "Archive",
+        readTime: "5 min read"
+      },
+      {
+        title: "AKTU Result Troubleshooting & Portal Fixes",
+        slug: "aktu-result-troubleshooting",
+        description: "Fixing ASP.NET ViewState token errors, endless captcha loops, 504 timeouts, and mobile cache conflicts.",
+        badge: "Technical",
+        readTime: "6 min read"
+      },
+      {
+        title: "Common AKTU Portal Error Codes & Solutions",
+        slug: "common-portal-errors",
+        description: "Direct index of error messages seen on oneview.aktu.ac.in and erp.aktu.ac.in with verified workarounds.",
+        badge: "Error Reference",
+        readTime: "5 min read"
+      }
+    ]
+  },
+  {
+    title: "Academic Metrics & Calculations",
+    description: "Formulas, worked examples, and conversion rules for AKTU Choice Based Credit System (CBCS).",
+    icon: "🧮",
+    guides: [
+      {
+        title: "AKTU SGPA Calculation: Formula & Worked Examples",
+        slug: "aktu-sgpa-calculation",
+        description: "Learn how Semester Grade Point Average is calculated using credit weightage, grade points, and non-credit courses.",
+        badge: "Formula",
+        readTime: "7 min read"
+      },
+      {
+        title: "AKTU CGPA Calculation & Percentage Conversion",
+        slug: "aktu-cgpa-calculation",
+        description: "Calculate cumulative CGPA across all semesters and use the official university formula ((CGPA - 0.75) × 10) for percentage.",
+        badge: "Official Formula",
+        readTime: "6 min read"
+      },
+      {
+        title: "AKTU Grading System & 10-Point CBCS Scale",
+        slug: "aktu-grading-system",
+        description: "Detailed breakdown of letter grades (O, A+, A, B+, B, C, P, F), minimum 30% external passing marks, and grace criteria.",
+        badge: "Academic Rule",
+        readTime: "6 min read"
+      },
+      {
+        title: "Anatomy of an AKTU Marksheet",
+        slug: "aktu-marksheet-guide",
+        description: "Understand every field on your grade card: PCP vs PWG, subject codes, credits, sessional marks, and division classifications.",
+        badge: "Student Guide",
+        readTime: "5 min read"
+      }
+    ]
+  },
+  {
+    title: "Regulations, Carry-Over & Redressal",
+    description: "University rules regarding back papers, challenge revaluation, scrutiny, and official document verification.",
+    icon: "⚖️",
+    guides: [
+      {
+        title: "AKTU Carry-Over (COP) & Back Paper Rules",
+        slug: "aktu-carry-over-cop-back-paper",
+        description: "Progression criteria, 50% credit threshold to avoid Year Back (YB), Special Carry Over Papers (SCOP), and examination fees.",
+        badge: "Examination",
+        readTime: "8 min read"
+      },
+      {
+        title: "AKTU Revaluation, Scrutiny & Challenge Evaluation",
+        slug: "aktu-revaluation-scrutiny-challenge",
+        description: "Stage 1 digital answer booklet inspection, Stage 2 challenge evaluation, fee structures, and the 20% refund rule.",
+        badge: "Re-check",
+        readTime: "7 min read"
+      },
+      {
+        title: "How to Verify AKTU Marksheets & Transcripts",
+        slug: "verify-aktu-marksheet-records",
+        description: "Provisional web copies vs official stamped transcripts. Verification steps for employers, WES, and DigiLocker integration.",
+        badge: "Verification",
+        readTime: "6 min read"
+      },
+      {
+        title: "Comprehensive AKTU Result FAQs",
+        slug: "aktu-result-faqs",
+        description: "Over 20 verified answers to the most common questions asked by students regarding examination records and marksheets.",
+        badge: "Q&A",
+        readTime: "9 min read"
+      }
+    ]
+  }
+];
+---
+
+<Layout 
+  title="AKTU Student Resource & Result Guides Hub | akturesult.bond"
+  description="Authoritative, step-by-step guides for AKTU students. Learn how to check results, calculate SGPA/CGPA, resolve portal errors, understand carry-over rules, and apply for challenge evaluation."
+  jsonLd={jsonLd}
+>
+  <!-- Hero Section -->
+  <section class="py-16 md:py-20 border-b border-canvas-dark-border light:border-canvas-light-border bg-gradient-to-b from-black via-canvas-dark-surface to-black light:from-white light:via-canvas-light-surface light:to-white text-center">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6">
+      <!-- Breadcrumb -->
+      <nav class="flex items-center justify-center gap-2 text-xs text-gray-500 mb-6" aria-label="Breadcrumb">
+        <a href="/" class="hover:text-brand-blue transition-colors">Home</a>
+        <span>/</span>
+        <span class="text-gray-300 light:text-gray-800 font-semibold">Guides</span>
+      </nav>
+
+      <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold text-brand-blue bg-brand-blue/10 border border-brand-blue/20 mb-4">
+        <span>📚</span> Student Knowledge Base • Updated October 2026
+      </span>
+      <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-white light:text-ink mb-4">
+        AKTU Student Resource &amp; Result Guides Hub
+      </h1>
+      <p class="text-sm sm:text-base text-gray-400 light:text-gray-600 max-w-2xl mx-auto leading-relaxed">
+        Comprehensive, student-first documentation explaining university grading systems, result troubleshooting, carry-over regulations, and portal navigation.
+      </p>
+
+      <!-- Independent Notice -->
+      <div class="mt-8 p-4 rounded-xl border border-amber-500/25 bg-amber-500/10 text-amber-200 text-xs sm:text-sm leading-relaxed max-w-2xl mx-auto text-left">
+        <strong>Independent Student Utility:</strong> akturesult.bond is an independent student utility platform and is not affiliated with, endorsed by, or officially connected to Dr. A.P.J. Abdul Kalam Technical University (AKTU). These guides are compiled from official circulars, student handbooks, and verified university ordinances.
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Directory Section -->
+  <section class="py-16 md:py-20 bg-black light:bg-white text-left">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
+      
+      {guideCategories.map((cat) => (
+        <div class="space-y-6">
+          <div class="border-b border-canvas-dark-border light:border-canvas-light-border pb-4">
+            <div class="flex items-center gap-2.5">
+              <span class="text-2xl">{cat.icon}</span>
+              <h2 class="text-xl sm:text-2xl font-bold text-white light:text-ink">
+                {cat.title}
+              </h2>
+            </div>
+            <p class="text-xs sm:text-sm text-gray-500 light:text-gray-600 mt-1">
+              {cat.description}
+            </p>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {cat.guides.map((g) => (
+              <a 
+                href={`/guides/${g.slug}`}
+                class="group p-5 rounded-2xl border border-canvas-dark-border light:border-canvas-light-border bg-canvas-dark-tile light:bg-canvas-light-tile hover:border-brand-blue/40 light:hover:border-brand-blue/40 transition-all duration-300 hover:translate-y-[-2px] flex flex-col justify-between shadow-sm"
+              >
+                <div class="space-y-3">
+                  <div class="flex items-center justify-between text-[11px]">
+                    <span class="px-2 py-0.5 rounded font-semibold bg-brand-blue/15 text-brand-blue border border-brand-blue/20">
+                      {g.badge}
+                    </span>
+                    <span class="text-gray-500 font-mono text-[10px]">
+                      {g.readTime}
+                    </span>
+                  </div>
+
+                  <h3 class="text-sm font-bold text-white light:text-ink group-hover:text-brand-blue transition-colors leading-snug">
+                    {g.title}
+                  </h3>
+
+                  <p class="text-xs text-gray-400 light:text-gray-600 leading-relaxed line-clamp-3">
+                    {g.description}
+                  </p>
+                </div>
+
+                <div class="pt-4 mt-4 border-t border-canvas-dark-border/40 light:border-canvas-light-border/60 flex items-center justify-between text-xs font-semibold text-brand-blue">
+                  <span>Read Full Guide</span>
+                  <span class="group-hover:translate-x-1 transition-transform">&rarr;</span>
+                </div>
+              </a>
+            ))}
+          </div>
+        </div>
+      ))}
+
+      <!-- Result Tool CTA Card -->
+      <div class="p-6 sm:p-8 rounded-2xl bg-gradient-to-r from-brand-blue/20 via-purple-600/15 to-canvas-dark-surface border border-brand-blue/30 text-center md:text-left flex flex-col md:flex-row items-center justify-between gap-6">
+        <div class="space-y-2 max-w-xl">
+          <span class="text-xs font-bold uppercase tracking-wider text-brand-blue">Core Utility</span>
+          <h3 class="text-xl sm:text-2xl font-extrabold text-white light:text-ink">
+            Need to Check Your Semester Marksheet Right Now?
+          </h3>
+          <p class="text-xs sm:text-sm text-gray-400 light:text-gray-600 leading-relaxed">
+            Use our fast, independent result retrieval tool to inspect your OneView grades, SGPA, and carry-over status using only your University Roll Number.
+          </p>
+        </div>
+        <a 
+          href="/" 
+          class="px-6 py-3.5 rounded-xl bg-brand-blue hover:bg-brand-blue-hover text-white text-xs sm:text-sm font-bold transition-all shadow-lg shadow-brand-blue/20 whitespace-nowrap"
+        >
+          ⚡ Go to Result Checker
+        </a>
+      </div>
+
+    </div>
+  </section>
+</Layout>

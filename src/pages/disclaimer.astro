@@ -1,44 +1,84 @@
 ---
 import Layout from "../layouts/Layout.astro";
+
+const pageTitle = "Disclaimer | AKTU Result Independent Student Utility";
+const pageDescription = "Legal disclaimer and non-affiliation notice for akturesult.bond, an independent student utility for Dr. A.P.J. Abdul Kalam Technical University students.";
 ---
 
 <Layout 
-  title="Disclaimer | AKTU Result Without DOB"
-  description="Read our legal disclaimer outlining our status as a third-party student utility separate from AKTU."
+  title={pageTitle}
+  description={pageDescription}
 >
   <section class="py-16 md:py-24 bg-black light:bg-white text-gray-400 light:text-gray-600 text-left">
-    <div class="max-w-3xl mx-auto px-4 sm:px-6">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 space-y-8">
       
-      <h1 class="text-3xl font-extrabold tracking-tight text-white light:text-ink mb-8 border-b border-canvas-dark-border pb-4">
-        Disclaimer
-      </h1>
+      <div class="border-b border-canvas-dark-border light:border-canvas-light-border pb-6 space-y-2">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-amber-500/30 bg-amber-500/10 text-xs font-semibold text-amber-400">
+          <span>⚖️ Official Legal Disclaimer</span>
+        </div>
+        <h1 class="text-3xl font-extrabold tracking-tight text-white light:text-ink">
+          Website Disclaimer &amp; Notice
+        </h1>
+        <p class="text-xs text-gray-500">
+          Last Updated: October 2026
+        </p>
+      </div>
+
+      <!-- Prominent Non-Affiliation Box -->
+      <div class="p-5 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-xs sm:text-sm text-gray-300 light:text-gray-700 leading-relaxed space-y-3">
+        <h2 class="text-sm font-bold text-amber-400 light:text-amber-800 uppercase tracking-wide">
+          1. Independent Student Utility (Non-Affiliation Notice)
+        </h2>
+        <p class="font-medium">
+          <strong>akturesult.bond is an independent student utility platform and is not affiliated with, endorsed by, or officially connected to Dr. A.P.J. Abdul Kalam Technical University (AKTU).</strong>
+        </p>
+        <p>
+          This website does not represent, act as an agent for, or claim authorization from Dr. A.P.J. Abdul Kalam Technical University, Lucknow, the Uttar Pradesh Board of Technical Education, or the Department of Technical Education, Government of Uttar Pradesh.
+        </p>
+      </div>
 
       <div class="space-y-6 text-xs sm:text-sm leading-relaxed">
+        <h2 class="text-base font-bold text-white light:text-ink border-l-4 border-brand-blue pl-3">
+          2. Informational &amp; Provisional Nature of Data
+        </h2>
         <p>
-          Last Updated: July 2026
+          All examination scores, subject grades, SGPA, CGPA, and marksheet summaries presented through this platform are compiled for <strong>provisional reference and informational assistance only</strong>.
         </p>
-        <p class="font-semibold text-white light:text-ink">
-          Please read this legal disclaimer carefully before utilizing our search assistance engine.
-        </p>
-
-        <h3 class="text-sm font-semibold text-white light:text-ink uppercase tracking-wider mt-6">1. Academic & Affiliation Status</h3>
         <p>
-          **AKTU Result Without DOB** is an independent, student-built search utility. This website is **not** affiliated with, authorized, sponsored, licensed, or in any way officially associated with Dr. A.P.J. Abdul Kalam Technical University (AKTU), the Government of Uttar Pradesh, or any of their subsidiary academic councils.
+          While the search engine queries public result gateways to display current information, internet-retrieved result cards do <strong>not</strong> constitute a legal, formal, or final university transcript. Official academic transcripts, marksheets, division certificates, and migration documents are issued exclusively by Dr. A.P.J. Abdul Kalam Technical University through your affiliated college registrar.
         </p>
 
-        <h3 class="text-sm font-semibold text-white light:text-ink uppercase tracking-wider mt-6">2. Third-Party Trademarks</h3>
+        <h2 class="text-base font-bold text-white light:text-ink border-l-4 border-brand-blue pl-3">
+          3. Trademarks &amp; Proprietary Rights
+        </h2>
         <p>
-          All product names, logos, brands, trademarks, and registered trademarks (including "AKTU", "AKTU One View", "UPTU") are the property of their respective owners. Use of these names on this website does not imply any affiliation, sponsorship, or endorsement.
+          All trademarks, service marks, trade names, acronyms, and product logos referenced on this website—including but not limited to <em>"AKTU"</em>, <em>"UPTU"</em>, <em>"OneView"</em>, and college names—are the exclusive intellectual property of their respective owners. Their mention on this platform is solely for descriptive, educational, and nominative identification purposes, and does not imply endorsement, sponsorship, or association.
         </p>
 
-        <h3 class="text-sm font-semibold text-white light:text-ink uppercase tracking-wider mt-6">3. Accuracy of Information</h3>
+        <h2 class="text-base font-bold text-white light:text-ink border-l-4 border-brand-blue pl-3">
+          4. Technical Limitations &amp; University Downtime
+        </h2>
         <p>
-          While we strive to ensure that the retrieved academic details are accurate and up-to-date by utilizing live validation handshakes with the university portal, we accept no responsibility for server errors, incorrect result outputs resulting from portal data anomalies, or network timeouts.
+          Because our utility interacts with external university gateways, we cannot guarantee continuous availability. During university result declaration cycles, official AKTU servers frequently experience server congestion, ViewState timeouts, maintenance blackouts, or database rollbacks. We accept no responsibility or liability for delays, temporary service interruptions, or server-side data discrepancies originating from official university servers.
         </p>
 
-        <h3 class="text-sm font-semibold text-white light:text-ink uppercase tracking-wider mt-6">4. Financial Responsibility</h3>
+        <h2 class="text-base font-bold text-white light:text-ink border-l-4 border-brand-blue pl-3">
+          5. Official Resolution Channels
+        </h2>
         <p>
-          Our search tool is free for student query lookups. The developer is not liable for any academic delays, losses, or inconveniences resulting from database lookups or temporary downtime of the search engine.
+          If your academic records show errors (such as missing internal marks, withheld results "WH", or unfair means flags "UFM"), our utility cannot alter or expedite these university records. Students must contact:
+        </p>
+        <ul class="list-disc pl-5 space-y-1.5">
+          <li>Their affiliated college Examination Controller or Dean of Academics.</li>
+          <li>The official AKTU student grievance cell at <a href="https://erp.aktu.ac.in" target="_blank" rel="noopener noreferrer" class="text-brand-blue underline font-semibold">erp.aktu.ac.in</a>.</li>
+          <li>The university campus registrar's office located at Sector-11, Jankipuram Vistar, Lucknow, Uttar Pradesh.</li>
+        </ul>
+
+        <h2 class="text-base font-bold text-white light:text-ink border-l-4 border-brand-blue pl-3">
+          6. Contact Inquiries
+        </h2>
+        <p>
+          For legal, operational, or editorial questions regarding this disclaimer, please reach out directly through our <a href="/contact" class="text-brand-blue underline font-semibold">Contact Page</a> or via email at <a href="mailto:support@akturesult.bond" class="text-brand-blue underline font-semibold">support@akturesult.bond</a>.
         </p>
       </div>
 

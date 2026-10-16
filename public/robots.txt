@@ -1,5 +1,7 @@
 User-agent: *
 Allow: /
+Disallow: /admin
+Disallow: /api/admin
 
 User-agent: Googlebot-Image
 Allow: /
@@ -25,10 +27,6 @@ Disallow: /
 
 User-agent: Bytespider
 Disallow: /
-
-# Agent & AI Content Directives (Informational metadata)
-# Content-Signal: ai-train=no, search=yes, ai-input=no
-# Agentmap: https://akturesult.bond/.well-known/ai-catalog.json
 
 # XML Sitemaps
 Sitemap: https://akturesult.bond/sitemap.xml

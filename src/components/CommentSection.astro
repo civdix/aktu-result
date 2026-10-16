@@ -291,11 +291,11 @@ function getAvatarGradient(name: string): string {
       const likeButtons = document.querySelectorAll('.like-comment-btn');
       likeButtons.forEach((btn) => {
         // Prevent duplicate bindings
-        if ((btn as any)._hasLikeListener) return;
-        (btn as any)._hasLikeListener = true;
+        if (btn._hasLikeListener) return;
+        btn._hasLikeListener = true;
 
         btn.addEventListener('click', async () => {
-          const commentId = (btn as HTMLElement).dataset.commentId;
+          const commentId = btn.dataset.commentId;
           if (!commentId) return;
 
           // Prevent multiple likes from same session
@@ -310,7 +310,7 @@ function getAvatarGradient(name: string): string {
             const current = parseInt(countSpan.textContent || '0', 10);
             countSpan.textContent = String(current + 1);
           }
-          (btn as HTMLElement).classList.add('text-cyan-400');
+          btn.classList.add('text-cyan-400');
 
           try {
             await fetch('/api/comments/like', {
