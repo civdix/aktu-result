@@ -223,9 +223,6 @@ const isActive = (path: string) => {
 
           <!-- Navigation Right Controls -->
           <div class="hidden md:flex items-center gap-2">
-            <!-- Sponsored Direct Fast Server Mirror -->
-            <DirectLink variant="badge" text="⚡ Server 2" />
-            
             <!-- Theme Toggle Button -->
             <button id="theme-toggle" aria-label="Toggle dark mode" class="w-8 h-8 flex items-center justify-center rounded-full border border-canvas-dark-border/60 light:border-canvas-light-border/60 hover:bg-gray-900 light:hover:bg-gray-100 transition-colors btn-press-active text-gray-400 hover:text-white light:text-gray-600 light:hover:text-ink">
               <!-- Sun Icon -->
@@ -264,8 +261,6 @@ const isActive = (path: string) => {
               <span>📢 Telegram Group</span>
             </a>
           </div>
-          <!-- Direct Link in Mobile Menu -->
-          <DirectLink variant="button" text="⚡ Fast Server 2 Mirror" class="w-full text-center" />
           <a href="/" class={`text-sm font-semibold py-1.5 px-3 rounded-xl ${isActive('/') ? 'bg-brand-blue/10 text-brand-blue' : 'text-gray-400 light:text-gray-600'}`}>Home</a>
           <a href="/aktu-result-without-date-of-birth" class={`text-sm font-semibold py-1.5 px-3 rounded-xl ${isActive('/aktu-result-without-date-of-birth') ? 'bg-brand-blue/10 text-brand-blue' : 'text-gray-400 light:text-gray-600'}`}>Without Date of Birth</a>
           <a href="/oneview" class={`text-sm font-semibold py-1.5 px-3 rounded-xl ${isActive('/oneview') ? 'bg-brand-blue/10 text-brand-blue' : 'text-gray-400 light:text-gray-600'}`}>OneView AKTU</a>
