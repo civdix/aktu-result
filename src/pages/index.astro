@@ -6,6 +6,7 @@ import { ArticleService } from "../services/article.service";
 import ResponsiveLeaderboard from "../components/ads/ResponsiveLeaderboard.astro";
 import Banner300x250 from "../components/ads/Banner300x250.astro";
 import DirectLink from "../components/ads/DirectLink.astro";
+import { redisService } from "../services/redis.service";
 
 const yearInfo = getAcademicYearInfo();
 
@@ -16,6 +17,23 @@ try {
   latestNews = newsRes.articles;
 } catch (e) {
   // fallback
+}
+
+// Fetch initial global lookups for SSR (instant display with 0ms delay, immune to ad blockers/CDN)
+let initialRecentSearches: any[] = [];
+try {
+  initialRecentSearches = await redisService.getRecentSearches(8);
+} catch (e) {
+  // fallback
+}
+
+function formatInitialTimeAgo(ts: number) {
+  if (!ts) return "Just now";
+  const diffSec = Math.floor((Date.now() - ts) / 1000);
+  if (diffSec < 60) return "Just now";
+  if (diffSec < 3600) return `${Math.floor(diffSec / 60)}m ago`;
+  if (diffSec < 86400) return `${Math.floor(diffSec / 3600)}h ago`;
+  return `${Math.floor(diffSec / 86400)}d ago`;
 }
 
 // JSON-LD Structured Data for index page with comprehensive @graph
@@ -749,7 +767,21 @@ const homeKeywords = `aktu result without date of birth, aktu result without dob
 
         <!-- Ticker / Pills Grid -->
         <div id="recent-searches-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 text-left">
-          <!-- Populated client-side via fetch('/api/recent-searches') -->
+          {initialRecentSearches.map((s) => (
+            <div class="p-3 rounded-xl border border-white/[0.08] light:border-black/[0.08] bg-white/[0.02] light:bg-black/[0.02] hover:border-brand-blue/30 hover:bg-brand-blue/5 transition-all duration-200">
+              <div class="flex items-center justify-between mb-1.5">
+                <span class="font-mono text-xs font-bold text-brand-blue tracking-tight" title="Masked Roll Number">{s.rollMasked || '240052****'}</span>
+                <span class={`px-1.5 py-0.5 rounded text-[9px] font-bold ${s.status === 'FAIL' ? 'bg-rose-500/10 text-rose-400 border border-rose-500/20' : 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20'}`}>
+                  {s.status || 'PASS'}
+                </span>
+              </div>
+              <div class="text-[11px] font-medium text-gray-300 light:text-gray-800 truncate">{s.nameMasked || 'AKTU Student'}</div>
+              <div class="flex items-center justify-between text-[10px] text-gray-500 light:text-gray-400 mt-1 min-w-0">
+                <span class="truncate pr-1" title={s.institute || 'AKTU'}>{s.course || 'B.Tech'} • <strong class="font-medium text-gray-300 light:text-gray-700">{s.institute || 'AKTU'}</strong></span>
+                <span class="font-mono text-[9px] shrink-0 text-gray-500">{formatInitialTimeAgo(s.timestamp)}</span>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
 

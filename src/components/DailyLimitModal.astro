@@ -207,30 +207,5 @@
         }
       });
     });
-
-    // Global fetch interceptor to catch 429 rate limit responses from /api/search
-    const originalFetch = window.fetch;
-    window.fetch = async function(...args) {
-      const url = typeof args[0] === 'string' ? args[0] : (args[0]?.url || '');
-      const response = await originalFetch.apply(this, args);
-
-      // If /api/search returns 429 (Too Many Requests / Exceeded Limit)
-      if (url.includes('/api/search') && response.status === 429) {
-        try {
-          const clone = response.clone();
-          const data = await clone.json();
-          if (data && (data.limitExceeded || data.rateLimited || data.error)) {
-            // Record limit exceeded locally so future clicks block immediately
-            const today = getTodayString();
-            localStorage.setItem(STORAGE_KEY, JSON.stringify({ date: today, count: MAX_DAILY_FETCHES }));
-            window.showDailyLimitPopup(data.error || 'You have exceeded the limit to fetch details kindly comeback later');
-          }
-        } catch (e) {
-          window.showDailyLimitPopup('You have exceeded the limit to fetch details kindly comeback later');
-        }
-      }
-
-      return response;
-    };
   })();
 </script>
