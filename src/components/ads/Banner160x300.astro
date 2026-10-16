@@ -1,4 +1,6 @@
 ---
+import AdSlot from "./AdSlot.astro";
+
 interface Props {
   class?: string;
   label?: boolean;
@@ -7,23 +9,10 @@ interface Props {
 const { class: className = "", label = true } = Astro.props;
 ---
 
-<div class={`ad-container-160x300 flex flex-col items-center justify-center text-center my-3 overflow-hidden ${className}`}>
-  {label && (
-    <div class="flex items-center justify-between w-[160px] max-w-full px-1 mb-1">
-      <span class="text-[8px] uppercase font-bold text-gray-400 light:text-gray-500 tracking-wider">Ad</span>
-      <span class="text-[8px] font-mono text-gray-500 uppercase">160x300</span>
-    </div>
-  )}
-  <div class="w-[160px] h-[300px] max-w-full flex items-center justify-center bg-white/[0.02] light:bg-gray-50 rounded-xl overflow-hidden border border-white/10 light:border-black/5 shadow-sm">
-    <script is:inline>
-      atOptions = {
-        'key' : 'ba6f67ae1ff64ca4e9401a5a5812d408',
-        'format' : 'iframe',
-        'height' : 300,
-        'width' : 160,
-        'params' : {}
-      };
-    </script>
-    <script is:inline type="text/javascript" src="https://bauval.org/22/ba6f67ae1ff64ca4e9401a5a5812d408"></script>
-  </div>
-</div>
+<AdSlot
+  adKey="ba6f67ae1ff64ca4e9401a5a5812d408"
+  width={160}
+  height={300}
+  class={className}
+  label={label}
+/>
