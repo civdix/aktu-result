@@ -1,4 +1,5 @@
 ---
+// NativeBanner.astro - Clean In-Place Google AdSense Responsive Unit
 interface Props {
   class?: string;
   title?: string;
@@ -8,7 +9,7 @@ const { class: className = "", title = "Sponsored Stories & Recommendations" } =
 ---
 
 <div class={`native-ad-section w-full max-w-5xl mx-auto px-4 my-8 ${className}`}>
-  <div class="p-4 sm:p-6 rounded-2xl border border-white/10 light:border-black/10 bg-white/[0.02] light:bg-white shadow-lg overflow-hidden">
+  <div class="p-4 sm:p-6 rounded-2xl border border-white/10 light:border-black/10 bg-white/[0.02] light:bg-white shadow-sm overflow-hidden text-center">
     <div class="flex items-center justify-between mb-3 border-b border-white/5 light:border-black/5 pb-2">
       <div class="flex items-center gap-2">
         <span class="w-2 h-2 rounded-full bg-brand-blue animate-pulse"></span>
@@ -17,10 +18,19 @@ const { class: className = "", title = "Sponsored Stories & Recommendations" } =
       <span class="text-[9px] font-mono px-2 py-0.5 rounded bg-white/5 light:bg-black/5 text-gray-400 uppercase tracking-widest">Sponsored</span>
     </div>
 
-    <!-- Adsterra Native Banner Container -->
-    <div class="native-ad-wrapper min-h-[140px] flex items-center justify-center">
-      <div id="container-6d6651b99939c795c8e0c1a4fdbf56db" class="w-full"></div>
-      <script is:inline async="async" data-cfasync="false" src="https://bauval.org/21/6d6651b99939c795c8e0c1a4fdbf56db"></script>
+    <!-- Clean In-Place AdSense Responsive Display Unit -->
+    <div class="native-ad-wrapper min-h-[100px] flex items-center justify-center">
+      <ins class="adsbygoogle"
+           style="display:block"
+           data-ad-client="ca-pub-5590747238948130"
+           data-ad-format="auto"
+           data-full-width-responsive="true"></ins>
     </div>
   </div>
 </div>
+
+<script is:inline>
+  try {
+    (window.adsbygoogle = window.adsbygoogle || []).push({});
+  } catch (e) {}
+</script>

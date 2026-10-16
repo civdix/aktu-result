@@ -554,45 +554,6 @@ const homeKeywords = `aktu result without date of birth, aktu result without dob
               </div>
             </div>
 
-            <!-- Pre-Result Ad Interstitial (Shown Before Revealing Result) -->
-            <div id="ad-interstitial-state" class="hidden space-y-4 animate-fade-in text-left">
-              <div class="flex items-center justify-between pb-3 border-b border-brand-blue/20 light:border-brand-blue/30">
-                <div class="flex items-center gap-2">
-                  <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 light:bg-emerald-600 animate-pulse"></span>
-                  <span class="text-xs font-bold text-emerald-400 light:text-emerald-700 uppercase tracking-wider">Academic Record Retrieved ✅</span>
-                </div>
-                <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-brand-blue/20 light:bg-blue-100 text-brand-blue border border-brand-blue/30 light:border-blue-200">
-                  Ready To View
-                </span>
-              </div>
-
-              <!-- Sponsored Advertisement Container (300x250) -->
-              <Banner300x250 />
-
-              <!-- Countdown & View Result CTA -->
-              <div class="space-y-3 pt-1">
-                <div class="flex items-center justify-between text-xs text-gray-400 light:text-gray-600">
-                  <span class="font-medium">Unlocking your academic scorecard...</span>
-                  <span class="font-bold text-brand-blue font-mono" id="ad-countdown-text">5s</span>
-                </div>
-                <!-- Animated Progress Bar -->
-                <div class="w-full bg-white/10 light:bg-gray-200 h-1.5 rounded-full overflow-hidden">
-                  <div id="ad-progress-bar" class="bg-gradient-to-r from-brand-blue to-emerald-400 h-full w-0 transition-all duration-1000 ease-linear"></div>
-                </div>
-
-                <button 
-                  type="button" 
-                  id="ad-view-result-btn" 
-                  class="w-full py-3.5 bg-gradient-to-r from-emerald-500 via-teal-500 to-brand-blue hover:from-emerald-600 hover:to-brand-blue-hover text-white text-xs sm:text-sm font-bold rounded-xl shadow-lg transition-all flex items-center justify-center gap-2 cursor-pointer btn-press-active"
-                >
-                  <span>⚡ View Full Marksheet Now</span>
-                  <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                  </svg>
-                </button>
-              </div>
-            </div>
-
             <!-- Result Box Card -->
             <div id="result-state" class="hidden space-y-5 animate-fade-in">
               <div class="p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-center">
@@ -1992,18 +1953,7 @@ const homeKeywords = `aktu result without date of birth, aktu result without dob
       loaderState.classList.add("hidden");
       resultState.classList.add("hidden");
       errorState.classList.add("hidden");
-      if (adCountdownInterval) {
-        clearInterval(adCountdownInterval);
-        adCountdownInterval = null;
-      }
-      if (dobTimerInterval) {
-        clearInterval(dobTimerInterval);
-        dobTimerInterval = null;
-      }
-      const adInterstitialState = document.getElementById("ad-interstitial-state");
-      if (adInterstitialState) {
-        adInterstitialState.classList.add("hidden");
-      }
+
       const verifiedProfileContainer = document.getElementById("search-verified-profile-container");
       if (verifiedProfileContainer) {
         verifiedProfileContainer.classList.add("hidden");
@@ -3095,35 +3045,8 @@ const homeKeywords = `aktu result without date of birth, aktu result without dob
       resultState.classList.remove("hidden");
     }
 
-    let adCountdownInterval = null;
-
-    function showAdInterstitialThen(data, onProceed) {
-      loaderState.classList.add("hidden");
-      searchForm.classList.add("hidden");
-      resultState.classList.add("hidden");
-      errorState.classList.add("hidden");
-      const mcc = document.getElementById("search-manual-captcha-container");
-      if (mcc) mcc.classList.add("hidden");
-      const vpc = document.getElementById("search-verified-profile-container");
-      if (vpc) vpc.classList.add("hidden");
-      const interstitial = document.getElementById("ad-interstitial-state");
-      if (interstitial) interstitial.classList.add("hidden");
-
-      // Instantly reveal results without artificial countdown delays
-      // Eliminates Google Intrusive Interstitial penalty & complies with AdSense policies
-      onProceed();
-      try {
-        (window.adsbygoogle = window.adsbygoogle || []).push({});
-      } catch (e) {}
-    }
-
-    let dobTimerInterval = null;
 
     function renderSearchVerifiedProfile(data) {
-      if (dobTimerInterval) {
-        clearInterval(dobTimerInterval);
-        dobTimerInterval = null;
-      }
 
       loaderState.classList.add("hidden");
       searchForm.classList.add("hidden");
@@ -3195,31 +3118,6 @@ const homeKeywords = `aktu result without date of birth, aktu result without dob
                 title="Copy Date of Birth"
               >
                 <span>📋 Copy DOB</span>
-              </button>
-            </div>
-          </div>
-
-          <!-- Timed Countdown Banner -->
-          <div class="p-3 bg-white/5 light:bg-gray-100/80 rounded-xl border border-white/10 light:border-gray-200 space-y-2">
-            <div class="flex items-center justify-between text-xs">
-              <span class="text-gray-300 light:text-gray-700 font-medium flex items-center gap-1.5">
-                <span>⏱️</span>
-                <span id="search-dob-timer-label">Showing DOB on screen for:</span>
-              </span>
-              <span id="search-dob-timer-seconds" class="font-mono font-bold text-brand-blue light:text-brand-blue-hover text-sm">15s</span>
-            </div>
-            <!-- Animated Countdown Bar -->
-            <div class="w-full bg-white/10 light:bg-gray-200 h-1.5 rounded-full overflow-hidden">
-              <div id="search-dob-timer-bar" class="h-full bg-gradient-to-r from-emerald-400 to-brand-blue rounded-full transition-all duration-1000 ease-linear" style="width: 100%;"></div>
-            </div>
-            <div class="flex items-center justify-between pt-1 text-[11px]">
-              <span class="text-[10px] text-gray-400 light:text-gray-500">Auto-launches Live Portal with your DOB</span>
-              <button 
-                type="button" 
-                id="search-dob-pause-timer-btn" 
-                class="text-[11px] text-brand-blue light:text-brand-blue-hover hover:underline font-semibold cursor-pointer"
-              >
-                ⏸️ Pause Timer
               </button>
             </div>
           </div>
@@ -3310,63 +3208,12 @@ const homeKeywords = `aktu result without date of birth, aktu result without dob
         }
       });
 
-      // Countdown Timer for DOB Display
-      if (resolvedDob) {
-        let dobSeconds = 15;
-        let isPaused = false;
-        const secondsEl = document.getElementById("search-dob-timer-seconds");
-        const barEl = document.getElementById("search-dob-timer-bar");
-        const labelEl = document.getElementById("search-dob-timer-label");
-        const pauseBtn = document.getElementById("search-dob-pause-timer-btn");
-
-        pauseBtn?.addEventListener("click", () => {
-          isPaused = !isPaused;
-          if (isPaused) {
-            pauseBtn.textContent = "▶️ Resume Timer";
-            if (labelEl) labelEl.textContent = "DOB Display Paused:";
-          } else {
-            pauseBtn.textContent = "⏸️ Pause Timer";
-            if (labelEl) labelEl.textContent = "Showing DOB on screen for:";
-          }
-        });
-
-        dobTimerInterval = setInterval(() => {
-          if (isPaused) return;
-          dobSeconds--;
-          if (secondsEl) secondsEl.textContent = `${dobSeconds}s`;
-          if (barEl) {
-            const pct = Math.max(0, Math.round((dobSeconds / 15) * 100));
-            barEl.style.width = `${pct}%`;
-          }
-          if (dobSeconds <= 0) {
-            clearInterval(dobTimerInterval);
-            dobTimerInterval = null;
-            if (labelEl) labelEl.textContent = "Live Portal Ready:";
-            if (secondsEl) secondsEl.textContent = "Launched";
-            if (barEl) barEl.style.width = "0%";
-            if (pauseBtn) pauseBtn.classList.add("hidden");
-            // Auto open live portal
-            if (typeof window.openOneViewModal === "function") {
-              window.openOneViewModal(rollNumber, resolvedDob);
-            }
-          }
-        }, 1000);
-      }
-
-      // Live Portal Button
+      // Live Portal Button (Voluntary user click - no auto redirect)
       document.getElementById("search-open-oneview-modal-btn")?.addEventListener("click", () => {
-        if (dobTimerInterval) {
-          clearInterval(dobTimerInterval);
-          dobTimerInterval = null;
-        }
         if (resolvedDob) {
           navigator.clipboard.writeText(resolvedDob).catch(() => {});
         }
-        if (typeof window.openOneViewModal === "function") {
-          window.openOneViewModal(rollNumber, resolvedDob);
-        } else {
-          window.open("https://oneview.aktu.ac.in/WebPages/aktu/OneView.aspx", "_blank");
-        }
+        window.open("https://oneview.aktu.ac.in/WebPages/aktu/OneView.aspx", "_blank");
       });
 
       document.getElementById("search-check-another-btn")?.addEventListener("click", resetUI);
@@ -3510,13 +3357,11 @@ const homeKeywords = `aktu result without date of birth, aktu result without dob
           });
           const vData = await vRes.json();
           if (vData && vData.success) {
-            showAdInterstitialThen(vData, () => {
-              if (vData.semesters && vData.semesters.length > 0) {
-                displayFullResult(vData);
-              } else {
-                renderSearchVerifiedProfile(vData);
-              }
-            });
+            if (vData.semesters && vData.semesters.length > 0) {
+              displayFullResult(vData);
+            } else {
+              renderSearchVerifiedProfile(vData);
+            }
           } else if (vData && vData.needsManualCaptcha && vData.captchaImage) {
             currentSession = vData.session || currentSession;
             updateModal(vData.captchaImage, vData.error || "Incorrect code. Please enter the new characters shown.");
@@ -3650,13 +3495,11 @@ const homeKeywords = `aktu result without date of birth, aktu result without dob
               if (resData.totalSearches) {
                 updateCounterUI(resData.totalSearches);
               }
-              showAdInterstitialThen(resData, () => {
-                if (resData.semesters && resData.semesters.length > 0) {
-                  displayFullResult(resData);
-                } else {
-                  renderSearchVerifiedProfile(resData);
-                }
-              });
+              if (resData.semesters && resData.semesters.length > 0) {
+                displayFullResult(resData);
+              } else {
+                renderSearchVerifiedProfile(resData);
+              }
             } else if (resData && (resData.limitExceeded || resData.rateLimited || res.status === 429)) {
               resetUI();
               if (typeof window.showDailyLimitPopup === "function") {

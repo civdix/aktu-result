@@ -189,43 +189,7 @@ const jsonLd = {
         <!-- 3. Manual Security Verification Code Container -->
         <div id="erp-manual-captcha-container" class="hidden space-y-4"></div>
 
-        <!-- Pre-Result AdSense Interstitial Modal -->
-        <div id="erp-ad-interstitial-state" class="hidden space-y-4 animate-fade-in text-center">
-          <div class="p-3 sm:p-4 rounded-xl border border-purple-500/30 light:border-purple-200 bg-purple-500/10 light:bg-purple-50 space-y-2">
-            <div class="flex items-center justify-center gap-2 text-purple-400 light:text-purple-700 text-xs font-bold">
-              <span class="w-2 h-2 rounded-full bg-purple-400 animate-ping"></span>
-              <span>AKTU ERP Marksheet Ready</span>
-            </div>
-            <p class="text-xs text-gray-300 light:text-gray-700">
-              Your semester grades & ERP records have been verified. Displaying marksheet in a few seconds...
-            </p>
-          </div>
 
-          <!-- Interstitial Ad Unit (300x250) -->
-          <Banner300x250 />
-
-          <div class="space-y-3 pt-1">
-            <div class="flex items-center justify-between text-xs text-gray-400 light:text-gray-600">
-              <span class="font-medium">Loading ERP marksheet...</span>
-              <span class="font-bold text-brand-blue font-mono" id="erp-ad-countdown-text">5s</span>
-            </div>
-            <!-- Animated Progress Bar -->
-            <div class="w-full bg-white/10 light:bg-gray-200 h-1.5 rounded-full overflow-hidden">
-              <div id="erp-ad-progress-bar" class="bg-gradient-to-r from-purple-500 via-brand-blue to-emerald-400 h-full w-0 transition-all duration-1000 ease-linear"></div>
-            </div>
-
-            <button 
-              type="button" 
-              id="erp-ad-view-result-btn" 
-              class="w-full py-3.5 bg-gradient-to-r from-purple-600 via-brand-blue to-emerald-500 hover:from-purple-700 hover:to-brand-blue-hover text-white text-xs sm:text-sm font-bold rounded-xl shadow-lg transition-all flex items-center justify-center gap-2 cursor-pointer"
-            >
-              <span>⚡ View ERP Marksheet Now</span>
-              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-              </svg>
-            </button>
-          </div>
-        </div>
 
         <!-- 4. Verified Academic Profile Container -->
         <div id="erp-verified-profile-container" class="hidden space-y-4"></div>
@@ -522,8 +486,6 @@ const jsonLd = {
         }).join('');
       }
 
-      let erpDobTimerInterval = null;
-
       // Reset to search form
       function resetUI() {
         if (cardWrapper) {
@@ -532,16 +494,6 @@ const jsonLd = {
         }
         searchForm?.classList.remove("hidden");
         loaderState?.classList.add("hidden");
-        if (adCountdownInterval) {
-          clearInterval(adCountdownInterval);
-          adCountdownInterval = null;
-        }
-        if (erpDobTimerInterval) {
-          clearInterval(erpDobTimerInterval);
-          erpDobTimerInterval = null;
-        }
-        const interstitial = document.getElementById("erp-ad-interstitial-state");
-        if (interstitial) interstitial.classList.add("hidden");
         if (captchaContainer) {
           captchaContainer.classList.add("hidden");
           captchaContainer.innerHTML = "";
@@ -565,39 +517,8 @@ const jsonLd = {
 
       retryBtn?.addEventListener("click", resetUI);
 
-      let adCountdownInterval = null;
-
-      // Result Presentation Handler (Instantly renders result without intrusive interstitial delay)
-      function showErpAdInterstitialThen(data, onProceed) {
-        loaderState?.classList.add("hidden");
-        searchForm?.classList.add("hidden");
-        errorState?.classList.add("hidden");
-        if (captchaContainer) {
-          captchaContainer.classList.add("hidden");
-          captchaContainer.innerHTML = "";
-        }
-        if (profileContainer) {
-          profileContainer.classList.add("hidden");
-          profileContainer.innerHTML = "";
-        }
-
-        const interstitial = document.getElementById("erp-ad-interstitial-state");
-        if (interstitial) interstitial.classList.add("hidden");
-
-        // Instantly reveal results without artificial countdown delays
-        // Eliminates Google Intrusive Interstitial penalty & complies with AdSense policies
-        onProceed();
-        try {
-          (window.adsbygoogle = window.adsbygoogle || []).push({});
-        } catch (e) {}
-      }
-
       // Render Verified Academic Profile & Complete Marksheet
       function renderErpVerifiedProfile(data) {
-        if (erpDobTimerInterval) {
-          clearInterval(erpDobTimerInterval);
-          erpDobTimerInterval = null;
-        }
 
         loaderState?.classList.add("hidden");
         searchForm?.classList.add("hidden");
@@ -841,30 +762,6 @@ const jsonLd = {
                 </div>
               </div>
 
-              <!-- Timed Countdown Banner -->
-              <div class="p-3 bg-white/5 light:bg-gray-100/80 rounded-xl border border-white/10 light:border-gray-200 space-y-2">
-                <div class="flex items-center justify-between text-xs">
-                  <span class="text-gray-300 light:text-gray-700 font-medium flex items-center gap-1.5">
-                    <span>⏱️</span>
-                    <span id="erp-dob-timer-label">Showing DOB on screen for:</span>
-                  </span>
-                  <span id="erp-dob-timer-seconds" class="font-mono font-bold text-brand-blue light:text-brand-blue-hover text-sm">15s</span>
-                </div>
-                <!-- Animated Countdown Bar -->
-                <div class="w-full bg-white/10 light:bg-gray-200 h-1.5 rounded-full overflow-hidden">
-                  <div id="erp-dob-timer-bar" class="h-full bg-gradient-to-r from-purple-400 to-brand-blue rounded-full transition-all duration-1000 ease-linear" style="width: 100%;"></div>
-                </div>
-                <div class="flex items-center justify-between pt-1 text-[11px]">
-                  <span class="text-[10px] text-gray-400 light:text-gray-500">Auto-launches Live Portal with your DOB</span>
-                  <button 
-                    type="button" 
-                    id="erp-dob-pause-timer-btn" 
-                    class="text-[11px] text-brand-blue light:text-brand-blue-hover hover:underline font-semibold cursor-pointer"
-                  >
-                    ⏸️ Pause Timer
-                  </button>
-                </div>
-              </div>
             </div>
           ` : '';
 
@@ -963,53 +860,7 @@ const jsonLd = {
             }
           });
 
-          // Countdown Timer for DOB Display on erp page
-          if (resolvedDob) {
-            let dobSeconds = 15;
-            let isPaused = false;
-            const secondsEl = document.getElementById("erp-dob-timer-seconds");
-            const barEl = document.getElementById("erp-dob-timer-bar");
-            const labelEl = document.getElementById("erp-dob-timer-label");
-            const pauseBtn = document.getElementById("erp-dob-pause-timer-btn");
-
-            pauseBtn?.addEventListener("click", () => {
-              isPaused = !isPaused;
-              if (isPaused) {
-                pauseBtn.textContent = "▶️ Resume Timer";
-                if (labelEl) labelEl.textContent = "DOB Display Paused:";
-              } else {
-                pauseBtn.textContent = "⏸️ Pause Timer";
-                if (labelEl) labelEl.textContent = "Showing DOB on screen for:";
-              }
-            });
-
-            erpDobTimerInterval = setInterval(() => {
-              if (isPaused) return;
-              dobSeconds--;
-              if (secondsEl) secondsEl.textContent = `${dobSeconds}s`;
-              if (barEl) {
-                const pct = Math.max(0, Math.round((dobSeconds / 15) * 100));
-                barEl.style.width = `${pct}%`;
-              }
-              if (dobSeconds <= 0) {
-                clearInterval(erpDobTimerInterval);
-                erpDobTimerInterval = null;
-                if (labelEl) labelEl.textContent = "Live Portal Ready:";
-                if (secondsEl) secondsEl.textContent = "Launched";
-                if (barEl) barEl.style.width = "0%";
-                if (pauseBtn) pauseBtn.classList.add("hidden");
-                if (typeof window.openOneViewModal === "function") {
-                  window.openOneViewModal(rollNumber, resolvedDob);
-                }
-              }
-            }, 1000);
-          }
-
           document.getElementById("erp-open-oneview-btn")?.addEventListener("click", () => {
-            if (erpDobTimerInterval) {
-              clearInterval(erpDobTimerInterval);
-              erpDobTimerInterval = null;
-            }
             if (resolvedDob) {
               navigator.clipboard.writeText(resolvedDob).catch(() => {});
             }
@@ -1153,9 +1004,7 @@ const jsonLd = {
             });
             const vData = await vRes.json();
             if (vData && vData.success) {
-              showErpAdInterstitialThen(vData, () => {
-                renderErpVerifiedProfile(vData);
-              });
+              renderErpVerifiedProfile(vData);
             } else if (vData && vData.needsManualCaptcha && vData.captchaImage) {
               currentSession = vData.session || currentSession;
               updateModal(vData.captchaImage, vData.error || "Incorrect code. Please enter the new characters shown.");
@@ -1268,9 +1117,7 @@ const jsonLd = {
 
             const data = await res.json();
             if (data.success) {
-              showErpAdInterstitialThen(data, () => {
-                renderErpVerifiedProfile(data);
-              });
+              renderErpVerifiedProfile(data);
             } else if (data.needsManualCaptcha && data.captchaImage) {
               renderErpManualCaptcha(data, enteredRoll);
             } else {

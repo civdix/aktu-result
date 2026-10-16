@@ -211,43 +211,6 @@ const jsonLd = {
         <!-- 3. Manual Security Verification Code Container -->
         <div id="oneview-manual-captcha-container" class="hidden space-y-4"></div>
 
-        <!-- 3.5 Pre-Result Ad Interstitial -->
-        <div id="oneview-ad-interstitial-state" class="hidden space-y-4 animate-fade-in text-left">
-          <div class="flex items-center justify-between pb-3 border-b border-brand-blue/20 light:border-brand-blue/30">
-            <div class="flex items-center gap-2">
-              <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 light:bg-emerald-600 animate-pulse"></span>
-              <span class="text-xs font-bold text-emerald-400 light:text-emerald-700 uppercase tracking-wider">OneView Marksheet Authenticated ✅</span>
-            </div>
-            <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-brand-blue/20 light:bg-blue-100 text-brand-blue border border-brand-blue/30 light:border-blue-200">
-              Ready To View
-            </span>
-          </div>
-
-          <!-- Sponsored Advertisement Container (300x250) -->
-          <Banner300x250 />
-
-          <!-- Countdown & View Result CTA -->
-          <div class="space-y-3 pt-1">
-            <div class="flex items-center justify-between text-xs text-gray-400 light:text-gray-600">
-              <span class="font-medium">Unlocking your OneView marksheet...</span>
-              <span class="font-bold text-brand-blue font-mono" id="oneview-ad-countdown-text">5s</span>
-            </div>
-            <div class="w-full bg-white/10 light:bg-gray-200 h-1.5 rounded-full overflow-hidden">
-              <div id="oneview-ad-progress-bar" class="bg-gradient-to-r from-brand-blue to-emerald-400 h-full w-0 transition-all duration-1000 ease-linear"></div>
-            </div>
-
-            <button 
-              type="button" 
-              id="oneview-ad-view-result-btn" 
-              class="w-full py-3.5 bg-gradient-to-r from-emerald-500 via-teal-500 to-brand-blue hover:from-emerald-600 hover:to-brand-blue-hover text-white text-xs sm:text-sm font-bold rounded-xl shadow-lg transition-all flex items-center justify-center gap-2 cursor-pointer btn-press-active"
-            >
-              <span>⚡ View Verified OneView Marksheet</span>
-              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-              </svg>
-            </button>
-          </div>
-        </div>
 
         <!-- 4. Verified Academic Profile Container -->
         <div id="oneview-verified-profile-container" class="hidden space-y-4"></div>
@@ -530,24 +493,12 @@ const jsonLd = {
         }).join('');
       }
 
-      let oneviewDobTimerInterval = null;
-
       // Reset to search form
       function resetUI() {
         if (cardWrapper) {
           cardWrapper.classList.remove("max-w-4xl");
           cardWrapper.classList.add("max-w-lg");
         }
-        if (adCountdownInterval) {
-          clearInterval(adCountdownInterval);
-          adCountdownInterval = null;
-        }
-        if (oneviewDobTimerInterval) {
-          clearInterval(oneviewDobTimerInterval);
-          oneviewDobTimerInterval = null;
-        }
-        const adInterstitial = document.getElementById("oneview-ad-interstitial-state");
-        if (adInterstitial) adInterstitial.classList.add("hidden");
 
         searchForm?.classList.remove("hidden");
         loaderState?.classList.add("hidden");
@@ -574,39 +525,8 @@ const jsonLd = {
 
       retryBtn?.addEventListener("click", resetUI);
 
-      let adCountdownInterval = null;
-
-      // Result Presentation Handler (Instantly renders result without intrusive interstitial delay)
-      function showOneViewAdInterstitialThen(data, onProceed) {
-        loaderState?.classList.add("hidden");
-        searchForm?.classList.add("hidden");
-        errorState?.classList.add("hidden");
-        if (captchaContainer) {
-          captchaContainer.classList.add("hidden");
-          captchaContainer.innerHTML = "";
-        }
-        if (profileContainer) {
-          profileContainer.classList.add("hidden");
-          profileContainer.innerHTML = "";
-        }
-
-        const interstitial = document.getElementById("oneview-ad-interstitial-state");
-        if (interstitial) interstitial.classList.add("hidden");
-
-        // Instantly reveal results without artificial countdown delays
-        // Eliminates Google Intrusive Interstitial penalty & complies with AdSense policies
-        onProceed();
-        try {
-          (window.adsbygoogle = window.adsbygoogle || []).push({});
-        } catch (e) {}
-      }
-
       // Render Verified Academic Profile & OneView Marksheet
       function renderOneViewVerifiedProfile(data) {
-        if (oneviewDobTimerInterval) {
-          clearInterval(oneviewDobTimerInterval);
-          oneviewDobTimerInterval = null;
-        }
 
         loaderState?.classList.add("hidden");
         searchForm?.classList.add("hidden");
@@ -891,30 +811,6 @@ const jsonLd = {
                 </div>
               </div>
 
-              <!-- Timed Countdown Banner -->
-              <div class="p-3 bg-white/5 light:bg-gray-100/80 rounded-xl border border-white/10 light:border-gray-200 space-y-2">
-                <div class="flex items-center justify-between text-xs">
-                  <span class="text-gray-300 light:text-gray-700 font-medium flex items-center gap-1.5">
-                    <span>⏱️</span>
-                    <span id="oneview-dob-timer-label">Showing DOB on screen for:</span>
-                  </span>
-                  <span id="oneview-dob-timer-seconds" class="font-mono font-bold text-brand-blue light:text-brand-blue-hover text-sm">15s</span>
-                </div>
-                <!-- Animated Countdown Bar -->
-                <div class="w-full bg-white/10 light:bg-gray-200 h-1.5 rounded-full overflow-hidden">
-                  <div id="oneview-dob-timer-bar" class="h-full bg-gradient-to-r from-emerald-400 to-brand-blue rounded-full transition-all duration-1000 ease-linear" style="width: 100%;"></div>
-                </div>
-                <div class="flex items-center justify-between pt-1 text-[11px]">
-                  <span class="text-[10px] text-gray-400 light:text-gray-500">Auto-launches Live Portal with your DOB</span>
-                  <button 
-                    type="button" 
-                    id="oneview-dob-pause-timer-btn" 
-                    class="text-[11px] text-brand-blue light:text-brand-blue-hover hover:underline font-semibold cursor-pointer"
-                  >
-                    ⏸️ Pause Timer
-                  </button>
-                </div>
-              </div>
             </div>
           ` : '';
 
@@ -1000,47 +896,6 @@ const jsonLd = {
             </button>
           `;
 
-          // Countdown Timer for DOB Display on OneView page
-          if (resolvedDob) {
-            let dobSeconds = 15;
-            let isPaused = false;
-            const secondsEl = document.getElementById("oneview-dob-timer-seconds");
-            const barEl = document.getElementById("oneview-dob-timer-bar");
-            const labelEl = document.getElementById("oneview-dob-timer-label");
-            const pauseBtn = document.getElementById("oneview-dob-pause-timer-btn");
-
-            pauseBtn?.addEventListener("click", () => {
-              isPaused = !isPaused;
-              if (isPaused) {
-                pauseBtn.textContent = "▶️ Resume Timer";
-                if (labelEl) labelEl.textContent = "DOB Display Paused:";
-              } else {
-                pauseBtn.textContent = "⏸️ Pause Timer";
-                if (labelEl) labelEl.textContent = "Showing DOB on screen for:";
-              }
-            });
-
-            oneviewDobTimerInterval = setInterval(() => {
-              if (isPaused) return;
-              dobSeconds--;
-              if (secondsEl) secondsEl.textContent = `${dobSeconds}s`;
-              if (barEl) {
-                const pct = Math.max(0, Math.round((dobSeconds / 15) * 100));
-                barEl.style.width = `${pct}%`;
-              }
-              if (dobSeconds <= 0) {
-                clearInterval(oneviewDobTimerInterval);
-                oneviewDobTimerInterval = null;
-                if (labelEl) labelEl.textContent = "Live Portal Ready:";
-                if (secondsEl) secondsEl.textContent = "Launched";
-                if (barEl) barEl.style.width = "0%";
-                if (pauseBtn) pauseBtn.classList.add("hidden");
-                if (typeof window.openOneViewModal === "function") {
-                  window.openOneViewModal(rollNumber, resolvedDob);
-                }
-              }
-            }, 1000);
-          }
         }
 
         // Common Events: Toggle DOB
@@ -1072,10 +927,6 @@ const jsonLd = {
 
         // Common Events: Launch Live OneView with modal or fallback
         document.getElementById("oneview-launch-official-btn")?.addEventListener("click", () => {
-          if (oneviewDobTimerInterval) {
-            clearInterval(oneviewDobTimerInterval);
-            oneviewDobTimerInterval = null;
-          }
           if (resolvedDob) {
             navigator.clipboard.writeText(resolvedDob).catch(() => {});
           }
@@ -1240,9 +1091,7 @@ const jsonLd = {
             });
             const vData = await vRes.json();
             if (vData && vData.success) {
-              showOneViewAdInterstitialThen(vData, () => {
-                renderOneViewVerifiedProfile(vData);
-              });
+              renderOneViewVerifiedProfile(vData);
             } else if (vData && vData.needsManualCaptcha && vData.captchaImage) {
               currentSession = vData.session || currentSession;
               updateModal(vData.captchaImage, vData.error || "Incorrect code. Please enter the new characters shown.");
@@ -1366,9 +1215,7 @@ const jsonLd = {
 
             completeProgress(() => {
               if (resData && resData.success) {
-                showOneViewAdInterstitialThen(resData, () => {
-                  renderOneViewVerifiedProfile(resData);
-                });
+                renderOneViewVerifiedProfile(resData);
               } else if (resData && (resData.limitExceeded || resData.rateLimited || res.status === 429)) {
                 resetUI();
                 if (typeof window.showDailyLimitPopup === "function") {

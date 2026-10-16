@@ -1,69 +1,28 @@
 ---
 // AdSlot.astro
-// High-performance isolated ad slot component for Adsterra / Bauval banner tags.
-// Resolves CDN caching issues by isolating `atOptions` in independent friendly iframes,
-// preventing global variable collisions, and providing cache-busting on page refresh / bfcache.
-
+// Clean In-Place Google AdSense ad unit.
+// Strictly in-place, zero click-hijacking, zero popunders, zero auto-redirects.
 interface Props {
-  adKey: string;
-  width: number;
-  height: number;
+  adKey?: string;
+  width?: number;
+  height?: number;
   class?: string;
   label?: boolean;
 }
 
 const {
-  adKey,
-  width,
-  height,
+  width = 300,
+  height = 250,
   class: className = "",
   label = true,
 } = Astro.props;
 
-// Generate a unique ID per slot instance to prevent DOM collisions
-const uniqueSlotId = `ad-unit-${adKey.slice(0, 8)}-${Math.random().toString(36).substring(2, 7)}`;
-
-// Build the isolated iframe document with sandboxed window.atOptions
-// This ensures multiple ads on the same page NEVER overwrite each other's atOptions
-const iframeSrcDoc = `<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <base target="_blank">
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    html, body {
-      width: 100%;
-      height: 100%;
-      overflow: hidden;
-      background: transparent;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-  </style>
-</head>
-<body>
-  <script>
-    var atOptions = {
-      'key' : '${adKey}',
-      'format' : 'iframe',
-      'height' : ${height},
-      'width' : ${width},
-      'params' : {}
-    };
-  <\/script>
-  <script type="text/javascript" src="https://bauval.org/22/${adKey}"><\/script>
-</body>
-</html>`;
+const uniqueSlotId = `ad-unit-${Math.random().toString(36).substring(2, 7)}`;
 ---
 
 <div 
   id={uniqueSlotId}
   class={`ad-slot-wrapper flex flex-col items-center justify-center text-center my-3 overflow-hidden ${className}`}
-  data-ad-key={adKey}
-  data-ad-width={width}
-  data-ad-height={height}
 >
   {label && (
     <div 
@@ -77,17 +36,17 @@ const iframeSrcDoc = `<!DOCTYPE html>
 
   <div 
     class="flex items-center justify-center bg-white/[0.02] light:bg-gray-50 rounded-xl overflow-hidden border border-white/10 light:border-black/5 shadow-sm max-w-full"
-    style={`width: ${width}px; height: ${height}px;`}
+    style={`width: ${width}px; min-height: ${height}px;`}
   >
-    <iframe
-      class="ad-isolated-frame"
-      title="Advertisement"
-      width={width}
-      height={height}
-      srcdoc={iframeSrcDoc}
-      style={`width: ${width}px; height: ${height}px; border: 0; margin: 0; padding: 0; overflow: hidden; display: block;`}
-      scrolling="no"
-      loading="lazy"
-    ></iframe>
+    <ins class="adsbygoogle"
+         style={`display:inline-block;width:${width}px;height:${height}px`}
+         data-ad-client="ca-pub-5590747238948130"
+         data-ad-slot="default"></ins>
   </div>
 </div>
+
+<script is:inline>
+  try {
+    (window.adsbygoogle = window.adsbygoogle || []).push({});
+  } catch (e) {}
+</script>

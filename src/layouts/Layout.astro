@@ -834,41 +834,6 @@ const isActive = (path: string) => {
       })();
     </script>
 
-    <!-- Ad Freshness & Cache-Immunity Manager (Maximizes Fill Rate & eCPM across CDN Hits & bfcache) -->
-    <script is:inline>
-      (function initAdFreshnessManager() {
-        // 1. Back-Forward Cache (bfcache) Re-hydration
-        // When user navigates back to a cached page, re-trigger iframes to record fresh paid impressions
-        window.addEventListener('pageshow', function(event) {
-          if (event.persisted) {
-            document.querySelectorAll('iframe.ad-isolated-frame').forEach(function(frame) {
-              try {
-                frame.srcdoc = frame.srcdoc;
-              } catch (e) {}
-            });
-          }
-        });
-
-        // 2. Tab Visibility Re-engagement
-        // When user returns to tab after 2.5+ minutes, refresh ads to monetize extended session time
-        var lastVisible = Date.now();
-        document.addEventListener('visibilitychange', function() {
-          if (document.visibilityState === 'visible') {
-            if (Date.now() - lastVisible > 150000) {
-              document.querySelectorAll('iframe.ad-isolated-frame').forEach(function(frame) {
-                try {
-                  frame.srcdoc = frame.srcdoc;
-                } catch (e) {}
-              });
-            }
-            lastVisible = Date.now();
-          } else {
-            lastVisible = Date.now();
-          }
-        });
-      })();
-    </script>
-
     <!-- Daily Fetch Limit Exceeded Modal (Max 5/day) -->
     <DailyLimitModal />
   </body>
