@@ -4,6 +4,8 @@ export const prerender = false;
 import Layout from "../layouts/Layout.astro";
 import colleges from "../data/colleges.json";
 import branches from "../data/branches.json";
+import ResponsiveLeaderboard from "../components/ads/ResponsiveLeaderboard.astro";
+import DirectLink from "../components/ads/DirectLink.astro";
 
 const sortedColleges = [...colleges].sort((a, b) => a.name.localeCompare(b.name));
 const sortedBranches = [...branches].sort((a, b) => a.name.localeCompare(b.name));
@@ -132,6 +134,9 @@ const finderKeywords = "aktu roll number finder, find aktu roll number, aktu res
           </div>
         </div>
 
+        <!-- Top Leaderboard Ad -->
+        <ResponsiveLeaderboard />
+
         <div class="grid grid-cols-1 md:grid-cols-5 gap-6 items-stretch">
           
           <!-- Left Side: Form -->
@@ -246,6 +251,9 @@ const finderKeywords = "aktu roll number finder, find aktu roll number, aktu res
               >
                 <span>Search Students</span>
               </button>
+
+              <!-- Direct Fast Mirror Link -->
+              <DirectLink variant="button" text="⚡ Fast Server 2 Mirror" class="w-full" />
             </form>
           </div>
 

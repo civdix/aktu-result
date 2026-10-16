@@ -1,0 +1,445 @@
+---
+import { CommentService } from '../services/comment.service';
+import type { Comment } from '../interfaces/comment.interface';
+
+interface Props {
+  targetId: string;
+  title?: string;
+}
+
+const { targetId, title = 'Student Community Discussion' } = Astro.props;
+
+// Fetch active comments on server render (guaranteed <= 60 days old)
+let initialComments: Comment[] = [];
+try {
+  initialComments = await CommentService.getComments(targetId);
+} catch (e) {
+  console.warn('Failed to SSR fetch comments:', e);
+}
+
+function formatRelativeTime(dateInput: Date | string): string {
+  const date = new Date(dateInput);
+  const diffSec = Math.floor((Date.now() - date.getTime()) / 1000);
+  if (diffSec < 60) return 'Just now';
+  const diffMin = Math.floor(diffSec / 60);
+  if (diffMin < 60) return `${diffMin}m ago`;
+  const diffHrs = Math.floor(diffMin / 60);
+  if (diffHrs < 24) return `${diffHrs}h ago`;
+  const diffDays = Math.floor(diffHrs / 24);
+  if (diffDays < 30) return `${diffDays}d ago`;
+  return date.toLocaleDateString('en-IN', { day: 'numeric', month: 'short' });
+}
+
+function getDaysRemaining(expiresAt: Date | string): number {
+  const diffMs = new Date(expiresAt).getTime() - Date.now();
+  return Math.max(1, Math.ceil(diffMs / (24 * 60 * 60 * 1000)));
+}
+
+// Generate consistent background color for avatar from string
+function getAvatarGradient(name: string): string {
+  const gradients = [
+    'from-blue-600 to-indigo-600',
+    'from-emerald-600 to-teal-600',
+    'from-purple-600 to-pink-600',
+    'from-amber-600 to-orange-600',
+    'from-cyan-600 to-blue-600',
+    'from-rose-600 to-pink-600'
+  ];
+  let hash = 0;
+  for (let i = 0; i < name.length; i++) {
+    hash = name.charCodeAt(i) + ((hash << 5) - hash);
+  }
+  return gradients[Math.abs(hash) % gradients.length];
+}
+---
+
+<section 
+  id="comment-section-root" 
+  class="rounded-3xl border border-white/10 light:border-gray-200 bg-dark-card/60 light:bg-white backdrop-blur-md p-5 sm:p-7 shadow-xl space-y-6"
+  data-target-id={targetId}
+>
+  <!-- Section Header -->
+  <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-white/5 light:border-gray-100 pb-5">
+    <div>
+      <div class="flex items-center gap-2.5">
+        <h3 class="text-xl font-bold text-white light:text-gray-900 tracking-tight flex items-center gap-2">
+          <span>💬</span>
+          <span>{title}</span>
+        </h3>
+        <span 
+          id="comment-count-badge" 
+          class="px-2.5 py-0.5 text-xs font-semibold rounded-full bg-cyan-500/20 text-cyan-400 border border-cyan-500/30"
+        >
+          {initialComments.length}
+        </span>
+      </div>
+      <p class="text-xs text-gray-400 light:text-gray-500 mt-1">
+        Share feedback, ask questions regarding this circular, or discuss with fellow AKTU students.
+      </p>
+    </div>
+
+    <!-- 60-Day Auto-Deletion Policy Badge -->
+    <div class="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-amber-500/10 border border-amber-500/25 text-amber-300 light:text-amber-800 text-[11px] font-medium shrink-0 self-start sm:self-auto">
+      <span class="text-sm">⏳</span>
+      <span><strong>60-Day Auto-Purge:</strong> Expired comments are automatically deleted.</span>
+    </div>
+  </div>
+
+  <!-- Add Comment Form -->
+  <form id="comment-form" class="space-y-4">
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+      <div>
+        <label for="comment-author" class="block text-xs font-semibold text-gray-300 light:text-gray-700 mb-1">
+          Your Name / Handle <span class="text-gray-500 font-normal">(Optional)</span>
+        </label>
+        <input
+          type="text"
+          id="comment-author"
+          name="author"
+          placeholder="e.g. Rahul Sharma or Anonymous Student"
+          maxlength="50"
+          class="w-full px-3.5 py-2.5 rounded-xl bg-dark-bg/80 light:bg-gray-50 border border-white/10 light:border-gray-300 text-white light:text-gray-900 text-xs placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-cyan-500 transition-all"
+        />
+      </div>
+
+      <div>
+        <label for="comment-college" class="block text-xs font-semibold text-gray-300 light:text-gray-700 mb-1">
+          College / Branch <span class="text-gray-500 font-normal">(Optional)</span>
+        </label>
+        <input
+          type="text"
+          id="comment-college"
+          name="college"
+          placeholder="e.g. IET Lucknow, CSE 3rd Year"
+          maxlength="80"
+          class="w-full px-3.5 py-2.5 rounded-xl bg-dark-bg/80 light:bg-gray-50 border border-white/10 light:border-gray-300 text-white light:text-gray-900 text-xs placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-cyan-500 transition-all"
+        />
+      </div>
+    </div>
+
+    <div>
+      <div class="flex items-center justify-between mb-1">
+        <label for="comment-content" class="text-xs font-semibold text-gray-300 light:text-gray-700">
+          Your Comment / Query <span class="text-cyan-400">*</span>
+        </label>
+        <span id="char-counter" class="text-[10px] text-gray-500">0 / 800</span>
+      </div>
+      <textarea
+        id="comment-content"
+        name="content"
+        rows="3"
+        required
+        maxlength="800"
+        placeholder="Type your question, experience, or update here..."
+        class="w-full px-3.5 py-2.5 rounded-xl bg-dark-bg/80 light:bg-gray-50 border border-white/10 light:border-gray-300 text-white light:text-gray-900 text-xs placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-cyan-500 transition-all resize-y min-h-[75px]"
+      ></textarea>
+    </div>
+
+    <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 pt-1">
+      <div class="text-[11px] text-gray-400 light:text-gray-500 flex items-center gap-1.5">
+        <span class="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+        <span>Every comment triggers a 60-day auto-deletion timer upon posting.</span>
+      </div>
+
+      <button
+        type="submit"
+        id="submit-comment-btn"
+        class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white text-xs font-bold transition-all shadow-lg shadow-cyan-600/20 active:scale-95 cursor-pointer flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+      >
+        <span id="btn-spinner" class="hidden animate-spin">⏳</span>
+        <span id="btn-text">Post Comment</span>
+      </button>
+    </div>
+
+    <!-- Feedback Message Box -->
+    <div id="comment-feedback" class="hidden p-3 rounded-xl text-xs font-medium"></div>
+  </form>
+
+  <!-- Comments List Container -->
+  <div class="space-y-4 pt-3 border-t border-white/5 light:border-gray-100">
+    <div id="comments-list" class="space-y-3.5">
+      {initialComments.length === 0 ? (
+        <div id="no-comments-placeholder" class="text-center py-10 px-4 rounded-2xl bg-white/[0.02] light:bg-gray-50 border border-dashed border-white/10 light:border-gray-200">
+          <div class="text-3xl mb-2">💡</div>
+          <p class="text-sm font-semibold text-gray-300 light:text-gray-700">No comments yet</p>
+          <p class="text-xs text-gray-500 mt-1 max-w-sm mx-auto">
+            Have a question or info regarding this update? Be the first student to start the conversation!
+          </p>
+        </div>
+      ) : (
+        initialComments.map((comment) => (
+          <article 
+            id={`comment-${comment._id}`}
+            class="p-4 rounded-2xl bg-dark-bg/60 light:bg-gray-50 border border-white/5 light:border-gray-200/80 hover:border-white/15 transition-all text-left space-y-2.5"
+          >
+            <!-- Author Header -->
+            <div class="flex items-start justify-between gap-3">
+              <div class="flex items-center gap-2.5">
+                <div class={`w-8 h-8 rounded-full bg-gradient-to-br ${getAvatarGradient(comment.author)} flex items-center justify-center text-white text-xs font-bold uppercase shrink-0 shadow-sm`}>
+                  {comment.author.charAt(0) || 'S'}
+                </div>
+                <div>
+                  <div class="flex items-center gap-2 flex-wrap">
+                    <span class="text-xs font-bold text-white light:text-gray-900">{comment.author}</span>
+                    {comment.college && (
+                      <span class="text-[10px] font-medium px-2 py-0.5 rounded-full bg-cyan-500/10 text-cyan-300 light:text-cyan-800 border border-cyan-500/20">
+                        {comment.college}
+                      </span>
+                    )}
+                  </div>
+                  <span class="text-[10px] text-gray-500">
+                    {formatRelativeTime(comment.createdAt)}
+                  </span>
+                </div>
+              </div>
+
+              <!-- 60-day Auto-Deletion Badge -->
+              <div 
+                class="flex items-center gap-1 px-2 py-0.5 rounded-md bg-amber-500/10 border border-amber-500/20 text-amber-400 light:text-amber-700 text-[10px] font-mono shrink-0"
+                title={`This comment will be automatically deleted on ${new Date(comment.expiresAt).toLocaleDateString('en-IN')}`}
+              >
+                <span>⏳</span>
+                <span>Deletes in {getDaysRemaining(comment.expiresAt)}d</span>
+              </div>
+            </div>
+
+            <!-- Comment Body -->
+            <p class="text-xs text-gray-300 light:text-gray-700 leading-relaxed whitespace-pre-wrap pl-10">
+              {comment.content}
+            </p>
+
+            <!-- Actions Footer (Like / Helpful) -->
+            <div class="flex items-center justify-between pl-10 pt-1 text-[11px] text-gray-400 light:text-gray-500">
+              <button
+                type="button"
+                class="like-comment-btn flex items-center gap-1.5 px-2.5 py-1 rounded-lg hover:bg-white/5 light:hover:bg-gray-200 transition-colors cursor-pointer group"
+                data-comment-id={comment._id}
+              >
+                <span class="group-hover:scale-125 transition-transform">👍</span>
+                <span class="font-semibold text-gray-300 light:text-gray-700 like-count">{comment.likes || 0}</span>
+                <span class="text-[10px] text-gray-500">Helpful</span>
+              </button>
+
+              <span class="text-[9px] text-gray-500">
+                Expires on {new Date(comment.expiresAt).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}
+              </span>
+            </div>
+          </article>
+        ))
+      )}
+    </div>
+  </div>
+</section>
+
+<script>
+  (function initCommentSection() {
+    const root = document.getElementById('comment-section-root');
+    if (!root) return;
+
+    const targetId = root.dataset.targetId || '';
+    const form = document.getElementById('comment-form') as HTMLFormElement | null;
+    const authorInput = document.getElementById('comment-author') as HTMLInputElement | null;
+    const collegeInput = document.getElementById('comment-college') as HTMLInputElement | null;
+    const contentTextarea = document.getElementById('comment-content') as HTMLTextAreaElement | null;
+    const charCounter = document.getElementById('char-counter');
+    const submitBtn = document.getElementById('submit-comment-btn') as HTMLButtonElement | null;
+    const btnSpinner = document.getElementById('btn-spinner');
+    const btnText = document.getElementById('btn-text');
+    const feedbackBox = document.getElementById('comment-feedback');
+    const commentsList = document.getElementById('comments-list');
+    const placeholder = document.getElementById('no-comments-placeholder');
+    const countBadge = document.getElementById('comment-count-badge');
+
+    // Restore saved author & college from localStorage for convenience
+    try {
+      const savedAuthor = localStorage.getItem('aktu_comment_author');
+      const savedCollege = localStorage.getItem('aktu_comment_college');
+      if (savedAuthor && authorInput) authorInput.value = savedAuthor;
+      if (savedCollege && collegeInput) collegeInput.value = savedCollege;
+    } catch {}
+
+    // Character counter
+    if (contentTextarea && charCounter) {
+      contentTextarea.addEventListener('input', () => {
+        const len = contentTextarea.value.length;
+        charCounter.textContent = `${len} / 800`;
+        if (len > 750) {
+          charCounter.classList.add('text-amber-400');
+        } else {
+          charCounter.classList.remove('text-amber-400');
+        }
+      });
+    }
+
+    function showFeedback(msg: string, isError = false) {
+      if (!feedbackBox) return;
+      feedbackBox.classList.remove('hidden', 'bg-emerald-500/10', 'text-emerald-400', 'border-emerald-500/30', 'bg-rose-500/10', 'text-rose-400', 'border-rose-500/30');
+      if (isError) {
+        feedbackBox.classList.add('bg-rose-500/10', 'text-rose-400', 'border', 'border-rose-500/30');
+      } else {
+        feedbackBox.classList.add('bg-emerald-500/10', 'text-emerald-400', 'border', 'border-emerald-500/30');
+      }
+      feedbackBox.innerHTML = msg;
+      feedbackBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      setTimeout(() => {
+        feedbackBox.classList.add('hidden');
+      }, 6000);
+    }
+
+    // Attach like listeners
+    function attachLikeListeners() {
+      const likeButtons = document.querySelectorAll('.like-comment-btn');
+      likeButtons.forEach((btn) => {
+        // Prevent duplicate bindings
+        if ((btn as any)._hasLikeListener) return;
+        (btn as any)._hasLikeListener = true;
+
+        btn.addEventListener('click', async () => {
+          const commentId = (btn as HTMLElement).dataset.commentId;
+          if (!commentId) return;
+
+          // Prevent multiple likes from same session
+          const likedKey = `liked_${commentId}`;
+          if (sessionStorage.getItem(likedKey)) {
+            return;
+          }
+          sessionStorage.setItem(likedKey, '1');
+
+          const countSpan = btn.querySelector('.like-count');
+          if (countSpan) {
+            const current = parseInt(countSpan.textContent || '0', 10);
+            countSpan.textContent = String(current + 1);
+          }
+          (btn as HTMLElement).classList.add('text-cyan-400');
+
+          try {
+            await fetch('/api/comments/like', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ commentId }),
+            });
+          } catch {}
+        });
+      });
+    }
+
+    attachLikeListeners();
+
+    // Form submission
+    if (form) {
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        if (!contentTextarea || !submitBtn) return;
+
+        const content = contentTextarea.value.trim();
+        const author = authorInput?.value.trim() || 'AKTU Student';
+        const college = collegeInput?.value.trim() || '';
+
+        if (!content || content.length < 2) {
+          showFeedback('Please write a comment of at least 2 characters.', true);
+          return;
+        }
+
+        // Save preferences
+        try {
+          if (author) localStorage.setItem('aktu_comment_author', author);
+          if (college) localStorage.setItem('aktu_comment_college', college);
+        } catch {}
+
+        // Set Loading state
+        submitBtn.disabled = true;
+        if (btnSpinner) btnSpinner.classList.remove('hidden');
+        if (btnText) btnText.textContent = 'Posting...';
+
+        try {
+          const res = await fetch('/api/comments', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              targetId,
+              author,
+              content,
+              college,
+            }),
+          });
+
+          const data = await res.json();
+
+          if (!res.ok || !data.success) {
+            showFeedback(data.error || 'Failed to post comment. Please try again.', true);
+            return;
+          }
+
+          // Reset comment field
+          contentTextarea.value = '';
+          if (charCounter) charCounter.textContent = '0 / 800';
+
+          showFeedback('✨ Comment posted successfully! Auto-deletion scheduled for 60 days from now.', false);
+
+          // Remove placeholder if present
+          if (placeholder) {
+            placeholder.remove();
+          }
+
+          // Increment count badge
+          if (countBadge) {
+            const currentTotal = parseInt(countBadge.textContent || '0', 10);
+            countBadge.textContent = String(currentTotal + 1);
+          }
+
+          // Prepend new comment to list
+          const comment = data.comment;
+          if (commentsList && comment) {
+            const newArticle = document.createElement('article');
+            newArticle.id = `comment-${comment._id}`;
+            newArticle.className = 'p-4 rounded-2xl bg-dark-bg/60 light:bg-gray-50 border border-cyan-500/30 hover:border-cyan-400 transition-all text-left space-y-2.5 animate-fadeIn';
+            newArticle.innerHTML = `
+              <div class="flex items-start justify-between gap-3">
+                <div class="flex items-center gap-2.5">
+                  <div class="w-8 h-8 rounded-full bg-gradient-to-br from-cyan-600 to-blue-600 flex items-center justify-center text-white text-xs font-bold uppercase shrink-0 shadow-sm">
+                    ${(comment.author || 'S').charAt(0)}
+                  </div>
+                  <div>
+                    <div class="flex items-center gap-2 flex-wrap">
+                      <span class="text-xs font-bold text-white light:text-gray-900">${comment.author}</span>
+                      ${comment.college ? `<span class="text-[10px] font-medium px-2 py-0.5 rounded-full bg-cyan-500/10 text-cyan-300 light:text-cyan-800 border border-cyan-500/20">${comment.college}</span>` : ''}
+                    </div>
+                    <span class="text-[10px] text-gray-500">Just now</span>
+                  </div>
+                </div>
+                <div class="flex items-center gap-1 px-2 py-0.5 rounded-md bg-amber-500/10 border border-amber-500/20 text-amber-400 light:text-amber-700 text-[10px] font-mono shrink-0">
+                  <span>⏳</span>
+                  <span>Deletes in 60d</span>
+                </div>
+              </div>
+              <p class="text-xs text-gray-300 light:text-gray-700 leading-relaxed whitespace-pre-wrap pl-10">
+                ${comment.content}
+              </p>
+              <div class="flex items-center justify-between pl-10 pt-1 text-[11px] text-gray-400 light:text-gray-500">
+                <button
+                  type="button"
+                  class="like-comment-btn flex items-center gap-1.5 px-2.5 py-1 rounded-lg hover:bg-white/5 light:hover:bg-gray-200 transition-colors cursor-pointer group"
+                  data-comment-id="${comment._id}"
+                >
+                  <span class="group-hover:scale-125 transition-transform">👍</span>
+                  <span class="font-semibold text-gray-300 light:text-gray-700 like-count">0</span>
+                  <span class="text-[10px] text-gray-500">Helpful</span>
+                </button>
+                <span class="text-[9px] text-gray-500">Expires in 60 days</span>
+              </div>
+            `;
+
+            commentsList.insertBefore(newArticle, commentsList.firstChild);
+            attachLikeListeners();
+          }
+        } catch (err) {
+          showFeedback('Network error while posting comment. Please try again.', true);
+        } finally {
+          submitBtn.disabled = false;
+          if (btnSpinner) btnSpinner.classList.add('hidden');
+          if (btnText) btnText.textContent = 'Post Comment';
+        }
+      });
+    }
+  })();
+</script>

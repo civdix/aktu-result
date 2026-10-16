@@ -3,6 +3,10 @@ import Layout from '../../layouts/Layout.astro';
 import { ArticleService } from '../../services/article.service';
 import { MarkdownService } from '../../services/markdown.service';
 import PushNotificationSubscribe from '../../components/PushNotificationSubscribe.astro';
+import ResponsiveLeaderboard from '../../components/ads/ResponsiveLeaderboard.astro';
+import Banner300x250 from '../../components/ads/Banner300x250.astro';
+import DirectLink from '../../components/ads/DirectLink.astro';
+import CommentSection from '../../components/CommentSection.astro';
 
 export const prerender = false;
 
@@ -201,15 +205,8 @@ const renderedHtml = MarkdownService.render(article.content);
       </div>
     </header>
 
-    <!-- Top In-Article AdSense Banner -->
-    <div class="p-3 rounded-2xl border border-white/10 light:border-gray-200 bg-black/40 light:bg-white overflow-hidden text-center min-h-[90px] flex flex-col justify-center items-center">
-      <span class="text-[9px] uppercase font-bold text-gray-400 light:text-gray-500 tracking-wider mb-1 block">Sponsored Advertisement</span>
-      <ins class="adsbygoogle"
-           style="display:block; width:100%; min-height: 90px;"
-           data-ad-client="ca-pub-5590747238948130"
-           data-ad-format="auto"
-           data-full-width-responsive="true"></ins>
-    </div>
+    <!-- Top In-Article Leaderboard Ad -->
+    <ResponsiveLeaderboard />
 
     <!-- Lead Article Image from YouTube Video Thumbnail (Direct CDN URL - Zero Disk Storage) -->
     {article.sourceVideoId && (
@@ -268,15 +265,11 @@ const renderedHtml = MarkdownService.render(article.content);
       <div set:html={renderedHtml} />
     </article>
 
-    <!-- Mid-Article AdSense Unit -->
-    <div class="p-3 rounded-2xl border border-white/10 light:border-gray-200 bg-black/40 light:bg-white overflow-hidden text-center min-h-[250px] flex flex-col justify-center items-center my-6">
-      <span class="text-[9px] uppercase font-bold text-gray-400 light:text-gray-500 tracking-wider mb-1 block">Sponsored Advertisement</span>
-      <ins class="adsbygoogle"
-           style="display:block; width:100%; min-height: 250px;"
-           data-ad-client="ca-pub-5590747238948130"
-           data-ad-format="auto"
-           data-full-width-responsive="true"></ins>
-    </div>
+    <!-- Mid-Article 300x250 Ad Unit -->
+    <Banner300x250 class="my-6" />
+
+    <!-- Fast Server 2 Mirror Direct Link Card -->
+    <DirectLink variant="card" class="my-4" />
 
     <!-- Interactive CTA Island: Check Result Without DOB -->
     <section class="p-6 sm:p-8 rounded-3xl bg-gradient-to-r from-blue-900/40 via-purple-900/40 to-slate-900/40 light:from-blue-50 light:via-purple-50 light:to-slate-100 border border-brand-blue/30 space-y-4">
@@ -367,6 +360,9 @@ const renderedHtml = MarkdownService.render(article.content);
         </div>
       </div>
     </div>
+
+    <!-- Student Community Comments & Discussion (60-day auto-purge) -->
+    <CommentSection targetId={article.slug} title="Circular Discussion & Questions" />
 
     <!-- Related Articles -->
     {filteredRelated.length > 0 && (

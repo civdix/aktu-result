@@ -1,6 +1,9 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import { getAcademicYearInfo } from "../utils/academicYear";
+import ResponsiveLeaderboard from "../components/ads/ResponsiveLeaderboard.astro";
+import Banner300x250 from "../components/ads/Banner300x250.astro";
+import DirectLink from "../components/ads/DirectLink.astro";
 
 const yearInfo = getAcademicYearInfo();
 
@@ -98,6 +101,9 @@ const faqKeywords = "aktu result faq, oneview aktu, erp aktu result, aktu erp re
   <section class="py-16 md:py-24 bg-black light:bg-white text-gray-400 light:text-gray-600">
     <div class="max-w-3xl mx-auto px-4 sm:px-6">
       
+      <!-- Top Leaderboard Ad -->
+      <ResponsiveLeaderboard />
+
       <!-- Accordion Grid -->
       <div class="space-y-4">
         {faqs.map((faq, index) => (
@@ -126,6 +132,9 @@ const faqKeywords = "aktu result faq, oneview aktu, erp aktu result, aktu erp re
           </div>
         ))}
       </div>
+
+      <!-- Fast Result Server Mirror Direct Link -->
+      <DirectLink variant="card" class="mt-12" />
 
       <!-- Support Card -->
       <div class="mt-16 p-6 sm:p-8 rounded-2xl bg-canvas-dark-surface light:bg-canvas-light-surface border border-canvas-dark-border light:border-canvas-light-border text-center max-w-xl mx-auto space-y-4">

@@ -2,6 +2,7 @@
 import Layout from '../../layouts/Layout.astro';
 import { ArticleService } from '../../services/article.service';
 import PushNotificationSubscribe from '../../components/PushNotificationSubscribe.astro';
+import ResponsiveLeaderboard from '../../components/ads/ResponsiveLeaderboard.astro';
 
 export const prerender = false;
 
@@ -69,15 +70,8 @@ const jsonLd = {
       </p>
     </header>
 
-    <!-- Top Sponsored AdSense Unit -->
-    <div class="p-3 rounded-2xl border border-white/10 light:border-gray-200 bg-black/40 light:bg-white overflow-hidden text-center min-h-[90px] flex flex-col justify-center items-center">
-      <span class="text-[9px] uppercase font-bold text-gray-400 light:text-gray-500 tracking-wider mb-1 block">Sponsored Advertisement</span>
-      <ins class="adsbygoogle"
-           style="display:block; width:100%; min-height: 90px;"
-           data-ad-client="ca-pub-5590747238948130"
-           data-ad-format="auto"
-           data-full-width-responsive="true"></ins>
-    </div>
+    <!-- Top Sponsored Leaderboard Unit -->
+    <ResponsiveLeaderboard />
 
     <!-- Free Native Browser Push Notifications Subscription Card -->
     <PushNotificationSubscribe variant="banner" />

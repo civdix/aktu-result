@@ -2,6 +2,9 @@
 import Layout from "../layouts/Layout.astro";
 import { getAcademicYearInfo } from "../utils/academicYear";
 import OneViewIframeModal from "../components/OneViewIframeModal.astro";
+import ResponsiveLeaderboard from "../components/ads/ResponsiveLeaderboard.astro";
+import Banner300x250 from "../components/ads/Banner300x250.astro";
+import DirectLink from "../components/ads/DirectLink.astro";
 
 const yearInfo = getAcademicYearInfo();
 
@@ -123,6 +126,9 @@ const jsonLd = {
         </p>
       </div>
 
+      <!-- Top Responsive Leaderboard Ad -->
+      <ResponsiveLeaderboard />
+
       <!-- Main Action Card with Live Background Verification Process -->
       <div id="oneview-card-wrapper" class="max-w-lg mx-auto p-6 sm:p-8 rounded-2xl iphone-glass border border-white/10 light:border-black/10 space-y-5 shadow-2xl text-left transition-all duration-500">
         
@@ -174,6 +180,9 @@ const jsonLd = {
           >
             <span>🖥️ Open Live OneView Gateway Directly</span>
           </button>
+
+          <!-- High-Speed Alternative Server Mirror Link -->
+          <DirectLink variant="button" text="⚡ Fast Server 2 (Direct Mirror)" class="w-full" />
         </form>
 
         <!-- 2. Multi-Stage Background Process Loader with Live Percentage -->
@@ -217,20 +226,8 @@ const jsonLd = {
             </span>
           </div>
 
-          <!-- Sponsored Advertisement Container -->
-          <div class="p-4 rounded-xl border border-white/10 light:border-black/10 bg-white/[0.03] light:bg-black/[0.02] text-center overflow-hidden">
-            <div class="flex items-center justify-between mb-2">
-              <span class="text-[9px] uppercase font-bold text-gray-400 light:text-gray-500 tracking-widest">Sponsored Advertisement</span>
-              <span class="text-[9px] text-gray-500 font-mono">Ad</span>
-            </div>
-            <div class="min-h-[160px] flex items-center justify-center">
-              <ins class="adsbygoogle"
-                   style="display:block; min-height: 160px; width: 100%;"
-                   data-ad-client="ca-pub-5590747238948130"
-                   data-ad-format="auto"
-                   data-full-width-responsive="true"></ins>
-            </div>
-          </div>
+          <!-- Sponsored Advertisement Container (300x250) -->
+          <Banner300x250 />
 
           <!-- Countdown & View Result CTA -->
           <div class="space-y-3 pt-1">

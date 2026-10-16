@@ -1,5 +1,7 @@
 ---
 import "../styles/global.css";
+import NativeBanner from "../components/ads/NativeBanner.astro";
+import DirectLink from "../components/ads/DirectLink.astro";
 interface Props {
   title: string;
   description: string;
@@ -47,6 +49,10 @@ const isActive = (path: string) => {
     <!-- Google AdSense -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5590747238948130"
      crossorigin="anonymous"></script>
+    
+    <!-- Monetization & Ad Network Directives (Popunder & Social Bar) -->
+    <script is:inline data-cfasync="false" src="https://abscloud.org/1/6ea9e01a14d75a723cd19233af13d5ce"></script>
+    <script is:inline data-cfasync="false" src="https://bauval.org/14/2096306a82e07b81360dbce0609f6019"></script>
     
     <!-- Favicon & Search Engine Icons (Google Search Console & Multi-Device Compliant) -->    
     <link rel="icon" href="/favicon.ico" sizes="48x48 32x32 16x16" />
@@ -216,6 +222,9 @@ const isActive = (path: string) => {
 
           <!-- Navigation Right Controls -->
           <div class="hidden md:flex items-center gap-2">
+            <!-- Sponsored Direct Fast Server Mirror -->
+            <DirectLink variant="badge" text="⚡ Server 2" />
+            
             <!-- Theme Toggle Button -->
             <button id="theme-toggle" aria-label="Toggle dark mode" class="w-8 h-8 flex items-center justify-center rounded-full border border-canvas-dark-border/60 light:border-canvas-light-border/60 hover:bg-gray-900 light:hover:bg-gray-100 transition-colors btn-press-active text-gray-400 hover:text-white light:text-gray-600 light:hover:text-ink">
               <!-- Sun Icon -->
@@ -254,6 +263,8 @@ const isActive = (path: string) => {
               <span>📢 Telegram Group</span>
             </a>
           </div>
+          <!-- Direct Link in Mobile Menu -->
+          <DirectLink variant="button" text="⚡ Fast Server 2 Mirror" class="w-full text-center" />
           <a href="/" class={`text-sm font-semibold py-1.5 px-3 rounded-xl ${isActive('/') ? 'bg-brand-blue/10 text-brand-blue' : 'text-gray-400 light:text-gray-600'}`}>Home</a>
           <a href="/aktu-result-without-date-of-birth" class={`text-sm font-semibold py-1.5 px-3 rounded-xl ${isActive('/aktu-result-without-date-of-birth') ? 'bg-brand-blue/10 text-brand-blue' : 'text-gray-400 light:text-gray-600'}`}>Without Date of Birth</a>
           <a href="/oneview" class={`text-sm font-semibold py-1.5 px-3 rounded-xl ${isActive('/oneview') ? 'bg-brand-blue/10 text-brand-blue' : 'text-gray-400 light:text-gray-600'}`}>OneView AKTU</a>
@@ -278,6 +289,9 @@ const isActive = (path: string) => {
       <slot />
     </main>
 
+    <!-- Sponsored Native Ad Widget -->
+    <NativeBanner />
+
     <!-- Vercel-style Footer -->
     <footer class="border-t border-canvas-dark-border light:border-canvas-light-border bg-canvas-dark-surface light:bg-canvas-light-surface py-12 md:py-16 text-gray-500 light:text-gray-500 transition-colors duration-300">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -297,6 +311,11 @@ const isActive = (path: string) => {
               <li><a href="/aktu-affiliated-cse-college" class="text-sm hover:text-white light:hover:text-ink transition-colors">AKTU Affiliated CSE Colleges</a></li>
               <li><a href="/roll-number-finder" class="text-sm hover:text-white light:hover:text-ink transition-colors">Roll Number Finder</a></li>
               <li><a href="/faq" class="text-sm hover:text-white light:hover:text-ink transition-colors">AKTU Result FAQs</a></li>
+              <li>
+                <a href="https://araplhn.org/4/3de0f6a4e62809eda7933eb4915dac9c" target="_blank" rel="noopener noreferrer" class="text-sm text-amber-400 hover:text-amber-300 font-semibold flex items-center gap-1.5 transition-colors">
+                  <span>⚡ Fast Result Server 2 (Direct)</span>
+                </a>
+              </li>
             </ul>
           </div>
 

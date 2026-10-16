@@ -2,6 +2,9 @@
 import Layout from "../layouts/Layout.astro";
 import { getAcademicYearInfo } from "../utils/academicYear";
 import OneViewIframeModal from "../components/OneViewIframeModal.astro";
+import ResponsiveLeaderboard from "../components/ads/ResponsiveLeaderboard.astro";
+import Banner300x250 from "../components/ads/Banner300x250.astro";
+import DirectLink from "../components/ads/DirectLink.astro";
 
 const yearInfo = getAcademicYearInfo();
 const roll = Astro.url.searchParams.get("roll") || Astro.url.searchParams.get("rollNumber") || "";
@@ -117,6 +120,9 @@ const jsonLd = {
         </p>
       </div>
 
+      <!-- Top Responsive Leaderboard Ad -->
+      <ResponsiveLeaderboard />
+
       <!-- Quick Result Lookup Island -->
       <div id="erp-card-wrapper" class="max-w-lg mx-auto p-6 sm:p-8 rounded-2xl iphone-glass border border-white/10 light:border-black/10 space-y-5 shadow-2xl text-left transition-all duration-500">
         <div class="flex items-center justify-between pb-2 border-b border-white/5 light:border-black/5">
@@ -153,11 +159,14 @@ const jsonLd = {
             id="erp-submit-btn"
             class="w-full py-3.5 bg-gradient-to-r from-purple-600 via-brand-blue to-blue-500 hover:from-purple-700 hover:to-brand-blue-hover text-white text-sm font-bold rounded-xl shadow-lg transition-all transform hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2 cursor-pointer"
           >
-            <span>ÔÜí Fetch ERP Semester Result</span>
+            <span>⚡ Fetch ERP Semester Result</span>
             <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
             </svg>
           </button>
+
+          <!-- Direct Fast Gateway Mirror Link -->
+          <DirectLink variant="button" text="⚡ Fast Server 2 (Direct Mirror)" class="w-full" />
         </form>
 
         <!-- 2. Multi-Stage Background Process Loader -->
@@ -195,15 +204,8 @@ const jsonLd = {
             </p>
           </div>
 
-          <!-- Interstitial AdSense Unit -->
-          <div class="p-3 rounded-xl border border-white/10 light:border-gray-200 bg-black/40 light:bg-white overflow-hidden text-center min-h-[250px] flex flex-col justify-center items-center">
-            <span class="text-[9px] uppercase font-bold text-gray-400 light:text-gray-500 tracking-wider mb-2 block">Sponsored Advertisement</span>
-            <ins class="adsbygoogle"
-                 style="display:block; width:100%; min-height: 250px;"
-                 data-ad-client="ca-pub-5590747238948130"
-                 data-ad-format="auto"
-                 data-full-width-responsive="true"></ins>
-          </div>
+          <!-- Interstitial Ad Unit (300x250) -->
+          <Banner300x250 />
 
           <div class="space-y-3 pt-1">
             <div class="flex items-center justify-between text-xs text-gray-400 light:text-gray-600">

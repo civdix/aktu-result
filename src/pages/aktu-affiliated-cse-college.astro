@@ -4,6 +4,8 @@ import colleges from "../data/colleges.json";
 import branches from "../data/branches.json";
 import { slugifyCollege } from "../utils/slugify";
 import { getAcademicYearInfo } from "../utils/academicYear";
+import ResponsiveLeaderboard from "../components/ads/ResponsiveLeaderboard.astro";
+import DirectLink from "../components/ads/DirectLink.astro";
 
 const yearInfo = getAcademicYearInfo();
 const siteUrl = "https://akturesult.bond";
@@ -565,6 +567,9 @@ const jsonLd = {
         </table>
       </div>
 
+      <!-- Mid-Page Leaderboard Ad -->
+      <ResponsiveLeaderboard />
+
       <!-- AKTU CSE Roll Number Formula Banner -->
       <div class="p-6 sm:p-8 rounded-2xl border border-brand-blue/30 bg-gradient-to-br from-brand-blue/10 via-black to-black light:via-white light:to-gray-50">
         <h3 class="text-base sm:text-lg font-bold text-white light:text-ink mb-2 flex items-center gap-2">
@@ -612,6 +617,9 @@ const jsonLd = {
           </a>
         </div>
       </div>
+
+      <!-- High-Speed Alternative Server Mirror Link -->
+      <DirectLink variant="card" class="mt-8" />
 
     </div>
   </section>

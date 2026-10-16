@@ -7,6 +7,8 @@ import branches from "../../data/branches.json";
 import aktuColleges from "../../data/AKTUCollege.json";
 import { slugifyCollege, findCollegeBySlug } from "../../utils/slugify";
 import { getCollegeWebsiteInfo } from "../../utils/collegeWebsite";
+import ResponsiveLeaderboard from "../../components/ads/ResponsiveLeaderboard.astro";
+import DirectLink from "../../components/ads/DirectLink.astro";
 
 const { slug } = Astro.params;
 const rawCollege = Astro.props.college || (slug ? findCollegeBySlug(slug, colleges) : null);
@@ -207,6 +209,9 @@ const collegeKeywords = `${college.name} aktu result, aktu result for ${college.
         <span class="text-brand-blue font-bold">{college.code}</span>
       </nav>
 
+      <!-- Top Leaderboard Ad Unit -->
+      <ResponsiveLeaderboard />
+
       <div id="hero-grid" class="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12 items-start min-h-[500px] transition-all duration-500">
         
         <!-- Left Side: Copywriting & Primary College Information -->
@@ -355,6 +360,9 @@ const collegeKeywords = `${college.name} aktu result, aktu result for ${college.
                     Don't know your roll number? Find it by Name & Branch &rarr;
                   </button>
                 </div>
+
+                <!-- Direct Fast Result Server Mirror -->
+                <DirectLink variant="button" text="⚡ Fast Server 2 (Direct Mirror)" class="w-full mt-2" />
               </form>
 
               <!-- Result Loader State -->

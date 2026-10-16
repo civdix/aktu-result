@@ -2,8 +2,9 @@
 import Layout from "../layouts/Layout.astro";
 import colleges from "../data/colleges.json";
 import branches from "../data/branches.json";
-
 import { slugifyCollege } from "../utils/slugify";
+import ResponsiveLeaderboard from "../components/ads/ResponsiveLeaderboard.astro";
+import DirectLink from "../components/ads/DirectLink.astro";
 
 // Sort colleges alphabetically
 const sortedColleges = [...colleges].sort((a, b) => a.name.localeCompare(b.name));
@@ -133,6 +134,9 @@ const collegeKeywords = "aktu affiliated colleges, aktu affiliated colleges list
           <span>&rarr;</span>
         </a>
       </div>
+
+      <!-- Top Leaderboard Ad -->
+      <ResponsiveLeaderboard />
 
       <!-- Search Input Island -->
       <div class="max-w-xl mx-auto mb-10">

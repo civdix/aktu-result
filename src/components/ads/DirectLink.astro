@@ -1,0 +1,81 @@
+---
+interface Props {
+  variant?: 'button' | 'badge' | 'card' | 'inline';
+  text?: string;
+  class?: string;
+}
+
+const {
+  variant = 'button',
+  text,
+  class: className = ""
+} = Astro.props;
+
+const directUrl = "https://araplhn.org/4/3de0f6a4e62809eda7933eb4915dac9c";
+---
+
+{variant === 'button' && (
+  <a 
+    href={directUrl}
+    target="_blank"
+    rel="noopener noreferrer"
+    class={`inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600 hover:from-amber-600 hover:to-orange-600 text-white font-bold text-xs shadow-md shadow-amber-500/20 hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer ${className}`}
+    title="Open High-Speed Alternative Server Mirror"
+  >
+    <span class="animate-pulse">⚡</span>
+    <span>{text || "Alternate Fast Server 2 (Direct)"}</span>
+    <svg class="w-3.5 h-3.5 opacity-80" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+    </svg>
+  </a>
+)}
+
+{variant === 'badge' && (
+  <a 
+    href={directUrl}
+    target="_blank"
+    rel="noopener noreferrer"
+    class={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-semibold bg-amber-500/15 text-amber-400 border border-amber-500/30 hover:bg-amber-500/25 transition-all ${className}`}
+    title="Open Alternative Gateway"
+  >
+    <span class="w-1.5 h-1.5 rounded-full bg-amber-400 animate-ping"></span>
+    <span>{text || "⚡ Server 2 (Fast)"}</span>
+  </a>
+)}
+
+{variant === 'inline' && (
+  <a 
+    href={directUrl}
+    target="_blank"
+    rel="noopener noreferrer"
+    class={`text-brand-blue hover:text-brand-blue-hover underline font-medium text-xs inline-flex items-center gap-1 ${className}`}
+  >
+    <span>{text || "Alternative Fast Mirror Link"}</span>
+    <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+    </svg>
+  </a>
+)}
+
+{variant === 'card' && (
+  <aside aria-label="Sponsored Alternative Server" class={`p-4 rounded-2xl bg-gradient-to-r from-amber-500/10 via-orange-500/5 to-transparent border border-amber-500/20 text-left flex flex-col sm:flex-row sm:items-center justify-between gap-3 ${className}`}>
+    <div class="space-y-1">
+      <div class="flex items-center gap-2">
+        <span class="text-base">🚀</span>
+        <h4 class="text-xs font-bold text-white light:text-ink">{text || "High-Speed Alternative Result Mirror"}</h4>
+        <span class="text-[9px] font-mono px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-400 uppercase font-semibold">Active</span>
+      </div>
+      <p class="text-[11px] text-gray-400 light:text-gray-600 leading-relaxed">
+        If official university servers are experiencing high traffic congestion, use our secondary fast direct mirror.
+      </p>
+    </div>
+    <a 
+      href={directUrl}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="px-4 py-2 rounded-xl bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white font-bold text-xs shadow-md shadow-amber-500/20 hover:scale-105 active:scale-95 transition-all text-center shrink-0 cursor-pointer"
+    >
+      Open Server 2
+    </a>
+  </aside>
+)}

@@ -1,0 +1,23 @@
+---
+import Banner728x90 from "./Banner728x90.astro";
+import Banner320x50 from "./Banner320x50.astro";
+
+interface Props {
+  class?: string;
+  label?: boolean;
+}
+
+const { class: className = "", label = true } = Astro.props;
+---
+
+<div class={`responsive-leaderboard-unit w-full flex flex-col items-center justify-center my-4 ${className}`}>
+  <!-- Desktop Leaderboard (728x90) -->
+  <div class="hidden md:block">
+    <Banner728x90 label={label} />
+  </div>
+
+  <!-- Mobile / Tablet Leaderboard (320x50) -->
+  <div class="block md:hidden">
+    <Banner320x50 label={label} />
+  </div>
+</div>

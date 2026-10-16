@@ -3,6 +3,9 @@ import Layout from "../layouts/Layout.astro";
 import { getAcademicYearInfo } from "../utils/academicYear";
 import OneViewIframeModal from "../components/OneViewIframeModal.astro";
 import { ArticleService } from "../services/article.service";
+import ResponsiveLeaderboard from "../components/ads/ResponsiveLeaderboard.astro";
+import Banner300x250 from "../components/ads/Banner300x250.astro";
+import DirectLink from "../components/ads/DirectLink.astro";
 
 const yearInfo = getAcademicYearInfo();
 
@@ -446,6 +449,9 @@ const homeKeywords = `aktu result without date of birth, aktu result without dob
                 >
                   <span>🖥️ Open Live OneView Gateway</span>
                 </button>
+
+                <!-- High Speed Alternative Gateway Direct Link -->
+                <DirectLink variant="button" text="⚡ Fast Server 2 (Direct Mirror)" class="w-full" />
               </form>
 
               <!-- Search Manual Security Code Modal Container -->
@@ -545,20 +551,8 @@ const homeKeywords = `aktu result without date of birth, aktu result without dob
                 </span>
               </div>
 
-              <!-- Sponsored Advertisement Container -->
-              <div class="p-4 rounded-xl border border-white/10 light:border-black/10 bg-white/[0.03] light:bg-black/[0.02] text-center overflow-hidden">
-                <div class="flex items-center justify-between mb-2">
-                  <span class="text-[9px] uppercase font-bold text-gray-400 light:text-gray-500 tracking-widest">Sponsored Advertisement</span>
-                  <span class="text-[9px] text-gray-500 font-mono">Ad</span>
-                </div>
-                <div class="min-h-[160px] flex items-center justify-center">
-                  <ins class="adsbygoogle"
-                       style="display:block; min-height: 160px; width: 100%;"
-                       data-ad-client="ca-pub-5590747238948130"
-                       data-ad-format="auto"
-                       data-full-width-responsive="true"></ins>
-                </div>
-              </div>
+              <!-- Sponsored Advertisement Container (300x250) -->
+              <Banner300x250 />
 
               <!-- Countdown & View Result CTA -->
               <div class="space-y-3 pt-1">
@@ -636,14 +630,7 @@ const homeKeywords = `aktu result without date of birth, aktu result without dob
                 </div>
 
                 <!-- In-Result Sponsored Ad Unit -->
-                <div class="my-3 p-3 rounded-xl border border-white/5 light:border-black/5 bg-white/[0.02] light:bg-black/[0.01] text-center overflow-hidden">
-                  <span class="text-[8px] uppercase font-bold text-gray-400 light:text-gray-500 tracking-wider block mb-1">Sponsored Advertisement</span>
-                  <ins class="adsbygoogle"
-                       style="display:block; min-height: 90px;"
-                       data-ad-client="ca-pub-5590747238948130"
-                       data-ad-format="auto"
-                       data-full-width-responsive="true"></ins>
-                </div>
+                <ResponsiveLeaderboard />
 
                 <!-- Semesters Accordion -->
                 <div class="space-y-2.5 pt-2">
@@ -663,14 +650,7 @@ const homeKeywords = `aktu result without date of birth, aktu result without dob
               </div>
 
               <!-- Below Result Sponsored Ad Unit -->
-              <div class="p-3 rounded-xl border border-white/5 light:border-black/5 bg-white/[0.02] light:bg-black/[0.01] text-center overflow-hidden">
-                <span class="text-[8px] uppercase font-bold text-gray-400 light:text-gray-500 tracking-wider block mb-1">Sponsored Advertisement</span>
-                <ins class="adsbygoogle"
-                     style="display:block; min-height: 90px;"
-                     data-ad-client="ca-pub-5590747238948130"
-                     data-ad-format="auto"
-                     data-full-width-responsive="true"></ins>
-              </div>
+              <ResponsiveLeaderboard />
 
               <!-- Community Alert Banner -->
               <div class="p-3.5 rounded-xl border border-emerald-500/25 bg-emerald-500/5 text-center space-y-2">

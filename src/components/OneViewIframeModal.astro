@@ -1,6 +1,8 @@
 ---
 // OneView Live Embedded Gateway Modal
 // Provides a zero-cost, high-speed direct portal view allowing students to solve reCAPTCHA themselves.
+import Banner468x60 from "./ads/Banner468x60.astro";
+import Banner320x50 from "./ads/Banner320x50.astro";
 ---
 
 <!-- OneView Live Embedded Modal -->
@@ -89,13 +91,13 @@
     </div>
 
     <!-- Sponsored Top Ad Unit in Modal -->
-    <div class="px-3 py-1.5 bg-black/40 light:bg-gray-50 border-b border-white/5 light:border-gray-200 text-center shrink-0">
-      <span class="text-[8px] uppercase font-bold text-gray-500 tracking-wider block mb-0.5">Sponsored Advertisement</span>
-      <ins class="adsbygoogle"
-           style="display:block; min-height: 50px; max-height: 60px;"
-           data-ad-client="ca-pub-5590747238948130"
-           data-ad-format="horizontal"
-           data-full-width-responsive="true"></ins>
+    <div class="px-3 py-1 bg-black/40 light:bg-gray-50 border-b border-white/5 light:border-gray-200 text-center shrink-0">
+      <div class="hidden sm:block">
+        <Banner468x60 label={false} class="!my-0.5" />
+      </div>
+      <div class="block sm:hidden">
+        <Banner320x50 label={false} class="!my-0.5" />
+      </div>
     </div>
 
     <!-- Iframe Container -->

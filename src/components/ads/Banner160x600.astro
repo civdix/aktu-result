@@ -1,0 +1,29 @@
+---
+interface Props {
+  class?: string;
+  label?: boolean;
+}
+
+const { class: className = "", label = true } = Astro.props;
+---
+
+<div class={`ad-container-160x600 flex flex-col items-center justify-center text-center my-3 overflow-hidden ${className}`}>
+  {label && (
+    <div class="flex items-center justify-between w-[160px] max-w-full px-1 mb-1">
+      <span class="text-[8px] uppercase font-bold text-gray-400 light:text-gray-500 tracking-wider">Ad</span>
+      <span class="text-[8px] font-mono text-gray-500 uppercase">160x600</span>
+    </div>
+  )}
+  <div class="w-[160px] h-[600px] max-w-full flex items-center justify-center bg-white/[0.02] light:bg-gray-50 rounded-xl overflow-hidden border border-white/10 light:border-black/5 shadow-sm">
+    <script is:inline>
+      atOptions = {
+        'key' : '8880deda34d77f70fc86737955456f57',
+        'format' : 'iframe',
+        'height' : 600,
+        'width' : 160,
+        'params' : {}
+      };
+    </script>
+    <script is:inline type="text/javascript" src="https://bauval.org/22/8880deda34d77f70fc86737955456f57"></script>
+  </div>
+</div>

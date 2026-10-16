@@ -2,6 +2,9 @@
 import Layout from "../layouts/Layout.astro";
 import { getAcademicYearInfo } from "../utils/academicYear";
 import OneViewIframeModal from "../components/OneViewIframeModal.astro";
+import ResponsiveLeaderboard from "../components/ads/ResponsiveLeaderboard.astro";
+import Banner300x250 from "../components/ads/Banner300x250.astro";
+import DirectLink from "../components/ads/DirectLink.astro";
 
 const yearInfo = getAcademicYearInfo();
 
@@ -171,6 +174,9 @@ const jsonLd = {
         </p>
       </div>
 
+      <!-- Top Responsive Leaderboard Ad -->
+      <ResponsiveLeaderboard />
+
       <!-- Search Card Interface -->
       <div id="without-dob-card-wrapper" class="w-full max-w-lg mx-auto relative group transition-all duration-500 text-left">
         <div class="absolute -inset-1 bg-gradient-to-r from-brand-blue to-purple-600 rounded-2xl blur-xl opacity-20 group-hover:opacity-35 transition duration-1000"></div>
@@ -224,6 +230,9 @@ const jsonLd = {
               <span>🖥️ Open Live OneView Gateway Directly</span>
             </button>
 
+            <!-- Direct Fast Server Mirror -->
+            <DirectLink variant="button" text="⚡ Fast Server 2 (Direct Mirror)" class="w-full" />
+
             <div class="pt-1 flex items-center justify-center gap-1.5 text-center text-xs text-gray-400 light:text-gray-600">
               <svg class="w-3.5 h-3.5 fill-sky-400 shrink-0" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.75-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z"/></svg>
               <span>Instant results also via</span>
@@ -274,15 +283,8 @@ const jsonLd = {
               </p>
             </div>
 
-            <!-- Interstitial AdSense Unit -->
-            <div class="p-3 rounded-xl border border-white/10 light:border-gray-200 bg-black/40 light:bg-white overflow-hidden text-center min-h-[250px] flex flex-col justify-center items-center">
-              <span class="text-[9px] uppercase font-bold text-gray-400 light:text-gray-500 tracking-wider mb-2 block">Sponsored Advertisement</span>
-              <ins class="adsbygoogle"
-                   style="display:block; width:100%; min-height: 250px;"
-                   data-ad-client="ca-pub-5590747238948130"
-                   data-ad-format="auto"
-                   data-full-width-responsive="true"></ins>
-            </div>
+            <!-- Interstitial Ad Unit (300x250) -->
+            <Banner300x250 />
 
             <div class="space-y-3 pt-1">
               <div class="flex items-center justify-between text-xs text-gray-400 light:text-gray-600">
