@@ -123,13 +123,20 @@ const jsonLd = {
                 <span class="px-2.5 py-0.5 rounded-full font-bold bg-brand-blue/15 text-brand-blue border border-brand-blue/25">
                   {art.category}
                 </span>
-                <span class="text-gray-500 light:text-gray-400">
-                  {new Date(art.publishedAt).toLocaleDateString('en-IN', {
-                    day: 'numeric',
-                    month: 'short',
-                    year: 'numeric'
-                  })}
-                </span>
+                <div class="flex items-center gap-1.5 text-gray-500 light:text-gray-400">
+                  {art.updatedAt && new Date(art.updatedAt).getTime() - new Date(art.publishedAt).getTime() > 60000 && (
+                    <span class="text-[10px] font-bold text-amber-400 light:text-amber-600 bg-amber-500/10 px-1.5 py-0.5 rounded border border-amber-500/20" title={`Last updated on ${new Date(art.updatedAt).toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })}`}>
+                      Updated
+                    </span>
+                  )}
+                  <span>
+                    {new Date(art.publishedAt).toLocaleDateString('en-IN', {
+                      day: 'numeric',
+                      month: 'short',
+                      year: 'numeric'
+                    })}
+                  </span>
+                </div>
               </div>
 
               <!-- Title -->

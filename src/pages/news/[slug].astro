@@ -16,7 +16,7 @@ if (!slug) {
   return Astro.redirect('/news');
 }
 
-const article = await ArticleService.getArticleBySlug(slug);
+const article = await ArticleService.getArticleBySlug(slug, true);
 
 if (!article) {
   return Astro.redirect('/404');
@@ -38,6 +38,19 @@ const publishedFormatted = new Date(article.publishedAt).toLocaleDateString('en-
   month: 'long',
   year: 'numeric'
 });
+
+// Format last modified date if edited
+const isArticleUpdated = Boolean(
+  article.updatedAt && 
+  article.publishedAt && 
+  new Date(article.updatedAt).getTime() - new Date(article.publishedAt).getTime() > 60000
+);
+
+const updatedFormatted = isArticleUpdated ? new Date(article.updatedAt).toLocaleDateString('en-IN', {
+  day: 'numeric',
+  month: 'long',
+  year: 'numeric'
+}) : null;
 
 const articleImage = article.sourceVideoId 
   ? `https://i.ytimg.com/vi/${article.sourceVideoId}/maxresdefault.jpg` 
@@ -161,6 +174,12 @@ const renderedHtml = MarkdownService.render(article.content);
           <span>📅 Published:</span>
           <time datetime={article.publishedAt} class="text-white light:text-ink font-medium">{publishedFormatted}</time>
         </span>
+        {isArticleUpdated && updatedFormatted && (
+          <span class="flex items-center gap-1.5 px-2.5 py-0.5 rounded-md bg-amber-500/10 text-amber-400 light:text-amber-600 border border-amber-500/20 text-[11px] font-semibold" title={`Original circular: ${publishedFormatted}`}>
+            <span>✏️ Last Modified:</span>
+            <time datetime={article.updatedAt}>{updatedFormatted}</time>
+          </span>
+        )}
         <span class="flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-[11px] font-semibold">
           <span>✓</span>
           <span>Verified Circular</span>

@@ -266,16 +266,234 @@ const pageDescription = "Administrative content management portal for Dr. A.P.J.
     </div>
   </div>
 
+  <!-- Edit Article Modal -->
+  <div id="admin-edit-modal" class="fixed inset-0 z-50 flex items-center justify-center hidden p-3 sm:p-6 overflow-y-auto">
+    <div id="admin-edit-backdrop" class="fixed inset-0 bg-black/80 backdrop-blur-md cursor-pointer"></div>
+    <div class="relative w-full max-w-4xl bg-[#0e1117] light:bg-white border border-brand-blue/30 rounded-3xl p-5 sm:p-7 shadow-2xl z-10 space-y-5 text-left my-auto max-h-[92vh] flex flex-col">
+      
+      <!-- Modal Header -->
+      <div class="flex items-start justify-between gap-4 border-b border-white/10 light:border-black/10 pb-4 shrink-0">
+        <div class="flex items-center gap-3">
+          <div class="w-12 h-12 rounded-2xl bg-brand-blue/15 text-brand-blue flex items-center justify-center text-2xl shrink-0 border border-brand-blue/25">
+            ✏️
+          </div>
+          <div>
+            <div class="flex items-center gap-2 flex-wrap">
+              <h3 class="text-base sm:text-lg font-bold text-white light:text-ink">Edit Article Post</h3>
+              <span id="edit-status-badge" class="px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-emerald-500/15 text-emerald-400 border border-emerald-500/25">Published</span>
+            </div>
+            <p id="edit-slug-display" class="text-xs font-mono text-gray-400 light:text-gray-500 truncate max-w-md">/news/...</p>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-3 shrink-0">
+          <div class="text-right hidden sm:block">
+            <div class="text-[10px] uppercase font-bold text-gray-400 tracking-wider">Last Modified</div>
+            <div id="edit-last-modified-display" class="text-xs font-mono font-semibold text-amber-400 light:text-amber-600">--</div>
+          </div>
+          <button 
+            id="admin-edit-close-btn" 
+            type="button" 
+            class="w-8 h-8 rounded-xl bg-white/5 hover:bg-white/10 light:bg-black/5 light:hover:bg-black/10 text-gray-400 hover:text-white light:hover:text-ink flex items-center justify-center text-lg transition-colors cursor-pointer"
+            title="Close without saving"
+          >
+            ✕
+          </button>
+        </div>
+      </div>
+
+      <!-- Modal Form (scrollable body) -->
+      <div class="space-y-4 overflow-y-auto pr-1 flex-1 text-xs">
+        
+        <!-- Loading State for Modal -->
+        <div id="edit-modal-loading" class="py-16 text-center space-y-3">
+          <div class="w-10 h-10 border-2 border-brand-blue border-t-transparent rounded-full animate-spin mx-auto"></div>
+          <p class="text-xs text-gray-400 light:text-gray-500">Loading article content from database...</p>
+        </div>
+
+        <form id="admin-edit-form" class="space-y-4 hidden">
+          <input type="hidden" id="edit-article-slug" />
+
+          <!-- Title -->
+          <div>
+            <label for="edit-article-title" class="block font-semibold text-gray-300 light:text-gray-700 mb-1">
+              Article Title / Headline <span class="text-rose-400">*</span>
+            </label>
+            <input 
+              id="edit-article-title" 
+              type="text" 
+              required
+              class="w-full px-3.5 py-2.5 rounded-xl bg-black/40 light:bg-gray-50 border border-white/15 light:border-gray-300 text-white light:text-ink text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-brand-blue transition-all"
+              placeholder="Official Circular Title..."
+            />
+          </div>
+
+          <!-- Meta row: Category, Status, Author -->
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <div>
+              <label for="edit-article-category" class="block font-semibold text-gray-300 light:text-gray-700 mb-1">
+                Category
+              </label>
+              <select 
+                id="edit-article-category" 
+                class="w-full px-3 py-2 rounded-xl bg-black/40 light:bg-gray-50 border border-white/15 light:border-gray-300 text-white light:text-ink text-xs focus:outline-none focus:ring-2 focus:ring-brand-blue transition-all cursor-pointer"
+              >
+                <option value="Results & Marksheets">Results &amp; Marksheets</option>
+                <option value="Circulars & Updates">Circulars &amp; Updates</option>
+                <option value="Exam Schedule">Exam Schedule</option>
+                <option value="Student Services">Student Services</option>
+                <option value="Admissions & Counseling">Admissions &amp; Counseling</option>
+                <option value="General News">General News</option>
+              </select>
+            </div>
+
+            <div>
+              <label for="edit-article-status" class="block font-semibold text-gray-300 light:text-gray-700 mb-1">
+                Publication Status
+              </label>
+              <select 
+                id="edit-article-status" 
+                class="w-full px-3 py-2 rounded-xl bg-black/40 light:bg-gray-50 border border-white/15 light:border-gray-300 text-white light:text-ink text-xs focus:outline-none focus:ring-2 focus:ring-brand-blue transition-all cursor-pointer"
+              >
+                <option value="published">Published (Live to public)</option>
+                <option value="draft">Draft (Admin only)</option>
+              </select>
+            </div>
+
+            <div>
+              <label for="edit-article-author" class="block font-semibold text-gray-300 light:text-gray-700 mb-1">
+                Author
+              </label>
+              <input 
+                id="edit-article-author" 
+                type="text" 
+                class="w-full px-3 py-2 rounded-xl bg-black/40 light:bg-gray-50 border border-white/15 light:border-gray-300 text-white light:text-ink text-xs focus:outline-none focus:ring-2 focus:ring-brand-blue transition-all"
+                placeholder="e.g. AKTU News Desk"
+              />
+            </div>
+          </div>
+
+          <!-- Excerpt -->
+          <div>
+            <label for="edit-article-excerpt" class="block font-semibold text-gray-300 light:text-gray-700 mb-1">
+              Summary / Excerpt (Displayed in Key Takeaways &amp; Google Snippets) <span class="text-rose-400">*</span>
+            </label>
+            <textarea 
+              id="edit-article-excerpt" 
+              rows="2" 
+              required
+              class="w-full px-3.5 py-2.5 rounded-xl bg-black/40 light:bg-gray-50 border border-white/15 light:border-gray-300 text-white light:text-ink text-xs focus:outline-none focus:ring-2 focus:ring-brand-blue transition-all leading-relaxed"
+              placeholder="Concise 1-2 sentence overview..."
+            ></textarea>
+          </div>
+
+          <!-- Tags -->
+          <div>
+            <label for="edit-article-tags" class="block font-semibold text-gray-300 light:text-gray-700 mb-1">
+              Tags (comma-separated)
+            </label>
+            <input 
+              id="edit-article-tags" 
+              type="text" 
+              class="w-full px-3.5 py-2 rounded-xl bg-black/40 light:bg-gray-50 border border-white/15 light:border-gray-300 text-white light:text-ink text-xs focus:outline-none focus:ring-2 focus:ring-brand-blue transition-all"
+              placeholder="AKTU, Odd Semester, Result, Carry Over"
+            />
+          </div>
+
+          <!-- Markdown Content with Toolbar & Preview -->
+          <div class="space-y-2">
+            <div class="flex items-center justify-between gap-2 flex-wrap">
+              <label class="block font-semibold text-gray-300 light:text-gray-700">
+                Article Body Content (Markdown) <span class="text-rose-400">*</span>
+              </label>
+              <div class="flex items-center gap-2">
+                <span id="edit-content-stats" class="text-[11px] text-gray-400 font-mono">0 words • ~1 min read</span>
+                <div class="inline-flex rounded-lg border border-white/15 light:border-gray-300 p-0.5 bg-black/40 light:bg-gray-100">
+                  <button type="button" id="tab-write-btn" class="px-2.5 py-1 rounded-md text-[11px] font-semibold bg-brand-blue text-white transition-all cursor-pointer">Write</button>
+                  <button type="button" id="tab-preview-btn" class="px-2.5 py-1 rounded-md text-[11px] font-semibold text-gray-400 light:text-gray-600 hover:text-white light:hover:text-ink transition-all cursor-pointer">Preview</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Markdown quick-action toolbar -->
+            <div id="edit-markdown-toolbar" class="flex items-center gap-1 p-1.5 rounded-xl bg-white/[0.03] light:bg-gray-100 border border-white/10 light:border-gray-200 overflow-x-auto">
+              <button type="button" class="toolbar-btn px-2 py-1 rounded hover:bg-white/10 light:hover:bg-gray-200 text-gray-300 light:text-gray-700 font-bold text-[11px] cursor-pointer" data-prefix="**" data-suffix="**" title="Bold">B</button>
+              <button type="button" class="toolbar-btn px-2 py-1 rounded hover:bg-white/10 light:hover:bg-gray-200 text-gray-300 light:text-gray-700 italic text-[11px] cursor-pointer" data-prefix="*" data-suffix="*" title="Italic">I</button>
+              <span class="w-px h-4 bg-white/10 light:bg-gray-300 mx-1"></span>
+              <button type="button" class="toolbar-btn px-2 py-1 rounded hover:bg-white/10 light:hover:bg-gray-200 text-gray-300 light:text-gray-700 font-bold text-[11px] cursor-pointer" data-prefix="## " data-suffix="" title="Heading 2">H2</button>
+              <button type="button" class="toolbar-btn px-2 py-1 rounded hover:bg-white/10 light:hover:bg-gray-200 text-gray-300 light:text-gray-700 font-bold text-[11px] cursor-pointer" data-prefix="### " data-suffix="" title="Heading 3">H3</button>
+              <span class="w-px h-4 bg-white/10 light:bg-gray-300 mx-1"></span>
+              <button type="button" class="toolbar-btn px-2 py-1 rounded hover:bg-white/10 light:hover:bg-gray-200 text-gray-300 light:text-gray-700 text-[11px] cursor-pointer" data-prefix="- " data-suffix="" title="Bullet List">• List</button>
+              <button type="button" class="toolbar-btn px-2 py-1 rounded hover:bg-white/10 light:hover:bg-gray-200 text-gray-300 light:text-gray-700 text-[11px] cursor-pointer" data-prefix="1. " data-suffix="" title="Numbered List">1. List</button>
+              <button type="button" class="toolbar-btn px-2 py-1 rounded hover:bg-white/10 light:hover:bg-gray-200 text-gray-300 light:text-gray-700 text-[11px] cursor-pointer" data-prefix="> " data-suffix="" title="Quote">Quote</button>
+              <span class="w-px h-4 bg-white/10 light:bg-gray-300 mx-1"></span>
+              <button type="button" class="toolbar-btn px-2 py-1 rounded hover:bg-white/10 light:hover:bg-gray-200 text-gray-300 light:text-gray-700 text-[11px] cursor-pointer" data-snippet="table" title="Insert Table">📊 Table</button>
+              <button type="button" class="toolbar-btn px-2 py-1 rounded hover:bg-white/10 light:hover:bg-gray-200 text-gray-300 light:text-gray-700 text-[11px] cursor-pointer" data-snippet="link" title="Insert Link">🔗 Link</button>
+              <button type="button" class="toolbar-btn px-2 py-1 rounded hover:bg-white/10 light:hover:bg-gray-200 text-amber-400 font-semibold text-[11px] cursor-pointer" data-snippet="callout" title="Important Callout Box">⚠️ Callout</button>
+            </div>
+
+            <!-- Write Textarea -->
+            <textarea 
+              id="edit-article-content" 
+              rows="12" 
+              required
+              class="w-full font-mono text-xs sm:text-sm p-4 rounded-xl bg-black/50 light:bg-gray-50 border border-white/15 light:border-gray-300 text-gray-200 light:text-ink focus:outline-none focus:ring-2 focus:ring-brand-blue resize-y transition-all leading-relaxed"
+              placeholder="Type article content in Markdown format..."
+            ></textarea>
+
+            <!-- Live Preview Container -->
+            <div 
+              id="edit-article-preview" 
+              class="hidden min-h-[280px] max-h-[380px] overflow-y-auto p-4 rounded-xl bg-black/30 light:bg-gray-50 border border-white/15 light:border-gray-300 text-gray-200 light:text-ink text-xs sm:text-sm leading-relaxed prose prose-invert light:prose-neutral max-w-none"
+            ></div>
+          </div>
+
+          <div id="edit-modal-error" class="hidden p-3 rounded-xl bg-rose-500/10 border border-rose-500/20 text-rose-400 text-xs font-medium"></div>
+
+          <div class="flex items-center justify-between gap-3 pt-3 border-t border-white/10 light:border-black/10 shrink-0">
+            <div class="text-[11px] text-gray-400 light:text-gray-500">
+              <span>💾 Saving will automatically update <strong class="text-amber-400">Last Modified</strong> &amp; invalidate CDN cache.</span>
+            </div>
+
+            <div class="flex items-center gap-2.5">
+              <button 
+                id="admin-edit-cancel-btn" 
+                type="button" 
+                class="px-4 py-2.5 rounded-xl border border-white/15 light:border-gray-300 text-xs font-semibold text-gray-300 light:text-gray-700 hover:bg-white/5 light:hover:bg-black/5 cursor-pointer transition-all"
+              >
+                Cancel
+              </button>
+              <button 
+                id="admin-edit-save-btn" 
+                type="submit" 
+                class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-brand-blue to-purple-600 hover:from-brand-blue-hover hover:to-purple-700 text-white text-xs font-bold transition-all shadow-lg shadow-brand-blue/30 cursor-pointer flex items-center gap-1.5"
+              >
+                <span>💾</span>
+                <span id="admin-edit-save-text">Save Changes</span>
+              </button>
+            </div>
+          </div>
+
+        </form>
+      </div>
+
+    </div>
+  </div>
+
   <script>
+    import { marked } from 'marked';
+
     interface ArticleRow {
       slug: string;
       title: string;
       category: string;
       publishedAt: string;
+      updatedAt?: string;
       readingTime?: number;
       views?: number;
       sourceVideoId?: string;
       sourceChannel?: string;
+      status?: string;
     }
 
     let allArticles: ArticleRow[] = [];
@@ -313,6 +531,33 @@ const pageDescription = "Administrative content management portal for Dr. A.P.J.
     const deleteTitleEl = document.getElementById("admin-delete-article-title");
     const deleteSlugEl = document.getElementById("admin-delete-article-slug");
     const deleteErrorEl = document.getElementById("admin-delete-error");
+
+    // Edit Modal Elements
+    const editModal = document.getElementById("admin-edit-modal");
+    const editBackdrop = document.getElementById("admin-edit-backdrop");
+    const editCloseBtn = document.getElementById("admin-edit-close-btn");
+    const editCancelBtn = document.getElementById("admin-edit-cancel-btn");
+    const editForm = document.getElementById("admin-edit-form") as HTMLFormElement | null;
+    const editModalLoading = document.getElementById("edit-modal-loading");
+    const editModalError = document.getElementById("edit-modal-error");
+    const editSlugDisplay = document.getElementById("edit-slug-display");
+    const editStatusBadge = document.getElementById("edit-status-badge");
+    const editLastModifiedDisplay = document.getElementById("edit-last-modified-display");
+    const editSaveBtn = document.getElementById("admin-edit-save-btn") as HTMLButtonElement | null;
+    const editSaveText = document.getElementById("admin-edit-save-text");
+
+    const editSlugInput = document.getElementById("edit-article-slug") as HTMLInputElement | null;
+    const editTitleInput = document.getElementById("edit-article-title") as HTMLInputElement | null;
+    const editCategorySelect = document.getElementById("edit-article-category") as HTMLSelectElement | null;
+    const editStatusSelect = document.getElementById("edit-article-status") as HTMLSelectElement | null;
+    const editAuthorInput = document.getElementById("edit-article-author") as HTMLInputElement | null;
+    const editExcerptInput = document.getElementById("edit-article-excerpt") as HTMLTextAreaElement | null;
+    const editTagsInput = document.getElementById("edit-article-tags") as HTMLInputElement | null;
+    const editContentInput = document.getElementById("edit-article-content") as HTMLTextAreaElement | null;
+    const editPreviewContainer = document.getElementById("edit-article-preview");
+    const editContentStats = document.getElementById("edit-content-stats");
+    const tabWriteBtn = document.getElementById("tab-write-btn");
+    const tabPreviewBtn = document.getElementById("tab-preview-btn");
 
     const getLocalToken = (): string => {
       try {
@@ -414,7 +659,12 @@ const pageDescription = "Administrative content management portal for Dr. A.P.J.
               </span>
             </td>
             <td class="py-3.5 px-4 whitespace-nowrap text-gray-400 light:text-gray-500 text-[11px]">
-              ${dateStr}
+              <div>${dateStr}</div>
+              ${art.updatedAt && (new Date(art.updatedAt).getTime() - new Date(art.publishedAt).getTime() > 60000) ? `
+                <span class="text-[10px] text-amber-400 light:text-amber-600 font-semibold block" title="Last updated: ${new Date(art.updatedAt).toLocaleString('en-IN')}">
+                  ✏️ ${new Date(art.updatedAt).toLocaleDateString("en-IN", { day: "numeric", month: "short" })}
+                </span>
+              ` : ''}
             </td>
             <td class="py-3.5 px-4 whitespace-nowrap text-[11px]">
               ${art.sourceVideoId ? `
@@ -431,20 +681,31 @@ const pageDescription = "Administrative content management portal for Dr. A.P.J.
                 <span class="text-gray-500">—</span>
               `}
             </td>
-            <td class="py-3.5 px-4 whitespace-nowrap text-right space-x-2">
+            <td class="py-3.5 px-4 whitespace-nowrap text-right space-x-1.5">
               <a 
                 href="/news/${art.slug}" 
                 target="_blank" 
                 class="px-2.5 py-1.5 rounded-lg border border-white/10 light:border-black/10 text-gray-300 light:text-gray-700 hover:text-white light:hover:text-ink hover:bg-white/5 light:hover:bg-black/5 transition-all text-xs font-semibold inline-flex items-center gap-1"
+                title="View live article"
               >
                 <span>👁️</span>
                 <span>View</span>
               </a>
               <button 
                 type="button" 
+                class="edit-btn px-2.5 py-1.5 rounded-lg bg-brand-blue/10 hover:bg-brand-blue text-brand-blue-light hover:text-white border border-brand-blue/25 text-xs font-semibold transition-all inline-flex items-center gap-1 cursor-pointer"
+                data-slug="${art.slug}"
+                title="Edit article post"
+              >
+                <span>✏️</span>
+                <span>Edit</span>
+              </button>
+              <button 
+                type="button" 
                 class="delete-btn px-2.5 py-1.5 rounded-lg bg-red-600/10 hover:bg-red-600 text-red-400 hover:text-white border border-red-500/20 text-xs font-semibold transition-all inline-flex items-center gap-1 cursor-pointer"
                 data-slug="${art.slug}"
                 data-title="${encodeURIComponent(art.title)}"
+                title="Delete article"
               >
                 <span>🗑️</span>
                 <span>Delete</span>
@@ -453,6 +714,15 @@ const pageDescription = "Administrative content management portal for Dr. A.P.J.
           </tr>
         `;
       }).join("");
+
+      // Attach edit click handlers
+      document.querySelectorAll(".edit-btn").forEach(btn => {
+        btn.addEventListener("click", (e) => {
+          e.preventDefault();
+          const slug = btn.getAttribute("data-slug") || "";
+          openEditModal(slug);
+        });
+      });
 
       // Attach delete click handlers
       document.querySelectorAll(".delete-btn").forEach(btn => {
@@ -708,6 +978,269 @@ const pageDescription = "Administrative content management portal for Dr. A.P.J.
       } finally {
         deleteConfirmBtn.disabled = false;
         deleteConfirmBtn.textContent = "Confirm Delete";
+      }
+    });
+
+    // Edit Modal Handling
+    const updateContentStats = () => {
+      if (!editContentStats || !editContentInput) return;
+      const text = editContentInput.value.trim();
+      const words = text ? text.split(/\s+/).filter(Boolean).length : 0;
+      const readTime = Math.max(1, Math.ceil(words / 200));
+      editContentStats.textContent = `${words.toLocaleString()} words • ~${readTime} min read`;
+    };
+
+    const openEditModal = async (slug: string) => {
+      const token = getLocalToken();
+      if (!token) return;
+
+      editModal?.classList.remove("hidden");
+      editModalLoading?.classList.remove("hidden");
+      editForm?.classList.add("hidden");
+      editModalError?.classList.add("hidden");
+      if (editSlugDisplay) editSlugDisplay.textContent = `/news/${slug}`;
+
+      // Reset to write tab
+      tabWriteBtn?.classList.add("bg-brand-blue", "text-white");
+      tabWriteBtn?.classList.remove("text-gray-400");
+      tabPreviewBtn?.classList.remove("bg-brand-blue", "text-white");
+      tabPreviewBtn?.classList.add("text-gray-400");
+      editContentInput?.classList.remove("hidden");
+      editPreviewContainer?.classList.add("hidden");
+
+      try {
+        const res = await fetch(`/api/admin/article?slug=${encodeURIComponent(slug)}&_t=${Date.now()}`, {
+          headers: { "Authorization": `Bearer ${token}` },
+          cache: "no-store"
+        });
+
+        if (res.status === 401) {
+          setLocalToken("");
+          closeEditModal();
+          switchToAuthView();
+          return;
+        }
+
+        const data = await res.json();
+        if (res.ok && data.success && data.article) {
+          const art = data.article;
+          if (editSlugInput) editSlugInput.value = art.slug || slug;
+          if (editTitleInput) editTitleInput.value = art.title || "";
+          if (editCategorySelect) editCategorySelect.value = art.category || "Circulars & Updates";
+          if (editStatusSelect) editStatusSelect.value = art.status || "published";
+          if (editAuthorInput) editAuthorInput.value = art.author || "AKTU Student News Desk";
+          if (editExcerptInput) editExcerptInput.value = art.excerpt || "";
+          if (editTagsInput) editTagsInput.value = Array.isArray(art.tags) ? art.tags.join(", ") : (art.tags || "");
+          if (editContentInput) editContentInput.value = art.content || "";
+
+          // Status badge
+          if (editStatusBadge) {
+            const isDraft = art.status === "draft";
+            editStatusBadge.textContent = isDraft ? "Draft" : "Published";
+            editStatusBadge.className = isDraft 
+              ? "px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-amber-500/15 text-amber-400 border border-amber-500/25"
+              : "px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-emerald-500/15 text-emerald-400 border border-emerald-500/25";
+          }
+
+          // Last modified timestamp display
+          if (editLastModifiedDisplay) {
+            const lastDate = art.updatedAt || art.publishedAt;
+            editLastModifiedDisplay.textContent = lastDate 
+              ? new Date(lastDate).toLocaleString("en-IN", {
+                  day: "numeric",
+                  month: "short",
+                  year: "numeric",
+                  hour: "2-digit",
+                  minute: "2-digit"
+                })
+              : "--";
+          }
+
+          updateContentStats();
+          editModalLoading?.classList.add("hidden");
+          editForm?.classList.remove("hidden");
+          editTitleInput?.focus();
+        } else {
+          if (editModalError) {
+            editModalError.textContent = data.message || "Failed to load article from database.";
+            editModalError.classList.remove("hidden");
+          }
+        }
+      } catch (err) {
+        if (editModalError) {
+          editModalError.textContent = "Network error loading article details.";
+          editModalError.classList.remove("hidden");
+        }
+      } finally {
+        editModalLoading?.classList.add("hidden");
+      }
+    };
+
+    const closeEditModal = () => {
+      editModal?.classList.add("hidden");
+      editModalError?.classList.add("hidden");
+      if (editForm) editForm.reset();
+    };
+
+    editBackdrop?.addEventListener("click", closeEditModal);
+    editCloseBtn?.addEventListener("click", closeEditModal);
+    editCancelBtn?.addEventListener("click", closeEditModal);
+
+    // Live word count listener
+    editContentInput?.addEventListener("input", updateContentStats);
+
+    // Write / Preview Tab Switching
+    tabWriteBtn?.addEventListener("click", () => {
+      tabPreviewBtn?.classList.remove("bg-brand-blue", "text-white");
+      tabPreviewBtn?.classList.add("text-gray-400");
+      tabWriteBtn?.classList.add("bg-brand-blue", "text-white");
+      tabWriteBtn?.classList.remove("text-gray-400");
+      editPreviewContainer?.classList.add("hidden");
+      editContentInput?.classList.remove("hidden");
+      editContentInput?.focus();
+    });
+
+    tabPreviewBtn?.addEventListener("click", () => {
+      tabWriteBtn?.classList.remove("bg-brand-blue", "text-white");
+      tabWriteBtn?.classList.add("text-gray-400");
+      tabPreviewBtn?.classList.add("bg-brand-blue", "text-white");
+      tabPreviewBtn?.classList.remove("text-gray-400");
+      editContentInput?.classList.add("hidden");
+      editPreviewContainer?.classList.remove("hidden");
+      if (editPreviewContainer) {
+        const rawContent = editContentInput?.value?.trim() || "*No article content written yet.*";
+        editPreviewContainer.innerHTML = marked.parse(rawContent) as string;
+      }
+    });
+
+    // Formatting Toolbar Buttons
+    document.querySelectorAll(".toolbar-btn").forEach(btn => {
+      btn.addEventListener("click", (e) => {
+        e.preventDefault();
+        if (!editContentInput) return;
+
+        // If currently in preview mode, switch to write mode first
+        if (!editPreviewContainer?.classList.contains("hidden")) {
+          tabWriteBtn?.click();
+        }
+
+        const prefix = btn.getAttribute("data-prefix");
+        const suffix = btn.getAttribute("data-suffix") || "";
+        const snippet = btn.getAttribute("data-snippet");
+
+        const start = editContentInput.selectionStart;
+        const end = editContentInput.selectionEnd;
+        const text = editContentInput.value;
+
+        if (snippet) {
+          let snippetText = "";
+          if (snippet === "table") {
+            snippetText = "\n\n| Item | Description | Status |\n|---|---|---|\n| Application Deadline | DD/MM/YYYY | Active |\n| Result Release | DD/MM/YYYY | Declared |\n\n";
+          } else if (snippet === "link") {
+            snippetText = "[AKTU Official Portal](https://erp.aktu.ac.in)";
+          } else if (snippet === "callout") {
+            snippetText = "\n\n> [!IMPORTANT]\n> Official Notice: Ensure all examination roll numbers and marksheets are verified through OneView.\n\n";
+          }
+          editContentInput.value = text.substring(0, start) + snippetText + text.substring(end);
+          editContentInput.focus();
+          editContentInput.setSelectionRange(start + snippetText.length, start + snippetText.length);
+        } else if (prefix !== null) {
+          const selected = text.substring(start, end);
+          const replacement = prefix + (selected || "sample text") + suffix;
+          editContentInput.value = text.substring(0, start) + replacement + text.substring(end);
+          editContentInput.focus();
+          const newStart = start + prefix.length;
+          const newEnd = newStart + (selected ? selected.length : 11);
+          editContentInput.setSelectionRange(newStart, newEnd);
+        }
+
+        updateContentStats();
+      });
+    });
+
+    // Save Edited Article Form Submit
+    editForm?.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const token = getLocalToken();
+      if (!token) return;
+
+      const slug = editSlugInput?.value.trim();
+      if (!slug) return;
+
+      if (editSaveBtn && editSaveText) {
+        editSaveBtn.disabled = true;
+        editSaveText.textContent = "Saving & Purging CDN...";
+      }
+      editModalError?.classList.add("hidden");
+
+      try {
+        const payload = {
+          slug,
+          title: editTitleInput?.value.trim(),
+          category: editCategorySelect?.value,
+          status: editStatusSelect?.value,
+          author: editAuthorInput?.value.trim(),
+          excerpt: editExcerptInput?.value.trim(),
+          tags: editTagsInput?.value || "",
+          content: editContentInput?.value || ""
+        };
+
+        const res = await fetch(`/api/admin/article?_t=${Date.now()}`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+          },
+          body: JSON.stringify(payload),
+          cache: "no-store"
+        });
+
+        const data = await res.json();
+        if (res.ok && data.success && data.article) {
+          const updated = data.article;
+          // Update in-memory array
+          const idx = allArticles.findIndex(a => a.slug === slug);
+          if (idx !== -1) {
+            allArticles[idx] = {
+              ...allArticles[idx],
+              title: updated.title,
+              category: updated.category,
+              updatedAt: updated.updatedAt,
+              readingTime: updated.readingTime,
+              status: updated.status
+            };
+          }
+          renderArticlesTable();
+          closeEditModal();
+          const updatedTimeStr = new Date(updated.updatedAt).toLocaleTimeString("en-IN", { hour: "2-digit", minute: "2-digit" });
+          showToast(`✨ Article "${updated.title}" saved! Last modified: ${updatedTimeStr}`);
+        } else {
+          if (editModalError) {
+            editModalError.textContent = data.message || "Failed to save article changes.";
+            editModalError.classList.remove("hidden");
+          }
+        }
+      } catch (err) {
+        if (editModalError) {
+          editModalError.textContent = "Network error while saving article.";
+          editModalError.classList.remove("hidden");
+        }
+      } finally {
+        if (editSaveBtn && editSaveText) {
+          editSaveBtn.disabled = false;
+          editSaveText.textContent = "Save Changes";
+        }
+      }
+    });
+
+    // Close modals on Escape key
+    window.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") {
+        if (!editModal?.classList.contains("hidden")) {
+          closeEditModal();
+        } else if (!deleteModal?.classList.contains("hidden")) {
+          closeDeleteModal();
+        }
       }
     });
   </script>

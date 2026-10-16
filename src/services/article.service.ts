@@ -89,12 +89,16 @@ export class ArticleService {
   /**
    * Retrieve article by its unique slug
    */
-  static async getArticleBySlug(slug: string): Promise<Article | null> {
+  static async getArticleBySlug(slug: string, publishedOnly: boolean = false): Promise<Article | null> {
     // 1. Try DB
     try {
       const db = await DatabaseService.connectToDatabase();
       if (db) {
-        const doc = await db.collection<Article>('articles').findOne({ slug, status: 'published' });
+        const filter: any = { slug };
+        if (publishedOnly) {
+          filter.status = 'published';
+        }
+        const doc = await db.collection<Article>('articles').findOne(filter);
         if (doc) return doc;
       }
     } catch (e) {
@@ -108,13 +112,82 @@ export class ArticleService {
       if (fs.existsSync(filePath)) {
         const raw = fs.readFileSync(filePath, 'utf-8');
         const parsed: Article = JSON.parse(raw);
-        if (parsed.status === 'published') return parsed;
+        if (!publishedOnly || parsed.status === 'published') return parsed;
       }
     } catch (e) {
       console.warn(`Failed to read local article ${slug}:`, e);
     }
 
     return null;
+  }
+
+  /**
+   * Update an existing article's content, metadata, reading time, and lastModified (updatedAt)
+   */
+  static async updateArticle(
+    slug: string,
+    updates: {
+      title?: string;
+      excerpt?: string;
+      content?: string;
+      category?: string;
+      tags?: string[];
+      status?: 'published' | 'draft';
+      author?: string;
+    }
+  ): Promise<Article | null> {
+    const existing = await this.getArticleBySlug(slug, false);
+    if (!existing) {
+      return null;
+    }
+
+    const now = new Date().toISOString();
+    const updatedArticle: Article = {
+      ...existing,
+      ...(updates.title !== undefined ? { title: updates.title.trim() } : {}),
+      ...(updates.excerpt !== undefined ? { excerpt: updates.excerpt.trim() } : {}),
+      ...(updates.content !== undefined ? { content: updates.content } : {}),
+      ...(updates.category !== undefined ? { category: updates.category.trim() } : {}),
+      ...(updates.tags !== undefined ? { tags: updates.tags } : {}),
+      ...(updates.status !== undefined ? { status: updates.status } : {}),
+      ...(updates.author !== undefined ? { author: updates.author.trim() } : {}),
+      updatedAt: now
+    };
+
+    if (updates.content) {
+      const wordCount = updates.content.trim().split(/\s+/).filter(Boolean).length;
+      updatedArticle.readingTime = Math.max(1, Math.ceil(wordCount / 200));
+    }
+
+    // Save back to DB and local JSON backup
+    await this.saveArticle(updatedArticle);
+
+    // Invalidate edge cache so readers immediately receive updated content
+    await this.purgeCloudflareCache();
+
+    return updatedArticle;
+  }
+
+  /**
+   * Purge Cloudflare Edge Cache for immediate article freshness
+   */
+  static async purgeCloudflareCache(): Promise<void> {
+    try {
+      const zoneId = process.env.CLOUDFLARE_ZONE_ID;
+      const apiToken = process.env.CLOUDFLARE_API_TOKEN;
+      if (zoneId && apiToken) {
+        await fetch(`https://api.cloudflare.com/client/v4/zones/${zoneId}/purge_cache`, {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${apiToken}`,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            purge_everything: true
+          })
+        }).catch(() => {});
+      }
+    } catch {}
   }
 
   /**
