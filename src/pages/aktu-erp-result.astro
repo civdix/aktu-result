@@ -1181,6 +1181,17 @@ const jsonLd = {
           return;
         }
 
+        // Enforce 5 fetches per day limit
+        if (typeof (window as any).checkDailyFetchLimit === "function") {
+          const limitInfo = (window as any).checkDailyFetchLimit();
+          if (limitInfo && limitInfo.exceeded) {
+            if (typeof (window as any).showDailyLimitPopup === "function") {
+              (window as any).showDailyLimitPopup("You have exceeded the limit to fetch details kindly comeback later");
+            }
+            return;
+          }
+        }
+
         // Hide other containers & show loader
         searchForm?.classList.add("hidden");
         if (captchaContainer) {
@@ -1223,6 +1234,10 @@ const jsonLd = {
         }, 1500);
 
         // Network Request & Minimum Animation Delay
+        if (typeof (window as any).recordDailyFetchAttempt === "function") {
+          (window as any).recordDailyFetchAttempt();
+        }
+
         const fetchPromise = fetch('/api/search', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -1240,6 +1255,13 @@ const jsonLd = {
               try {
                 const errData = await res.json();
                 if (errData?.error) errorText = errData.error;
+                if (errData?.limitExceeded || errData?.rateLimited || res.status === 429) {
+                  resetUI();
+                  if (typeof (window as any).showDailyLimitPopup === "function") {
+                    (window as any).showDailyLimitPopup(errData?.error || "You have exceeded the limit to fetch details kindly comeback later");
+                  }
+                  return;
+                }
               } catch (e) {}
               if (errorTitle) errorTitle.textContent = "ERP Search Failed";
               if (errorDesc) errorDesc.textContent = errorText;

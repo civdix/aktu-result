@@ -1,0 +1,236 @@
+---
+// DailyLimitModal.astro
+// Global popup component that enforces max 5 result fetches per day and displays:
+// "You have exceeded the limit to fetch details kindly comeback later"
+---
+
+<div 
+  id="daily-fetch-limit-modal" 
+  class="hidden fixed inset-0 z-[9999] bg-black/85 backdrop-blur-md items-center justify-center p-4 sm:p-6 transition-all duration-300"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="daily-limit-title"
+>
+  <div class="relative w-full max-w-md rounded-3xl border border-rose-500/30 bg-gradient-to-b from-[#181214] via-[#120d0f] to-[#0a0708] light:from-white light:via-rose-50/30 light:to-white p-6 sm:p-8 shadow-2xl text-center space-y-4 overflow-hidden animate-fadeIn">
+    <!-- Top Ambient Glow -->
+    <div class="absolute -top-16 left-1/2 -translate-x-1/2 w-48 h-48 rounded-full bg-rose-500/20 blur-3xl pointer-events-none"></div>
+
+    <!-- Close Button -->
+    <button 
+      type="button" 
+      id="daily-limit-close-btn"
+      class="absolute top-4 right-4 w-8 h-8 rounded-full bg-white/5 hover:bg-white/10 light:bg-black/5 light:hover:bg-black/10 text-gray-400 hover:text-white light:text-gray-600 light:hover:text-black flex items-center justify-center text-sm font-bold transition-all cursor-pointer"
+      aria-label="Close popup"
+    >
+      ✕
+    </button>
+
+    <!-- Icon Badge -->
+    <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-rose-500/20 to-amber-500/20 border border-rose-500/30 text-rose-400 flex items-center justify-center text-3xl mx-auto shadow-lg shadow-rose-500/10 animate-bounce" style="animation-duration: 3s;">
+      ⏳
+    </div>
+
+    <!-- Title -->
+    <div>
+      <span class="text-[10px] font-bold uppercase tracking-widest text-rose-400 px-2.5 py-0.5 rounded-full bg-rose-500/10 border border-rose-500/20">
+        Daily Quota Exceeded
+      </span>
+      <h3 id="daily-limit-title" class="text-xl font-extrabold text-white light:text-gray-900 mt-2">
+        Daily Search Limit Reached
+      </h3>
+    </div>
+
+    <!-- Required Primary Popup Message -->
+    <div class="p-4 rounded-2xl bg-rose-500/15 light:bg-rose-100 border border-rose-500/30 light:border-rose-300 text-rose-200 light:text-rose-900 font-bold text-sm sm:text-base leading-snug shadow-inner">
+      <span class="block text-lg mb-1">⚠️</span>
+      <span id="daily-limit-message-text">You have exceeded the limit to fetch details kindly comeback later</span>
+    </div>
+
+    <!-- Quota Meter & Explanation -->
+    <div class="space-y-2 text-left bg-white/[0.02] light:bg-gray-50 p-3.5 rounded-xl border border-white/5 light:border-gray-200">
+      <div class="flex items-center justify-between text-xs font-semibold">
+        <span class="text-gray-400 light:text-gray-600">Daily Lookups Used:</span>
+        <span class="text-rose-400 font-bold">5 / 5 (100%)</span>
+      </div>
+
+      <div class="w-full bg-black/40 light:bg-gray-200 h-2.5 rounded-full overflow-hidden">
+        <div class="bg-gradient-to-r from-amber-500 via-rose-500 to-red-600 h-full w-full rounded-full transition-all"></div>
+      </div>
+
+      <p class="text-[11px] text-gray-400 light:text-gray-600 leading-relaxed pt-1">
+        To prevent server overload and ensure uninterrupted access for all AKTU students during peak result hours, each user is allocated <strong>5 result searches per day</strong>.
+      </p>
+    </div>
+
+    <!-- Reset Countdown -->
+    <div class="py-2 px-3 rounded-xl bg-amber-500/10 border border-amber-500/20 text-xs text-amber-300 light:text-amber-800 flex items-center justify-center gap-2">
+      <span>⏰</span>
+      <span>Quota resets in: <strong id="daily-limit-countdown" class="font-mono font-bold text-amber-200 light:text-amber-900">--h --m --s</strong></span>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="space-y-2 pt-2">
+      <button 
+        type="button" 
+        id="daily-limit-dismiss-btn"
+        class="w-full py-3 rounded-xl bg-gradient-to-r from-rose-600 to-red-600 hover:from-rose-500 hover:to-red-500 text-white font-bold text-xs tracking-wide shadow-lg shadow-rose-600/25 active:scale-95 transition-all cursor-pointer"
+      >
+        Understood, I'll Come Back Later
+      </button>
+
+      <a 
+        href="https://oneview.aktu.ac.in/WebPages/aktu/OneView.aspx" 
+        target="_blank" 
+        rel="noopener noreferrer"
+        class="block w-full py-2.5 text-center text-[11px] font-semibold text-gray-400 hover:text-white light:text-gray-600 light:hover:text-ink transition-colors"
+      >
+        Or Open University OneView Portal Directly ↗
+      </a>
+    </div>
+  </div>
+</div>
+
+<script is:inline>
+  (function initDailyFetchLimiter() {
+    const MAX_DAILY_FETCHES = 5;
+    const STORAGE_KEY = 'aktu_daily_fetches';
+
+    // Get current local date as YYYY-MM-DD
+    function getTodayString() {
+      const d = new Date();
+      const year = d.getFullYear();
+      const month = String(d.getMonth() + 1).padStart(2, '0');
+      const day = String(d.getDate()).padStart(2, '0');
+      return `${year}-${month}-${day}`;
+    }
+
+    // Read stored daily fetch records
+    function getDailyRecord() {
+      const today = getTodayString();
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (raw) {
+          const parsed = JSON.parse(raw);
+          if (parsed && parsed.date === today) {
+            return parsed;
+          }
+        }
+      } catch (e) {}
+      return { date: today, count: 0 };
+    }
+
+    // Expose helpers globally on window
+    window.DAILY_FETCH_MAX = MAX_DAILY_FETCHES;
+
+    window.checkDailyFetchLimit = function() {
+      const record = getDailyRecord();
+      return {
+        count: record.count,
+        max: MAX_DAILY_FETCHES,
+        exceeded: record.count >= MAX_DAILY_FETCHES
+      };
+    };
+
+    window.recordDailyFetchAttempt = function() {
+      const today = getTodayString();
+      const record = getDailyRecord();
+      record.count = (record.count || 0) + 1;
+      record.date = today;
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(record));
+      } catch (e) {}
+      return record.count;
+    };
+
+    window.showDailyLimitPopup = function(customMessage) {
+      const modal = document.getElementById('daily-fetch-limit-modal');
+      const msgEl = document.getElementById('daily-limit-message-text');
+      if (modal) {
+        if (customMessage && msgEl) {
+          msgEl.textContent = customMessage;
+        }
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+        updateCountdown();
+      }
+    };
+
+    window.hideDailyLimitPopup = function() {
+      const modal = document.getElementById('daily-fetch-limit-modal');
+      if (modal) {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+      }
+    };
+
+    // Live countdown to next midnight (00:00:00)
+    function updateCountdown() {
+      const countdownEl = document.getElementById('daily-limit-countdown');
+      if (!countdownEl) return;
+
+      const now = new Date();
+      const tomorrow = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1, 0, 0, 0);
+      const diffMs = tomorrow.getTime() - now.getTime();
+
+      if (diffMs <= 0) {
+        countdownEl.textContent = '00h 00m 00s (Resetting...)';
+        return;
+      }
+
+      const hours = Math.floor(diffMs / (1000 * 60 * 60));
+      const minutes = Math.floor((diffMs % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((diffMs % (1000 * 60)) / 1000);
+
+      countdownEl.textContent = `${String(hours).padStart(2, '0')}h ${String(minutes).padStart(2, '0')}m ${String(seconds).padStart(2, '0')}s`;
+    }
+
+    // Refresh countdown every second while popup is active
+    setInterval(updateCountdown, 1000);
+
+    // Wire dismiss buttons
+    document.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('daily-limit-close-btn')?.addEventListener('click', window.hideDailyLimitPopup);
+      document.getElementById('daily-limit-dismiss-btn')?.addEventListener('click', window.hideDailyLimitPopup);
+
+      // Dismiss on backdrop click
+      const modal = document.getElementById('daily-fetch-limit-modal');
+      modal?.addEventListener('click', (e) => {
+        if (e.target === modal) {
+          window.hideDailyLimitPopup();
+        }
+      });
+
+      // Dismiss on Escape key
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modal && !modal.classList.contains('hidden')) {
+          window.hideDailyLimitPopup();
+        }
+      });
+    });
+
+    // Global fetch interceptor to catch 429 rate limit responses from /api/search
+    const originalFetch = window.fetch;
+    window.fetch = async function(...args) {
+      const url = typeof args[0] === 'string' ? args[0] : (args[0]?.url || '');
+      const response = await originalFetch.apply(this, args);
+
+      // If /api/search returns 429 (Too Many Requests / Exceeded Limit)
+      if (url.includes('/api/search') && response.status === 429) {
+        try {
+          const clone = response.clone();
+          const data = await clone.json();
+          if (data && (data.limitExceeded || data.rateLimited || data.error)) {
+            // Record limit exceeded locally so future clicks block immediately
+            const today = getTodayString();
+            localStorage.setItem(STORAGE_KEY, JSON.stringify({ date: today, count: MAX_DAILY_FETCHES }));
+            window.showDailyLimitPopup(data.error || 'You have exceeded the limit to fetch details kindly comeback later');
+          }
+        } catch (e) {
+          window.showDailyLimitPopup('You have exceeded the limit to fetch details kindly comeback later');
+        }
+      }
+
+      return response;
+    };
+  })();
+</script>

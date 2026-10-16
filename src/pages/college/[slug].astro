@@ -906,6 +906,17 @@ const collegeKeywords = `${college.name} aktu result, aktu result for ${college.
       const handleResultSearch = async (roll) => {
         if (!roll) return;
 
+        // Enforce 5 fetches per day limit
+        if (typeof (window as any).checkDailyFetchLimit === "function") {
+          const limitInfo = (window as any).checkDailyFetchLimit();
+          if (limitInfo && limitInfo.exceeded) {
+            if (typeof (window as any).showDailyLimitPopup === "function") {
+              (window as any).showDailyLimitPopup("You have exceeded the limit to fetch details kindly comeback later");
+            }
+            return;
+          }
+        }
+
         resultForm?.classList.add("hidden");
         resultOutput?.classList.add("hidden");
         resultError?.classList.add("hidden");
@@ -929,6 +940,10 @@ const collegeKeywords = `${college.name} aktu result, aktu result for ${college.
         }, 600);
 
         try {
+          if (typeof (window as any).recordDailyFetchAttempt === "function") {
+            (window as any).recordDailyFetchAttempt();
+          }
+
           const res = await fetch("/api/search", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -939,6 +954,14 @@ const collegeKeywords = `${college.name} aktu result, aktu result for ${college.
           resultLoader?.classList.add("hidden");
 
           const data = await res.json();
+
+          if (data && (data.limitExceeded || data.rateLimited || res.status === 429)) {
+            resultForm?.classList.remove("hidden");
+            if (typeof (window as any).showDailyLimitPopup === "function") {
+              (window as any).showDailyLimitPopup(data?.error || "You have exceeded the limit to fetch details kindly comeback later");
+            }
+            return;
+          }
 
           if (data && data.success) {
             const studentName = data.name || data.student?.name || "Verified Student";

@@ -86,7 +86,7 @@ function logRecentSearchSafe(roll: string, name?: string, course?: string, insti
   }).catch(() => {});
 }
 
-export const GET: APIRoute = async ({ request, url }) => {
+export const GET: APIRoute = async ({ request, url, clientAddress }) => {
   const rollNumber = url.searchParams.get('rollNumber') || url.searchParams.get('roll');
   if (rollNumber) {
     const syntheticReq = new Request(request.url, {
@@ -99,7 +99,7 @@ export const GET: APIRoute = async ({ request, url }) => {
         cgid: url.searchParams.get('cgid') || undefined
       })
     });
-    return POST({ request: syntheticReq } as any);
+    return POST({ request: syntheticReq, clientAddress } as any);
   }
 
   return new Response(
@@ -116,7 +116,7 @@ export const GET: APIRoute = async ({ request, url }) => {
   );
 };
 
-export const POST: APIRoute = async ({ request }) => {
+export const POST: APIRoute = async ({ request, clientAddress }) => {
   try {
     const contentType = request.headers.get('content-type') || '';
     let rollNumber: string | undefined;
@@ -190,6 +190,30 @@ export const POST: APIRoute = async ({ request }) => {
             message: "New security verification code loaded."
           }),
           { status: 200, headers: { 'Content-Type': 'application/json' } }
+        );
+      }
+    }
+
+    // 5 Fetches Per Day Limit Check (Daily quota enforcement)
+    if (action !== 'refreshCaptcha' && !manualCaptcha) {
+      const clientIp = (clientAddress || request.headers.get('x-forwarded-for')?.split(',')[0] || request.headers.get('x-real-ip') || 'unknown').trim();
+      const { redisService } = await import('../../services/redis.service');
+      const limitResult = await redisService.checkDailyFetchLimit(clientIp, 5);
+
+      if (!limitResult.allowed) {
+        return new Response(
+          JSON.stringify({
+            success: false,
+            limitExceeded: true,
+            rateLimited: true,
+            error: "You have exceeded the limit to fetch details kindly comeback later",
+            maxDaily: 5,
+            currentCount: limitResult.count
+          }),
+          {
+            status: 429,
+            headers: { 'Content-Type': 'application/json' }
+          }
         );
       }
     }

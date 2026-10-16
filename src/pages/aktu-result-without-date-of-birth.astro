@@ -1410,6 +1410,17 @@ const jsonLd = {
           return;
         }
 
+        // Enforce 5 fetches per day limit
+        if (typeof (window as any).checkDailyFetchLimit === "function") {
+          const limitInfo = (window as any).checkDailyFetchLimit();
+          if (limitInfo && limitInfo.exceeded) {
+            if (typeof (window as any).showDailyLimitPopup === "function") {
+              (window as any).showDailyLimitPopup("You have exceeded the limit to fetch details kindly comeback later");
+            }
+            return;
+          }
+        }
+
         searchForm?.classList.add("hidden");
         if (captchaContainer) {
           captchaContainer.classList.add("hidden");
@@ -1475,6 +1486,10 @@ const jsonLd = {
           log3?.classList.remove("hidden");
         }, 1500);
 
+        if (typeof (window as any).recordDailyFetchAttempt === "function") {
+          (window as any).recordDailyFetchAttempt();
+        }
+
         const fetchPromise = fetch('/api/search', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -1506,6 +1521,11 @@ const jsonLd = {
                 showWithoutDobAdInterstitialThen(resData, () => {
                   renderVerifiedProfile(resData);
                 });
+              } else if (resData && (resData.limitExceeded || resData.rateLimited || res.status === 429)) {
+                resetUI();
+                if (typeof (window as any).showDailyLimitPopup === "function") {
+                  (window as any).showDailyLimitPopup(resData?.error || "You have exceeded the limit to fetch details kindly comeback later");
+                }
               } else if (resData && resData.needsManualCaptcha && resData.captchaImage) {
                 renderManualCaptcha(resData, enteredRoll);
               } else {

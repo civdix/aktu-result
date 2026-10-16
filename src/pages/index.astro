@@ -3451,6 +3451,17 @@ const homeKeywords = `aktu result without date of birth, aktu result without dob
       if (!enteredRoll) return;
 
       const proceedWithSearch = () => {
+        // Enforce 5 fetches per day limit
+        if (typeof (window as any).checkDailyFetchLimit === "function") {
+          const limitInfo = (window as any).checkDailyFetchLimit();
+          if (limitInfo && limitInfo.exceeded) {
+            if (typeof (window as any).showDailyLimitPopup === "function") {
+              (window as any).showDailyLimitPopup("You have exceeded the limit to fetch details kindly comeback later");
+            }
+            return;
+          }
+        }
+
         // Hide Form & Show Loader
         searchForm.classList.add("hidden");
       const vpc = document.getElementById("search-verified-profile-container");
@@ -3522,6 +3533,10 @@ const homeKeywords = `aktu result without date of birth, aktu result without dob
       }, 1500);
 
       // Start network request immediately
+      if (typeof (window as any).recordDailyFetchAttempt === "function") {
+        (window as any).recordDailyFetchAttempt();
+      }
+
       const fetchPromise = fetch('/api/search', {
         method: 'POST',
         headers: {
@@ -3555,6 +3570,11 @@ const homeKeywords = `aktu result without date of birth, aktu result without dob
                   renderSearchVerifiedProfile(resData);
                 }
               });
+            } else if (resData && (resData.limitExceeded || resData.rateLimited || res.status === 429)) {
+              resetUI();
+              if (typeof (window as any).showDailyLimitPopup === "function") {
+                (window as any).showDailyLimitPopup(resData?.error || "You have exceeded the limit to fetch details kindly comeback later");
+              }
             } else if (resData && resData.needsManualCaptcha && resData.captchaImage) {
               renderSearchManualCaptcha(resData, enteredRoll);
             } else {

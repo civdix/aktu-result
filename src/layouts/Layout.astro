@@ -2,6 +2,7 @@
 import "../styles/global.css";
 import NativeBanner from "../components/ads/NativeBanner.astro";
 import DirectLink from "../components/ads/DirectLink.astro";
+import DailyLimitModal from "../components/DailyLimitModal.astro";
 interface Props {
   title: string;
   description: string;
@@ -819,5 +820,8 @@ const isActive = (path: string) => {
         }
       })();
     </script>
+
+    <!-- Daily Fetch Limit Exceeded Modal (Max 5/day) -->
+    <DailyLimitModal />
   </body>
 </html>

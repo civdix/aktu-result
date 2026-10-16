@@ -346,6 +346,47 @@ class RedisService {
       return 1;
     }
   }
+
+  /**
+   * Check and increment daily search limit (Max 5 fetches per day per user/IP)
+   * Automatically resets after 24 hours / daily.
+   */
+  async checkDailyFetchLimit(identifier: string, maxFetches: number = 5): Promise<{ allowed: boolean; count: number; max: number }> {
+    const today = new Date().toISOString().slice(0, 10);
+    const key = `aktu:daily_fetch:${today}:${identifier}`;
+
+    try {
+      const client = await this.getActiveClient();
+      if (client) {
+        const count = await client.incr(key);
+        if (count === 1) {
+          // Set TTL of 24 hours (86,400 seconds)
+          await client.expire(key, 86400);
+        }
+        return {
+          allowed: count <= maxFetches,
+          count,
+          max: maxFetches
+        };
+      }
+    } catch (err) {
+      console.warn('[Redis] checkDailyFetchLimit failed, falling back to memory:', err);
+    }
+
+    // In-memory fallback
+    const memKey = `${today}:${identifier}`;
+    const current = (inMemoryDailyLimitMap.get(memKey) || 0) + 1;
+    inMemoryDailyLimitMap.set(memKey, current);
+    return {
+      allowed: current <= maxFetches,
+      count: current,
+      max: maxFetches
+    };
+  }
 }
 
+// In-memory fallback map for daily limits
+const inMemoryDailyLimitMap = new Map<string, number>();
+
 export const redisService = new RedisService();
+
