@@ -1060,11 +1060,24 @@ if (process.env.EMBEDDED_MODE !== 'true') {
   });
 }
 
-// Launch Bot
+// Global Error Handler for Grammy Updates
+bot.catch((err) => {
+  const ctx = err.ctx;
+  console.error(`[TelegramBot] Error while handling update ${ctx?.update?.update_id}:`, err.error || err);
+});
+
+// Launch Bot with Graceful 409 Conflict Protection
 console.log('🚀 [TelegramBot] Starting Telegram bot listener...');
 bot.start({
   onStart: (botInfo) => {
     console.log(`✅ [TelegramBot] Bot @${botInfo.username} is LIVE and listening for messages!`);
+  }
+}).catch((err: any) => {
+  if (err?.error_code === 409 || err?.message?.includes('409') || err?.description?.includes('Conflict')) {
+    console.warn('⚠️ [TelegramBot] Telegram Bot 409 Conflict: Another instance of @akturesultwithoutdobbot is already running and polling getUpdates.');
+    console.warn('ℹ️ [TelegramBot] Running in passive mode. Only one bot listener can poll at a time.');
+  } else {
+    console.error('❌ [TelegramBot] Failed to start Telegram Bot listener:', err?.message || err);
   }
 });
 
