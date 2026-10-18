@@ -937,10 +937,6 @@ const collegeKeywords = `${college.name} aktu result, aktu result for ${college.
         }, 600);
 
         try {
-          if (typeof window.recordDailyFetchAttempt === "function") {
-            window.recordDailyFetchAttempt();
-          }
-
           const res = await fetch("/api/search", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -961,6 +957,9 @@ const collegeKeywords = `${college.name} aktu result, aktu result for ${college.
           }
 
           if (data && data.success) {
+            if (typeof window.recordSuccessfulDailyFetch === "function") {
+              window.recordSuccessfulDailyFetch();
+            }
             const studentName = data.name || data.student?.name || "Verified Student";
             const enrollmentNo = data.enrollmentNumber || data.student?.enrollmentNo || "--";
             const fatherName = data.fatherName || data.student?.fatherName || "--";

@@ -1004,6 +1004,9 @@ const jsonLd = {
             });
             const vData = await vRes.json();
             if (vData && vData.success) {
+              if (typeof window.recordSuccessfulDailyFetch === "function") {
+                window.recordSuccessfulDailyFetch();
+              }
               renderErpVerifiedProfile(vData);
             } else if (vData && vData.needsManualCaptcha && vData.captchaImage) {
               currentSession = vData.session || currentSession;
@@ -1080,10 +1083,6 @@ const jsonLd = {
         }, 1500);
 
         // Network Request & Minimum Animation Delay
-        if (typeof window.recordDailyFetchAttempt === "function") {
-          window.recordDailyFetchAttempt();
-        }
-
         const fetchPromise = fetch('/api/search', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -1117,6 +1116,9 @@ const jsonLd = {
 
             const data = await res.json();
             if (data.success) {
+              if (typeof window.recordSuccessfulDailyFetch === "function") {
+                window.recordSuccessfulDailyFetch();
+              }
               renderErpVerifiedProfile(data);
             } else if (data.needsManualCaptcha && data.captchaImage) {
               renderErpManualCaptcha(data, enteredRoll);

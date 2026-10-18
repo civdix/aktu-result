@@ -3480,6 +3480,9 @@ const homeKeywords = `aktu result without date of birth, aktu result without dob
           });
           const vData = await vRes.json();
           if (vData && vData.success) {
+            if (typeof window.recordSuccessfulDailyFetch === "function") {
+              window.recordSuccessfulDailyFetch();
+            }
             if (vData.semesters && vData.semesters.length > 0) {
               displayFullResult(vData);
             } else {
@@ -3588,10 +3591,6 @@ const homeKeywords = `aktu result without date of birth, aktu result without dob
       }, 1500);
 
       // Start network request immediately
-      if (typeof window.recordDailyFetchAttempt === "function") {
-        window.recordDailyFetchAttempt();
-      }
-
       const fetchPromise = fetch('/api/search', {
         method: 'POST',
         headers: {
@@ -3615,6 +3614,9 @@ const homeKeywords = `aktu result without date of birth, aktu result without dob
 
           completeProgress(() => {
             if (resData && resData.success) {
+              if (typeof window.recordSuccessfulDailyFetch === "function") {
+                window.recordSuccessfulDailyFetch();
+              }
               if (resData.totalSearches) {
                 updateCounterUI(resData.totalSearches);
               }

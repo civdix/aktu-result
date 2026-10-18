@@ -131,7 +131,7 @@
       };
     };
 
-    window.recordDailyFetchAttempt = function() {
+    window.recordSuccessfulDailyFetch = function() {
       const today = getTodayString();
       const record = getDailyRecord();
       record.count = (record.count || 0) + 1;
@@ -141,6 +141,9 @@
       } catch (e) {}
       return record.count;
     };
+
+    // Backward compatibility alias
+    window.recordDailyFetchAttempt = window.recordSuccessfulDailyFetch;
 
     window.showDailyLimitPopup = function(customMessage) {
       const modal = document.getElementById('daily-fetch-limit-modal');

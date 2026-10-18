@@ -86,6 +86,16 @@ function logRecentSearchSafe(roll: string, name?: string, course?: string, insti
   }).catch(() => {});
 }
 
+async function recordSuccessfulRetrievalSafe(clientIp: string): Promise<number> {
+  try {
+    const { redisService } = await import('../../services/redis.service');
+    const res = await redisService.recordSuccessfulFetch(clientIp, 5);
+    return res.count;
+  } catch (e) {
+    return 0;
+  }
+}
+
 export const GET: APIRoute = async ({ request, url, clientAddress }) => {
   const rollNumber = url.searchParams.get('rollNumber') || url.searchParams.get('roll');
   if (rollNumber) {
@@ -118,6 +128,7 @@ export const GET: APIRoute = async ({ request, url, clientAddress }) => {
 
 export const POST: APIRoute = async ({ request, clientAddress }) => {
   try {
+    const clientIp = (clientAddress || request.headers.get('x-forwarded-for')?.split(',')[0] || request.headers.get('x-real-ip') || 'unknown').trim();
     const contentType = request.headers.get('content-type') || '';
     let rollNumber: string | undefined;
     let action: string | undefined;
@@ -194,13 +205,12 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
       }
     }
 
-    // 5 Fetches Per Day Limit Check (Daily quota enforcement)
+    // 5 Fetches Per Day Limit Check (Daily quota enforcement - read-only pre-flight check, does NOT increment)
     if (action !== 'refreshCaptcha' && !manualCaptcha) {
-      const clientIp = (clientAddress || request.headers.get('x-forwarded-for')?.split(',')[0] || request.headers.get('x-real-ip') || 'unknown').trim();
       const { redisService } = await import('../../services/redis.service');
-      const limitResult = await redisService.checkDailyFetchLimit(clientIp, 5);
+      const limitStatus = await redisService.isDailyFetchLimitExceeded(clientIp, 5);
 
-      if (!limitResult.allowed) {
+      if (limitStatus.exceeded) {
         return new Response(
           JSON.stringify({
             success: false,
@@ -208,7 +218,7 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
             rateLimited: true,
             error: "You have exceeded the limit to fetch details kindly comeback later",
             maxDaily: 5,
-            currentCount: limitResult.count
+            currentCount: limitStatus.count
           }),
           {
             status: 429,
@@ -254,6 +264,7 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
 
     // 1A: If student has full semester results cached in database, return immediately!
     if (student && student.semesters && student.semesters.length > 0) {
+      await recordSuccessfulRetrievalSafe(clientIp);
       let totalSearches = 0;
       try {
         totalSearches = await incrementFetchCounterSafe();
@@ -299,6 +310,7 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
       console.log(`[Search API] Cached DOB located for roll ${trimmedRoll} (${student.dob}), fetching full marksheet...`);
       const scraped = await scrapeMarksheetSafe(trimmedRoll, student.dob);
       if (scraped && scraped.semesters && scraped.semesters.length > 0) {
+        await recordSuccessfulRetrievalSafe(clientIp);
         let totalSearches = 0;
         try {
           totalSearches = await incrementFetchCounterSafe();
@@ -334,6 +346,7 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
         );
       } else {
         // Cached DOB located, but marksheet not generated on university servers yet
+        await recordSuccessfulRetrievalSafe(clientIp);
         let totalSearches = 0;
         try {
           totalSearches = await incrementFetchCounterSafe();
@@ -373,6 +386,7 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
       const verifyRes = await AktuEngineService.verifySession(engineSession, trimmedRoll, manualCaptcha);
 
       if (verifyRes.success && verifyRes.dob) {
+        await recordSuccessfulRetrievalSafe(clientIp);
         const enrollmentNo = verifyRes.student?.enrollmentNo || trimmedRoll;
         const studentObj: Student = {
           name: verifyRes.student?.name || 'Verified Student',
@@ -451,6 +465,7 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
     const engineResult = await AktuEngineService.findDob(trimmedRoll, cgid);
 
     if (engineResult.success && engineResult.dob) {
+      await recordSuccessfulRetrievalSafe(clientIp);
       console.log(`[Search API] Engine resolved record for roll ${trimmedRoll}`);
       const enrollmentNo = engineResult.student?.enrollmentNo || trimmedRoll;
       const studentObj: Student = {

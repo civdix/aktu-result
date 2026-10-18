@@ -348,10 +348,41 @@ class RedisService {
   }
 
   /**
-   * Check and increment daily search limit (Max 5 fetches per day per user/IP)
-   * Automatically resets after 24 hours / daily.
+   * Check if user/IP has already reached their daily quota (Does NOT increment)
    */
-  async checkDailyFetchLimit(identifier: string, maxFetches: number = 5): Promise<{ allowed: boolean; count: number; max: number }> {
+  async isDailyFetchLimitExceeded(identifier: string, maxFetches: number = 5): Promise<{ exceeded: boolean; count: number; max: number }> {
+    const today = new Date().toISOString().slice(0, 10);
+    const key = `aktu:daily_fetch:${today}:${identifier}`;
+
+    try {
+      const client = await this.getActiveClient();
+      if (client) {
+        const val = await client.get(key);
+        const count = val ? parseInt(val, 10) : 0;
+        return {
+          exceeded: count >= maxFetches,
+          count,
+          max: maxFetches
+        };
+      }
+    } catch (err) {
+      console.warn('[Redis] isDailyFetchLimitExceeded failed, falling back to memory:', err);
+    }
+
+    const memKey = `${today}:${identifier}`;
+    const count = inMemoryDailyLimitMap.get(memKey) || 0;
+    return {
+      exceeded: count >= maxFetches,
+      count,
+      max: maxFetches
+    };
+  }
+
+  /**
+   * Record a successful retrieval of result or DOB (Increments daily limit by 1)
+   * Only called when either a marksheet result or DOB profile is genuinely retrieved.
+   */
+  async recordSuccessfulFetch(identifier: string, maxFetches: number = 5): Promise<{ allowed: boolean; count: number; max: number }> {
     const today = new Date().toISOString().slice(0, 10);
     const key = `aktu:daily_fetch:${today}:${identifier}`;
 
@@ -370,7 +401,7 @@ class RedisService {
         };
       }
     } catch (err) {
-      console.warn('[Redis] checkDailyFetchLimit failed, falling back to memory:', err);
+      console.warn('[Redis] recordSuccessfulFetch failed, falling back to memory:', err);
     }
 
     // In-memory fallback
@@ -385,6 +416,18 @@ class RedisService {
   }
 
   /**
+   * Check if daily fetch quota allows requests (Read-only check, does NOT increment)
+   */
+  async checkDailyFetchLimit(identifier: string, maxFetches: number = 5): Promise<{ allowed: boolean; count: number; max: number }> {
+    const res = await this.isDailyFetchLimitExceeded(identifier, maxFetches);
+    return {
+      allowed: !res.exceeded,
+      count: res.count,
+      max: res.max
+    };
+  }
+
+  /**
    * Get configured system rate limit policy metadata
    */
   getDailyFetchPolicy() {
@@ -392,6 +435,7 @@ class RedisService {
       maxFetchesPerDay: 5,
       ttlSeconds: 86400,
       windowDescription: 'Rolling 24 Hours / Daily',
+      countingRule: 'Only counted on successful retrieval of result or DOB',
       enforcementMode: 'Dual Layer (Client localStorage + Server IP Filter)',
       exceededMessage: 'You have exceeded the limit to fetch details kindly comeback later',
       httpStatusCode: 429
