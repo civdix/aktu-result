@@ -3,6 +3,14 @@ import Layout from '../../layouts/Layout.astro';
 
 export const prerender = false;
 
+// Force zero caching across Cloudflare edge, proxies, and client browsers
+Astro.response.headers.set('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0, s-maxage=0');
+Astro.response.headers.set('Pragma', 'no-cache');
+Astro.response.headers.set('Expires', '0');
+Astro.response.headers.set('Surrogate-Control', 'no-store');
+Astro.response.headers.set('CDN-Cache-Control', 'no-store');
+Astro.response.headers.set('Cloudflare-CDN-Cache-Control', 'no-store');
+
 const pageTitle = "Administration Portal | AKTU Student Utility";
 const pageDescription = "Administrative content management, CDN cache invalidation, and student fair-use rate limiting portal.";
 ---
@@ -22,10 +30,10 @@ const pageDescription = "Administrative content management, CDN cache invalidati
 
       <div class="space-y-2">
         <h1 class="text-2xl font-black tracking-tight text-white light:text-ink">
-          Admin Portal Login
+          Admin Portal &amp; Rate Limits
         </h1>
         <p class="text-xs text-gray-400 light:text-gray-500 leading-relaxed">
-          Enter the administrative master passcode to manage articles, trigger AI synthesis, and perform deletions.
+          Enter administrative master passcode to manage articles, view student fair-use search limits, reset IP quotas, and control CDN caching.
         </p>
       </div>
 
@@ -53,21 +61,21 @@ const pageDescription = "Administrative content management, CDN cache invalidati
           type="submit" 
           class="w-full py-3 rounded-xl bg-gradient-to-r from-brand-blue to-purple-600 hover:from-brand-blue-hover hover:to-purple-700 text-white text-xs font-bold transition-all shadow-lg shadow-brand-blue/25 cursor-pointer transform hover:scale-[1.01] active:scale-[0.99] flex items-center justify-center gap-2"
         >
-          <span>Unlock Article Manager</span>
+          <span>Unlock Admin Console &amp; Limits</span>
           <span>&rarr;</span>
         </button>
       </form>
 
       <div class="pt-2 text-[11px] text-gray-500 border-t border-white/5 light:border-black/5">
-        <span>Protected administrative route • CDN caching bypassed</span>
+        <span>Protected administrative route • Real-time telemetry</span>
       </div>
     </div>
 
-    <!-- Screen 2: Article Manager Dashboard (shown when authenticated) -->
+    <!-- Screen 2: Administration Dashboard (shown when authenticated) -->
     <div id="admin-dashboard-view" class="hidden space-y-8">
       
       <!-- Dashboard Top Header Bar -->
-      <header class="flex flex-col md:flex-row md:items-center justify-between gap-4 p-6 rounded-3xl bg-gradient-to-r from-[#0e1117] via-slate-900/50 to-[#0e1117] light:from-white light:via-slate-50 light:to-white border border-white/10 light:border-black/10 shadow-xl">
+      <header class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 p-6 rounded-3xl bg-gradient-to-r from-[#0e1117] via-slate-900/50 to-[#0e1117] light:from-white light:via-slate-50 light:to-white border border-white/10 light:border-black/10 shadow-xl">
         <div class="space-y-1">
           <div class="flex items-center gap-2.5 flex-wrap">
             <h1 class="text-xl sm:text-2xl font-black text-white light:text-ink tracking-tight flex items-center gap-2">
@@ -82,6 +90,27 @@ const pageDescription = "Administrative content management, CDN cache invalidati
           <p class="text-xs text-gray-400 light:text-gray-500">
             Publish circulars, monitor student search limits, unblock IP quotas, and control fair-use caching.
           </p>
+        </div>
+
+        <!-- Prominent Navigation Switcher Pill directly in Header -->
+        <div class="inline-flex p-1.5 rounded-2xl bg-black/40 light:bg-gray-100 border border-white/15 light:border-black/15 shadow-inner self-start lg:self-center shrink-0">
+          <button 
+            id="admin-nav-articles-btn" 
+            type="button" 
+            class="px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 cursor-pointer bg-brand-blue text-white shadow-md shadow-brand-blue/30"
+          >
+            <span>📰</span>
+            <span>Articles</span>
+          </button>
+          <button 
+            id="admin-nav-limits-btn" 
+            type="button" 
+            class="px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 cursor-pointer text-gray-400 hover:text-white light:text-gray-600 light:hover:text-black"
+          >
+            <span>🛡️</span>
+            <span>User Limits</span>
+            <span id="nav-limits-badge" class="px-1.5 py-0.5 rounded-full text-[10px] font-mono bg-rose-500 text-white hidden">0</span>
+          </button>
         </div>
 
         <div class="flex items-center gap-2.5 flex-wrap">
@@ -121,12 +150,12 @@ const pageDescription = "Administrative content management, CDN cache invalidati
       <!-- Toast Feedback Notification -->
       <div id="admin-toast" class="hidden p-4 rounded-2xl border text-xs font-medium transition-all duration-300"></div>
 
-      <!-- Navigation Tabs: Articles vs User Rate Limits -->
-      <nav class="flex items-center gap-2.5 border-b border-white/10 light:border-black/10 pb-3 overflow-x-auto">
+      <!-- Navigation Tabs: Articles vs User Rate Limits (Secondary Full-width bar) -->
+      <nav class="flex items-center gap-3 border-b border-white/10 light:border-black/10 pb-3 overflow-x-auto">
         <button 
           id="admin-tab-articles-btn" 
           type="button" 
-          class="px-4 py-2.5 rounded-2xl font-bold text-xs transition-all flex items-center gap-2 cursor-pointer bg-brand-blue text-white shadow-lg shadow-brand-blue/20 shrink-0"
+          class="px-5 py-3 rounded-2xl font-bold text-xs sm:text-sm transition-all flex items-center gap-2.5 cursor-pointer bg-brand-blue text-white shadow-lg shadow-brand-blue/20 shrink-0"
         >
           <span>📰</span>
           <span>Articles Management</span>
@@ -136,16 +165,33 @@ const pageDescription = "Administrative content management, CDN cache invalidati
         <button 
           id="admin-tab-limits-btn" 
           type="button" 
-          class="px-4 py-2.5 rounded-2xl font-bold text-xs transition-all flex items-center gap-2 cursor-pointer bg-white/5 hover:bg-white/10 light:bg-black/5 light:hover:bg-black/10 text-gray-400 hover:text-white light:text-gray-600 light:hover:text-black border border-white/10 light:border-black/10 shrink-0"
+          class="px-5 py-3 rounded-2xl font-bold text-xs sm:text-sm transition-all flex items-center gap-2.5 cursor-pointer bg-white/5 hover:bg-white/10 light:bg-black/5 light:hover:bg-black/10 text-gray-400 hover:text-white light:text-gray-600 light:hover:text-black border border-white/10 light:border-black/10 shrink-0"
         >
           <span>🛡️</span>
-          <span>User Limits &amp; Quotas</span>
-          <span id="tab-limits-badge" class="px-2 py-0.5 rounded-full text-[10px] bg-rose-500/20 text-rose-300 border border-rose-500/30 font-mono hidden">0 blocked</span>
+          <span>User Rate Limits &amp; Quotas</span>
+          <span id="tab-limits-badge" class="px-2.5 py-0.5 rounded-full text-[10px] bg-rose-500/20 text-rose-300 border border-rose-500/30 font-mono hidden">0 blocked</span>
         </button>
       </nav>
 
       <!-- TAB 1: ARTICLES MANAGEMENT SECTION -->
       <div id="section-articles" class="space-y-6">
+        <!-- Quick Switch Banner to Limits -->
+        <div class="flex items-center justify-between p-4 rounded-2xl bg-brand-blue/10 border border-brand-blue/25 text-xs text-gray-300 flex-wrap gap-3">
+          <div class="flex items-center gap-2.5">
+            <span class="text-xl">🛡️</span>
+            <div>
+              <div class="font-bold text-white light:text-ink">Looking for Student Fair-Use Rate Limits &amp; IP Quotas?</div>
+              <div class="text-[11px] text-gray-400">Inspect real-time student lookups, unblock restricted IPs, or test daily quota enforcement.</div>
+            </div>
+          </div>
+          <button 
+            id="admin-switch-to-limits-quick-btn" 
+            type="button" 
+            class="px-4 py-2 rounded-xl bg-brand-blue hover:bg-brand-blue-hover text-white font-bold text-xs transition-all cursor-pointer shadow-md shadow-brand-blue/20 shrink-0"
+          >
+            Open User Limits &amp; Quotas &rarr;
+          </button>
+        </div>
         <!-- KPI Summary Cards -->
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
           <div class="p-5 rounded-2xl bg-white/[0.02] light:bg-white border border-white/10 light:border-black/10 space-y-1">
@@ -243,6 +289,23 @@ const pageDescription = "Administrative content management, CDN cache invalidati
 
       <!-- TAB 2: USER RATE LIMITS & QUOTAS SECTION -->
       <div id="section-limits" class="hidden space-y-6">
+        <!-- Quick Switch Banner to Articles -->
+        <div class="flex items-center justify-between p-4 rounded-2xl bg-purple-500/10 border border-purple-500/25 text-xs text-gray-300 flex-wrap gap-3">
+          <div class="flex items-center gap-2.5">
+            <span class="text-xl">📰</span>
+            <div>
+              <div class="font-bold text-white light:text-ink">Looking for Articles &amp; Circular Management?</div>
+              <div class="text-[11px] text-gray-400">Edit circular news, generate AI summaries from official video notices, or purge CDN cache.</div>
+            </div>
+          </div>
+          <button 
+            id="admin-switch-to-articles-quick-btn" 
+            type="button" 
+            class="px-4 py-2 rounded-xl bg-purple-600 hover:bg-purple-700 text-white font-bold text-xs transition-all cursor-pointer shadow-md shadow-purple-600/20 shrink-0"
+          >
+            &larr; Switch to Articles
+          </button>
+        </div>
         <!-- Applied Policy & System Rules Card -->
         <div class="rounded-3xl p-6 sm:p-7 bg-gradient-to-r from-blue-950/30 via-slate-900/60 to-purple-950/30 border border-blue-500/20 light:bg-blue-50/40 light:border-blue-200 shadow-xl space-y-4">
           <div class="flex items-center justify-between flex-wrap gap-3">
@@ -724,11 +787,16 @@ const pageDescription = "Administrative content management, CDN cache invalidati
     let allUserLimits: UserLimitRow[] = [];
     let activeTab: 'articles' | 'limits' = 'articles';
 
-    // Tabs
+    // Tabs & Header Nav
     const tabArticlesBtn = document.getElementById("admin-tab-articles-btn");
     const tabLimitsBtn = document.getElementById("admin-tab-limits-btn");
     const tabArticlesBadge = document.getElementById("tab-articles-badge");
     const tabLimitsBadge = document.getElementById("tab-limits-badge");
+    const adminNavArticlesBtn = document.getElementById("admin-nav-articles-btn");
+    const adminNavLimitsBtn = document.getElementById("admin-nav-limits-btn");
+    const navLimitsBadge = document.getElementById("nav-limits-badge");
+    const quickToLimitsBtn = document.getElementById("admin-switch-to-limits-quick-btn");
+    const quickToArticlesBtn = document.getElementById("admin-switch-to-articles-quick-btn");
     const sectionArticles = document.getElementById("section-articles");
     const sectionLimits = document.getElementById("section-limits");
 
@@ -1033,21 +1101,32 @@ const pageDescription = "Administrative content management, CDN cache invalidati
     // Tab Navigation Logic
     const switchTab = (tab: 'articles' | 'limits') => {
       activeTab = tab;
-      const activeClass = "px-4 py-2.5 rounded-2xl font-bold text-xs transition-all flex items-center gap-2 cursor-pointer bg-brand-blue text-white shadow-lg shadow-brand-blue/20 shrink-0";
-      const inactiveClass = "px-4 py-2.5 rounded-2xl font-bold text-xs transition-all flex items-center gap-2 cursor-pointer bg-white/5 hover:bg-white/10 light:bg-black/5 light:hover:bg-black/10 text-gray-400 hover:text-white light:text-gray-600 light:hover:text-black border border-white/10 light:border-black/10 shrink-0";
+      const mainActive = "px-5 py-3 rounded-2xl font-bold text-xs sm:text-sm transition-all flex items-center gap-2.5 cursor-pointer bg-brand-blue text-white shadow-lg shadow-brand-blue/20 shrink-0";
+      const mainInactive = "px-5 py-3 rounded-2xl font-bold text-xs sm:text-sm transition-all flex items-center gap-2.5 cursor-pointer bg-white/5 hover:bg-white/10 light:bg-black/5 light:hover:bg-black/10 text-gray-400 hover:text-white light:text-gray-600 light:hover:text-black border border-white/10 light:border-black/10 shrink-0";
+
+      const navActive = "px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 cursor-pointer bg-brand-blue text-white shadow-md shadow-brand-blue/30";
+      const navInactive = "px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 cursor-pointer text-gray-400 hover:text-white light:text-gray-600 light:hover:text-black";
 
       if (tab === 'articles') {
         sectionArticles?.classList.remove("hidden");
         sectionLimits?.classList.add("hidden");
-        if (tabArticlesBtn) tabArticlesBtn.className = activeClass;
-        if (tabLimitsBtn) tabLimitsBtn.className = inactiveClass;
-        window.location.hash = "articles";
+        if (tabArticlesBtn) tabArticlesBtn.className = mainActive;
+        if (tabLimitsBtn) tabLimitsBtn.className = mainInactive;
+        if (adminNavArticlesBtn) adminNavArticlesBtn.className = navActive;
+        if (adminNavLimitsBtn) adminNavLimitsBtn.className = navInactive;
+        try {
+          window.history.replaceState(null, '', '?tab=articles#articles');
+        } catch {}
       } else {
         sectionArticles?.classList.add("hidden");
         sectionLimits?.classList.remove("hidden");
-        if (tabLimitsBtn) tabLimitsBtn.className = activeClass;
-        if (tabArticlesBtn) tabArticlesBtn.className = inactiveClass;
-        window.location.hash = "limits";
+        if (tabLimitsBtn) tabLimitsBtn.className = mainActive;
+        if (tabArticlesBtn) tabArticlesBtn.className = mainInactive;
+        if (adminNavLimitsBtn) adminNavLimitsBtn.className = navActive;
+        if (adminNavArticlesBtn) adminNavArticlesBtn.className = navInactive;
+        try {
+          window.history.replaceState(null, '', '?tab=limits#limits');
+        } catch {}
         fetchUserLimits();
       }
     };
@@ -1206,6 +1285,16 @@ const pageDescription = "Administrative content management, CDN cache invalidati
             }
           }
 
+          if (navLimitsBadge) {
+            const blocked = data.stats?.totalBlocked || 0;
+            if (blocked > 0) {
+              navLimitsBadge.textContent = blocked.toString();
+              navLimitsBadge.classList.remove("hidden");
+            } else {
+              navLimitsBadge.classList.add("hidden");
+            }
+          }
+
           renderUserLimitsTable();
         }
       } catch (err) {
@@ -1248,7 +1337,10 @@ const pageDescription = "Administrative content management, CDN cache invalidati
       dashboardView?.classList.remove("hidden");
       fetchArticles();
       fetchUserLimits();
-      if (window.location.hash === '#limits') {
+
+      const urlParams = new URLSearchParams(window.location.search);
+      const isLimitsTab = urlParams.get('tab') === 'limits' || urlParams.get('view') === 'limits' || window.location.hash === '#limits';
+      if (isLimitsTab) {
         switchTab('limits');
       } else {
         switchTab('articles');
@@ -1332,7 +1424,7 @@ const pageDescription = "Administrative content management, CDN cache invalidati
       } finally {
         if (authSubmitBtn) {
           authSubmitBtn.removeAttribute("disabled");
-          authSubmitBtn.textContent = "Unlock Article Manager →";
+          authSubmitBtn.textContent = "Unlock Admin Console & Limits →";
         }
       }
     });
@@ -1352,6 +1444,27 @@ const pageDescription = "Administrative content management, CDN cache invalidati
     // Tab Switching
     tabArticlesBtn?.addEventListener("click", () => switchTab('articles'));
     tabLimitsBtn?.addEventListener("click", () => switchTab('limits'));
+    adminNavArticlesBtn?.addEventListener("click", () => switchTab('articles'));
+    adminNavLimitsBtn?.addEventListener("click", () => switchTab('limits'));
+    quickToLimitsBtn?.addEventListener("click", () => switchTab('limits'));
+    quickToArticlesBtn?.addEventListener("click", () => switchTab('articles'));
+
+    window.addEventListener("hashchange", () => {
+      if (window.location.hash === '#limits') {
+        switchTab('limits');
+      } else if (window.location.hash === '#articles') {
+        switchTab('articles');
+      }
+    });
+
+    window.addEventListener("popstate", () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.get('tab') === 'limits' || window.location.hash === '#limits') {
+        switchTab('limits');
+      } else {
+        switchTab('articles');
+      }
+    });
 
     // User Limits Filters & Controls
     limitsSearchInput?.addEventListener("input", renderUserLimitsTable);
