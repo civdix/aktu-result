@@ -383,6 +383,155 @@ class RedisService {
       max: maxFetches
     };
   }
+
+  /**
+   * Get configured system rate limit policy metadata
+   */
+  getDailyFetchPolicy() {
+    return {
+      maxFetchesPerDay: 5,
+      ttlSeconds: 86400,
+      windowDescription: 'Rolling 24 Hours / Daily',
+      enforcementMode: 'Dual Layer (Client localStorage + Server IP Filter)',
+      exceededMessage: 'You have exceeded the limit to fetch details kindly comeback later',
+      httpStatusCode: 429
+    };
+  }
+
+  /**
+   * Admin: Retrieve all tracked user rate limits for today across Redis & in-memory store
+   */
+  async getAllDailyFetchLimits(dateStr?: string): Promise<{ records: UserRateLimitRecord[]; isRedisConnected: boolean }> {
+    const targetDate = dateStr || new Date().toISOString().slice(0, 10);
+    const prefix = `aktu:daily_fetch:${targetDate}:`;
+    const maxFetches = 5;
+    const recordsMap = new Map<string, UserRateLimitRecord>();
+
+    let isRedisConnected = false;
+    try {
+      const client = await this.getActiveClient();
+      if (client) {
+        isRedisConnected = true;
+        // Non-blocking scan for keys matching prefix
+        const keys: string[] = [];
+        let cursor = '0';
+        do {
+          const [nextCursor, matchedKeys] = await client.scan(cursor, 'MATCH', `${prefix}*`, 'COUNT', 100);
+          cursor = nextCursor;
+          if (matchedKeys && matchedKeys.length > 0) {
+            keys.push(...matchedKeys);
+          }
+        } while (cursor !== '0' && keys.length < 500);
+
+        if (keys.length > 0) {
+          const pipeline = client.pipeline();
+          keys.forEach(k => {
+            pipeline.get(k);
+            pipeline.ttl(k);
+          });
+          const results = await pipeline.exec();
+          if (results) {
+            for (let i = 0; i < keys.length; i++) {
+              const key = keys[i];
+              const identifier = key.replace(prefix, '');
+              const countVal = results[i * 2]?.[1];
+              const ttlVal = results[i * 2 + 1]?.[1];
+
+              const count = parseInt(String(countVal || '0'), 10);
+              const ttlSeconds = typeof ttlVal === 'number' ? Math.max(0, ttlVal) : 86400;
+              const resetAt = new Date(Date.now() + ttlSeconds * 1000).toISOString();
+
+              recordsMap.set(identifier, {
+                identifier,
+                count,
+                max: maxFetches,
+                isBlocked: count >= maxFetches,
+                remaining: Math.max(0, maxFetches - count),
+                ttlSeconds,
+                resetAt,
+                source: 'redis'
+              });
+            }
+          }
+        }
+      }
+    } catch (err) {
+      console.warn('[Redis] getAllDailyFetchLimits failed:', err);
+    }
+
+    // Merge in-memory limits
+    const memPrefix = `${targetDate}:`;
+    inMemoryDailyLimitMap.forEach((count, key) => {
+      if (key.startsWith(memPrefix)) {
+        const identifier = key.replace(memPrefix, '');
+        if (!recordsMap.has(identifier)) {
+          recordsMap.set(identifier, {
+            identifier,
+            count,
+            max: maxFetches,
+            isBlocked: count >= maxFetches,
+            remaining: Math.max(0, maxFetches - count),
+            ttlSeconds: 86400,
+            resetAt: new Date(Date.now() + 86400 * 1000).toISOString(),
+            source: 'memory'
+          });
+        }
+      }
+    });
+
+    const records = Array.from(recordsMap.values()).sort((a, b) => b.count - a.count);
+    return { records, isRedisConnected };
+  }
+
+  /**
+   * Admin: Reset / unblock a specific user/IP limit
+   */
+  async resetDailyFetchLimit(identifier: string, dateStr?: string): Promise<{ success: boolean; identifier: string }> {
+    const targetDate = dateStr || new Date().toISOString().slice(0, 10);
+    const key = `aktu:daily_fetch:${targetDate}:${identifier}`;
+
+    try {
+      const client = await this.getActiveClient();
+      if (client) {
+        await client.del(key);
+      }
+    } catch (err) {
+      console.warn('[Redis] resetDailyFetchLimit failed on redis:', err);
+    }
+
+    // Also remove from in-memory map
+    const memKey = `${targetDate}:${identifier}`;
+    inMemoryDailyLimitMap.delete(memKey);
+
+    return { success: true, identifier };
+  }
+
+  /**
+   * Admin: Simulate or set a test user limit (useful for testing admin UI)
+   */
+  async setTestDailyFetchLimit(identifier: string, count: number = 5): Promise<void> {
+    const today = new Date().toISOString().slice(0, 10);
+    const key = `aktu:daily_fetch:${today}:${identifier}`;
+    try {
+      const client = await this.getActiveClient();
+      if (client) {
+        await client.set(key, count.toString(), 'EX', 86400);
+      }
+    } catch {}
+    const memKey = `${today}:${identifier}`;
+    inMemoryDailyLimitMap.set(memKey, count);
+  }
+}
+
+export interface UserRateLimitRecord {
+  identifier: string;
+  count: number;
+  max: number;
+  isBlocked: boolean;
+  remaining: number;
+  ttlSeconds: number;
+  resetAt: string;
+  source: 'redis' | 'memory';
 }
 
 // In-memory fallback map for daily limits

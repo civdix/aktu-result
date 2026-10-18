@@ -3,8 +3,8 @@ import Layout from '../../layouts/Layout.astro';
 
 export const prerender = false;
 
-const pageTitle = "Article Manager Dashboard | AKTU Admin";
-const pageDescription = "Administrative content management portal for Dr. A.P.J. Abdul Kalam Technical University news, circulars, and updates.";
+const pageTitle = "Administration Portal | AKTU Student Utility";
+const pageDescription = "Administrative content management, CDN cache invalidation, and student fair-use rate limiting portal.";
 ---
 
 <Layout
@@ -71,8 +71,8 @@ const pageDescription = "Administrative content management portal for Dr. A.P.J.
         <div class="space-y-1">
           <div class="flex items-center gap-2.5 flex-wrap">
             <h1 class="text-xl sm:text-2xl font-black text-white light:text-ink tracking-tight flex items-center gap-2">
-              <span>📰</span>
-              <span>Article Manager</span>
+              <span>⚡</span>
+              <span>AKTU Administration Portal</span>
             </h1>
             <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-emerald-500/15 text-emerald-400 border border-emerald-500/25 flex items-center gap-1">
               <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
@@ -80,7 +80,7 @@ const pageDescription = "Administrative content management portal for Dr. A.P.J.
             </span>
           </div>
           <p class="text-xs text-gray-400 light:text-gray-500">
-            Publish, inspect, and delete university news circulars with automatic CDN cache invalidation.
+            Publish circulars, monitor student search limits, unblock IP quotas, and control fair-use caching.
           </p>
         </div>
 
@@ -121,101 +121,312 @@ const pageDescription = "Administrative content management portal for Dr. A.P.J.
       <!-- Toast Feedback Notification -->
       <div id="admin-toast" class="hidden p-4 rounded-2xl border text-xs font-medium transition-all duration-300"></div>
 
-      <!-- KPI Summary Cards -->
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <div class="p-5 rounded-2xl bg-white/[0.02] light:bg-white border border-white/10 light:border-black/10 space-y-1">
-          <span class="text-[11px] font-semibold text-gray-400 light:text-gray-500 uppercase tracking-wider block">Total Articles</span>
-          <div id="stat-total-articles" class="text-2xl font-black text-white light:text-ink">--</div>
+      <!-- Navigation Tabs: Articles vs User Rate Limits -->
+      <nav class="flex items-center gap-2.5 border-b border-white/10 light:border-black/10 pb-3 overflow-x-auto">
+        <button 
+          id="admin-tab-articles-btn" 
+          type="button" 
+          class="px-4 py-2.5 rounded-2xl font-bold text-xs transition-all flex items-center gap-2 cursor-pointer bg-brand-blue text-white shadow-lg shadow-brand-blue/20 shrink-0"
+        >
+          <span>📰</span>
+          <span>Articles Management</span>
+          <span id="tab-articles-badge" class="px-2 py-0.5 rounded-full text-[10px] bg-white/20 text-white font-mono">--</span>
+        </button>
+
+        <button 
+          id="admin-tab-limits-btn" 
+          type="button" 
+          class="px-4 py-2.5 rounded-2xl font-bold text-xs transition-all flex items-center gap-2 cursor-pointer bg-white/5 hover:bg-white/10 light:bg-black/5 light:hover:bg-black/10 text-gray-400 hover:text-white light:text-gray-600 light:hover:text-black border border-white/10 light:border-black/10 shrink-0"
+        >
+          <span>🛡️</span>
+          <span>User Limits &amp; Quotas</span>
+          <span id="tab-limits-badge" class="px-2 py-0.5 rounded-full text-[10px] bg-rose-500/20 text-rose-300 border border-rose-500/30 font-mono hidden">0 blocked</span>
+        </button>
+      </nav>
+
+      <!-- TAB 1: ARTICLES MANAGEMENT SECTION -->
+      <div id="section-articles" class="space-y-6">
+        <!-- KPI Summary Cards -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div class="p-5 rounded-2xl bg-white/[0.02] light:bg-white border border-white/10 light:border-black/10 space-y-1">
+            <span class="text-[11px] font-semibold text-gray-400 light:text-gray-500 uppercase tracking-wider block">Total Articles</span>
+            <div id="stat-total-articles" class="text-2xl font-black text-white light:text-ink">--</div>
+          </div>
+
+          <div class="p-5 rounded-2xl bg-white/[0.02] light:bg-white border border-white/10 light:border-black/10 space-y-1">
+            <span class="text-[11px] font-semibold text-gray-400 light:text-gray-500 uppercase tracking-wider block">Total Views</span>
+            <div id="stat-total-views" class="text-2xl font-black text-emerald-400">--</div>
+          </div>
+
+          <div class="p-5 rounded-2xl bg-white/[0.02] light:bg-white border border-white/10 light:border-black/10 space-y-1">
+            <span class="text-[11px] font-semibold text-gray-400 light:text-gray-500 uppercase tracking-wider block">Categories</span>
+            <div id="stat-categories" class="text-2xl font-black text-brand-blue">--</div>
+          </div>
+
+          <div class="p-5 rounded-2xl bg-white/[0.02] light:bg-white border border-white/10 light:border-black/10 space-y-1">
+            <span class="text-[11px] font-semibold text-gray-400 light:text-gray-500 uppercase tracking-wider block">Filtered Count</span>
+            <div id="stat-filtered-articles" class="text-2xl font-black text-purple-400">--</div>
+          </div>
         </div>
 
-        <div class="p-5 rounded-2xl bg-white/[0.02] light:bg-white border border-white/10 light:border-black/10 space-y-1">
-          <span class="text-[11px] font-semibold text-gray-400 light:text-gray-500 uppercase tracking-wider block">Total Views</span>
-          <div id="stat-total-views" class="text-2xl font-black text-emerald-400">--</div>
+        <!-- Search, Filter & Refresh Bar -->
+        <div class="p-4 rounded-2xl bg-white/[0.02] light:bg-white border border-white/10 light:border-black/10 flex flex-col sm:flex-row items-center justify-between gap-3">
+          <div class="relative w-full sm:w-96">
+            <span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-500 text-xs">🔍</span>
+            <input 
+              id="admin-search-input" 
+              type="text" 
+              placeholder="Search articles by title, slug, or keywords..."
+              class="w-full pl-9 pr-3.5 py-2.5 rounded-xl bg-black/40 light:bg-gray-50 border border-white/10 light:border-gray-200 text-white light:text-ink text-xs focus:outline-none focus:ring-2 focus:ring-brand-blue transition-all"
+            />
+          </div>
+
+          <div class="flex items-center gap-2.5 w-full sm:w-auto justify-between sm:justify-end">
+            <select 
+              id="admin-category-select" 
+              class="px-3.5 py-2.5 rounded-xl bg-black/40 light:bg-gray-50 border border-white/10 light:border-gray-200 text-white light:text-ink text-xs focus:outline-none focus:ring-2 focus:ring-brand-blue transition-all cursor-pointer"
+            >
+              <option value="All">All Categories</option>
+              <option value="Results & Marksheets">Results &amp; Marksheets</option>
+              <option value="Circulars & Updates">Circulars &amp; Updates</option>
+              <option value="Exam Schedule">Exam Schedule</option>
+              <option value="Student Services">Student Services</option>
+            </select>
+
+            <button 
+              id="admin-refresh-btn" 
+              type="button" 
+              class="px-3.5 py-2.5 rounded-xl bg-white/5 hover:bg-white/10 light:bg-black/5 light:hover:bg-black/10 text-gray-300 light:text-gray-700 text-xs font-semibold border border-white/10 light:border-black/10 transition-all cursor-pointer flex items-center gap-1.5"
+              title="Reload articles list"
+            >
+              <span>🔄</span>
+              <span>Refresh</span>
+            </button>
+          </div>
         </div>
 
-        <div class="p-5 rounded-2xl bg-white/[0.02] light:bg-white border border-white/10 light:border-black/10 space-y-1">
-          <span class="text-[11px] font-semibold text-gray-400 light:text-gray-500 uppercase tracking-wider block">Categories</span>
-          <div id="stat-categories" class="text-2xl font-black text-brand-blue">--</div>
-        </div>
+        <!-- Articles Management Table Container -->
+        <div class="rounded-3xl border border-white/10 light:border-black/10 bg-white/[0.02] light:bg-white overflow-hidden shadow-xl">
+          <!-- Loading State -->
+          <div id="admin-table-loading" class="py-16 text-center space-y-3">
+            <div class="w-10 h-10 border-2 border-brand-blue border-t-transparent rounded-full animate-spin mx-auto"></div>
+            <p class="text-xs text-gray-400 light:text-gray-500">Loading articles from database...</p>
+          </div>
 
-        <div class="p-5 rounded-2xl bg-white/[0.02] light:bg-white border border-white/10 light:border-black/10 space-y-1">
-          <span class="text-[11px] font-semibold text-gray-400 light:text-gray-500 uppercase tracking-wider block">Filtered Count</span>
-          <div id="stat-filtered-articles" class="text-2xl font-black text-purple-400">--</div>
+          <!-- Empty State -->
+          <div id="admin-table-empty" class="hidden py-16 text-center space-y-3">
+            <span class="text-3xl block">📭</span>
+            <h3 class="text-sm font-bold text-white light:text-ink">No Articles Found</h3>
+            <p class="text-xs text-gray-400 light:text-gray-500">Try adjusting your search query or generate a new article.</p>
+          </div>
+
+          <!-- Articles Table -->
+          <div class="overflow-x-auto">
+            <table id="admin-articles-table" class="hidden w-full text-left border-collapse text-xs">
+              <thead>
+                <tr class="border-b border-white/10 light:border-black/10 bg-white/[0.03] light:bg-black/[0.02] text-gray-400 light:text-gray-500 font-bold uppercase tracking-wider text-[10px]">
+                  <th class="py-3.5 px-4">Article</th>
+                  <th class="py-3.5 px-4">Category</th>
+                  <th class="py-3.5 px-4">Views</th>
+                  <th class="py-3.5 px-4">Published</th>
+                  <th class="py-3.5 px-4">Source Video</th>
+                  <th class="py-3.5 px-4 text-right">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="admin-articles-tbody" class="divide-y divide-white/5 light:divide-black/5 text-gray-300 light:text-gray-700 font-normal">
+                <!-- Dynamically populated via client script -->
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
 
-      <!-- Search, Filter & Refresh Bar -->
-      <div class="p-4 rounded-2xl bg-white/[0.02] light:bg-white border border-white/10 light:border-black/10 flex flex-col sm:flex-row items-center justify-between gap-3">
-        <div class="relative w-full sm:w-96">
-          <span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-500 text-xs">🔍</span>
-          <input 
-            id="admin-search-input" 
-            type="text" 
-            placeholder="Search articles by title, slug, or keywords..."
-            class="w-full pl-9 pr-3.5 py-2.5 rounded-xl bg-black/40 light:bg-gray-50 border border-white/10 light:border-gray-200 text-white light:text-ink text-xs focus:outline-none focus:ring-2 focus:ring-brand-blue transition-all"
-          />
+      <!-- TAB 2: USER RATE LIMITS & QUOTAS SECTION -->
+      <div id="section-limits" class="hidden space-y-6">
+        <!-- Applied Policy & System Rules Card -->
+        <div class="rounded-3xl p-6 sm:p-7 bg-gradient-to-r from-blue-950/30 via-slate-900/60 to-purple-950/30 border border-blue-500/20 light:bg-blue-50/40 light:border-blue-200 shadow-xl space-y-4">
+          <div class="flex items-center justify-between flex-wrap gap-3">
+            <div class="flex items-center gap-3">
+              <div class="w-12 h-12 rounded-2xl bg-brand-blue/20 text-brand-blue flex items-center justify-center text-2xl border border-brand-blue/30 shrink-0">
+                🛡️
+              </div>
+              <div>
+                <h2 class="text-base sm:text-lg font-bold text-white light:text-ink flex items-center gap-2">
+                  <span>Active Student Rate Limit Policy</span>
+                  <span class="px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-emerald-500/15 text-emerald-400 border border-emerald-500/25">Enforced Live</span>
+                </h2>
+                <p class="text-xs text-gray-400 light:text-gray-500">
+                  Fair-use quota protecting university result lookups and preventing automated bot harvesting.
+                </p>
+              </div>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="text-[11px] text-gray-400 light:text-gray-500 font-mono">Storage Engine:</span>
+              <span id="limits-engine-badge" class="px-2.5 py-1 rounded-xl text-xs font-bold bg-white/5 border border-white/10 text-white light:text-ink">Checking...</span>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 pt-2">
+            <div class="p-3.5 rounded-2xl bg-black/40 light:bg-white border border-white/5 light:border-black/5 space-y-1">
+              <span class="text-[10px] font-bold uppercase tracking-wider text-gray-400 light:text-gray-500">Per-IP Daily Quota</span>
+              <div class="text-lg font-black text-white light:text-ink">5 Result Fetches</div>
+              <p class="text-[11px] text-gray-400">Max allowed searches per day per IP</p>
+            </div>
+
+            <div class="p-3.5 rounded-2xl bg-black/40 light:bg-white border border-white/5 light:border-black/5 space-y-1">
+              <span class="text-[10px] font-bold uppercase tracking-wider text-gray-400 light:text-gray-500">Auto-Reset Window</span>
+              <div class="text-lg font-black text-amber-400">24h Rolling Window</div>
+              <p class="text-[11px] text-gray-400">86,400s key TTL in Upstash Redis</p>
+            </div>
+
+            <div class="p-3.5 rounded-2xl bg-black/40 light:bg-white border border-white/5 light:border-black/5 space-y-1">
+              <span class="text-[10px] font-bold uppercase tracking-wider text-gray-400 light:text-gray-500">Enforcement Action</span>
+              <div class="text-lg font-black text-rose-400">HTTP 429 Too Many Req</div>
+              <p class="text-[11px] text-gray-400">Blocks API &amp; displays quota dialog</p>
+            </div>
+
+            <div class="p-3.5 rounded-2xl bg-black/40 light:bg-white border border-white/5 light:border-black/5 space-y-1">
+              <span class="text-[10px] font-bold uppercase tracking-wider text-gray-400 light:text-gray-500">Client Defense</span>
+              <div class="text-lg font-black text-emerald-400">LocalStorage Guard</div>
+              <p class="text-[11px] text-gray-400">Immediate local modal prevents spam</p>
+            </div>
+          </div>
+
+          <div class="p-3 rounded-xl bg-rose-500/10 border border-rose-500/20 text-rose-300 light:text-rose-900 text-xs flex items-center gap-2">
+            <span>⚠️</span>
+            <span><strong>Penalty message displayed to blocked students:</strong> "You have exceeded the limit to fetch details kindly comeback later"</span>
+          </div>
         </div>
 
-        <div class="flex items-center gap-2.5 w-full sm:w-auto justify-between sm:justify-end">
-          <select 
-            id="admin-category-select" 
-            class="px-3.5 py-2.5 rounded-xl bg-black/40 light:bg-gray-50 border border-white/10 light:border-gray-200 text-white light:text-ink text-xs focus:outline-none focus:ring-2 focus:ring-brand-blue transition-all cursor-pointer"
-          >
-            <option value="All">All Categories</option>
-            <option value="Results & Marksheets">Results &amp; Marksheets</option>
-            <option value="Circulars & Updates">Circulars &amp; Updates</option>
-            <option value="Exam Schedule">Exam Schedule</option>
-            <option value="Student Services">Student Services</option>
-          </select>
+        <!-- Real-time Quota Telemetry KPI Cards -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div class="p-5 rounded-2xl bg-white/[0.02] light:bg-white border border-white/10 light:border-black/10 space-y-1">
+            <span class="text-[11px] font-semibold text-gray-400 light:text-gray-500 uppercase tracking-wider block">Tracked Users Today</span>
+            <div id="stat-limits-total" class="text-2xl font-black text-white light:text-ink">--</div>
+          </div>
 
-          <button 
-            id="admin-refresh-btn" 
-            type="button" 
-            class="px-3.5 py-2.5 rounded-xl bg-white/5 hover:bg-white/10 light:bg-black/5 light:hover:bg-black/10 text-gray-300 light:text-gray-700 text-xs font-semibold border border-white/10 light:border-black/10 transition-all cursor-pointer flex items-center gap-1.5"
-            title="Reload articles list"
-          >
-            <span>🔄</span>
-            <span>Refresh</span>
-          </button>
+          <div class="p-5 rounded-2xl bg-white/[0.02] light:bg-white border border-white/10 light:border-black/10 space-y-1">
+            <span class="text-[11px] font-semibold text-gray-400 light:text-gray-500 uppercase tracking-wider block">Blocked (Limit Exceeded)</span>
+            <div id="stat-limits-blocked" class="text-2xl font-black text-rose-400">--</div>
+          </div>
+
+          <div class="p-5 rounded-2xl bg-white/[0.02] light:bg-white border border-white/10 light:border-black/10 space-y-1">
+            <span class="text-[11px] font-semibold text-gray-400 light:text-gray-500 uppercase tracking-wider block">High Usage (3-4 / 5)</span>
+            <div id="stat-limits-warning" class="text-2xl font-black text-amber-400">--</div>
+          </div>
+
+          <div class="p-5 rounded-2xl bg-white/[0.02] light:bg-white border border-white/10 light:border-black/10 space-y-1">
+            <span class="text-[11px] font-semibold text-gray-400 light:text-gray-500 uppercase tracking-wider block">Total Searches Today</span>
+            <div id="stat-limits-queries" class="text-2xl font-black text-brand-blue">--</div>
+          </div>
+        </div>
+
+        <!-- Filter, Search, & IP Unblock Bar -->
+        <div class="p-4 rounded-2xl bg-white/[0.02] light:bg-white border border-white/10 light:border-black/10 flex flex-col md:flex-row items-center justify-between gap-3">
+          <div class="flex items-center gap-2.5 w-full md:w-auto flex-1">
+            <div class="relative w-full sm:w-80">
+              <span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-500 text-xs">🔍</span>
+              <input 
+                id="limits-search-input" 
+                type="text" 
+                placeholder="Filter by IP address or client ID..."
+                class="w-full pl-9 pr-3.5 py-2.5 rounded-xl bg-black/40 light:bg-gray-50 border border-white/10 light:border-gray-200 text-white light:text-ink text-xs focus:outline-none focus:ring-2 focus:ring-brand-blue transition-all"
+              />
+            </div>
+
+            <select 
+              id="limits-status-filter" 
+              class="px-3.5 py-2.5 rounded-xl bg-black/40 light:bg-gray-50 border border-white/10 light:border-gray-200 text-white light:text-ink text-xs focus:outline-none focus:ring-2 focus:ring-brand-blue transition-all cursor-pointer"
+            >
+              <option value="all">All Tracked Users</option>
+              <option value="blocked">🔴 Blocked Only (&ge; 5)</option>
+              <option value="high">🟡 High Usage (3-4)</option>
+              <option value="active">🟢 Normal Usage (&lt; 3)</option>
+            </select>
+          </div>
+
+          <div class="flex items-center gap-2 w-full md:w-auto justify-end flex-wrap">
+            <!-- Quick unblock manual IP input -->
+            <div class="flex items-center gap-1.5 w-full sm:w-auto">
+              <input 
+                id="limits-quick-ip-input" 
+                type="text" 
+                placeholder="Enter IP to unblock..."
+                class="px-3 py-2 rounded-xl bg-black/40 light:bg-gray-50 border border-white/10 light:border-gray-200 text-white light:text-ink text-xs focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-all w-36 sm:w-44"
+              />
+              <button 
+                id="limits-quick-unblock-btn" 
+                type="button" 
+                class="px-3 py-2 rounded-xl bg-emerald-600/20 hover:bg-emerald-600/30 text-emerald-400 border border-emerald-500/30 text-xs font-bold transition-all cursor-pointer flex items-center gap-1"
+                title="Unblock this IP"
+              >
+                <span>🔓</span>
+                <span>Unblock IP</span>
+              </button>
+            </div>
+
+            <!-- Simulate Test User Button -->
+            <button 
+              id="limits-simulate-btn" 
+              type="button" 
+              class="px-3 py-2 rounded-xl bg-purple-600/20 hover:bg-purple-600/30 text-purple-300 border border-purple-500/30 text-xs font-bold transition-all cursor-pointer flex items-center gap-1"
+              title="Add a test rate-limited IP to verify dashboard and unblock flows"
+            >
+              <span>🧪</span>
+              <span>Simulate IP</span>
+            </button>
+
+            <!-- Refresh Telemetry Button -->
+            <button 
+              id="limits-refresh-btn" 
+              type="button" 
+              class="px-3 py-2 rounded-xl bg-white/5 hover:bg-white/10 light:bg-black/5 light:hover:bg-black/10 text-gray-300 light:text-gray-700 text-xs font-semibold border border-white/10 light:border-black/10 transition-all cursor-pointer flex items-center gap-1.5"
+              title="Refresh live user telemetry"
+            >
+              <span id="limits-refresh-icon">🔄</span>
+              <span>Refresh</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Live User Limits Table Container -->
+        <div class="rounded-3xl border border-white/10 light:border-black/10 bg-white/[0.02] light:bg-white overflow-hidden shadow-xl">
+          <!-- Loading State -->
+          <div id="limits-table-loading" class="py-16 text-center space-y-3">
+            <div class="w-10 h-10 border-2 border-brand-blue border-t-transparent rounded-full animate-spin mx-auto"></div>
+            <p class="text-xs text-gray-400 light:text-gray-500">Scanning Redis &amp; memory rate limit tables...</p>
+          </div>
+
+          <!-- Empty State -->
+          <div id="limits-table-empty" class="hidden py-16 text-center space-y-3">
+            <span class="text-3xl block">🛡️</span>
+            <h3 class="text-sm font-bold text-white light:text-ink">No Active Rate Limits Recorded</h3>
+            <p class="text-xs text-gray-400 light:text-gray-500 max-w-sm mx-auto">
+              All student quotas are fresh, or no searches have been performed yet today. You can simulate a test user to test the unblock workflow.
+            </p>
+          </div>
+
+          <!-- Table -->
+          <div class="overflow-x-auto">
+            <table id="limits-table" class="hidden w-full text-left border-collapse text-xs">
+              <thead>
+                <tr class="border-b border-white/10 light:border-black/10 bg-white/[0.03] light:bg-black/[0.02] text-gray-400 light:text-gray-500 font-bold uppercase tracking-wider text-[10px]">
+                  <th class="py-3.5 px-4">User / IP Identifier</th>
+                  <th class="py-3.5 px-4">Usage Meter</th>
+                  <th class="py-3.5 px-4">Status</th>
+                  <th class="py-3.5 px-4">Quota Resets In</th>
+                  <th class="py-3.5 px-4">Engine Source</th>
+                  <th class="py-3.5 px-4 text-right">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="limits-tbody" class="divide-y divide-white/5 light:divide-black/5 text-gray-300 light:text-gray-700 font-normal">
+                <!-- Dynamically populated via client script -->
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
 
-      <!-- Articles Management Table Container -->
-      <div class="rounded-3xl border border-white/10 light:border-black/10 bg-white/[0.02] light:bg-white overflow-hidden shadow-xl">
-        
-        <!-- Loading State -->
-        <div id="admin-table-loading" class="py-16 text-center space-y-3">
-          <div class="w-10 h-10 border-2 border-brand-blue border-t-transparent rounded-full animate-spin mx-auto"></div>
-          <p class="text-xs text-gray-400 light:text-gray-500">Loading articles from database...</p>
-        </div>
-
-        <!-- Empty State -->
-        <div id="admin-table-empty" class="hidden py-16 text-center space-y-3">
-          <span class="text-3xl block">📭</span>
-          <h3 class="text-sm font-bold text-white light:text-ink">No Articles Found</h3>
-          <p class="text-xs text-gray-400 light:text-gray-500">Try adjusting your search query or generate a new article.</p>
-        </div>
-
-        <!-- Articles Table -->
-        <div class="overflow-x-auto">
-          <table id="admin-articles-table" class="hidden w-full text-left border-collapse text-xs">
-            <thead>
-              <tr class="border-b border-white/10 light:border-black/10 bg-white/[0.03] light:bg-black/[0.02] text-gray-400 light:text-gray-500 font-bold uppercase tracking-wider text-[10px]">
-                <th class="py-3.5 px-4">Article</th>
-                <th class="py-3.5 px-4">Category</th>
-                <th class="py-3.5 px-4">Views</th>
-                <th class="py-3.5 px-4">Published</th>
-                <th class="py-3.5 px-4">Source Video</th>
-                <th class="py-3.5 px-4 text-right">Actions</th>
-              </tr>
-            </thead>
-            <tbody id="admin-articles-tbody" class="divide-y divide-white/5 light:divide-black/5 text-gray-300 light:text-gray-700 font-normal">
-              <!-- Dynamically populated via client script -->
-            </tbody>
-          </table>
-        </div>
-
-      </div>
 
     </div>
 
@@ -499,6 +710,48 @@ const pageDescription = "Administrative content management portal for Dr. A.P.J.
     let allArticles: ArticleRow[] = [];
     let pendingDeleteSlug = '';
 
+    interface UserLimitRow {
+      identifier: string;
+      count: number;
+      max: number;
+      isBlocked: boolean;
+      remaining: number;
+      ttlSeconds: number;
+      resetAt: string;
+      source: 'redis' | 'memory';
+    }
+
+    let allUserLimits: UserLimitRow[] = [];
+    let activeTab: 'articles' | 'limits' = 'articles';
+
+    // Tabs
+    const tabArticlesBtn = document.getElementById("admin-tab-articles-btn");
+    const tabLimitsBtn = document.getElementById("admin-tab-limits-btn");
+    const tabArticlesBadge = document.getElementById("tab-articles-badge");
+    const tabLimitsBadge = document.getElementById("tab-limits-badge");
+    const sectionArticles = document.getElementById("section-articles");
+    const sectionLimits = document.getElementById("section-limits");
+
+    // Limits Elements
+    const limitsEngineBadge = document.getElementById("limits-engine-badge");
+    const statLimitsTotal = document.getElementById("stat-limits-total");
+    const statLimitsBlocked = document.getElementById("stat-limits-blocked");
+    const statLimitsWarning = document.getElementById("stat-limits-warning");
+    const statLimitsQueries = document.getElementById("stat-limits-queries");
+
+    const limitsSearchInput = document.getElementById("limits-search-input") as HTMLInputElement | null;
+    const limitsStatusFilter = document.getElementById("limits-status-filter") as HTMLSelectElement | null;
+    const limitsQuickIpInput = document.getElementById("limits-quick-ip-input") as HTMLInputElement | null;
+    const limitsQuickUnblockBtn = document.getElementById("limits-quick-unblock-btn");
+    const limitsSimulateBtn = document.getElementById("limits-simulate-btn");
+    const limitsRefreshBtn = document.getElementById("limits-refresh-btn");
+    const limitsRefreshIcon = document.getElementById("limits-refresh-icon");
+
+    const limitsTableLoading = document.getElementById("limits-table-loading");
+    const limitsTableEmpty = document.getElementById("limits-table-empty");
+    const limitsTable = document.getElementById("limits-table");
+    const limitsTbody = document.getElementById("limits-tbody");
+
     const authView = document.getElementById("admin-auth-view");
     const dashboardView = document.getElementById("admin-dashboard-view");
     const loginForm = document.getElementById("admin-login-form");
@@ -760,6 +1013,7 @@ const pageDescription = "Administrative content management portal for Dr. A.P.J.
         if (data.success && Array.isArray(data.articles)) {
           allArticles = data.articles;
           if (statTotal) statTotal.textContent = allArticles.length.toString();
+          if (tabArticlesBadge) tabArticlesBadge.textContent = allArticles.length.toString();
 
           const totalViews = allArticles.reduce((acc, a) => acc + (a.views || 0), 0);
           if (statTotalViews) statTotalViews.textContent = totalViews.toLocaleString();
@@ -776,10 +1030,229 @@ const pageDescription = "Administrative content management portal for Dr. A.P.J.
       }
     };
 
+    // Tab Navigation Logic
+    const switchTab = (tab: 'articles' | 'limits') => {
+      activeTab = tab;
+      const activeClass = "px-4 py-2.5 rounded-2xl font-bold text-xs transition-all flex items-center gap-2 cursor-pointer bg-brand-blue text-white shadow-lg shadow-brand-blue/20 shrink-0";
+      const inactiveClass = "px-4 py-2.5 rounded-2xl font-bold text-xs transition-all flex items-center gap-2 cursor-pointer bg-white/5 hover:bg-white/10 light:bg-black/5 light:hover:bg-black/10 text-gray-400 hover:text-white light:text-gray-600 light:hover:text-black border border-white/10 light:border-black/10 shrink-0";
+
+      if (tab === 'articles') {
+        sectionArticles?.classList.remove("hidden");
+        sectionLimits?.classList.add("hidden");
+        if (tabArticlesBtn) tabArticlesBtn.className = activeClass;
+        if (tabLimitsBtn) tabLimitsBtn.className = inactiveClass;
+        window.location.hash = "articles";
+      } else {
+        sectionArticles?.classList.add("hidden");
+        sectionLimits?.classList.remove("hidden");
+        if (tabLimitsBtn) tabLimitsBtn.className = activeClass;
+        if (tabArticlesBtn) tabArticlesBtn.className = inactiveClass;
+        window.location.hash = "limits";
+        fetchUserLimits();
+      }
+    };
+
+    // Render User Limits Table
+    const renderUserLimitsTable = () => {
+      if (!limitsTbody || !limitsTable || !limitsTableEmpty || !limitsTableLoading) return;
+      limitsTableLoading.classList.add("hidden");
+
+      const query = (limitsSearchInput?.value || "").trim().toLowerCase();
+      const statusFilter = limitsStatusFilter?.value || "all";
+
+      const filtered = allUserLimits.filter(user => {
+        const matchesQuery = !query || user.identifier.toLowerCase().includes(query);
+        let matchesStatus = true;
+        if (statusFilter === 'blocked') matchesStatus = user.isBlocked;
+        else if (statusFilter === 'high') matchesStatus = user.count >= 3 && !user.isBlocked;
+        else if (statusFilter === 'active') matchesStatus = user.count < 3;
+        return matchesQuery && matchesStatus;
+      });
+
+      if (filtered.length === 0) {
+        limitsTable.classList.add("hidden");
+        limitsTableEmpty.classList.remove("hidden");
+        return;
+      }
+
+      limitsTableEmpty.classList.add("hidden");
+      limitsTable.classList.remove("hidden");
+
+      limitsTbody.innerHTML = filtered.map(user => {
+        const pct = Math.min(100, Math.round((user.count / user.max) * 100));
+        const meterColor = user.isBlocked 
+          ? 'bg-rose-500' 
+          : user.count >= 3 
+            ? 'bg-amber-500' 
+            : 'bg-emerald-500';
+
+        const statusBadge = user.isBlocked
+          ? `<span class="px-2.5 py-0.5 rounded-full font-bold text-[10px] bg-rose-500/15 text-rose-400 border border-rose-500/25 flex items-center gap-1 w-fit">
+              <span class="w-1.5 h-1.5 rounded-full bg-rose-400 animate-pulse"></span>
+              <span>BLOCKED (Limit Exceeded)</span>
+            </span>`
+          : user.count >= 3
+            ? `<span class="px-2.5 py-0.5 rounded-full font-bold text-[10px] bg-amber-500/15 text-amber-400 border border-amber-500/25 w-fit">
+                🟡 High Usage (${user.count}/${user.max})
+              </span>`
+            : `<span class="px-2.5 py-0.5 rounded-full font-bold text-[10px] bg-emerald-500/15 text-emerald-400 border border-emerald-500/25 w-fit">
+                🟢 Normal (${user.count}/${user.max})
+              </span>`;
+
+        const hoursLeft = Math.floor(user.ttlSeconds / 3600);
+        const minsLeft = Math.floor((user.ttlSeconds % 3600) / 60);
+        const ttlDisplay = user.ttlSeconds > 0 
+          ? `${hoursLeft}h ${minsLeft}m`
+          : 'Expiring soon';
+
+        return `
+          <tr class="hover:bg-white/[0.02] light:hover:bg-black/[0.02] transition-colors">
+            <td class="py-3.5 px-4 font-mono font-bold text-white light:text-ink">
+              <div class="flex items-center gap-2">
+                <span class="text-xs">💻</span>
+                <span>${user.identifier}</span>
+              </div>
+            </td>
+            <td class="py-3.5 px-4">
+              <div class="space-y-1 w-36">
+                <div class="flex items-center justify-between text-[11px] font-semibold">
+                  <span class="text-white light:text-ink font-bold">${user.count} / ${user.max}</span>
+                  <span class="text-gray-400 text-[10px]">${pct}%</span>
+                </div>
+                <div class="w-full bg-black/40 light:bg-gray-200 h-2 rounded-full overflow-hidden">
+                  <div class="${meterColor} h-full rounded-full transition-all" style="width: ${pct}%;"></div>
+                </div>
+              </div>
+            </td>
+            <td class="py-3.5 px-4 whitespace-nowrap">
+              ${statusBadge}
+            </td>
+            <td class="py-3.5 px-4 whitespace-nowrap font-mono text-[11px] text-gray-400">
+              ⏱️ ${ttlDisplay}
+            </td>
+            <td class="py-3.5 px-4 whitespace-nowrap">
+              <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold ${user.source === 'redis' ? 'bg-red-500/15 text-red-400 border border-red-500/20' : 'bg-blue-500/15 text-blue-400 border border-blue-500/20'}">
+                ${user.source.toUpperCase()}
+              </span>
+            </td>
+            <td class="py-3.5 px-4 whitespace-nowrap text-right">
+              <button 
+                type="button" 
+                class="unblock-btn px-3 py-1.5 rounded-lg bg-emerald-600/15 hover:bg-emerald-600 text-emerald-400 hover:text-white border border-emerald-500/25 text-xs font-bold transition-all cursor-pointer inline-flex items-center gap-1"
+                data-id="${encodeURIComponent(user.identifier)}"
+                title="Reset this user's quota to 0"
+              >
+                <span>🔓</span>
+                <span>Reset / Unblock</span>
+              </button>
+            </td>
+          </tr>
+        `;
+      }).join("");
+
+      // Attach unblock click handlers
+      document.querySelectorAll(".unblock-btn").forEach(btn => {
+        btn.addEventListener("click", async (e) => {
+          e.preventDefault();
+          const identifier = decodeURIComponent(btn.getAttribute("data-id") || "");
+          if (identifier) {
+            await handleUnblockUser(identifier);
+          }
+        });
+      });
+    };
+
+    // Load User Limits from API
+    const fetchUserLimits = async () => {
+      const token = getLocalToken();
+      if (!token) return;
+
+      if (limitsTableLoading) limitsTableLoading.classList.remove("hidden");
+      if (limitsTable) limitsTable.classList.add("hidden");
+      if (limitsTableEmpty) limitsTableEmpty.classList.add("hidden");
+
+      try {
+        const res = await fetch(`/api/admin/limits?_t=${Date.now()}`, {
+          headers: { "Authorization": `Bearer ${token}` },
+          cache: "no-store"
+        });
+
+        if (res.status === 401) {
+          setLocalToken("");
+          switchToAuthView();
+          return;
+        }
+
+        const data = await res.json();
+        if (data.success) {
+          allUserLimits = data.users || [];
+          
+          if (statLimitsTotal) statLimitsTotal.textContent = (data.stats?.totalTracked || 0).toString();
+          if (statLimitsBlocked) statLimitsBlocked.textContent = (data.stats?.totalBlocked || 0).toString();
+          if (statLimitsWarning) statLimitsWarning.textContent = (data.stats?.totalHighUsage || 0).toString();
+          if (statLimitsQueries) statLimitsQueries.textContent = (data.stats?.totalLookups || 0).toString();
+
+          if (limitsEngineBadge) {
+            limitsEngineBadge.textContent = data.isRedisConnected ? '🟢 Upstash Redis' : '🟡 In-Memory Store';
+          }
+
+          if (tabLimitsBadge) {
+            const blocked = data.stats?.totalBlocked || 0;
+            if (blocked > 0) {
+              tabLimitsBadge.textContent = `${blocked} blocked`;
+              tabLimitsBadge.classList.remove("hidden");
+            } else {
+              tabLimitsBadge.classList.add("hidden");
+            }
+          }
+
+          renderUserLimitsTable();
+        }
+      } catch (err) {
+        showToast("Failed to load user limits telemetry", true);
+      } finally {
+        if (limitsTableLoading) limitsTableLoading.classList.add("hidden");
+      }
+    };
+
+    // Unblock IP Handler
+    const handleUnblockUser = async (identifier: string) => {
+      const token = getLocalToken();
+      if (!token || !identifier) return;
+
+      try {
+        const res = await fetch(`/api/admin/limits?_t=${Date.now()}`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+          },
+          body: JSON.stringify({ action: "reset", identifier }),
+          cache: "no-store"
+        });
+
+        const data = await res.json();
+        if (res.ok && data.success) {
+          showToast(`🔓 Quota reset for: ${identifier}. User unblocked!`);
+          await fetchUserLimits();
+        } else {
+          showToast(data.message || "Failed to reset user quota", true);
+        }
+      } catch (err) {
+        showToast("Network error while resetting user quota", true);
+      }
+    };
+
     const switchToDashboardView = () => {
       authView?.classList.add("hidden");
       dashboardView?.classList.remove("hidden");
       fetchArticles();
+      fetchUserLimits();
+      if (window.location.hash === '#limits') {
+        switchTab('limits');
+      } else {
+        switchTab('articles');
+      }
     };
 
     const switchToAuthView = () => {
@@ -875,6 +1348,63 @@ const pageDescription = "Administrative content management portal for Dr. A.P.J.
     searchInput?.addEventListener("input", renderArticlesTable);
     categorySelect?.addEventListener("change", renderArticlesTable);
     refreshBtn?.addEventListener("click", fetchArticles);
+
+    // Tab Switching
+    tabArticlesBtn?.addEventListener("click", () => switchTab('articles'));
+    tabLimitsBtn?.addEventListener("click", () => switchTab('limits'));
+
+    // User Limits Filters & Controls
+    limitsSearchInput?.addEventListener("input", renderUserLimitsTable);
+    limitsStatusFilter?.addEventListener("change", renderUserLimitsTable);
+    limitsRefreshBtn?.addEventListener("click", fetchUserLimits);
+
+    // Quick IP Unblock
+    limitsQuickUnblockBtn?.addEventListener("click", async () => {
+      const ip = limitsQuickIpInput?.value.trim();
+      if (!ip) {
+        showToast("Please enter an IP address to unblock", true);
+        return;
+      }
+      await handleUnblockUser(ip);
+      if (limitsQuickIpInput) limitsQuickIpInput.value = "";
+    });
+
+    limitsQuickIpInput?.addEventListener("keydown", async (e) => {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        const ip = limitsQuickIpInput?.value.trim();
+        if (ip) {
+          await handleUnblockUser(ip);
+          limitsQuickIpInput.value = "";
+        }
+      }
+    });
+
+    // Simulate Test IP
+    limitsSimulateBtn?.addEventListener("click", async () => {
+      const token = getLocalToken();
+      if (!token) return;
+      try {
+        const res = await fetch(`/api/admin/limits?_t=${Date.now()}`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+          },
+          body: JSON.stringify({ action: "simulate_test" }),
+          cache: "no-store"
+        });
+        const data = await res.json();
+        if (res.ok && data.success) {
+          showToast(`🧪 Simulated test user limit created for ${data.identifier}!`);
+          await fetchUserLimits();
+        } else {
+          showToast(data.message || "Simulation failed", true);
+        }
+      } catch {
+        showToast("Network error while simulating user limit", true);
+      }
+    });
 
     // Generate Article on Demand
     generateBtn?.addEventListener("click", async () => {

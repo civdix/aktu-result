@@ -29,6 +29,7 @@ export const GET: APIRoute = async () => {
     { loc: `${domain}/aktu-result-without-date-of-birth`, priority: '0.95', changefreq: 'weekly', lastmod: currentDate },
     { loc: `${domain}/aktu-erp-result`, priority: '0.95', changefreq: 'weekly', lastmod: currentDate },
     { loc: `${domain}/roll-number-finder`, priority: '0.90', changefreq: 'weekly', lastmod: currentDate },
+    { loc: `${domain}/assessment-simulator`, priority: '0.90', changefreq: 'weekly', lastmod: currentDate },
     { loc: `${domain}/colleges`, priority: '0.90', changefreq: 'weekly', lastmod: '2026-09-22' },
     { loc: `${domain}/aktu-affiliated-cse-college`, priority: '0.85', changefreq: 'weekly', lastmod: '2026-09-20' },
     { loc: `${domain}/how-it-works`, priority: '0.80', changefreq: 'monthly', lastmod: currentDate },

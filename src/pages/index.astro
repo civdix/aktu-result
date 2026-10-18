@@ -6,6 +6,7 @@ import { ArticleService } from "../services/article.service";
 import ResponsiveLeaderboard from "../components/ads/ResponsiveLeaderboard.astro";
 import Banner300x250 from "../components/ads/Banner300x250.astro";
 import DirectLink from "../components/ads/DirectLink.astro";
+import RentOnCentAds from "../components/ads/RentOnCentAds.astro";
 import { redisService } from "../services/redis.service";
 
 const yearInfo = getAcademicYearInfo();
@@ -467,6 +468,9 @@ const homeKeywords = `aktu result without date of birth, aktu result without dob
                 >
                   <span>🖥️ Open Live OneView Gateway</span>
                 </button>
+
+                <!-- Student Mobility & Host Partner: Rent on Cent -->
+                <RentOnCentAds />
               </form>
 
               <!-- Search Manual Security Code Modal Container -->
@@ -624,6 +628,9 @@ const homeKeywords = `aktu result without date of birth, aktu result without dob
                   </div>
                 </div>
               </div>
+
+              <!-- Featured Student Mobility Partner: Rent on Cent -->
+              <RentOnCentAds />
 
               <!-- Below Result Sponsored Ad Unit -->
               <ResponsiveLeaderboard />
@@ -1291,20 +1298,39 @@ const homeKeywords = `aktu result without date of birth, aktu result without dob
         </a>
 
         <!-- Card 5: Colleges Directory -->
-        <a href="/colleges" class="group p-5 rounded-2xl iphone-glass hover:border-amber-500/40 transition-all duration-300 hover:translate-y-[-2px] flex flex-col justify-between sm:col-span-2 lg:col-span-2">
+        <a href="/colleges" class="group p-5 rounded-2xl iphone-glass hover:border-amber-500/40 transition-all duration-300 hover:translate-y-[-2px] flex flex-col justify-between">
           <div>
             <div class="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-400 flex items-center justify-center text-lg mb-3">
               🏛️
             </div>
             <h3 class="text-base font-bold text-white light:text-ink group-hover:text-amber-400 transition-colors mb-1.5">
-              Affiliated Colleges Directory (750+ Institutes)
+              Affiliated Colleges (750+)
             </h3>
             <p class="text-xs text-gray-400 light:text-gray-600 leading-relaxed">
-              Browse 750+ AKTU-affiliated engineering, management, and pharmacy colleges with official institute codes, district locations, and student lists.
+              Browse 750+ AKTU-affiliated engineering, management, and pharmacy colleges with official institute codes and districts.
             </p>
           </div>
           <span class="text-xs font-semibold text-amber-400 mt-4 inline-flex items-center gap-1 group-hover:underline">
             Search 750+ Colleges &rarr;
+          </span>
+        </a>
+
+        <!-- Card 6: Assessment Simulator -->
+        <a href="/assessment-simulator" class="group p-5 rounded-2xl iphone-glass hover:border-blue-500/40 transition-all duration-300 hover:translate-y-[-2px] flex flex-col justify-between">
+          <div>
+            <div class="w-10 h-10 rounded-xl bg-blue-500/10 text-brand-blue flex items-center justify-center text-lg mb-3">
+              🎯
+            </div>
+            <h3 class="text-base font-bold text-white light:text-ink group-hover:text-brand-blue transition-colors mb-1.5 flex items-center gap-2">
+              <span>Exam Assessment Simulator</span>
+              <span class="text-[9px] bg-amber-500/20 text-amber-400 px-1.5 py-0.5 rounded font-mono font-medium">PROCTOR LAB</span>
+            </h3>
+            <p class="text-xs text-gray-400 light:text-gray-600 leading-relaxed">
+              Practice real-world proctored online exams (Wheebox, TCS iON) with live focus-loss tracking, tab-switch logging, and integrity reports.
+            </p>
+          </div>
+          <span class="text-xs font-semibold text-brand-blue mt-4 inline-flex items-center gap-1 group-hover:underline">
+            Launch Exam Simulator &rarr;
           </span>
         </a>
       </div>
@@ -3149,6 +3175,103 @@ const homeKeywords = `aktu result without date of birth, aktu result without dob
               ${fatherHtml}
               ${courseHtml}
               ${instituteHtml}
+            </div>
+          </div>
+
+          <!-- Featured Student Mobility Partner: Rent on Cent -->
+          <div class="rentoncent-ads-container my-3 text-left">
+            <div class="flex items-center justify-between mb-2 px-0.5">
+              <div class="flex items-center gap-1.5">
+                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                <span class="text-[10px] font-bold uppercase tracking-wider text-gray-400 light:text-gray-500">Student Mobility Partner</span>
+              </div>
+              <span class="text-[9px] font-mono uppercase bg-white/5 light:bg-black/5 text-gray-400 light:text-gray-500 px-1.5 py-0.5 rounded border border-white/5 light:border-black/5">Verified Partner</span>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <!-- Ad 1: rentoncent.bond -->
+              <a 
+                href="https://rentoncent.bond" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                class="group block p-3 rounded-2xl border border-white/10 light:border-black/10 bg-gradient-to-b from-white/[0.04] to-white/[0.01] light:bg-white hover:border-emerald-500/50 hover:bg-emerald-500/[0.04] transition-all duration-200 shadow-sm overflow-hidden"
+              >
+                <div class="relative w-full aspect-[16/9] rounded-xl overflow-hidden mb-2.5 bg-black/40 border border-white/5">
+                  <img 
+                    src="https://rentoncent.bond/og-customer.jpg" 
+                    alt="Bike & Scooty on Rent in Mathura & Vrindavan - Rent on Cent" 
+                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    loading="lazy"
+                  />
+                  <div class="absolute top-2 left-2 px-2 py-0.5 rounded-full bg-black/80 backdrop-blur-md text-[10px] font-bold text-emerald-400 border border-emerald-500/30">
+                    🛵 From ₹299/day (₹40/hr)
+                  </div>
+                  <div class="absolute bottom-2 right-2 px-2 py-0.5 rounded bg-black/80 backdrop-blur-md text-[9px] font-bold text-white">
+                    Zero Deposit
+                  </div>
+                </div>
+                <div class="space-y-1">
+                  <div class="flex items-center justify-between gap-1">
+                    <h4 class="text-xs sm:text-sm font-bold text-white light:text-ink group-hover:text-emerald-400 transition-colors line-clamp-1">
+                      Bike &amp; Scooty on Rent
+                    </h4>
+                    <span class="text-emerald-400 text-xs shrink-0 group-hover:translate-x-0.5 transition-transform font-bold">↗</span>
+                  </div>
+                  <p class="text-[11px] text-gray-400 light:text-gray-600 line-clamp-2 leading-relaxed">
+                    Rent Activa 6G, EV &amp; Royal Enfield in Mathura &amp; Vrindavan. Free helmets &amp; doorstep delivery.
+                  </p>
+                  <div class="pt-2 flex items-center justify-between">
+                    <span class="text-[10px] font-semibold text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-md border border-emerald-500/20">
+                      Instant Booking
+                    </span>
+                    <span class="text-[11px] font-bold text-emerald-400 group-hover:underline">
+                      rentoncent.bond &rarr;
+                    </span>
+                  </div>
+                </div>
+              </a>
+
+              <!-- Ad 2: rentoncent.bond/host -->
+              <a 
+                href="https://rentoncent.bond/host" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                class="group block p-3 rounded-2xl border border-white/10 light:border-black/10 bg-gradient-to-b from-white/[0.04] to-white/[0.01] light:bg-white hover:border-blue-500/50 hover:bg-blue-500/[0.04] transition-all duration-200 shadow-sm overflow-hidden"
+              >
+                <div class="relative w-full aspect-[16/9] rounded-xl overflow-hidden mb-2.5 bg-black/40 border border-white/5">
+                  <img 
+                    src="https://rentoncent.bond/og-host.jpg" 
+                    alt="List Your Bike & Earn - Rent on Cent Host" 
+                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    loading="lazy"
+                  />
+                  <div class="absolute top-2 left-2 px-2 py-0.5 rounded-full bg-black/80 backdrop-blur-md text-[10px] font-bold text-blue-400 border border-blue-500/30">
+                    💰 Earn up to ₹22,000/mo
+                  </div>
+                  <div class="absolute bottom-2 right-2 px-2 py-0.5 rounded bg-black/80 backdrop-blur-md text-[9px] font-bold text-white">
+                    Zero Listing Fees
+                  </div>
+                </div>
+                <div class="space-y-1">
+                  <div class="flex items-center justify-between gap-1">
+                    <h4 class="text-xs sm:text-sm font-bold text-white light:text-ink group-hover:text-blue-400 transition-colors line-clamp-1">
+                      Host Your Bike &amp; Earn
+                    </h4>
+                    <span class="text-blue-400 text-xs shrink-0 group-hover:translate-x-0.5 transition-transform font-bold">↗</span>
+                  </div>
+                  <p class="text-[11px] text-gray-400 light:text-gray-600 line-clamp-2 leading-relaxed">
+                    List your scooty or bike in Mathura &amp; Vrindavan. Verified riders, 6-angle digital photo audit &amp; daily payouts.
+                  </p>
+                  <div class="pt-2 flex items-center justify-between">
+                    <span class="text-[10px] font-semibold text-blue-400 bg-blue-500/10 px-2 py-0.5 rounded-md border border-blue-500/20">
+                      Host Registration
+                    </span>
+                    <span class="text-[11px] font-bold text-blue-400 group-hover:underline">
+                      rentoncent.bond/host &rarr;
+                    </span>
+                  </div>
+                </div>
+              </a>
             </div>
           </div>
 

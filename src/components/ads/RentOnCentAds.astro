@@ -1,0 +1,108 @@
+---
+// RentOnCentAds.astro
+// Featured Partner Ads for Rent on Cent (rentoncent.bond & rentoncent.bond/host)
+// High-visibility, student-friendly two-wheeler rental & host earning cards
+interface Props {
+  class?: string;
+}
+
+const { class: className = "" } = Astro.props;
+---
+
+<div class={`rentoncent-ads-container my-4 text-left ${className}`}>
+  <div class="flex items-center justify-between mb-2.5 px-0.5">
+    <div class="flex items-center gap-1.5">
+      <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+      <span class="text-[10px] font-bold uppercase tracking-wider text-gray-400 light:text-gray-500">Student Mobility Partner</span>
+    </div>
+    <span class="text-[9px] font-mono uppercase bg-white/5 light:bg-black/5 text-gray-400 light:text-gray-500 px-1.5 py-0.5 rounded border border-white/5 light:border-black/5">Verified Partner</span>
+  </div>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+    <!-- Ad 1: Rent on Cent (Customer Rental) -->
+    <a 
+      href="https://rentoncent.bond" 
+      target="_blank" 
+      rel="noopener noreferrer" 
+      class="group block p-3 rounded-2xl border border-white/10 light:border-black/10 bg-gradient-to-b from-white/[0.04] to-white/[0.01] light:bg-white hover:border-emerald-500/50 hover:bg-emerald-500/[0.04] transition-all duration-200 shadow-sm overflow-hidden"
+    >
+      <div class="relative w-full aspect-[16/9] rounded-xl overflow-hidden mb-2.5 bg-black/40 border border-white/5">
+        <img 
+          src="https://rentoncent.bond/og-customer.jpg" 
+          alt="Bike & Scooty on Rent in Mathura & Vrindavan - Rent on Cent" 
+          class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+          loading="lazy"
+        />
+        <div class="absolute top-2 left-2 px-2 py-0.5 rounded-full bg-black/80 backdrop-blur-md text-[10px] font-bold text-emerald-400 border border-emerald-500/30">
+          🛵 From ₹299/day (₹40/hr)
+        </div>
+        <div class="absolute bottom-2 right-2 px-2 py-0.5 rounded bg-black/80 backdrop-blur-md text-[9px] font-bold text-white">
+          Zero Deposit
+        </div>
+      </div>
+      
+      <div class="space-y-1">
+        <div class="flex items-center justify-between gap-1">
+          <h4 class="text-xs sm:text-sm font-bold text-white light:text-ink group-hover:text-emerald-400 transition-colors line-clamp-1">
+            Bike &amp; Scooty on Rent
+          </h4>
+          <span class="text-emerald-400 text-xs shrink-0 group-hover:translate-x-0.5 transition-transform font-bold">↗</span>
+        </div>
+        <p class="text-[11px] text-gray-400 light:text-gray-600 line-clamp-2 leading-relaxed">
+          Rent Activa 6G, EV &amp; Royal Enfield in Mathura &amp; Vrindavan. Free helmets &amp; doorstep delivery.
+        </p>
+        <div class="pt-2 flex items-center justify-between">
+          <span class="text-[10px] font-semibold text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-md border border-emerald-500/20">
+            Instant Booking
+          </span>
+          <span class="text-[11px] font-bold text-emerald-400 group-hover:underline">
+            rentoncent.bond &rarr;
+          </span>
+        </div>
+      </div>
+    </a>
+
+    <!-- Ad 2: Rent on Cent Host (Earn by Listing Vehicle) -->
+    <a 
+      href="https://rentoncent.bond/host" 
+      target="_blank" 
+      rel="noopener noreferrer" 
+      class="group block p-3 rounded-2xl border border-white/10 light:border-black/10 bg-gradient-to-b from-white/[0.04] to-white/[0.01] light:bg-white hover:border-blue-500/50 hover:bg-blue-500/[0.04] transition-all duration-200 shadow-sm overflow-hidden"
+    >
+      <div class="relative w-full aspect-[16/9] rounded-xl overflow-hidden mb-2.5 bg-black/40 border border-white/5">
+        <img 
+          src="https://rentoncent.bond/og-host.jpg" 
+          alt="List Your Bike & Earn - Rent on Cent Host" 
+          class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+          loading="lazy"
+        />
+        <div class="absolute top-2 left-2 px-2 py-0.5 rounded-full bg-black/80 backdrop-blur-md text-[10px] font-bold text-blue-400 border border-blue-500/30">
+          💰 Earn up to ₹22,000/mo
+        </div>
+        <div class="absolute bottom-2 right-2 px-2 py-0.5 rounded bg-black/80 backdrop-blur-md text-[9px] font-bold text-white">
+          Zero Listing Fees
+        </div>
+      </div>
+      
+      <div class="space-y-1">
+        <div class="flex items-center justify-between gap-1">
+          <h4 class="text-xs sm:text-sm font-bold text-white light:text-ink group-hover:text-blue-400 transition-colors line-clamp-1">
+            Host Your Bike &amp; Earn
+          </h4>
+          <span class="text-blue-400 text-xs shrink-0 group-hover:translate-x-0.5 transition-transform font-bold">↗</span>
+        </div>
+        <p class="text-[11px] text-gray-400 light:text-gray-600 line-clamp-2 leading-relaxed">
+          List your scooty or bike in Mathura &amp; Vrindavan. Verified riders, 6-angle digital photo audit &amp; daily payouts.
+        </p>
+        <div class="pt-2 flex items-center justify-between">
+          <span class="text-[10px] font-semibold text-blue-400 bg-blue-500/10 px-2 py-0.5 rounded-md border border-blue-500/20">
+            Host Registration
+          </span>
+          <span class="text-[11px] font-bold text-blue-400 group-hover:underline">
+            rentoncent.bond/host &rarr;
+          </span>
+        </div>
+      </div>
+    </a>
+  </div>
+</div>
