@@ -1,5 +1,6 @@
 import type { APIRoute } from 'astro';
 import { ArticleService } from '../../../services/article.service';
+import { CommentService } from '../../../services/comment.service';
 import { verifyAdminRequest, getAdminToken } from '../../../utils/admin-auth';
 
 export const prerender = false;
@@ -48,8 +49,14 @@ export const GET: APIRoute = async ({ request, cookies, url }) => {
       );
     }
 
+    const counts = await CommentService.getCommentCountsByTargetIds([slug]);
+    const enriched = {
+      ...article,
+      commentsCount: counts[slug] || 0
+    };
+
     return new Response(
-      JSON.stringify({ success: true, article }),
+      JSON.stringify({ success: true, article: enriched }),
       { status: 200, headers: ANTI_CACHE_HEADERS }
     );
   } catch (err: any) {

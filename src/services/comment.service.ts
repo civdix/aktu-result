@@ -111,6 +111,85 @@ export class CommentService {
   }
 
   /**
+   * Get comment counts grouped by targetId (e.g. article slug)
+   */
+  static async getCommentCountsByTargetIds(targetIds?: string[]): Promise<Record<string, number>> {
+    await this.ensureTtlIndex();
+    const counts: Record<string, number> = {};
+    const sixtyDaysAgo = new Date(Date.now() - TTL_60_DAYS_MS);
+
+    // 1. Try MongoDB aggregation
+    try {
+      const db = await DatabaseService.connectToDatabase();
+      if (db) {
+        const collection = db.collection('comments');
+        const match: any = {
+          status: { $ne: 'deleted' },
+          createdAt: { $gte: sixtyDaysAgo },
+        };
+        if (targetIds && targetIds.length > 0) {
+          match.targetId = { $in: targetIds };
+        }
+
+        const results = await collection
+          .aggregate([
+            { $match: match },
+            { $group: { _id: '$targetId', count: { $sum: 1 } } },
+          ])
+          .toArray();
+
+        results.forEach((r: any) => {
+          if (r._id) {
+            counts[r._id] = r.count;
+          }
+        });
+
+        if (targetIds) {
+          targetIds.forEach(id => {
+            if (counts[id] === undefined) {
+              counts[id] = 0;
+            }
+          });
+        }
+
+        return counts;
+      }
+    } catch (err) {
+      console.warn('MongoDB comment counts aggregation failed, falling back to local store:', err);
+    }
+
+    // 2. Fallback to local JSON store
+    ensureDataDir();
+    try {
+      if (fs.existsSync(COMMENTS_FILE)) {
+        const content = fs.readFileSync(COMMENTS_FILE, 'utf-8');
+        const all: Comment[] = JSON.parse(content);
+        const sixtyDaysAgoMs = Date.now() - TTL_60_DAYS_MS;
+
+        all.forEach(c => {
+          if (c.status !== 'deleted' && new Date(c.createdAt).getTime() >= sixtyDaysAgoMs) {
+            if (!targetIds || targetIds.includes(c.targetId)) {
+              counts[c.targetId] = (counts[c.targetId] || 0) + 1;
+            }
+          }
+        });
+      }
+    } catch (e) {
+      console.warn('Local comment counts fallback failed:', e);
+    }
+
+    if (targetIds) {
+      targetIds.forEach(id => {
+        if (counts[id] === undefined) {
+          counts[id] = 0;
+        }
+      });
+    }
+
+    return counts;
+  }
+
+  /**
    * Add a new comment with an exact 60-day expiration stamp.
    */
   static async addComment(input: CommentInput): Promise<Comment | null> {

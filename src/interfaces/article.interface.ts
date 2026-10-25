@@ -20,6 +20,7 @@ export interface Article {
   updatedAt: string;
   readingTime: number; // in minutes
   views?: number;
+  commentsCount?: number;
   faqs?: ArticleFaq[];
   featuredImage?: string;
   status: 'published' | 'draft';

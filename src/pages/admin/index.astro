@@ -193,7 +193,7 @@ const pageDescription = "Administrative content management, CDN cache invalidati
           </button>
         </div>
         <!-- KPI Summary Cards -->
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
           <div class="p-5 rounded-2xl bg-white/[0.02] light:bg-white border border-white/10 light:border-black/10 space-y-1">
             <span class="text-[11px] font-semibold text-gray-400 light:text-gray-500 uppercase tracking-wider block">Total Articles</span>
             <div id="stat-total-articles" class="text-2xl font-black text-white light:text-ink">--</div>
@@ -202,6 +202,11 @@ const pageDescription = "Administrative content management, CDN cache invalidati
           <div class="p-5 rounded-2xl bg-white/[0.02] light:bg-white border border-white/10 light:border-black/10 space-y-1">
             <span class="text-[11px] font-semibold text-gray-400 light:text-gray-500 uppercase tracking-wider block">Total Views</span>
             <div id="stat-total-views" class="text-2xl font-black text-emerald-400">--</div>
+          </div>
+
+          <div class="p-5 rounded-2xl bg-white/[0.02] light:bg-white border border-white/10 light:border-black/10 space-y-1">
+            <span class="text-[11px] font-semibold text-gray-400 light:text-gray-500 uppercase tracking-wider block">Total Comments</span>
+            <div id="stat-total-comments" class="text-2xl font-black text-amber-400">--</div>
           </div>
 
           <div class="p-5 rounded-2xl bg-white/[0.02] light:bg-white border border-white/10 light:border-black/10 space-y-1">
@@ -273,7 +278,7 @@ const pageDescription = "Administrative content management, CDN cache invalidati
                 <tr class="border-b border-white/10 light:border-black/10 bg-white/[0.03] light:bg-black/[0.02] text-gray-400 light:text-gray-500 font-bold uppercase tracking-wider text-[10px]">
                   <th class="py-3.5 px-4">Article</th>
                   <th class="py-3.5 px-4">Category</th>
-                  <th class="py-3.5 px-4">Views</th>
+                  <th class="py-3.5 px-4">Views &amp; Comments</th>
                   <th class="py-3.5 px-4">Published</th>
                   <th class="py-3.5 px-4">Source Video</th>
                   <th class="py-3.5 px-4 text-right">Actions</th>
@@ -555,6 +560,8 @@ const pageDescription = "Administrative content management, CDN cache invalidati
             <div class="flex items-center gap-2 flex-wrap">
               <h3 class="text-base sm:text-lg font-bold text-white light:text-ink">Edit Article Post</h3>
               <span id="edit-status-badge" class="px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-emerald-500/15 text-emerald-400 border border-emerald-500/25">Published</span>
+              <span id="edit-views-badge" class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-white/5 border border-white/10 text-white light:text-ink">👁️ 0 views</span>
+              <span id="edit-comments-badge" class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-500/10 border border-amber-500/20 text-amber-300 light:text-amber-700">💬 0 comments</span>
             </div>
             <p id="edit-slug-display" class="text-xs font-mono text-gray-400 light:text-gray-500 truncate max-w-md">/news/...</p>
           </div>
@@ -765,6 +772,7 @@ const pageDescription = "Administrative content management, CDN cache invalidati
       updatedAt?: string;
       readingTime?: number;
       views?: number;
+      commentsCount?: number;
       sourceVideoId?: string;
       sourceChannel?: string;
       status?: string;
@@ -837,6 +845,7 @@ const pageDescription = "Administrative content management, CDN cache invalidati
 
     const statTotal = document.getElementById("stat-total-articles");
     const statTotalViews = document.getElementById("stat-total-views");
+    const statTotalComments = document.getElementById("stat-total-comments");
     const statCategories = document.getElementById("stat-categories");
     const statFiltered = document.getElementById("stat-filtered-articles");
 
@@ -863,6 +872,8 @@ const pageDescription = "Administrative content management, CDN cache invalidati
     const editModalError = document.getElementById("edit-modal-error");
     const editSlugDisplay = document.getElementById("edit-slug-display");
     const editStatusBadge = document.getElementById("edit-status-badge");
+    const editViewsBadge = document.getElementById("edit-views-badge");
+    const editCommentsBadge = document.getElementById("edit-comments-badge");
     const editLastModifiedDisplay = document.getElementById("edit-last-modified-display");
     const editSaveBtn = document.getElementById("admin-edit-save-btn") as HTMLButtonElement | null;
     const editSaveText = document.getElementById("admin-edit-save-text");
@@ -974,10 +985,16 @@ const pageDescription = "Administrative content management, CDN cache invalidati
               </span>
             </td>
             <td class="py-3.5 px-4 whitespace-nowrap">
-              <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-white/5 light:bg-black/5 border border-white/10 light:border-black/10 text-white light:text-ink font-bold text-xs">
-                <span>👁️</span>
-                <span>${(art.views || 0).toLocaleString()}</span>
-              </span>
+              <div class="flex items-center gap-1.5 flex-wrap">
+                <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-xl bg-white/5 light:bg-black/5 border border-white/10 light:border-black/10 text-white light:text-ink font-bold text-xs" title="Total Views">
+                  <span>👁️</span>
+                  <span>${(art.views || 0).toLocaleString()}</span>
+                </span>
+                <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-300 light:text-amber-700 font-bold text-xs" title="Total Comments">
+                  <span>💬</span>
+                  <span>${(art.commentsCount || 0).toLocaleString()}</span>
+                </span>
+              </div>
             </td>
             <td class="py-3.5 px-4 whitespace-nowrap text-gray-400 light:text-gray-500 text-[11px]">
               <div>${dateStr}</div>
@@ -1085,6 +1102,9 @@ const pageDescription = "Administrative content management, CDN cache invalidati
 
           const totalViews = allArticles.reduce((acc, a) => acc + (a.views || 0), 0);
           if (statTotalViews) statTotalViews.textContent = totalViews.toLocaleString();
+
+          const totalComments = allArticles.reduce((acc, a) => acc + (a.commentsCount || 0), 0);
+          if (statTotalComments) statTotalComments.textContent = totalComments.toLocaleString();
           
           const uniqueCats = new Set(allArticles.map(a => a.category).filter(Boolean));
           if (statCategories) statCategories.textContent = uniqueCats.size.toString();
@@ -1592,6 +1612,9 @@ const pageDescription = "Administrative content management, CDN cache invalidati
           if (statTotal) statTotal.textContent = allArticles.length.toString();
           const totalViews = allArticles.reduce((acc, a) => acc + (a.views || 0), 0);
           if (statTotalViews) statTotalViews.textContent = totalViews.toLocaleString();
+
+          const totalComments = allArticles.reduce((acc, a) => acc + (a.commentsCount || 0), 0);
+          if (statTotalComments) statTotalComments.textContent = totalComments.toLocaleString();
           
           // Animate away
           const row = document.getElementById(`row-${pendingDeleteSlug}`);
@@ -1683,6 +1706,14 @@ const pageDescription = "Administrative content management, CDN cache invalidati
             editStatusBadge.className = isDraft 
               ? "px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-amber-500/15 text-amber-400 border border-amber-500/25"
               : "px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-emerald-500/15 text-emerald-400 border border-emerald-500/25";
+          }
+
+          // Views & Comments badges in edit modal
+          if (editViewsBadge) {
+            editViewsBadge.textContent = `👁️ ${(art.views || 0).toLocaleString()} views`;
+          }
+          if (editCommentsBadge) {
+            editCommentsBadge.textContent = `💬 ${(art.commentsCount || 0).toLocaleString()} comments`;
           }
 
           // Last modified timestamp display
