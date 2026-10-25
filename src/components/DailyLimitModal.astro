@@ -2,6 +2,8 @@
 // DailyLimitModal.astro
 // Global popup component that enforces max 5 result fetches per day and displays:
 // "You have exceeded the limit to fetch details kindly comeback later"
+// [TEMPORARILY DISABLED]: Disabled to allow unrestricted access without removing underlying code.
+const LIMIT_SYSTEM_ENABLED = false;
 ---
 
 <div 
@@ -10,6 +12,7 @@
   role="dialog"
   aria-modal="true"
   aria-labelledby="daily-limit-title"
+  style={!LIMIT_SYSTEM_ENABLED ? "display: none !important;" : undefined}
 >
   <div class="relative w-full max-w-md rounded-3xl border border-rose-500/30 bg-gradient-to-b from-[#181214] via-[#120d0f] to-[#0a0708] light:from-white light:via-rose-50/30 light:to-white p-6 sm:p-8 shadow-2xl text-center space-y-4 overflow-hidden animate-fadeIn">
     <!-- Top Ambient Glow -->
@@ -92,6 +95,8 @@
 
 <script is:inline>
   (function initDailyFetchLimiter() {
+    // Limit system toggle: set to false to temporarily disable daily limits without removing code
+    const LIMIT_SYSTEM_ENABLED = false;
     const MAX_DAILY_FETCHES = 5;
     const STORAGE_KEY = 'aktu_daily_fetches';
 
@@ -121,8 +126,17 @@
 
     // Expose helpers globally on window
     window.DAILY_FETCH_MAX = MAX_DAILY_FETCHES;
+    window.LIMIT_SYSTEM_ENABLED = LIMIT_SYSTEM_ENABLED;
 
     window.checkDailyFetchLimit = function() {
+      // Disabled mode: always allow fetches without triggering limit
+      if (!LIMIT_SYSTEM_ENABLED) {
+        return {
+          count: 0,
+          max: MAX_DAILY_FETCHES,
+          exceeded: false
+        };
+      }
       const record = getDailyRecord();
       return {
         count: record.count,
@@ -132,6 +146,9 @@
     };
 
     window.recordSuccessfulDailyFetch = function() {
+      if (!LIMIT_SYSTEM_ENABLED) {
+        return 0;
+      }
       const today = getTodayString();
       const record = getDailyRecord();
       record.count = (record.count || 0) + 1;
@@ -146,6 +163,10 @@
     window.recordDailyFetchAttempt = window.recordSuccessfulDailyFetch;
 
     window.showDailyLimitPopup = function(customMessage) {
+      // Disabled mode: do not display limit modal
+      if (!LIMIT_SYSTEM_ENABLED) {
+        return;
+      }
       const modal = document.getElementById('daily-fetch-limit-modal');
       const msgEl = document.getElementById('daily-limit-message-text');
       if (modal) {

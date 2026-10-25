@@ -5,6 +5,8 @@ class RedisService {
   private client: Redis | null = null;
   private isConnecting: boolean = false;
   private isConnected: boolean = false;
+  // Limit system toggle: set to false to temporarily disable daily limits without removing code
+  public limitSystemEnabled: boolean = false;
 
   constructor() {
     this.initClient();
@@ -351,6 +353,15 @@ class RedisService {
    * Check if user/IP has already reached their daily quota (Does NOT increment)
    */
   async isDailyFetchLimitExceeded(identifier: string, maxFetches: number = 5): Promise<{ exceeded: boolean; count: number; max: number }> {
+    // Disabled mode: fair-use daily limit enforcement bypassed
+    if (!this.limitSystemEnabled) {
+      return {
+        exceeded: false,
+        count: 0,
+        max: maxFetches
+      };
+    }
+
     const today = new Date().toISOString().slice(0, 10);
     const key = `aktu:daily_fetch:${today}:${identifier}`;
 
@@ -383,6 +394,15 @@ class RedisService {
    * Only called when either a marksheet result or DOB profile is genuinely retrieved.
    */
   async recordSuccessfulFetch(identifier: string, maxFetches: number = 5): Promise<{ allowed: boolean; count: number; max: number }> {
+    // Disabled mode: always allow fetches
+    if (!this.limitSystemEnabled) {
+      return {
+        allowed: true,
+        count: 0,
+        max: maxFetches
+      };
+    }
+
     const today = new Date().toISOString().slice(0, 10);
     const key = `aktu:daily_fetch:${today}:${identifier}`;
 
@@ -419,6 +439,13 @@ class RedisService {
    * Check if daily fetch quota allows requests (Read-only check, does NOT increment)
    */
   async checkDailyFetchLimit(identifier: string, maxFetches: number = 5): Promise<{ allowed: boolean; count: number; max: number }> {
+    if (!this.limitSystemEnabled) {
+      return {
+        allowed: true,
+        count: 0,
+        max: maxFetches
+      };
+    }
     const res = await this.isDailyFetchLimitExceeded(identifier, maxFetches);
     return {
       allowed: !res.exceeded,
@@ -432,6 +459,8 @@ class RedisService {
    */
   getDailyFetchPolicy() {
     return {
+      enabled: this.limitSystemEnabled,
+      status: this.limitSystemEnabled ? 'Active' : 'Disabled (Fair-use enforcement bypassed)',
       maxFetchesPerDay: 5,
       ttlSeconds: 86400,
       windowDescription: 'Rolling 24 Hours / Daily',
@@ -489,7 +518,7 @@ class RedisService {
                 identifier,
                 count,
                 max: maxFetches,
-                isBlocked: count >= maxFetches,
+                isBlocked: this.limitSystemEnabled && (count >= maxFetches),
                 remaining: Math.max(0, maxFetches - count),
                 ttlSeconds,
                 resetAt,
@@ -513,7 +542,7 @@ class RedisService {
             identifier,
             count,
             max: maxFetches,
-            isBlocked: count >= maxFetches,
+            isBlocked: this.limitSystemEnabled && (count >= maxFetches),
             remaining: Math.max(0, maxFetches - count),
             ttlSeconds: 86400,
             resetAt: new Date(Date.now() + 86400 * 1000).toISOString(),

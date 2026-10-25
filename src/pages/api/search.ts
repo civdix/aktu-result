@@ -206,7 +206,9 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
     }
 
     // 5 Fetches Per Day Limit Check (Daily quota enforcement - read-only pre-flight check, does NOT increment)
-    if (action !== 'refreshCaptcha' && !manualCaptcha) {
+    // [TEMPORARILY DISABLED]: Disabled to allow unrestricted access without removing underlying code.
+    const LIMIT_SYSTEM_ENABLED = false;
+    if (LIMIT_SYSTEM_ENABLED && action !== 'refreshCaptcha' && !manualCaptcha) {
       const { redisService } = await import('../../services/redis.service');
       const limitStatus = await redisService.isDailyFetchLimitExceeded(clientIp, 5);
 

@@ -4,9 +4,13 @@ import { CommentService } from '../../../services/comment.service';
 export const prerender = false;
 
 // Simple in-memory sliding window rate limiter (max 6 comments per minute per IP)
+// [TEMPORARILY DISABLED]: Disabled to act unrestricted without removing code
+const RATE_LIMIT_ENABLED = false;
 const ipRateMap = new Map<string, number[]>();
 
 function isRateLimited(ip: string): boolean {
+  if (!RATE_LIMIT_ENABLED) return false;
+
   const now = Date.now();
   const windowMs = 60 * 1000;
   const maxRequests = 6;
