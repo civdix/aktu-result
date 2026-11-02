@@ -24,6 +24,7 @@ Retrieve semester marksheets and One View scorecards without needing a Date of B
 * **Online Assessment Simulator**: [https://akturesult.bond/assessment-simulator](https://akturesult.bond/assessment-simulator)
 * **Telegram Bot Assistant**: [@akturesultwithoutdobbot](https://t.me/akturesultwithoutdobbot)
 * **Affiliated Colleges Directory**: [https://akturesult.bond/colleges](https://akturesult.bond/colleges)
+* **News and Circulars**: [https://akturesult.bond/news](https://akturesult.bond/news)
 
 ---
 
