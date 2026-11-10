@@ -14,7 +14,7 @@ const { slug } = Astro.params;
 const rawCollege = Astro.props.college || (slug ? findCollegeBySlug(slug, colleges) : null);
 
 if (!rawCollege) {
-  return Astro.redirect("/colleges", 302);
+  return Astro.rewrite('/404');
 }
 
 const college = rawCollege;

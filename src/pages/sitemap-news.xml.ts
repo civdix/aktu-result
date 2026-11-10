@@ -18,26 +18,22 @@ export const GET: APIRoute = async () => {
   const now = new Date();
   const fortyEightHoursAgo = new Date(now.getTime() - 48 * 60 * 60 * 1000);
 
-  // Filter for articles published within the last 48 hours per Google News standards
-  let newsEligibleArticles = articles.filter(item => {
+  // Filter strictly for articles published within the last 48 hours per Google News standards
+  const recentArticles = articles.filter(item => {
     const pubDate = new Date(item.publishedAt || item.updatedAt || 0);
     return pubDate >= fortyEightHoursAgo;
   });
 
-  // If no articles published in the last 48h, provide the top 5 most recent articles
-  if (newsEligibleArticles.length === 0 && articles.length > 0) {
-    newsEligibleArticles = articles.slice(0, 5);
-  }
-
   // Google News sitemaps must strictly contain ONLY article URLs with <news:news> blocks
-  const xmlUrls = newsEligibleArticles.map(item => {
+  const xmlUrls = recentArticles.map(item => {
     const pubDate = new Date(item.publishedAt || item.updatedAt || now);
     const pubIso = pubDate.toISOString();
     const lastMod = (item.updatedAt || item.publishedAt || now.toISOString()).split('T')[0];
     const safeTitle = escapeXml(item.title);
+    const safeSlug = escapeXml(item.slug);
 
     return `  <url>
-    <loc>${domain}/news/${item.slug}</loc>
+    <loc>${domain}/news/${safeSlug}</loc>
     <news:news>
       <news:publication>
         <news:name>AKTU Student News</news:name>

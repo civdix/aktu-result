@@ -30,5 +30,7 @@ Disallow: /
 
 # XML Sitemaps
 Sitemap: https://akturesult.bond/sitemap.xml
-Sitemap: https://akturesult.bond/sitemap-colleges.xml
+Sitemap: https://akturesult.bond/sitemap-core.xml
+Sitemap: https://akturesult.bond/sitemap-articles.xml
 Sitemap: https://akturesult.bond/sitemap-news.xml
+Sitemap: https://akturesult.bond/sitemap-colleges.xml

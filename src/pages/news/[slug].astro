@@ -19,7 +19,7 @@ if (!slug) {
 const article = await ArticleService.getArticleBySlug(slug, true);
 
 if (!article) {
-  return Astro.redirect('/404');
+  return Astro.rewrite('/404');
 }
 
 // Increment view counter

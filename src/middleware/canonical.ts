@@ -19,15 +19,25 @@ export const canonicalRedirectMiddleware = defineMiddleware(async (context, next
 
   const hostWithoutPort = rawHost.split(':')[0].toLowerCase();
   const isWww = hostWithoutPort.startsWith('www.');
-  const proto = (context.request.headers.get('x-forwarded-proto') || context.url.protocol.replace(':', '')).toLowerCase();
-  const isHttp = proto === 'http';
+
+  // Recognize Cloudflare and standard reverse-proxy HTTPS indicators
+  const cfVisitor = context.request.headers.get('cf-visitor');
+  const forwardedProto = context.request.headers.get('x-forwarded-proto');
+  const forwardedSsl = context.request.headers.get('x-forwarded-ssl');
+
+  const isHttps = (cfVisitor && cfVisitor.includes('"scheme":"https"'))
+    || (forwardedProto && forwardedProto.toLowerCase().includes('https'))
+    || (forwardedSsl && forwardedSsl.toLowerCase() === 'on')
+    || context.url.protocol === 'https:';
+
+  const isHttp = !isHttps;
 
   if (isWww || isHttp) {
     const cleanHost = hostWithoutPort.replace(/^www\./, '');
     const targetUrl = `https://${cleanHost}${context.url.pathname}${context.url.search}`;
     
     // Avoid self-redirect loops
-    if (context.url.href !== targetUrl) {
+    if (cleanHost !== hostWithoutPort || !isHttps) {
       return context.redirect(targetUrl, 301);
     }
   }

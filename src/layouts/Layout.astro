@@ -11,6 +11,7 @@ interface Props {
   ogType?: string;
   ogImage?: string;
   jsonLd?: Record<string, any>;
+  noindex?: boolean;
 }
 
 const {
@@ -20,7 +21,8 @@ const {
   canonicalUrl,
   ogType = "website",
   ogImage,
-  jsonLd
+  jsonLd,
+  noindex = false
 } = Astro.props;
 
 const brandUrl = "https://akturesult.bond";
@@ -71,8 +73,17 @@ const isActive = (path: string) => {
     <link rel="ai-catalog" href="/.well-known/ai-catalog.json" />
     <link rel="api-catalog" href="/.well-known/api-catalog" />
     <meta name="generator" content={Astro.generator} />
-    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
-    <meta name="googlebot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+    {noindex ? (
+      <>
+        <meta name="robots" content="noindex, follow" />
+        <meta name="googlebot" content="noindex, follow" />
+      </>
+    ) : (
+      <>
+        <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+        <meta name="googlebot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+      </>
+    )}
     <meta name="author" content={authorName} />
 
     <!-- Open Graph (Facebook / LinkedIn) -->
