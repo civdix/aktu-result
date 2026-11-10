@@ -53,6 +53,19 @@ const isActive = (path: string) => {
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5590747238948130"
      crossorigin="anonymous"></script>
     
+    <!-- Google Reader Revenue Manager / Subscribe with Google (SwG Basic) -->
+    <script async type="application/javascript" src="https://news.google.com/swg/js/v1/swg-basic.js"></script>
+    <script is:inline>
+      (self.SWG_BASIC = self.SWG_BASIC || []).push( basicSubscriptions => {
+        basicSubscriptions.init({
+          type: "NewsArticle",
+          isPartOfType: ["Product"],
+          isPartOfProductId: "CAowjabIDA:openaccess",
+          clientOptions: { theme: "light", lang: "en" },
+        });
+      });
+    </script>
+    
     <!-- Favicon & Search Engine Icons (Google Search Console & Multi-Device Compliant) -->    
     <link rel="icon" href="/favicon.ico" sizes="48x48 32x32 16x16" />
     <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48x48.png" />
@@ -389,6 +402,7 @@ const isActive = (path: string) => {
               <li><a href="/about" class="hover:text-white light:hover:text-ink transition-colors">About Us</a></li>
               <li><a href="/contact" class="hover:text-white light:hover:text-ink transition-colors">Contact Us</a></li>
               <li><a href="/privacy-policy" class="hover:text-white light:hover:text-ink transition-colors">Privacy Policy</a></li>
+              <li><a href="/publication-policies" class="hover:text-white light:hover:text-ink transition-colors">Publication Policies</a></li>
               <li><a href="/terms" class="hover:text-white light:hover:text-ink transition-colors">Terms of Service</a></li>
               <li><a href="/disclaimer" class="hover:text-white light:hover:text-ink transition-colors">Disclaimer</a></li>
               <li><a href="/privacy-policy#advertising" class="hover:text-white light:hover:text-ink transition-colors">Advertising &amp; Cookie Disclosure</a></li>

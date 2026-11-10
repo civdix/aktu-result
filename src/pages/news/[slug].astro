@@ -75,6 +75,11 @@ const jsonLd: Record<string, any> = {
       "articleSection": article.category,
       "inLanguage": "en-IN",
       "isAccessibleForFree": true,
+      "isPartOf": {
+        "@type": ["CreativeWork", "Product"],
+        "name": "AKTU Student Portal",
+        "productID": "CAowjabIDA:openaccess"
+      },
       "keywords": article.tags.join(', '),
       "author": {
         "@type": "Organization",
@@ -91,8 +96,8 @@ const jsonLd: Record<string, any> = {
           "width": 512,
           "height": 512
         },
-        "publishingPrinciples": `${domain}/about`,
-        "correctionsPolicy": `${domain}/contact`
+        "publishingPrinciples": `${domain}/publication-policies`,
+        "correctionsPolicy": `${domain}/publication-policies#corrections-policy`
       },
       "image": [
         articleImage,
