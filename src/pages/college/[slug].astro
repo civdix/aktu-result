@@ -61,6 +61,10 @@ if (acceptHeader.includes("application/json") || requestUrl.searchParams.get("fo
   );
 }
 
+if (slug !== canonicalSlug) {
+  return Astro.redirect(`/college/${canonicalSlug}`, 301);
+}
+
 const sortedBranches = [...branches].sort((a, b) => a.name.localeCompare(b.name));
 
 const siteUrl = "https://akturesult.bond";
