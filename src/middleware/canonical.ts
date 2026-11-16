@@ -3,8 +3,9 @@ import { defineMiddleware } from 'astro:middleware';
 /**
  * Canonical SEO Redirect Middleware
  * Automatically performs an HTTP 301 Permanent Redirect:
- * 1. From www.* to apex domain (e.g. www.akturesult.bond -> https://akturesult.bond)
+ * 1. From alternate hosts to the apex domain (e.g. www.akturesult.bond -> https://akturesult.bond)
  * 2. From http:// to https://
+ * 3. From trailing-slash paths to slashless paths
  * to prevent duplicate content indexing and consolidate search engine rankings.
  */
 export const canonicalRedirectMiddleware = defineMiddleware(async (context, next) => {
@@ -17,8 +18,8 @@ export const canonicalRedirectMiddleware = defineMiddleware(async (context, next
     return next();
   }
 
-  const hostWithoutPort = rawHost.split(':')[0].toLowerCase();
-  const isWww = hostWithoutPort.startsWith('www.');
+  const hostWithoutPort = rawHost.split(',')[0].trim().split(':')[0].toLowerCase();
+  const canonicalHost = 'akturesult.bond';
 
   // Recognize Cloudflare and standard reverse-proxy HTTPS indicators
   const cfVisitor = context.request.headers.get('cf-visitor');
@@ -32,12 +33,15 @@ export const canonicalRedirectMiddleware = defineMiddleware(async (context, next
 
   const isHttp = !isHttps;
 
-  if (isWww || isHttp) {
-    const cleanHost = hostWithoutPort.replace(/^www\./, '');
-    const targetUrl = `https://${cleanHost}${context.url.pathname}${context.url.search}`;
+  const hasTrailingSlash = context.url.pathname.length > 1 && context.url.pathname.endsWith('/');
+  if (hostWithoutPort !== canonicalHost || isHttp || hasTrailingSlash) {
+    const cleanPath = hasTrailingSlash
+      ? context.url.pathname.replace(/\/+$/, '')
+      : context.url.pathname;
+    const targetUrl = `https://${canonicalHost}${cleanPath || '/'}${context.url.search}`;
     
     // Avoid self-redirect loops
-    if (cleanHost !== hostWithoutPort || !isHttps) {
+    if (hostWithoutPort !== canonicalHost || !isHttps || hasTrailingSlash) {
       return context.redirect(targetUrl, 301);
     }
   }
